@@ -1,6 +1,6 @@
-package ca.mcgill.ecse321.ParkingLotBackend.config;
+package ca.mcgill.ecse321.parkinglotbackend.config;
 
-import ca.mcgill.ecse321.ParkingLotBackend.model.User;
+import ca.mcgill.ecse321.parkinglotbackend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

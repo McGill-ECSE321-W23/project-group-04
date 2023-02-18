@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.ParkingLotBackend.model;
+package ca.mcgill.ecse321.parkinglotbackend.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

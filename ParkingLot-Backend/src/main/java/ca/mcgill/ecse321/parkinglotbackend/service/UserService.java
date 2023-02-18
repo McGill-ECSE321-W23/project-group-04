@@ -1,7 +1,7 @@
-package ca.mcgill.ecse321.ParkingLotBackend.service;
+package ca.mcgill.ecse321.parkinglotbackend.service;
 
-import ca.mcgill.ecse321.ParkingLotBackend.config.UserRepository;
-import ca.mcgill.ecse321.ParkingLotBackend.model.User;
+import ca.mcgill.ecse321.parkinglotbackend.config.UserRepository;
+import ca.mcgill.ecse321.parkinglotbackend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

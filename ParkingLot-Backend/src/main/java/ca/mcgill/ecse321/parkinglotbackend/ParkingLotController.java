@@ -1,7 +1,7 @@
-package ca.mcgill.ecse321.ParkingLotBackend;
+package ca.mcgill.ecse321.parkinglotbackend;
 
-import ca.mcgill.ecse321.ParkingLotBackend.model.User;
-import ca.mcgill.ecse321.ParkingLotBackend.service.UserService;
+import ca.mcgill.ecse321.parkinglotbackend.model.User;
+import ca.mcgill.ecse321.parkinglotbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

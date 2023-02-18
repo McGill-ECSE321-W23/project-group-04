@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.ParkingLotBackend;
+package ca.mcgill.ecse321.parkinglotbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
