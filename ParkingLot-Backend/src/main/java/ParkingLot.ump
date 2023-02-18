@@ -1,0 +1,117 @@
+class ParkingLotSoftwareSystem {
+  autounique ParkingLotSoftwareSystemID;
+  float monthlyFee;
+  float feePer15m;
+  int maxStay;      //in minutes
+  int numberOfRegularParkingSpots;
+  int numberOfLargeParkingSpots;
+  int numberOfMonthlyFloors;
+  int numberOfMonthlySpotsPerFloor;
+  int numberOfGarages;
+  int maxCarsPerPerson;
+}
+
+class Person {
+  unique phoneNumber;
+  name;
+  
+  1 -> 1..2 Role roles;
+  1 <- 0..1 Account account;
+  1 -> * Car cars;
+  1 -> * ServiceRequest requests;
+}
+
+class Role {
+  abstract;
+}
+
+class CustomerRole {
+  isA Role;
+  
+  1 -> * ParkingSpot reservations;
+}
+
+class EmployeeRole {
+  isA Role;
+  
+  float salary;
+}
+
+class ManagerRole {
+  isA Role;
+}
+
+class Account {
+  unique email;
+  password;
+}
+
+class Car {
+  make;
+  model;
+  licensePlate;
+}
+
+class ParkingSpot {
+  unique ParkingSpotID;
+  int floor;
+  int number;
+}
+
+class Service {
+  unique ServiceID;
+  description;
+  float cost;
+  int duration;     //in minutes
+}
+
+class Garage {
+  unique int GarageID;
+}
+
+class ServiceRequest {
+  autounique ServiceRequestID;
+  datetime startTime;
+  }
+
+class TicketForRegularCar {
+  autounique TicketForRegularCarID;
+  datetime entryTime;
+}
+
+class TicketForLargeCar {
+  autounique TicketForLargeCarID;
+  datetime entryTime;
+}
+
+class TimeSlot {
+  enum DayOfTheWeek {
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  }
+  unique TimeSlotID;
+  DayOfTheWeek dayOfTheWeek;
+  Time startTime;
+  Time endTime;
+}
+
+association {
+
+  // Service requests
+  1 Car car <- * ServiceRequest requests;
+  * ServiceRequest requests -> 1 Service service;
+  1 ServiceRequest -> 1 Garage;
+
+  // Timeslots
+  1 ParkingLotSoftwareSystem -> * TimeSlot openingHours;
+  * EmployeeRole -> * TimeSlot schedule;
+  
+  // Tickets
+  * TicketForRegularCar <- 1 ParkingLotSoftwareSystem;
+  * TicketForLargeCar <- 1 ParkingLotSoftwareSystem;
+}
