@@ -2,7 +2,8 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
-import java.util.*;
+
+import org.joda.time.DateTime;
 
 // line 74 "../../../../../ParkingLot.ump"
 public class ServiceRequest
@@ -19,7 +20,7 @@ public class ServiceRequest
   //------------------------
 
   //ServiceRequest Attributes
-  private datetime startTime;
+  private DateTime startTime;
 
   //Autounique Attributes
   private int ServiceRequestID;
@@ -33,7 +34,7 @@ public class ServiceRequest
   // CONSTRUCTOR
   //------------------------
 
-  public ServiceRequest(datetime aStartTime, Car aCar, Service aService, Garage aGarage)
+  public ServiceRequest(DateTime aStartTime, Car aCar, Service aService, Garage aGarage)
   {
     startTime = aStartTime;
     ServiceRequestID = nextServiceRequestID++;
@@ -55,7 +56,7 @@ public class ServiceRequest
   // INTERFACE
   //------------------------
 
-  public boolean setStartTime(datetime aStartTime)
+  public boolean setStartTime(DateTime aStartTime)
   {
     boolean wasSet = false;
     startTime = aStartTime;
@@ -63,7 +64,7 @@ public class ServiceRequest
     return wasSet;
   }
 
-  public datetime getStartTime()
+  public DateTime getStartTime()
   {
     return startTime;
   }

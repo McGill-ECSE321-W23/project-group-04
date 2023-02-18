@@ -12,7 +12,7 @@ public class Garage
   // STATIC VARIABLES
   //------------------------
 
-  private static Map<int, Garage> garagesByGarageID = new HashMap<int, Garage>();
+  private static Map<Integer, Garage> garagesByGarageID = new HashMap<>();
 
   //------------------------
   // MEMBER VARIABLES
@@ -41,7 +41,7 @@ public class Garage
   {
     boolean wasSet = false;
     int anOldGarageID = getGarageID();
-    if (anOldGarageID != null && anOldGarageID.equals(aGarageID)) {
+    if (Objects.equals(anOldGarageID, aGarageID)) {
       return true;
     }
     if (hasWithGarageID(aGarageID)) {
@@ -49,9 +49,7 @@ public class Garage
     }
     GarageID = aGarageID;
     wasSet = true;
-    if (anOldGarageID != null) {
-      garagesByGarageID.remove(anOldGarageID);
-    }
+    garagesByGarageID.remove(anOldGarageID);
     garagesByGarageID.put(aGarageID, this);
     return wasSet;
   }

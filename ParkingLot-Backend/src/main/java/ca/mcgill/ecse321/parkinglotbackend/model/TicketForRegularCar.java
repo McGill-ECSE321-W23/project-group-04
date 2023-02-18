@@ -3,6 +3,8 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import org.joda.time.DateTime;
+
 // line 79 "../../../../../ParkingLot.ump"
 public class TicketForRegularCar
 {
@@ -18,7 +20,7 @@ public class TicketForRegularCar
   //------------------------
 
   //TicketForRegularCar Attributes
-  private datetime entryTime;
+  private DateTime entryTime;
 
   //Autounique Attributes
   private int TicketForRegularCarID;
@@ -27,7 +29,7 @@ public class TicketForRegularCar
   // CONSTRUCTOR
   //------------------------
 
-  public TicketForRegularCar(datetime aEntryTime)
+  public TicketForRegularCar(DateTime aEntryTime)
   {
     entryTime = aEntryTime;
     TicketForRegularCarID = nextTicketForRegularCarID++;
@@ -37,7 +39,7 @@ public class TicketForRegularCar
   // INTERFACE
   //------------------------
 
-  public boolean setEntryTime(datetime aEntryTime)
+  public boolean setEntryTime(DateTime aEntryTime)
   {
     boolean wasSet = false;
     entryTime = aEntryTime;
@@ -45,7 +47,7 @@ public class TicketForRegularCar
     return wasSet;
   }
 
-  public datetime getEntryTime()
+  public DateTime getEntryTime()
   {
     return entryTime;
   }

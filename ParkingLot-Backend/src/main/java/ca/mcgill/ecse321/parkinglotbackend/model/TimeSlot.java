@@ -13,7 +13,7 @@ public class TimeSlot
   // ENUMERATIONS
   //------------------------
 
-  public enum DayOfTheWeek { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }
+  public enum DayOfTheWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
   //------------------------
   // STATIC VARIABLES

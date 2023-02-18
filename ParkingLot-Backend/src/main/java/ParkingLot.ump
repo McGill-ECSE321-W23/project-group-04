@@ -68,38 +68,38 @@ class Service {
 }
 
 class Garage {
-  unique int GarageID;
+  unique Integer GarageID;
 }
 
 class ServiceRequest {
   autounique ServiceRequestID;
-  datetime startTime;
+  DateTime startTime;
   }
 
 class TicketForRegularCar {
   autounique TicketForRegularCarID;
-  datetime entryTime;
+  DateTime entryTime;
 }
 
 class TicketForLargeCar {
   autounique TicketForLargeCarID;
-  datetime entryTime;
+  DateTime entryTime;
 }
 
 class TimeSlot {
   enum DayOfTheWeek {
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday"
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday
   }
   unique TimeSlotID;
   DayOfTheWeek dayOfTheWeek;
-  Time startTime;
-  Time endTime;
+  DateTime startTime;
+  DateTime endTime;
 }
 
 association {
