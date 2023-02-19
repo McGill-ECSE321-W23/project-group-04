@@ -3,7 +3,6 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 import java.util.*;
-import java.sql.Time;
 
 // line 3 "../../../../../ParkingLot.ump"
 public class ParkingLotSoftwareSystem
