@@ -17,10 +17,9 @@ class Person {
   unique phoneNumber;
   name;
   
-  1 -> 1..2 Role roles;
-  1 <- 0..1 Account account;
-  1 -> * Car cars;
-  1 -> * ServiceRequest requests;
+  1 person -> 1..2 Role roles;
+  1 person <- 0..1 Account account;
+  1 owner <- * Car cars;
 }
 
 class Role {
@@ -30,17 +29,23 @@ class Role {
 class CustomerRole {
   isA Role;
   
+  autounique CustomerRoleID;
+  
   1 -> * ParkingSpot reservations;
 }
 
 class EmployeeRole {
   isA Role;
   
+  autounique EmployeeRoleID;
+  
   float salary;
 }
 
 class ManagerRole {
   isA Role;
+  
+  autunique ManagerRoleID;
 }
 
 class Account {
@@ -49,9 +54,9 @@ class Account {
 }
 
 class Car {
+  unique licensePlate;
   make;
   model;
-  licensePlate;
 }
 
 class ParkingSpot {
@@ -96,7 +101,7 @@ class TimeSlot {
     Saturday,
     Sunday
   }
-  unique TimeSlotID;
+  autounique TimeSlotID;
   DayOfTheWeek dayOfTheWeek;
   DateTime startTime;
   DateTime endTime;
@@ -107,11 +112,11 @@ association {
   // Service requests
   1 Car car <- * ServiceRequest requests;
   * ServiceRequest requests -> 1 Service service;
-  1 ServiceRequest -> 1 Garage;
+  1 ServiceRequest requests -> 1 Garage garage;
 
   // Timeslots
   1 ParkingLotSoftwareSystem -> * TimeSlot openingHours;
-  * EmployeeRole -> * TimeSlot schedule;
+  * EmployeeRole employees -> * TimeSlot schedule;
   
   // Tickets
   * TicketForRegularCar <- 1 ParkingLotSoftwareSystem;
