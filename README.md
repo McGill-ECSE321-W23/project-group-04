@@ -6,6 +6,13 @@
 | Annie Gouchee     | anniegouchee     | Software Engineering Co-op |
 | Lin Wei Li        | ElkCl0ner        | Software Engineering       |
 | Estefania Vazquez | estefaniavazquez | Software Engineering Co-op |
-| Qin Xuan Xu       |                  | Computer Engineering       |
+| Qin Xuan Xu       | qinxuanx         | Computer Engineering       |
 | Edwin You Zhou    | edwin-zhou       | Computer Engineering       |
 
+## Project Description
+
+## Sprint 1
+
+### Contributions
+
+### Project Report:
