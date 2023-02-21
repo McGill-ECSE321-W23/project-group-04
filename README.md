@@ -1,7 +1,7 @@
 # Parking Lot System
-## W2023 - ECSE 321 Introduction to Software Engineering
+### W2023 - ECSE 321 Introduction to Software Engineering
 
-# Meet the Team!
+## Meet the Team!
 | Team Member       | GitHub           | Major                      | Year |
 | ----------------- | ---------------- | -------------------------- | ---- |
 | Faiza Chowdhury   | faizachy         | Computer Engineering       | U2 |
