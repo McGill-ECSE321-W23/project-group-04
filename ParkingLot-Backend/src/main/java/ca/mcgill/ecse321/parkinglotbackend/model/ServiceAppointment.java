@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 // line 82 "../../../../../../ParkingLot.ump"
 public class ServiceAppointment
@@ -15,7 +15,7 @@ public class ServiceAppointment
 
   //ServiceAppointment Attributes
   private String serviceAppointmentID;
-  private DateTime startTime;
+  private LocalDateTime startTime;
 
   //ServiceAppointment Associations
   private Service service;
@@ -26,7 +26,7 @@ public class ServiceAppointment
   // CONSTRUCTOR
   //------------------------
 
-  public ServiceAppointment(String aServiceAppointmentID, DateTime aStartTime, Service aService, Garage aGarage, Car aCar)
+  public ServiceAppointment(String aServiceAppointmentID, LocalDateTime aStartTime, Service aService, Garage aGarage, Car aCar)
   {
     serviceAppointmentID = aServiceAppointmentID;
     startTime = aStartTime;
@@ -56,7 +56,7 @@ public class ServiceAppointment
     return wasSet;
   }
 
-  public boolean setStartTime(DateTime aStartTime)
+  public boolean setStartTime(LocalDateTime aStartTime)
   {
     boolean wasSet = false;
     startTime = aStartTime;
@@ -69,7 +69,7 @@ public class ServiceAppointment
     return serviceAppointmentID;
   }
 
-  public DateTime getStartTime()
+  public LocalDateTime getStartTime()
   {
     return startTime;
   }
