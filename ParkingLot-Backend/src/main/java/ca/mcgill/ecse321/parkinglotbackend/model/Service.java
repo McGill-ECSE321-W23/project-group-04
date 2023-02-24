@@ -1,25 +1,18 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
+/*This code was generated using the UMPLE 1.32.1.6535.66c005ced modeling language!*/
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
-import java.util.*;
 
-// line 63 "../../../../../ParkingLot.ump"
+// line 69 "../../../../../../ParkingLot.ump"
 public class Service
 {
-
-  //------------------------
-  // STATIC VARIABLES
-  //------------------------
-
-  private static Map<String, Service> servicesByServiceID = new HashMap<String, Service>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //Service Attributes
-  private String ServiceID;
+  private String serviceID;
   private String description;
   private float cost;
   private int duration;
@@ -30,13 +23,10 @@ public class Service
 
   public Service(String aServiceID, String aDescription, float aCost, int aDuration)
   {
+    serviceID = aServiceID;
     description = aDescription;
     cost = aCost;
     duration = aDuration;
-    if (!setServiceID(aServiceID))
-    {
-      throw new RuntimeException("Cannot create due to duplicate ServiceID. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
   }
 
   //------------------------
@@ -46,19 +36,8 @@ public class Service
   public boolean setServiceID(String aServiceID)
   {
     boolean wasSet = false;
-    String anOldServiceID = getServiceID();
-    if (anOldServiceID != null && anOldServiceID.equals(aServiceID)) {
-      return true;
-    }
-    if (hasWithServiceID(aServiceID)) {
-      return wasSet;
-    }
-    ServiceID = aServiceID;
+    serviceID = aServiceID;
     wasSet = true;
-    if (anOldServiceID != null) {
-      servicesByServiceID.remove(anOldServiceID);
-    }
-    servicesByServiceID.put(aServiceID, this);
     return wasSet;
   }
 
@@ -88,17 +67,7 @@ public class Service
 
   public String getServiceID()
   {
-    return ServiceID;
-  }
-  /* Code from template attribute_GetUnique */
-  public static Service getWithServiceID(String aServiceID)
-  {
-    return servicesByServiceID.get(aServiceID);
-  }
-  /* Code from template attribute_HasUnique */
-  public static boolean hasWithServiceID(String aServiceID)
-  {
-    return getWithServiceID(aServiceID) != null;
+    return serviceID;
   }
 
   public String getDescription()
@@ -120,15 +89,13 @@ public class Service
   }
 
   public void delete()
-  {
-    servicesByServiceID.remove(getServiceID());
-  }
+  {}
 
 
   public String toString()
   {
     return super.toString() + "["+
-            "ServiceID" + ":" + getServiceID()+ "," +
+            "serviceID" + ":" + getServiceID()+ "," +
             "description" + ":" + getDescription()+ "," +
             "cost" + ":" + getCost()+ "," +
             "duration" + ":" + getDuration()+ "]";

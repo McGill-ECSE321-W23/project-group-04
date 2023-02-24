@@ -1,7 +1,7 @@
 namespace ca.mcgill.ecse321.parkinglotbackend.model;
 
 class ParkingLotSoftwareSystem {
-  ParkingLotSoftwareSystemID;
+  parkingLotSoftwareSystemID;
   float monthlyFee;
   float feePer15m;
   int maxStay;      //in minutes
@@ -15,13 +15,13 @@ class ParkingLotSoftwareSystem {
 }
 
 class Account {
-  AccountID;
+  accountID;
   email;    //unique
   password;
 }
 
 class Person {
-  PersonID;
+  personID;
   phoneNumber;  //unique
   name;
   
@@ -45,14 +45,14 @@ class ManagerAccount {
 }
 
 class Car {
-  CarID;
+  carID;
   licensePlate;    //unique
   make;
   model;
 }
 
 class MonthlyReservation {
-  MonthlyReservationID;
+  monthlyReservationID;
   LocalDate startDate;
   LocalDate endDate;
 
@@ -61,27 +61,27 @@ class MonthlyReservation {
 }
 
 class ParkingSpot {
-  ParkingSpotID;
+  parkingSpotID;
   int floor;
   int number;
 }
 
 class Service {
-  ServiceID;
+  serviceID;
   description;
   float cost;
   int duration;     //in minutes
 }
 
 class Garage {
-  GarageID;
+  garageID;
 
   int garageNumber;    //unique and generated
 }
 
 class ServiceAppointment {
-  ServiceAppointmentID;
-  DateTime startTime;
+  serviceAppointmentID;
+  LocalDateTime startTime;
 
   * appointments -> 1 Service service;
   * appointments -> 1 Garage garage;
@@ -93,24 +93,15 @@ class Ticket {
     Regular,
     Large
   }
-  TicketForRegularCarID;
-  DateTime entryTime;
+  ticketForRegularCarID;
+  LocalDateTime entryTime;
   CarType carType;
 
   //* tickets -> 1 parkingLotSoftwareSystem;
 }
 
 class TimeSlot {
-  enum DayOfTheWeek {
-    Monday,
-    Tuesday,
-    Wednesday,
-    Thursday,
-    Friday,
-    Saturday,
-    Sunday
-  }
-  TimeSlotID;
+  timeSlotID;
   DayOfTheWeek dayOfTheWeek;
   LocalTime startTime;
   LocalTime endTime;
