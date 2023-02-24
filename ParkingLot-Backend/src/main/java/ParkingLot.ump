@@ -80,8 +80,14 @@ class Garage {
 }
 
 class ServiceAppointment {
+  enum AppointmentStatus {
+    Ready,
+    InProgress,
+    Competed
+  }
   serviceAppointmentID;
   LocalDateTime startTime;
+  AppointmentStatus appointmentStatus;
 
   * appointments -> 1 Service service;
   * appointments -> 1 Garage garage;
