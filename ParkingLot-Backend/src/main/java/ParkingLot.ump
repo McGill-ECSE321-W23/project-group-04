@@ -97,12 +97,12 @@ class Ticket {
   LocalDateTime entryTime;
   CarType carType;
 
-  //* tickets -> 1 parkingLotSoftwareSystem;
+  //* tickets -> 1 parkingLotSoftwareSystem;    //floating
 }
 
 class TimeSlot {
   timeSlotID;
-  DayOfTheWeek dayOfTheWeek;
+  DayOfWeek dayOfTheWeek;
   LocalTime startTime;
   LocalTime endTime;
 }
