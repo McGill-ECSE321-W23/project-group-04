@@ -2,48 +2,41 @@
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
-import java.util.*;
 
-import org.joda.time.DateTime;
+import java.time.DayOfWeek;
 
-// line 89 "../../../../../ParkingLot.ump"
+import org.joda.time.LocalTime;
+
+// line 109 "../../../../../ParkingLot.ump"
 public class TimeSlot
 {
-
-  //------------------------
-  // ENUMERATIONS
-  //------------------------
-
-  public enum DayOfTheWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
-
-  //------------------------
-  // STATIC VARIABLES
-  //------------------------
-
-  private static Map<String, TimeSlot> timeslotsByTimeSlotID = new HashMap<String, TimeSlot>();
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //TimeSlot Attributes
-  private String TimeSlotID;
-  private DayOfTheWeek dayOfTheWeek;
-  private DateTime startTime;
-  private DateTime endTime;
+  private String timeSlotID;
+  private DayOfWeek dayOfTheWeek;
+  private LocalTime startTime;
+  private LocalTime endTime;
+
+  //TimeSlot Associations
+  private ParkingLotSoftwareSystem system;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public TimeSlot(String aTimeSlotID, DayOfTheWeek aDayOfTheWeek, DateTime aStartTime, DateTime aEndTime)
+  public TimeSlot(String aTimeSlotID, DayOfWeek aDayOfTheWeek, LocalTime aStartTime, LocalTime aEndTime, ParkingLotSoftwareSystem aSystem)
   {
+    timeSlotID = aTimeSlotID;
     dayOfTheWeek = aDayOfTheWeek;
     startTime = aStartTime;
     endTime = aEndTime;
-    if (!setTimeSlotID(aTimeSlotID))
+    if (!setSystem(aSystem))
     {
-      throw new RuntimeException("Cannot create due to duplicate TimeSlotID. See http://manual.umple.org?RE003ViolationofUniqueness.html");
+      throw new RuntimeException("Unable to create TimeSlot due to aSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -54,23 +47,12 @@ public class TimeSlot
   public boolean setTimeSlotID(String aTimeSlotID)
   {
     boolean wasSet = false;
-    String anOldTimeSlotID = getTimeSlotID();
-    if (anOldTimeSlotID != null && anOldTimeSlotID.equals(aTimeSlotID)) {
-      return true;
-    }
-    if (hasWithTimeSlotID(aTimeSlotID)) {
-      return wasSet;
-    }
-    TimeSlotID = aTimeSlotID;
+    timeSlotID = aTimeSlotID;
     wasSet = true;
-    if (anOldTimeSlotID != null) {
-      timeslotsByTimeSlotID.remove(anOldTimeSlotID);
-    }
-    timeslotsByTimeSlotID.put(aTimeSlotID, this);
     return wasSet;
   }
 
-  public boolean setDayOfTheWeek(DayOfTheWeek aDayOfTheWeek)
+  public boolean setDayOfTheWeek(DayOfWeek aDayOfTheWeek)
   {
     boolean wasSet = false;
     dayOfTheWeek = aDayOfTheWeek;
@@ -78,7 +60,7 @@ public class TimeSlot
     return wasSet;
   }
 
-  public boolean setStartTime(DateTime aStartTime)
+  public boolean setStartTime(LocalTime aStartTime)
   {
     boolean wasSet = false;
     startTime = aStartTime;
@@ -86,7 +68,7 @@ public class TimeSlot
     return wasSet;
   }
 
-  public boolean setEndTime(DateTime aEndTime)
+  public boolean setEndTime(LocalTime aEndTime)
   {
     boolean wasSet = false;
     endTime = aEndTime;
@@ -96,46 +78,53 @@ public class TimeSlot
 
   public String getTimeSlotID()
   {
-    return TimeSlotID;
-  }
-  /* Code from template attribute_GetUnique */
-  public static TimeSlot getWithTimeSlotID(String aTimeSlotID)
-  {
-    return timeslotsByTimeSlotID.get(aTimeSlotID);
-  }
-  /* Code from template attribute_HasUnique */
-  public static boolean hasWithTimeSlotID(String aTimeSlotID)
-  {
-    return getWithTimeSlotID(aTimeSlotID) != null;
+    return timeSlotID;
   }
 
-  public DayOfTheWeek getDayOfTheWeek()
+  public DayOfWeek getDayOfTheWeek()
   {
     return dayOfTheWeek;
   }
 
-  public DateTime getStartTime()
+  public LocalTime getStartTime()
   {
     return startTime;
   }
 
-  public DateTime getEndTime()
+  public LocalTime getEndTime()
   {
     return endTime;
+  }
+  /* Code from template association_GetOne */
+  public ParkingLotSoftwareSystem getSystem()
+  {
+    return system;
+  }
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setSystem(ParkingLotSoftwareSystem aNewSystem)
+  {
+    boolean wasSet = false;
+    if (aNewSystem != null)
+    {
+      system = aNewSystem;
+      wasSet = true;
+    }
+    return wasSet;
   }
 
   public void delete()
   {
-    timeslotsByTimeSlotID.remove(getTimeSlotID());
+    system = null;
   }
 
 
   public String toString()
   {
     return super.toString() + "["+
-            "TimeSlotID" + ":" + getTimeSlotID()+ "]" + System.getProperties().getProperty("line.separator") +
+            "timeSlotID" + ":" + getTimeSlotID()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "dayOfTheWeek" + "=" + (getDayOfTheWeek() != null ? !getDayOfTheWeek().equals(this)  ? getDayOfTheWeek().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null");
+            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "system = "+(getSystem()!=null?Integer.toHexString(System.identityHashCode(getSystem())):"null");
   }
 }

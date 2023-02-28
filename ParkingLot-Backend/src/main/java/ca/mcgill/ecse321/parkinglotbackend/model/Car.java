@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
-// line 51 "../../../../../ParkingLot.ump"
+// line 47 "../../../../../ParkingLot.ump"
 public class Car
 {
 
@@ -12,24 +12,49 @@ public class Car
   //------------------------
 
   //Car Attributes
+  private String carID;
+  private String licensePlate;
   private String make;
   private String model;
-  private String licensePlate;
+
+  //Car Associations
+  private Person owner;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Car(String aMake, String aModel, String aLicensePlate)
+  public Car(String aCarID, String aLicensePlate, String aMake, String aModel, Person aOwner)
   {
+    carID = aCarID;
+    licensePlate = aLicensePlate;
     make = aMake;
     model = aModel;
-    licensePlate = aLicensePlate;
+    if (!setOwner(aOwner))
+    {
+      throw new RuntimeException("Unable to create Car due to aOwner. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
   }
 
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setCarID(String aCarID)
+  {
+    boolean wasSet = false;
+    carID = aCarID;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setLicensePlate(String aLicensePlate)
+  {
+    boolean wasSet = false;
+    licensePlate = aLicensePlate;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setMake(String aMake)
   {
@@ -47,12 +72,17 @@ public class Car
     return wasSet;
   }
 
-  public boolean setLicensePlate(String aLicensePlate)
+  public String getCarID()
   {
-    boolean wasSet = false;
-    licensePlate = aLicensePlate;
-    wasSet = true;
-    return wasSet;
+    return carID;
+  }
+
+  /**
+   * unique
+   */
+  public String getLicensePlate()
+  {
+    return licensePlate;
   }
 
   public String getMake()
@@ -64,21 +94,36 @@ public class Car
   {
     return model;
   }
-
-  public String getLicensePlate()
+  /* Code from template association_GetOne */
+  public Person getOwner()
   {
-    return licensePlate;
+    return owner;
+  }
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setOwner(Person aNewOwner)
+  {
+    boolean wasSet = false;
+    if (aNewOwner != null)
+    {
+      owner = aNewOwner;
+      wasSet = true;
+    }
+    return wasSet;
   }
 
   public void delete()
-  {}
+  {
+    owner = null;
+  }
 
 
   public String toString()
   {
     return super.toString() + "["+
+            "carID" + ":" + getCarID()+ "," +
+            "licensePlate" + ":" + getLicensePlate()+ "," +
             "make" + ":" + getMake()+ "," +
-            "model" + ":" + getModel()+ "," +
-            "licensePlate" + ":" + getLicensePlate()+ "]";
+            "model" + ":" + getModel()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "owner = "+(getOwner()!=null?Integer.toHexString(System.identityHashCode(getOwner())):"null");
   }
 }

@@ -3,8 +3,8 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
-// line 26 "../../../../../ParkingLot.ump"
-public abstract class Role
+// line 43 "../../../../../ParkingLot.ump"
+public class ManagerAccount extends StaffAccount
 {
 
   //------------------------
@@ -15,14 +15,18 @@ public abstract class Role
   // CONSTRUCTOR
   //------------------------
 
-  public Role()
-  {}
+  public ManagerAccount(String aAccountID, String aEmail, String aPassword, Person aPerson, float aSalary)
+  {
+    super(aAccountID, aEmail, aPassword, aPerson, aSalary);
+  }
 
   //------------------------
   // INTERFACE
   //------------------------
 
   public void delete()
-  {}
+  {
+    super.delete();
+  }
 
 }
