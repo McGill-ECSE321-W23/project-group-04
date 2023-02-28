@@ -4,7 +4,11 @@
 package ca.mcgill.ecse321.parkinglotbackend.model;
 import java.util.*;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 // line 63 "../../../../../ParkingLot.ump"
+@Entity
 public class Service
 {
 
@@ -86,6 +90,7 @@ public class Service
     return wasSet;
   }
 
+  @Id
   public String getServiceID()
   {
     return ServiceID;

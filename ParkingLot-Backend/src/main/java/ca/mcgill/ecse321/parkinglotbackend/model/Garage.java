@@ -4,7 +4,11 @@
 package ca.mcgill.ecse321.parkinglotbackend.model;
 import java.util.*;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 // line 70 "../../../../../ParkingLot.ump"
+@Entity
 public class Garage
 {
 
@@ -12,7 +16,7 @@ public class Garage
   // STATIC VARIABLES
   //------------------------
 
-  private static Map<Integer, Garage> garagesByGarageID = new HashMap<>();
+  private static Map<Integer, Garage> garagesByGarageID = new HashMap<Integer, Garage>();
 
   //------------------------
   // MEMBER VARIABLES
@@ -40,8 +44,8 @@ public class Garage
   public boolean setGarageID(int aGarageID)
   {
     boolean wasSet = false;
-    int anOldGarageID = getGarageID();
-    if (Objects.equals(anOldGarageID, aGarageID)) {
+    Integer anOldGarageID = getGarageID();
+    if (anOldGarageID != null && anOldGarageID.equals(aGarageID)) {
       return true;
     }
     if (hasWithGarageID(aGarageID)) {
@@ -49,11 +53,14 @@ public class Garage
     }
     GarageID = aGarageID;
     wasSet = true;
-    garagesByGarageID.remove(anOldGarageID);
+    if (anOldGarageID != null) {
+      garagesByGarageID.remove(anOldGarageID);
+    }
     garagesByGarageID.put(aGarageID, this);
     return wasSet;
   }
 
+  @Id
   public int getGarageID()
   {
     return GarageID;

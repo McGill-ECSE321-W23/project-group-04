@@ -3,7 +3,8 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 import java.util.*;
-import java.sql.Time;
+
+import org.joda.time.DateTime;
 
 // line 89 "../../../../../ParkingLot.ump"
 public class TimeSlot
@@ -28,14 +29,14 @@ public class TimeSlot
   //TimeSlot Attributes
   private String TimeSlotID;
   private DayOfTheWeek dayOfTheWeek;
-  private Time startTime;
-  private Time endTime;
+  private DateTime startTime;
+  private DateTime endTime;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public TimeSlot(String aTimeSlotID, DayOfTheWeek aDayOfTheWeek, Time aStartTime, Time aEndTime)
+  public TimeSlot(String aTimeSlotID, DayOfTheWeek aDayOfTheWeek, DateTime aStartTime, DateTime aEndTime)
   {
     dayOfTheWeek = aDayOfTheWeek;
     startTime = aStartTime;
@@ -77,7 +78,7 @@ public class TimeSlot
     return wasSet;
   }
 
-  public boolean setStartTime(Time aStartTime)
+  public boolean setStartTime(DateTime aStartTime)
   {
     boolean wasSet = false;
     startTime = aStartTime;
@@ -85,7 +86,7 @@ public class TimeSlot
     return wasSet;
   }
 
-  public boolean setEndTime(Time aEndTime)
+  public boolean setEndTime(DateTime aEndTime)
   {
     boolean wasSet = false;
     endTime = aEndTime;
@@ -113,12 +114,12 @@ public class TimeSlot
     return dayOfTheWeek;
   }
 
-  public Time getStartTime()
+  public DateTime getStartTime()
   {
     return startTime;
   }
 
-  public Time getEndTime()
+  public DateTime getEndTime()
   {
     return endTime;
   }
