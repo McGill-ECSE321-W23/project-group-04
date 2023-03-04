@@ -4,85 +4,31 @@
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 // line 23 "../../../../../../ParkingLot.ump"
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Person
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
   //Person Attributes
   @Id
-  private String personID;
+  @GeneratedValue
+  private Long personID;
+
   private String phoneNumber;
+
   private String name;
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public Person(String aPersonID, String aPhoneNumber, String aName)
-  {
-    personID = aPersonID;
-    phoneNumber = aPhoneNumber;
-    name = aName;
-  }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setPersonID(String aPersonID)
-  {
-    boolean wasSet = false;
-    personID = aPersonID;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setPhoneNumber(String aPhoneNumber)
-  {
-    boolean wasSet = false;
-    phoneNumber = aPhoneNumber;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setName(String aName)
-  {
-    boolean wasSet = false;
-    name = aName;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public String getPersonID()
-  {
-    return personID;
-  }
-
-  /**
-   * unique
-   */
-  public String getPhoneNumber()
-  {
-    return phoneNumber;
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
   public void delete()
   {}
-
 
   public String toString()
   {

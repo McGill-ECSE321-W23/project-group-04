@@ -1,8 +1,8 @@
 package ca.mcgill.ecse321.parkinglotbackend.dao;
 
+import ca.mcgill.ecse321.parkinglotbackend.data.AccountMockBuilder;
 import ca.mcgill.ecse321.parkinglotbackend.model.Account;
-import ca.mcgill.ecse321.parkinglotbackend.model.Person;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,21 +14,19 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class AccountRepositoryTest {
     @Autowired AccountRepository accountRepository;
 
-    @BeforeEach
+    @AfterEach
     void setup() {
         accountRepository.deleteAll();
     }
 
     @Test
     void testPersistAndLoadAccount() {
-        String accountId = "123";
-        Person person = new Person("11", "5554443333", "Jon");
-        Account account = new Account(accountId, "garage@mail.mcgill.ca", "123", person);
+        Account acc = AccountMockBuilder.builder().build();
 
-        accountRepository.save(account);
-        Account retrievedAccount = accountRepository.getAccountByAccountID(accountId);
+        Account savedAcc = accountRepository.save(acc);
+        Account retrievedAccount = accountRepository.getAccountByAccountID(savedAcc.getAccountID());
 
         assertNotNull(retrievedAccount);
-        assertEquals(accountId, retrievedAccount.getAccountID());
+        assertEquals("aa", retrievedAccount.getPassword());
     }
 }

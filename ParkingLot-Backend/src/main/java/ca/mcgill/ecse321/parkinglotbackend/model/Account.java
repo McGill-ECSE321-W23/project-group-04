@@ -4,112 +4,30 @@
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 // line 17 "../../../../../../ParkingLot.ump"
 @Entity
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class Account
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
   //Account Attributes
   @Id
-  private String accountID;
+  @GeneratedValue
+  private Long accountID;
   private String email;
   private String password;
 
   //Account Associations
-  @OneToOne
+  @ManyToOne
   private Person person;
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public Account(String aAccountID, String aEmail, String aPassword, Person aPerson)
-  {
-    accountID = aAccountID;
-    email = aEmail;
-    password = aPassword;
-    if (!setPerson(aPerson))
-    {
-      throw new RuntimeException("Unable to create Account due to aPerson. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setAccountID(String aAccountID)
-  {
-    boolean wasSet = false;
-    accountID = aAccountID;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setEmail(String aEmail)
-  {
-    boolean wasSet = false;
-    email = aEmail;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setPassword(String aPassword)
-  {
-    boolean wasSet = false;
-    password = aPassword;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public String getAccountID()
-  {
-    return accountID;
-  }
-
-  /**
-   * unique
-   */
-  public String getEmail()
-  {
-    return email;
-  }
-
-  public String getPassword()
-  {
-    return password;
-  }
-  /* Code from template association_GetOne */
-  public Person getPerson()
-  {
-    return person;
-  }
-  /* Code from template association_SetUnidirectionalOne */
-  public boolean setPerson(Person aNewPerson)
-  {
-    boolean wasSet = false;
-    if (aNewPerson != null)
-    {
-      person = aNewPerson;
-      wasSet = true;
-    }
-    return wasSet;
-  }
-
-  public void delete()
-  {
-    person = null;
-  }
-
 
   public String toString()
   {

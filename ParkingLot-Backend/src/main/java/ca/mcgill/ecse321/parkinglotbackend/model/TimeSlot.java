@@ -3,93 +3,32 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 // line 103 "../../../../../../ParkingLot.ump"
+@Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TimeSlot
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
   //TimeSlot Attributes
-  private String timeSlotID;
+  @Id
+  @GeneratedValue
+  private Long timeSlotID;
   private DayOfWeek dayOfTheWeek;
   private LocalTime startTime;
   private LocalTime endTime;
-
-//  private ParkingLotSoftwareSystem system;
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public TimeSlot(String aTimeSlotID, DayOfWeek aDayOfTheWeek, LocalTime aStartTime, LocalTime aEndTime)
-  {
-    timeSlotID = aTimeSlotID;
-    dayOfTheWeek = aDayOfTheWeek;
-    startTime = aStartTime;
-    endTime = aEndTime;
-  }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setTimeSlotID(String aTimeSlotID)
-  {
-    boolean wasSet = false;
-    timeSlotID = aTimeSlotID;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setDayOfTheWeek(DayOfWeek aDayOfTheWeek)
-  {
-    boolean wasSet = false;
-    dayOfTheWeek = aDayOfTheWeek;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setStartTime(LocalTime aStartTime)
-  {
-    boolean wasSet = false;
-    startTime = aStartTime;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setEndTime(LocalTime aEndTime)
-  {
-    boolean wasSet = false;
-    endTime = aEndTime;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public String getTimeSlotID()
-  {
-    return timeSlotID;
-  }
-
-  public DayOfWeek getDayOfTheWeek()
-  {
-    return dayOfTheWeek;
-  }
-
-  public LocalTime getStartTime()
-  {
-    return startTime;
-  }
-
-  public LocalTime getEndTime()
-  {
-    return endTime;
-  }
-  /* Code from template association_GetOne */
 
   public String toString()
   {

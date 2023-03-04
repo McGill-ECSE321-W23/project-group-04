@@ -12,26 +12,4 @@ import lombok.NoArgsConstructor;
 public class ManagerAccount extends StaffAccount
 {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public ManagerAccount(String aAccountID, String aEmail, String aPassword, Person aPerson, float aSalary)
-  {
-    super(aAccountID, aEmail, aPassword, aPerson, aSalary);
-  }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public void delete()
-  {
-    super.delete();
-  }
-
 }
