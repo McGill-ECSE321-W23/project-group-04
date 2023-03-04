@@ -3,7 +3,14 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import lombok.NoArgsConstructor;
+
 // line 17 "../../../../../../ParkingLot.ump"
+@Entity
+@NoArgsConstructor
 public class Account
 {
 
@@ -12,11 +19,13 @@ public class Account
   //------------------------
 
   //Account Attributes
+  @Id
   private String accountID;
   private String email;
   private String password;
 
   //Account Associations
+  @OneToOne
   private Person person;
 
   //------------------------

@@ -3,7 +3,10 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import lombok.NoArgsConstructor;
+
 // line 32 "../../../../../../ParkingLot.ump"
+@NoArgsConstructor
 public class StaffAccountToTimeSlot
 {
 

@@ -3,7 +3,12 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
+
 // line 37 "../../../../../../ParkingLot.ump"
+@Entity
+@NoArgsConstructor
 public class StaffAccount extends Account
 {
 

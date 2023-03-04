@@ -3,7 +3,13 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.NoArgsConstructor;
+
 // line 23 "../../../../../../ParkingLot.ump"
+@Entity
+@NoArgsConstructor
 public class Person
 {
 
@@ -12,6 +18,7 @@ public class Person
   //------------------------
 
   //Person Attributes
+  @Id
   private String personID;
   private String phoneNumber;
   private String name;

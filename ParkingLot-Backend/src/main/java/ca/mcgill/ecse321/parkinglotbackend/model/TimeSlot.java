@@ -20,23 +20,18 @@ public class TimeSlot
   private LocalTime startTime;
   private LocalTime endTime;
 
-  //TimeSlot Associations
-  private ParkingLotSoftwareSystem system;
+//  private ParkingLotSoftwareSystem system;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public TimeSlot(String aTimeSlotID, DayOfWeek aDayOfTheWeek, LocalTime aStartTime, LocalTime aEndTime, ParkingLotSoftwareSystem aSystem)
+  public TimeSlot(String aTimeSlotID, DayOfWeek aDayOfTheWeek, LocalTime aStartTime, LocalTime aEndTime)
   {
     timeSlotID = aTimeSlotID;
     dayOfTheWeek = aDayOfTheWeek;
     startTime = aStartTime;
     endTime = aEndTime;
-    if (!setSystem(aSystem))
-    {
-      throw new RuntimeException("Unable to create TimeSlot due to aSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
   }
 
   //------------------------
@@ -95,27 +90,6 @@ public class TimeSlot
     return endTime;
   }
   /* Code from template association_GetOne */
-  public ParkingLotSoftwareSystem getSystem()
-  {
-    return system;
-  }
-  /* Code from template association_SetUnidirectionalOne */
-  public boolean setSystem(ParkingLotSoftwareSystem aNewSystem)
-  {
-    boolean wasSet = false;
-    if (aNewSystem != null)
-    {
-      system = aNewSystem;
-      wasSet = true;
-    }
-    return wasSet;
-  }
-
-  public void delete()
-  {
-    system = null;
-  }
-
 
   public String toString()
   {
@@ -123,7 +97,6 @@ public class TimeSlot
             "timeSlotID" + ":" + getTimeSlotID()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "dayOfTheWeek" + "=" + (getDayOfTheWeek() != null ? !getDayOfTheWeek().equals(this)  ? getDayOfTheWeek().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "system = "+(getSystem()!=null?Integer.toHexString(System.identityHashCode(getSystem())):"null");
+            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator");
   }
 }
