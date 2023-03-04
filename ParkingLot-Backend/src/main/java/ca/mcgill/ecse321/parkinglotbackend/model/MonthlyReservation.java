@@ -16,7 +16,6 @@ public class MonthlyReservation
   //MonthlyReservation Attributes
   private String monthlyReservationID;
   private LocalDate startDate;
-
   private LocalDate endDate;
 
   //MonthlyReservation Associations

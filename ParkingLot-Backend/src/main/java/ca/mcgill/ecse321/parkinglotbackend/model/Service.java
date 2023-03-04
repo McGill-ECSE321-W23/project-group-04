@@ -3,7 +3,11 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
-// line 69 "../../../../../../ParkingLot.ump"
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+// line 69 "../../../../../ParkingLot.ump"
+@Entity
 public class Service
 {
 
@@ -33,7 +37,15 @@ public class Service
   // INTERFACE
   //------------------------
 
-  public boolean setServiceID(String aServiceID)
+  public Service() {
+	// TODO Auto-generated constructor stub
+	serviceID = null;
+	description = null;
+	cost = -1;
+	duration = -1;
+  }
+
+public boolean setServiceID(String aServiceID)
   {
     boolean wasSet = false;
     serviceID = aServiceID;
@@ -65,6 +77,7 @@ public class Service
     return wasSet;
   }
 
+  @Id
   public String getServiceID()
   {
     return serviceID;

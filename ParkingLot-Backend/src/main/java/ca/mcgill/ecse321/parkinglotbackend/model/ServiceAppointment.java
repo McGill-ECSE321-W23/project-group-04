@@ -10,12 +10,19 @@ public class ServiceAppointment
 {
 
   //------------------------
+  // ENUMERATIONS
+  //------------------------
+
+  public enum AppointmentStatus { Ready, InProgress, Competed }
+
+  //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //ServiceAppointment Attributes
   private String serviceAppointmentID;
   private LocalDateTime startTime;
+  private AppointmentStatus appointmentStatus;
 
   //ServiceAppointment Associations
   private Service service;
@@ -26,10 +33,11 @@ public class ServiceAppointment
   // CONSTRUCTOR
   //------------------------
 
-  public ServiceAppointment(String aServiceAppointmentID, LocalDateTime aStartTime, Service aService, Garage aGarage, Car aCar)
+  public ServiceAppointment(String aServiceAppointmentID, LocalDateTime aStartTime, AppointmentStatus aAppointmentStatus, Service aService, Garage aGarage, Car aCar)
   {
     serviceAppointmentID = aServiceAppointmentID;
     startTime = aStartTime;
+    appointmentStatus = aAppointmentStatus;
     if (!setService(aService))
     {
       throw new RuntimeException("Unable to create ServiceAppointment due to aService. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
@@ -64,6 +72,14 @@ public class ServiceAppointment
     return wasSet;
   }
 
+  public boolean setAppointmentStatus(AppointmentStatus aAppointmentStatus)
+  {
+    boolean wasSet = false;
+    appointmentStatus = aAppointmentStatus;
+    wasSet = true;
+    return wasSet;
+  }
+
   public String getServiceAppointmentID()
   {
     return serviceAppointmentID;
@@ -72,6 +88,11 @@ public class ServiceAppointment
   public LocalDateTime getStartTime()
   {
     return startTime;
+  }
+
+  public AppointmentStatus getAppointmentStatus()
+  {
+    return appointmentStatus;
   }
   /* Code from template association_GetOne */
   public Service getService()
@@ -135,6 +156,7 @@ public class ServiceAppointment
     return super.toString() + "["+
             "serviceAppointmentID" + ":" + getServiceAppointmentID()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "appointmentStatus" + "=" + (getAppointmentStatus() != null ? !getAppointmentStatus().equals(this)  ? getAppointmentStatus().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "service = "+(getService()!=null?Integer.toHexString(System.identityHashCode(getService())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "garage = "+(getGarage()!=null?Integer.toHexString(System.identityHashCode(getGarage())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "car = "+(getCar()!=null?Integer.toHexString(System.identityHashCode(getCar())):"null");
