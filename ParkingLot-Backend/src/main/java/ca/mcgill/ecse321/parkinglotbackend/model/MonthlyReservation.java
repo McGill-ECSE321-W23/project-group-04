@@ -23,11 +23,17 @@ public class MonthlyReservation
   private LocalDate endDate;
 
   //MonthlyReservation Associations
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   private ParkingSpot parkingSpot;
 
   @ManyToOne
   private Person person;
+
+  public MonthlyReservation(LocalDate startDate, LocalDate endDate, ParkingSpot parkingSpot) {
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.parkingSpot = parkingSpot;
+  }
 
   public String toString()
   {

@@ -6,16 +6,12 @@ package ca.mcgill.ecse321.parkinglotbackend.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 // line 23 "../../../../../../ParkingLot.ump"
 @Entity
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class Person
 {
@@ -27,8 +23,6 @@ public class Person
   private String phoneNumber;
 
   private String name;
-  public void delete()
-  {}
 
   public Person(String nbr, String name) {
     phoneNumber = nbr;

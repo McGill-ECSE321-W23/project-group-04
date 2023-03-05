@@ -6,11 +6,18 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 public class TimeSlotMockBuilder {
-    static TimeSlot build() {
-        return TimeSlot.builder()
-                .startTime(LocalTime.MIN)
-                .endTime(LocalTime.MAX)
-                .dayOfTheWeek(DayOfWeek.FRIDAY)
-                .build();
+    private TimeSlot timeSlot;
+
+    public static TimeSlotMockBuilder builder() {
+        return new TimeSlotMockBuilder();
+    }
+
+    public TimeSlot build() {
+        timeSlot = new TimeSlot(
+                LocalTime.MIN,
+                LocalTime.MAX,
+                DayOfWeek.FRIDAY
+        );
+        return timeSlot;
     }
 }

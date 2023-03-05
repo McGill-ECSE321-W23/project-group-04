@@ -30,13 +30,10 @@ public class MonthlyReservationRepositoryTest {
         ParkingSpot parkingSpot = new ParkingSpot();
         parkingSpot.setFloor(2);
         parkingSpot.setNumber(3);
-        MonthlyReservation monthlyReservation = new MonthlyReservation();
-        monthlyReservation.setEndDate(LocalDate.MAX);
-        monthlyReservation.setStartDate(LocalDate.MIN);
-        monthlyReservation.setPerson(person);
+        MonthlyReservation monthlyReservation = new MonthlyReservation(LocalDate.now(), LocalDate.now().plusDays(1), parkingSpot);
 
         Long savedId = monthlyReservationRepository.save(monthlyReservation).getMonthlyReservationID();
-        MonthlyReservation retrievedAccount = monthlyReservationRepository.getMonthlyReservationByMonthlyReservationID(monthlyReservation.getMonthlyReservationID());
+        MonthlyReservation retrievedAccount = monthlyReservationRepository.getMonthlyReservationByMonthlyReservationID(savedId);
 
         assertNotNull(retrievedAccount);
         assertEquals(savedId, monthlyReservation.getMonthlyReservationID());

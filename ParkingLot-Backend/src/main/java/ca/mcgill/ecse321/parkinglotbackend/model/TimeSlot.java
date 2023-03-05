@@ -6,8 +6,6 @@ package ca.mcgill.ecse321.parkinglotbackend.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,8 +15,6 @@ import java.time.LocalTime;
 // line 103 "../../../../../../ParkingLot.ump"
 @Entity
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class TimeSlot
 {
@@ -29,6 +25,12 @@ public class TimeSlot
   private DayOfWeek dayOfTheWeek;
   private LocalTime startTime;
   private LocalTime endTime;
+
+  public TimeSlot(LocalTime startTime, LocalTime endTime, DayOfWeek dayOfWeek) {
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.dayOfTheWeek = dayOfWeek;
+  }
 
   public String toString()
   {
