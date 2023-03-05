@@ -3,30 +3,13 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
+
 // line 43 "../../../../../../ParkingLot.ump"
+@Entity
+@NoArgsConstructor
 public class ManagerAccount extends StaffAccount
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public ManagerAccount(String aAccountID, String aEmail, String aPassword, Person aPerson, float aSalary)
-  {
-    super(aAccountID, aEmail, aPassword, aPerson, aSalary);
-  }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public void delete()
-  {
-    super.delete();
-  }
 
 }

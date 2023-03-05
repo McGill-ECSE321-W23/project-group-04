@@ -3,76 +3,34 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 // line 63 "../../../../../../ParkingLot.ump"
+@Entity
+@Data
+@NoArgsConstructor
 public class ParkingSpot
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
   //ParkingSpot Attributes
-  private String parkingSpotID;
+  @Id
+  @GeneratedValue
+  private Long parkingSpotID;
   private int floor;
   private int number;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+  //ParkingSpot Associations
+  @OneToOne(optional = true)
+  private MonthlyReservation monthlyReservation;
 
-  public ParkingSpot(String aParkingSpotID, int aFloor, int aNumber)
-  {
-    parkingSpotID = aParkingSpotID;
+  public ParkingSpot(int aFloor, int aNumber) {
     floor = aFloor;
     number = aNumber;
   }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setParkingSpotID(String aParkingSpotID)
-  {
-    boolean wasSet = false;
-    parkingSpotID = aParkingSpotID;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setFloor(int aFloor)
-  {
-    boolean wasSet = false;
-    floor = aFloor;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setNumber(int aNumber)
-  {
-    boolean wasSet = false;
-    number = aNumber;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public String getParkingSpotID()
-  {
-    return parkingSpotID;
-  }
-
-  public int getFloor()
-  {
-    return floor;
-  }
-
-  public int getNumber()
-  {
-    return number;
-  }
-
-  public void delete()
-  {}
-
 
   public String toString()
   {
