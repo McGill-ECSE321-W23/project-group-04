@@ -18,8 +18,8 @@ public class StaffAccount extends Account
   //StaffAccount Attributes
   private float salary;
 
-  public StaffAccount(String email, String password, float salary) {
-    super(email, password);
+  public StaffAccount(Person person, String email, String password, float salary) {
+    super(email, password, person);
     this.salary = salary;
   }
 

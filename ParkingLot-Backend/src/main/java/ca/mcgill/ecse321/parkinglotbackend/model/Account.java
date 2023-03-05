@@ -22,12 +22,13 @@ public class Account
   private String password;
 
   //Account Associations
-  @OneToOne
+  @OneToOne(optional = false, cascade = CascadeType.PERSIST)
   private Person person;
 
-  public Account(String email, String password) {
+  public Account(String email, String password, Person person) {
     this.email = email;
     this.password = password;
+    this.person = person;
   }
 
   public String toString()

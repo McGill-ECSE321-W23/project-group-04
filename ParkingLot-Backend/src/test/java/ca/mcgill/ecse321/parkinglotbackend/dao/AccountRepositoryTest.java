@@ -14,9 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class AccountRepositoryTest {
     @Autowired AccountRepository accountRepository;
 
+    @Autowired PersonRepository personRepository;
+
     @AfterEach
     void setup() {
         accountRepository.deleteAll();
+        personRepository.deleteAll();
     }
 
     @Test

@@ -13,6 +13,7 @@ public class AccountMockBuilder {
         account = new Account();
         account.setEmail("dsa");
         account.setPassword("aa");
+        account.setPerson(PersonMockBuilder.builder().build());
         return account;
     }
 

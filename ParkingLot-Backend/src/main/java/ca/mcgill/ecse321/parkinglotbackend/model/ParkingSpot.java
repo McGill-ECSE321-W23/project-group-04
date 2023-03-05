@@ -22,6 +22,11 @@ public class ParkingSpot
   private int floor;
   private int number;
 
+  public ParkingSpot(int aFloor, int aNumber) {
+    floor = aFloor;
+    number = aNumber;
+  }
+
   public String toString()
   {
     return super.toString() + "["+
