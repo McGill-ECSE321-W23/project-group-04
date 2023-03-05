@@ -23,6 +23,14 @@ The application will improve the overall experience for customers, employees and
 ## Sprint 1
 
 ### Project Report:
+[Sprint 1: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Overview)
 
 ### Contributions
-
+| Team Member       | Contributions                                   | Hours  |
+| ----------------- | ----------------------------------------------- | ------ |
+| Faiza Chowdhury   |Domain Model, Use-Case Diagram                   |        |
+| Annie Gouchee     |Domain Model, Use-Case Diagram                   |        |
+| Lin Wei Li        |Domain Model, Use-Case Diagram                   |        |
+| Estefania Vazquez |Domain Model, Use-Case Diagram                   |        |
+| Qin Xuan Xu       |Domain Model, Use-Case Diagram                   |        |
+| Edwin You Zhou    |Domain Model, Use-Case Diagram                   |        |
