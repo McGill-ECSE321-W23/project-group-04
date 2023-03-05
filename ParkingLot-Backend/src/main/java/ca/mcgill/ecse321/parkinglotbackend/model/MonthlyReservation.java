@@ -23,16 +23,12 @@ public class MonthlyReservation
   private LocalDate endDate;
 
   //MonthlyReservation Associations
-  @OneToOne(cascade = CascadeType.ALL)
-  private ParkingSpot parkingSpot;
-
   @ManyToOne
   private Person person;
 
-  public MonthlyReservation(LocalDate startDate, LocalDate endDate, ParkingSpot parkingSpot) {
+  public MonthlyReservation(LocalDate startDate, LocalDate endDate) {
     this.startDate = startDate;
     this.endDate = endDate;
-    this.parkingSpot = parkingSpot;
   }
 
   public String toString()
@@ -41,7 +37,6 @@ public class MonthlyReservation
             "monthlyReservationID" + ":" + getMonthlyReservationID()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "startDate" + "=" + (getStartDate() != null ? !getStartDate().equals(this)  ? getStartDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "endDate" + "=" + (getEndDate() != null ? !getEndDate().equals(this)  ? getEndDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "parkingSpot = "+(getParkingSpot()!=null?Integer.toHexString(System.identityHashCode(getParkingSpot())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "person = "+(getPerson()!=null?Integer.toHexString(System.identityHashCode(getPerson())):"null");
   }
 }

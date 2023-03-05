@@ -6,6 +6,7 @@ package ca.mcgill.ecse321.parkinglotbackend.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +22,10 @@ public class ParkingSpot
   private Long parkingSpotID;
   private int floor;
   private int number;
+
+  //ParkingSpot Associations
+  @OneToOne(optional = true)
+  private MonthlyReservation monthlyReservation;
 
   public ParkingSpot(int aFloor, int aNumber) {
     floor = aFloor;
