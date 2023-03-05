@@ -5,7 +5,7 @@
 In a team of 6, we are developing an application that will assist in the operation of a parking lot business. Following the software engineering process, the team will adhere to the four key activities in software engineering as part of their working structure: Specification, development, validation and evolution. 
 
 The application will improve the overall experience for customers, employees and managers. Its main features are listed as follows:
-1. Customer Accounts: Customers with accounts will be able to create a profile in order to reserve monthly parking spots and request additional services offered by the parling lot business.
+1. Customer Accounts: Customers with accounts will be able to create a profile in order to reserve monthly parking spots and request additional services offered by the parking lot business.
 2. Employee Accounts: Employees will each own an account for management purposes, specifically allowing them to assign parking spots to monthly customers.
 3. Manager Account: The manager's account will provide additional functionality, above that of an employee, where they can decide on opening hours, employee schedules, etc.
 4. Tickets: The system will also allow the general public to pay for a parking spot, without the need of an account.
