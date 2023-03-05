@@ -30,6 +30,11 @@ public class Person
   public void delete()
   {}
 
+  public Person(String nbr, String name) {
+    phoneNumber = nbr;
+    this.name = name;
+  }
+
   public String toString()
   {
     return super.toString() + "["+
