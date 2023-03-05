@@ -6,7 +6,12 @@ package ca.mcgill.ecse321.parkinglotbackend.model;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
 // line 103 "../../../../../../ParkingLot.ump"
+@Entity
 public class TimeSlot
 {
 
@@ -37,6 +42,15 @@ public class TimeSlot
     {
       throw new RuntimeException("Unable to create TimeSlot due to aSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+  }
+
+  // FOR TESTING PERSISTENCE
+  public TimeSlot() {
+    timeSlotID = null;
+    dayOfTheWeek = null;
+    startTime = null;
+    endTime = null;
+    system = null;
   }
 
   //------------------------
@@ -75,6 +89,7 @@ public class TimeSlot
     return wasSet;
   }
 
+  @Id
   public String getTimeSlotID()
   {
     return timeSlotID;
@@ -95,6 +110,7 @@ public class TimeSlot
     return endTime;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public ParkingLotSoftwareSystem getSystem()
   {
     return system;
