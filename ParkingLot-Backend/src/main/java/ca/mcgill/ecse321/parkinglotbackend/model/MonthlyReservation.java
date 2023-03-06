@@ -26,9 +26,10 @@ public class MonthlyReservation
   @ManyToOne
   private Person person;
 
-  public MonthlyReservation(LocalDate startDate, LocalDate endDate) {
+  public MonthlyReservation(LocalDate startDate, LocalDate endDate, Person aPerson) {
     this.startDate = startDate;
     this.endDate = endDate;
+    this.person = aPerson;
   }
 
   public String toString()
