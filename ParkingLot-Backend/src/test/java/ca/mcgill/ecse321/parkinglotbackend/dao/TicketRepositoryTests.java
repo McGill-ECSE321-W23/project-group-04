@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.parkinglotbackend.dao;
 
+import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
 
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
@@ -17,20 +18,29 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 public class TicketRepositoryTests {
     @Autowired
+    private ParkingLotSoftwareSystemRepository parkingLotSoftwareSystemRepository;
+    @Autowired
     private TicketRepository ticketRepository;
 
     @AfterEach
     public void clearDatabase() {
         ticketRepository.deleteAll();
+        parkingLotSoftwareSystemRepository.deleteAll();
     }
 
     @Test
     public void testPersistAndLoadTicketRepository() {
+
+        // create an instance of the system
+
+        ParkingLotSoftwareSystem parkingLotSoftwareSystem = new ParkingLotSoftwareSystem();
+        parkingLotSoftwareSystem = parkingLotSoftwareSystemRepository.save(parkingLotSoftwareSystem);
+
         // Create a ticket
         CarType carType = CarType.Regular;
         LocalDateTime entryTime = LocalDateTime.of(2022, Month.MARCH,6,6, 6, 6 );
-
         Ticket ticket = new Ticket(entryTime, carType);
+        ticket.setParkingLotSoftwareSystem(parkingLotSoftwareSystem);
 
         // Save object
         ticket = ticketRepository.save(ticket);
