@@ -3,16 +3,23 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 // line 91 "../../../../../../ParkingLot.ump"
+@Entity
+@Data
+@NoArgsConstructor
 public class Ticket
 {
-
   //------------------------
   // ENUMERATIONS
   //------------------------
-
   public enum CarType { Regular, Large }
 
   //------------------------
@@ -20,72 +27,24 @@ public class Ticket
   //------------------------
 
   //Ticket Attributes
-  private String ticketForRegularCarID;
+  @Id
+  @GeneratedValue
+  private String ticketForCarID;
   private LocalDateTime entryTime;
   private CarType carType;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
 
-  public Ticket(String aTicketForRegularCarID, LocalDateTime aEntryTime, CarType aCarType)
+  // Constructor
+  public Ticket(LocalDateTime aEntryTime, CarType aCarType)
   {
-    ticketForRegularCarID = aTicketForRegularCarID;
     entryTime = aEntryTime;
     carType = aCarType;
   }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setTicketForRegularCarID(String aTicketForRegularCarID)
-  {
-    boolean wasSet = false;
-    ticketForRegularCarID = aTicketForRegularCarID;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setEntryTime(LocalDateTime aEntryTime)
-  {
-    boolean wasSet = false;
-    entryTime = aEntryTime;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setCarType(CarType aCarType)
-  {
-    boolean wasSet = false;
-    carType = aCarType;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public String getTicketForRegularCarID()
-  {
-    return ticketForRegularCarID;
-  }
-
-  public LocalDateTime getEntryTime()
-  {
-    return entryTime;
-  }
-
-  public CarType getCarType()
-  {
-    return carType;
-  }
-
-  public void delete()
-  {}
-
-
+  
   public String toString()
   {
     return super.toString() + "["+
-            "ticketForRegularCarID" + ":" + getTicketForRegularCarID()+ "]" + System.getProperties().getProperty("line.separator") +
+            "ticketForRegularCarID" + ":" + getTicketForCarID()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "entryTime" + "=" + (getEntryTime() != null ? !getEntryTime().equals(this)  ? getEntryTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "carType" + "=" + (getCarType() != null ? !getCarType().equals(this)  ? getCarType().toString().replaceAll("  ","    ") : "this" : "null");
   }
