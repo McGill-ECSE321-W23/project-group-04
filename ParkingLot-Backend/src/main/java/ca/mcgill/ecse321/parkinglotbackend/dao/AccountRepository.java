@@ -1,8 +1,17 @@
 package ca.mcgill.ecse321.parkinglotbackend.dao;
 
 import ca.mcgill.ecse321.parkinglotbackend.model.Account;
+import ca.mcgill.ecse321.parkinglotbackend.model.Person;
+
 import org.springframework.data.repository.CrudRepository;
 
 public interface AccountRepository extends CrudRepository<Account, Long> {
-    Account getAccountByAccountID(Long accountId);
+    boolean existsAccountByAccountID(Long accountId);
+    Account findAccountByAccountID(Long accountId);
+    boolean existsAccountByEmail(String email);
+    Account findAccountByEmail(String email);
+    boolean existsAccountByEmailAndPassword(String email, String password);
+    Account findAccountByEmailAndPassword(String email, String password);
+
+    Person findPersonByAccountID(Long accountId);
 }

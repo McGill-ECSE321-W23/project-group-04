@@ -27,7 +27,7 @@ public class AccountRepositoryTest {
         Account acc = AccountMockBuilder.builder().build();
 
         Account savedAcc = accountRepository.save(acc);
-        Account retrievedAccount = accountRepository.getAccountByAccountID(savedAcc.getAccountID());
+        Account retrievedAccount = accountRepository.findAccountByAccountID(savedAcc.getAccountID());
 
         assertNotNull(retrievedAccount);
         assertEquals("aa", retrievedAccount.getPassword());
