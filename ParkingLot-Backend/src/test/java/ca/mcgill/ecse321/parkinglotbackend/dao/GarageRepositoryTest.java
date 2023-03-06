@@ -1,17 +1,16 @@
-package ca.mcgill.ecse321.parkinglotbackend;
+package ca.mcgill.ecse321.parkinglotbackend.dao;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
+import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ca.mcgill.ecse321.parkinglotbackend.dao.GarageRepository;
-import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-public class GarageRepositoryTests {
+public class GarageRepositoryTest {
 	@Autowired
 	private GarageRepository garageRepository;
 	
