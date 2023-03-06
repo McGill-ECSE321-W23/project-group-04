@@ -22,23 +22,23 @@ public class GarageRepositoryTest {
 	@Test
 	public void testPersistAndLoadGarage() {
 		// Create garage object
-		String garageId = "A";	// Create the unique id of the garage
 		int garageNum = 1;	// Create the garage number
 		Garage garageA = new Garage();	// Create the test garage
-		garageA.setGarageID(garageId);
 		garageA.setGarageNumber(garageNum);
 		
 		// Save garage object to database
-		Garage garageADB = garageRepository.save(garageA);
-		String garageADBId = garageADB.getGarageID();
-		
+		Garage savedGarage = garageRepository.save(garageA);
+
+		Long garageID = savedGarage.getGarageID();
+
+
 		// Read garage object from database
-		Garage garageATest = garageRepository.findGarageByGarageID(garageADBId);
+		Garage retrievedGarage = garageRepository.findGarageByGarageID(garageID);
 		
 		// Assert that the garage object taken from the database has the correct attributes 
-		assertNotNull(garageATest);
-		assertEquals(garageId, garageATest.getGarageID());
-		assertEquals(garageNum, garageATest.getGarageNumber());
+		assertNotNull(retrievedGarage);
+		assertEquals(garageID, retrievedGarage.getGarageID());
+		assertEquals(garageNum, retrievedGarage.getGarageNumber());
 
 	}
 	

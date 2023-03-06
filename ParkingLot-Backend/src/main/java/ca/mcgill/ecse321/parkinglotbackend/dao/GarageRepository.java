@@ -5,5 +5,5 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
 
 
 public interface GarageRepository extends CrudRepository<Garage, String>{
-	Garage findGarageByGarageID(String garageId);
+	Garage findGarageByGarageID(Long garageId);
 }
