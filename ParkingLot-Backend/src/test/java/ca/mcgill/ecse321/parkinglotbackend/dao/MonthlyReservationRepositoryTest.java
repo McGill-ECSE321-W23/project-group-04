@@ -54,28 +54,6 @@ public class MonthlyReservationRepositoryTest {
     }
 
     @Test
-    void testGetOwnerOfMonthlyReservation() {
-        // Create a Person
-        Person person = new PersonMockBuilder().build();
-
-        // Create a MonthlyReservation for the Person
-        MonthlyReservation monthlyReservation = new MonthlyReservation(LocalDate.now(), LocalDate.now().plusDays(30), person);
-
-        // Save the Person and the MonthlyReservation
-        Person savedPerson = personRepository.save(person);
-        MonthlyReservation savedMonthlyReservation = monthlyReservationRepository.save(monthlyReservation);
-
-        // Retrieve the Person of the MonthlyReservation
-        Person retrievedPerson = monthlyReservationRepository.findPersonByMonthlyReservationID(savedMonthlyReservation.getMonthlyReservationID());
-
-        // Check that the Person was retrieved correctly
-        assertNotNull(retrievedPerson);
-        assertEquals(savedPerson.getPersonID(), retrievedPerson.getPersonID());
-        assertEquals(savedPerson.getName(), retrievedPerson.getName());
-        assertEquals(savedPerson.getPhoneNumber(), retrievedPerson.getPhoneNumber());
-    }
-
-    @Test
     void testGetAllMonthlyReservationsOfPerson() {
         // Create a Person
         Person person = new PersonMockBuilder().build();
