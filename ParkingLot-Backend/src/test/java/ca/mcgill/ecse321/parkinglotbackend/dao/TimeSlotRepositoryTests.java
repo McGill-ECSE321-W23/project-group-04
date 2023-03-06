@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.parkinglotbackend;
+package ca.mcgill.ecse321.parkinglotbackend.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ca.mcgill.ecse321.parkinglotbackend.dao.TimeSlotRepository;
+//import ca.mcgill.ecse321.parkinglotbackend.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.TimeSlot;
-import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingLotSoftwareSystemRepository;
+//import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingLotSoftwareSystemRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 
 @SpringBootTest
@@ -55,18 +55,17 @@ public class TimeSlotRepositoryTests {
         parkingLotSoftwareSystemRepository.save(parkingSystem);
 
         // Create timeslot
-        Long timeSlotID = (long) 1;
         DayOfWeek dayOfTheWeek = DayOfWeek.MONDAY;
         LocalTime startTime = LocalTime.of(8, 0);
         LocalTime endTime = LocalTime.of(4, 30);
         TimeSlot mondaySlot = new TimeSlot();
-        mondaySlot.setTimeSlotID(timeSlotID);
         mondaySlot.setDayOfTheWeek(dayOfTheWeek);
         mondaySlot.setStartTime(startTime);
         mondaySlot.setEndTime(endTime);
         mondaySlot.setParkingLotSoftwareSystem(parkingSystem);
         // Save timeslot to database
         timeSlotRepository.save(mondaySlot);
+        Long timeSlotID = mondaySlot.getTimeSlotID();
 
         // Read object and assert attributes
         mondaySlot = null;
