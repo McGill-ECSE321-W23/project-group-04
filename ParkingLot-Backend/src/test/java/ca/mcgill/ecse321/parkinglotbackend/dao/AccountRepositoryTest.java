@@ -42,7 +42,7 @@ public class AccountRepositoryTest {
         // Retrieve the account
         Account retrievedAccount = accountRepository.findAccountByAccountID(savedAccount.getAccountID());
 
-        // Check that the account was saved and retrieved correctly
+        // Check that the account was retrieved correctly
         assertNotNull(retrievedAccount);
         assertEquals(savedAccount.getAccountID(), retrievedAccount.getAccountID());
         assertEquals(savedAccount.getEmail(), retrievedAccount.getEmail());
@@ -71,7 +71,7 @@ public class AccountRepositoryTest {
         boolean exists = accountRepository.existsAccountByEmailAndPassword(email, password);
         Account retrievedAccount = accountRepository.findAccountByEmailAndPassword(email, password);
 
-        // Check that the account was saved and retrieved correctly
+        // Check that the account was retrieved correctly
         assertTrue(exists);
         assertNotNull(retrievedAccount);
         assertEquals(savedAccount.getAccountID(), retrievedAccount.getAccountID());
