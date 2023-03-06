@@ -35,7 +35,7 @@ public class Ticket
   private CarType carType;
 
   //Ticket Associations
-  @ManyToOne(optional=true)
+  @ManyToOne(optional=false)
   private ParkingLotSoftwareSystem parkingLotSoftwareSystem;
 
   // Constructor
