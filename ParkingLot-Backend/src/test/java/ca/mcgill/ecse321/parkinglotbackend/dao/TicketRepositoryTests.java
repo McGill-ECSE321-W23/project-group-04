@@ -27,14 +27,14 @@ public class TicketRepositoryTests {
     @Test
     public void testPersistAndLoadTicketRepository() {
         // Create a ticket
-        String id = "test";
         CarType carType = CarType.Regular;
         LocalDateTime entryTime = LocalDateTime.of(2022, Month.MARCH,6,6, 6, 6 );
 
-        Ticket ticket = new Ticket(id, entryTime,carType);
+        Ticket ticket = new Ticket(entryTime, carType);
 
         // Save object
         ticket = ticketRepository.save(ticket);
+        String id = ticket.getTicketForCarID();
 
         // Read object from database
         ticket = ticketRepository.findTicketByTicketID(id);
