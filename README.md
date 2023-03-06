@@ -28,9 +28,9 @@ The application will improve the overall experience for customers, employees and
 ### Contributions
 | Team Member       | Contributions                                   | Hours  |
 | ----------------- | ----------------------------------------------- | ------ |
-| Faiza Chowdhury   |Domain Model, Use-Case Diagram                   |        |
-| Annie Gouchee     |Domain Model, Use-Case Diagram                   |        |
-| Lin Wei Li        |Domain Model, Use-Case Diagram                   |        |
-| Estefania Vazquez |Domain Model, Use-Case Diagram                   |        |
-| Qin Xuan Xu       |Domain Model, Use-Case Diagram                   |        |
-| Edwin You Zhou    |Domain Model, Use-Case Diagram                   |        |
+| Faiza Chowdhury   |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test|        |
+| Annie Gouchee     |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, README.md|        |
+| Lin Wei Li        |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Create Repository, |        |
+| Estefania Vazquez |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Meeting Minutes Wiki|        |
+| Qin Xuan Xu       |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test|        |
+| Edwin You Zhou    |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Create Repository|        |
