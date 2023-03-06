@@ -3,7 +3,15 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.ManyToOne;
+import lombok.NoArgsConstructor;
+
 // line 47 "../../../../../ParkingLot.ump"
+@Entity
+@NoArgsConstructor
 public class Car
 {
 
@@ -12,7 +20,8 @@ public class Car
   //------------------------
 
   //Car Attributes
-  private String carID;
+
+  private Long carID;
   private String licensePlate;
   private String make;
   private String model;
@@ -20,27 +29,26 @@ public class Car
   //Car Associations
   private Person owner;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public Car(String aCarID, String aLicensePlate, String aMake, String aModel, Person aOwner)
+  // Constructor
+  public Car(String aLicensePlate, String aMake, String aModel, Person aOwner)
   {
-    carID = aCarID;
     licensePlate = aLicensePlate;
     make = aMake;
     model = aModel;
+    /*
     if (!setOwner(aOwner))
     {
       throw new RuntimeException("Unable to create Car due to aOwner. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+    */
   }
+
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setCarID(String aCarID)
+  public boolean setCarID(Long aCarID)
   {
     boolean wasSet = false;
     carID = aCarID;
@@ -72,7 +80,9 @@ public class Car
     return wasSet;
   }
 
-  public String getCarID()
+  @Id
+  @GeneratedValue
+  public Long getCarID()
   {
     return carID;
   }
@@ -95,6 +105,7 @@ public class Car
     return model;
   }
   /* Code from template association_GetOne */
+  @ManyToOne(optional = false)
   public Person getOwner()
   {
     return owner;
