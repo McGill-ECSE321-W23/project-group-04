@@ -7,9 +7,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.ManyToOne;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 // line 47 "../../../../../ParkingLot.ump"
 @Entity
+@NoArgsConstructor
 public class Car
 {
 
@@ -26,6 +30,21 @@ public class Car
 
   //Car Associations
   private Person owner;
+
+  // Constructor
+  public Car(String aLicensePlate, String aMake, String aModel, Person aOwner)
+  {
+    licensePlate = aLicensePlate;
+    make = aMake;
+    model = aModel;
+    /*
+    if (!setOwner(aOwner))
+    {
+      throw new RuntimeException("Unable to create Car due to aOwner. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    */
+  }
+
 
   //------------------------
   // INTERFACE

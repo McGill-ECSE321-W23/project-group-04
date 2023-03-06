@@ -7,11 +7,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 // line 82 "../../../../../../ParkingLot.ump"
 @Entity
+@NoArgsConstructor
 public class ServiceAppointment
 {
 
@@ -34,6 +36,14 @@ public class ServiceAppointment
   private Service service;
   private Garage garage;
   private Car car;
+
+  // Constructor
+  public ServiceAppointment(LocalDateTime aStartTime, AppointmentStatus aAppointmentStatus)
+  {
+    startTime = aStartTime;
+    appointmentStatus = aAppointmentStatus;
+  }
+
 
   //------------------------
   // INTERFACE

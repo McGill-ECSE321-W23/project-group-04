@@ -36,7 +36,7 @@ public class ServiceAppointmentRepositoryTest {
     }
 
     @Test
-    public void testPersistAndLoadCar() {
+    public void testPersistAndLoadServiceAppointment() {
         String licensePlate = "E99VFK";
         String make = "Tesla";
         String model = "Model 3";
