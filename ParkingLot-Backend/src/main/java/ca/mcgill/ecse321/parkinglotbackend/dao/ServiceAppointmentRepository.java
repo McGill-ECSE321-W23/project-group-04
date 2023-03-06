@@ -4,7 +4,6 @@ import java.util.List;
 
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
 import ca.mcgill.ecse321.parkinglotbackend.model.Service;
-import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment;
 import org.springframework.data.repository.CrudRepository;
 

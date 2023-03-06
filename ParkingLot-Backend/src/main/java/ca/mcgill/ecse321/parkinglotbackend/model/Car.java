@@ -9,8 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.ManyToOne;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 // line 47 "../../../../../ParkingLot.ump"
 @Entity
 @NoArgsConstructor
