@@ -3,9 +3,15 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
 import java.time.LocalDateTime;
 
 // line 82 "../../../../../../ParkingLot.ump"
+@Entity
 public class ServiceAppointment
 {
 
@@ -13,14 +19,14 @@ public class ServiceAppointment
   // ENUMERATIONS
   //------------------------
 
-  public enum AppointmentStatus { Ready, InProgress, Competed }
+  public enum AppointmentStatus { Ready, InProgress, Completed }
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //ServiceAppointment Attributes
-  private String serviceAppointmentID;
+  private Long serviceAppointmentID;
   private LocalDateTime startTime;
   private AppointmentStatus appointmentStatus;
 
@@ -30,33 +36,10 @@ public class ServiceAppointment
   private Car car;
 
   //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public ServiceAppointment(String aServiceAppointmentID, LocalDateTime aStartTime, AppointmentStatus aAppointmentStatus, Service aService, Garage aGarage, Car aCar)
-  {
-    serviceAppointmentID = aServiceAppointmentID;
-    startTime = aStartTime;
-    appointmentStatus = aAppointmentStatus;
-    if (!setService(aService))
-    {
-      throw new RuntimeException("Unable to create ServiceAppointment due to aService. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    if (!setGarage(aGarage))
-    {
-      throw new RuntimeException("Unable to create ServiceAppointment due to aGarage. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    if (!setCar(aCar))
-    {
-      throw new RuntimeException("Unable to create ServiceAppointment due to aCar. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
-
-  //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setServiceAppointmentID(String aServiceAppointmentID)
+  public boolean setServiceAppointmentID(Long aServiceAppointmentID)
   {
     boolean wasSet = false;
     serviceAppointmentID = aServiceAppointmentID;
@@ -80,7 +63,9 @@ public class ServiceAppointment
     return wasSet;
   }
 
-  public String getServiceAppointmentID()
+  @Id
+  @GeneratedValue
+  public Long getServiceAppointmentID()
   {
     return serviceAppointmentID;
   }
@@ -95,16 +80,20 @@ public class ServiceAppointment
     return appointmentStatus;
   }
   /* Code from template association_GetOne */
+  @ManyToOne(optional = false)
   public Service getService()
   {
     return service;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public Garage getGarage()
   {
     return garage;
   }
   /* Code from template association_GetOne */
+
+  @ManyToOne(optional = false)
   public Car getCar()
   {
     return car;
