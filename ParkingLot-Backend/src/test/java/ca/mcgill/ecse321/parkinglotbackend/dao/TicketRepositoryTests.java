@@ -34,7 +34,7 @@ public class TicketRepositoryTests {
 
         // Save object
         ticket = ticketRepository.save(ticket);
-        String id = ticket.getTicketForCarID();
+        Long id = ticket.getTicketID();
 
         // Read object from database
         ticket = ticketRepository.findTicketByTicketID(id);

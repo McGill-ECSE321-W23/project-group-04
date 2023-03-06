@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 
 public interface TicketRepository extends CrudRepository<Ticket, String> {
-    Ticket findTicketByTicketID(String ticketID);
+    Ticket findTicketByTicketID(Long ticketID);
 
 }

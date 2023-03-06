@@ -29,7 +29,7 @@ public class Ticket
   //Ticket Attributes
   @Id
   @GeneratedValue
-  private String ticketForCarID;
+  private Long ticketID;
   private LocalDateTime entryTime;
   private CarType carType;
 
@@ -44,7 +44,7 @@ public class Ticket
   public String toString()
   {
     return super.toString() + "["+
-            "ticketForRegularCarID" + ":" + getTicketForCarID()+ "]" + System.getProperties().getProperty("line.separator") +
+            "ticketForRegularCarID" + ":" + getTicketID()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "entryTime" + "=" + (getEntryTime() != null ? !getEntryTime().equals(this)  ? getEntryTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "carType" + "=" + (getCarType() != null ? !getCarType().equals(this)  ? getCarType().toString().replaceAll("  ","    ") : "this" : "null");
   }
