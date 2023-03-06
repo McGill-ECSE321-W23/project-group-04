@@ -55,7 +55,7 @@ public class TimeSlotRepositoryTests {
         parkingLotSoftwareSystemRepository.save(parkingSystem);
 
         // Create timeslot
-        String timeSlotID = "1";
+        Long timeSlotID = (long) 1;
         DayOfWeek dayOfTheWeek = DayOfWeek.MONDAY;
         LocalTime startTime = LocalTime.of(8, 0);
         LocalTime endTime = LocalTime.of(4, 30);
@@ -64,7 +64,7 @@ public class TimeSlotRepositoryTests {
         mondaySlot.setDayOfTheWeek(dayOfTheWeek);
         mondaySlot.setStartTime(startTime);
         mondaySlot.setEndTime(endTime);
-        mondaySlot.setSystem(parkingSystem);
+        mondaySlot.setParkingLotSoftwareSystem(parkingSystem);
         // Save timeslot to database
         timeSlotRepository.save(mondaySlot);
 
@@ -78,7 +78,7 @@ public class TimeSlotRepositoryTests {
         assertEquals(startTime, mondaySlot.getStartTime());
         assertEquals(endTime, mondaySlot.getEndTime());
 
-        assertNotNull(mondaySlot.getSystem());
-        assertEquals(parkingLotSoftwareSystemID, mondaySlot.getSystem().getParkingLotSoftwareSystemID());
+        assertNotNull(mondaySlot.getParkingLotSoftwareSystem());
+        assertEquals(parkingLotSoftwareSystemID, mondaySlot.getParkingLotSoftwareSystem().getParkingLotSoftwareSystemID());
     }
 }
