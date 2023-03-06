@@ -29,8 +29,10 @@ public class TimeSlot
   private LocalTime endTime;
   
   //TimeSlot Associations
-  @ManyToOne
+  @ManyToOne(optional=true)
   private ParkingLotSoftwareSystem parkingLotSoftwareSystem;
+  @ManyToOne(optional=true)
+  private StaffAccount staffAccount;
 
   public TimeSlot(LocalTime startTime, LocalTime endTime, DayOfWeek dayOfWeek) {
     this.startTime = startTime;
