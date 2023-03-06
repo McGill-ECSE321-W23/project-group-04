@@ -8,8 +8,8 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 public interface MonthlyReservationRepository extends CrudRepository<MonthlyReservation, Long> {
-    MonthlyReservation getMonthlyReservationByMonthlyReservationID(Long reservationId);
+    MonthlyReservation getMonthlyReservationByMonthlyReservationID(Long monthlyReservationID);
 
-    Person findPersonByMonthlyReservationID(Long reservationId);
+    Person findPersonByMonthlyReservationID(Long monthlyReservationID);
     List<MonthlyReservation> findMonthlyReservationByPerson_PersonID(Long personId);
 }
