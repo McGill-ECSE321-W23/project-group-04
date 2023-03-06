@@ -3,7 +3,11 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 // line 3 "../../../../../../ParkingLot.ump"
+@Entity
 public class ParkingLotSoftwareSystem
 {
 
@@ -37,6 +41,20 @@ public class ParkingLotSoftwareSystem
     numberOfMonthlyFloors = aNumberOfMonthlyFloors;
     numberOfMonthlySpotsPerFloor = aNumberOfMonthlySpotsPerFloor;
     numberOfGarages = aNumberOfGarages;
+  }
+
+  // FOR PERSISTENCE TESTING
+  public ParkingLotSoftwareSystem()
+  {
+    parkingLotSoftwareSystemID = null;
+    monthlyFee = -1;
+    feePer15m = -1;
+    maxStay = -1;
+    numberOfRegularParkingSpots = -1;
+    numberOfLargeParkingSpots = -1;
+    numberOfMonthlyFloors = -1;
+    numberOfMonthlySpotsPerFloor = -1;
+    numberOfGarages = -1;
   }
 
   //------------------------
@@ -115,6 +133,7 @@ public class ParkingLotSoftwareSystem
     return wasSet;
   }
 
+  @Id
   public String getParkingLotSoftwareSystemID()
   {
     return parkingLotSoftwareSystemID;
