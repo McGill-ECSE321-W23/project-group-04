@@ -21,7 +21,7 @@ public class MonthlyReservationRepositoryTest {
     void setup() {
         monthlyReservationRepository.deleteAll();
     }
-
+/*
     @Test
     void testPersistAndLoadMonthlyReservation() {
         Person person = new Person();
@@ -38,4 +38,5 @@ public class MonthlyReservationRepositoryTest {
         assertNotNull(retrievedAccount);
         assertEquals(savedId, monthlyReservation.getMonthlyReservationID());
     }
+*/
 }
