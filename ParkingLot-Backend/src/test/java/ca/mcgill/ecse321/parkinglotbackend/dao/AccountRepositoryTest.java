@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class AccountRepositoryTest {
@@ -24,12 +26,83 @@ public class AccountRepositoryTest {
 
     @Test
     void testPersistAndLoadAccount() {
-        Account acc = AccountMockBuilder.builder().build();
+        // Create an account
+        Account account  = new AccountMockBuilder().build();
 
-        Account savedAcc = accountRepository.save(acc);
-        Account retrievedAccount = accountRepository.findAccountByAccountID(savedAcc.getAccountID());
+        // Save the account
+        Account savedAccount = accountRepository.save(account);
 
+        // Check that the account was saved correctly
+        assertNotNull(savedAccount);
+        assertEquals(account.getAccountID(), savedAccount.getAccountID());
+        assertEquals(account.getEmail(), savedAccount.getEmail());
+        assertEquals(account.getPassword(), savedAccount.getPassword());
+        assertEquals(account.getPerson(), savedAccount.getPerson());
+
+        // Retrieve the account
+        Account retrievedAccount = accountRepository.findAccountByAccountID(savedAccount.getAccountID());
+
+        // Check that the account was saved and retrieved correctly
         assertNotNull(retrievedAccount);
-        assertEquals("aa", retrievedAccount.getPassword());
+        assertEquals(savedAccount.getAccountID(), retrievedAccount.getAccountID());
+        assertEquals(savedAccount.getEmail(), retrievedAccount.getEmail());
+        assertEquals(savedAccount.getPassword(), retrievedAccount.getPassword());
+        assertEquals(savedAccount.getPerson(), retrievedAccount.getPerson());
+    }
+
+    @Test
+    void testLogin() {
+        // Create an account
+        Account account  = new AccountMockBuilder().build();
+
+        // Save the account
+        Account savedAccount = accountRepository.save(account);
+
+        // Check that the account was saved correctly
+        assertNotNull(savedAccount);
+        assertEquals(account.getAccountID(), savedAccount.getAccountID());
+        assertEquals(account.getEmail(), savedAccount.getEmail());
+        assertEquals(account.getPassword(), savedAccount.getPassword());
+        assertEquals(account.getPerson(), savedAccount.getPerson());
+
+        // Login
+        String email = savedAccount.getEmail();
+        String password = savedAccount.getPassword();
+        boolean exists = accountRepository.existsAccountByEmailAndPassword(email, password);
+        Account retrievedAccount = accountRepository.findAccountByEmailAndPassword(email, password);
+
+        // Check that the account was saved and retrieved correctly
+        assertTrue(exists);
+        assertNotNull(retrievedAccount);
+        assertEquals(savedAccount.getAccountID(), retrievedAccount.getAccountID());
+        assertEquals(savedAccount.getEmail(), retrievedAccount.getEmail());
+        assertEquals(savedAccount.getPassword(), retrievedAccount.getPassword());
+        assertEquals(savedAccount.getPerson(), retrievedAccount.getPerson());
+    }
+
+    @Test
+    void testLoginFail() {
+        // Create an account
+        Account account  = new AccountMockBuilder().build();
+
+        // Save the account
+        Account savedAccount = accountRepository.save(account);
+
+        // Check that the account was saved correctly
+        assertNotNull(savedAccount);
+        assertEquals(account.getAccountID(), savedAccount.getAccountID());
+        assertEquals(account.getEmail(), savedAccount.getEmail());
+        assertEquals(account.getPassword(), savedAccount.getPassword());
+        assertEquals(account.getPerson(), savedAccount.getPerson());
+
+        // Login
+        String email = savedAccount.getEmail();
+        String password = "wrong password";
+        boolean exists = accountRepository.existsAccountByEmailAndPassword(email, password);
+        Account retrievedAccount = accountRepository.findAccountByEmailAndPassword(email, password);
+
+        // Check that login failed
+        assertTrue(!exists);
+        assertNull(retrievedAccount);
     }
 }
