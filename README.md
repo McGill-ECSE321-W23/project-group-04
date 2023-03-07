@@ -29,8 +29,8 @@ The application will improve the overall experience for customers, employees and
 | Team Member       | Contributions                                   | Hours  |
 | ----------------- | ----------------------------------------------- | ------ |
 | Faiza Chowdhury   |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test|   26     |
-| Annie Gouchee     |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, README.md|    26   |
+| Annie Gouchee     |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, README.md, Wiki |    26   |
 | Lin Wei Li        |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Create Repository, Spring Boot Project Set Up|   32   |
-| Estefania Vazquez |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Meeting Minutes Wiki| 28     |
+| Estefania Vazquez |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Meeting Minutes, Wiki| 28     |
 | Qin Xuan Xu       |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test|   27   |
 | Edwin You Zhou    |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Create Repository, Spring Boot Project Set Up|   30   |
