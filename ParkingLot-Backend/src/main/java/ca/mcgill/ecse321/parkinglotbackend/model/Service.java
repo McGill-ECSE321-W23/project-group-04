@@ -4,10 +4,15 @@
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 // line 69 "../../../../../ParkingLot.ump"
 @Entity
+@Data
+@NoArgsConstructor
 public class Service
 {
 
@@ -16,7 +21,7 @@ public class Service
   //------------------------
 
   //Service Attributes
-  private String serviceID;
+  private Long serviceID;
   private String description;
   private float cost;
   private int duration;
@@ -25,9 +30,8 @@ public class Service
   // CONSTRUCTOR
   //------------------------
 
-  public Service(String aServiceID, String aDescription, float aCost, int aDuration)
+  public Service(String aDescription, float aCost, int aDuration)
   {
-    serviceID = aServiceID;
     description = aDescription;
     cost = aCost;
     duration = aDuration;
@@ -51,21 +55,13 @@ public class Service
   // INTERFACE
   //------------------------
 
-  public Service() {
-	// TODO Auto-generated constructor stub
-	serviceID = null;
-	description = null;
-	cost = -1;
-	duration = -1;
-  }
-
-public boolean setServiceID(String aServiceID)
-  {
-    boolean wasSet = false;
-    serviceID = aServiceID;
-    wasSet = true;
-    return wasSet;
-  }
+// public boolean setServiceID(String aServiceID)
+//   {
+//     boolean wasSet = false;
+//     serviceID = aServiceID;
+//     wasSet = true;
+//     return wasSet;
+//   }
 
   public boolean setDescription(String aDescription)
   {
@@ -92,7 +88,8 @@ public boolean setServiceID(String aServiceID)
   }
 
   @Id
-  public String getServiceID()
+  @GeneratedValue
+  public Long getServiceID()
   {
     return serviceID;
   }

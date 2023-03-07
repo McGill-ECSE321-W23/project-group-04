@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
 
 
-public interface GarageRepository extends CrudRepository<Garage, String>{
-	Garage findGarageByGarageID(String garageId);
+public interface GarageRepository extends CrudRepository<Garage, Long>{
+	Garage findGarageByGarageID(Long garageId);
 }
