@@ -24,7 +24,7 @@ public class ParkingLotSoftwareSystemRepositoryTests {
     @Test
     public void testPersistAndLoadParkingLotSoftwareSystem() {
         // Create object
-        String parkingLotSoftwareSystemID = "1";
+        Long parkingLotSoftwareSystemID = (long) 1;
         float monthlyFee = 12;
         float feePer15m = 5;
         int maxStay = 20;

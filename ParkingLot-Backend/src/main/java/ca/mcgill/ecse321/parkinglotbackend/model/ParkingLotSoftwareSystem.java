@@ -16,7 +16,7 @@ public class ParkingLotSoftwareSystem
   //------------------------
 
   //ParkingLotSoftwareSystem Attributes
-  private String parkingLotSoftwareSystemID;
+  private Long parkingLotSoftwareSystemID;
   private float monthlyFee;
   private float feePer15m;
   private int maxStay;
@@ -30,7 +30,7 @@ public class ParkingLotSoftwareSystem
   // CONSTRUCTOR
   //------------------------
 
-  public ParkingLotSoftwareSystem(String aParkingLotSoftwareSystemID, float aMonthlyFee, float aFeePer15m, int aMaxStay, int aNumberOfRegularParkingSpots, int aNumberOfLargeParkingSpots, int aNumberOfMonthlyFloors, int aNumberOfMonthlySpotsPerFloor, int aNumberOfGarages)
+  public ParkingLotSoftwareSystem(Long aParkingLotSoftwareSystemID, float aMonthlyFee, float aFeePer15m, int aMaxStay, int aNumberOfRegularParkingSpots, int aNumberOfLargeParkingSpots, int aNumberOfMonthlyFloors, int aNumberOfMonthlySpotsPerFloor, int aNumberOfGarages)
   {
     parkingLotSoftwareSystemID = aParkingLotSoftwareSystemID;
     monthlyFee = aMonthlyFee;
@@ -61,7 +61,7 @@ public class ParkingLotSoftwareSystem
   // INTERFACE
   //------------------------
 
-  public boolean setParkingLotSoftwareSystemID(String aParkingLotSoftwareSystemID)
+  public boolean setParkingLotSoftwareSystemID(Long aParkingLotSoftwareSystemID)
   {
     boolean wasSet = false;
     parkingLotSoftwareSystemID = aParkingLotSoftwareSystemID;
@@ -134,7 +134,7 @@ public class ParkingLotSoftwareSystem
   }
 
   @Id
-  public String getParkingLotSoftwareSystemID()
+  public Long getParkingLotSoftwareSystemID()
   {
     return parkingLotSoftwareSystemID;
   }
