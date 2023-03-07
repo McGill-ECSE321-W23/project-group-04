@@ -36,9 +36,9 @@ public class ServiceAppointmentRepositoryTest {
 
     @AfterEach
     public void clearDatabase() {
+        serviceAppointmentRepository.deleteAll();
         carRepository.deleteAll();
         serviceRepository.deleteAll();
-        serviceAppointmentRepository.deleteAll();
         garageRepository.deleteAll();
         personRepository.deleteAll();
     }
