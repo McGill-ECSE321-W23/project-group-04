@@ -6,12 +6,15 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.Service;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment.AppointmentStatus;
+import ca.mcgill.ecse321.parkinglotbackend.model.Person;
+import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
 
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -30,12 +33,16 @@ public class ServiceAppointmentRepositoryTest {
     private ServiceAppointmentRepository serviceAppointmentRepository;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private GarageRepository garageRepository;
 
     @AfterEach
     public void clearDatabase() {
+        serviceAppointmentRepository.deleteAll();
         carRepository.deleteAll();
         serviceRepository.deleteAll();
-        serviceAppointmentRepository.deleteAll();
+        garageRepository.deleteAll();
+        personRepository.deleteAll();
     }
 
     @Test
@@ -44,14 +51,20 @@ public class ServiceAppointmentRepositoryTest {
         String make = "Tesla";
         String model = "Model 3";
 
-        Person person = new PersonMockBuilder().build();
-        Person savedPerson = personRepository.save(person);
+        String ownerName = "Annie Gouchee";
+        String phoneNumber = "5149628668";
+        Person owner = new Person();
+        owner.setName(ownerName);
+        owner.setPhoneNumber(phoneNumber);
+        owner = personRepository.save(owner);
+        Long ownerId = owner.getPersonID();
 
         Car car = new Car();
         car.setLicensePlate(licensePlate);
         car.setMake(make);
         car.setModel(model);
-        car.setOwner(savedPerson);
+
+        car.setOwner(owner);
         carRepository.save(car);
         Long carId = car.getCarID();
 
@@ -65,6 +78,11 @@ public class ServiceAppointmentRepositoryTest {
         serviceRepository.save(carWash);
         Long serviceID = carWash.getServiceID();
 
+        Garage garage = new Garage();
+        garage.setGarageNumber(2);
+        garageRepository.save(garage);
+        Long garageID = garage.getGarageID();
+
         LocalDateTime startTime = LocalDateTime.of(2022, Month.MARCH,4,5, 6, 7 );
         AppointmentStatus status = AppointmentStatus.Completed;
         ServiceAppointment appointment = new ServiceAppointment();
@@ -72,12 +90,16 @@ public class ServiceAppointmentRepositoryTest {
         appointment.setAppointmentStatus(status);
         appointment.setService(carWash);
         appointment.setCar(car);
+        appointment.setGarage(garage);
+        serviceAppointmentRepository.save(appointment);
 
         Long appointmentID = appointment.getServiceAppointmentID();
 
         car = null;
         carWash = null;
         appointment = null;
+        garage = null;
+        owner = null;
 
         appointment = serviceAppointmentRepository.findAppointmentByServiceAppointmentID(appointmentID);
         assertNotNull(appointment);

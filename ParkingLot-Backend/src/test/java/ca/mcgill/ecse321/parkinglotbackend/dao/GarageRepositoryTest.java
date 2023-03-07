@@ -23,11 +23,11 @@ public class GarageRepositoryTest {
 	public void testPersistAndLoadGarage() {
 		// Create garage object
 		int garageNum = 1;	// Create the garage number
-		Garage garage = new Garage();	// Create the test garage
-		garage.setGarageNumber(garageNum);
+		Garage garageA = new Garage();	// Create the test garage
+		garageA.setGarageNumber(garageNum);
 		
 		// Save garage object to database
-		Garage savedGarage = garageRepository.save(garage);
+		Garage savedGarage = garageRepository.save(garageA);
 
 		Long garageID = savedGarage.getGarageID();
 
