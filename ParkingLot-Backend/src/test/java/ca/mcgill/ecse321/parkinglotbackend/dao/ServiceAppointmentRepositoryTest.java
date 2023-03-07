@@ -1,12 +1,10 @@
 package ca.mcgill.ecse321.parkinglotbackend.dao;
 
-import ca.mcgill.ecse321.parkinglotbackend.data.PersonMockBuilder;
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.Service;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment.AppointmentStatus;
-import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
 
 
@@ -14,7 +12,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -111,7 +108,5 @@ public class ServiceAppointmentRepositoryTest {
         assertNotNull(appointment.getService());
         assertEquals(serviceID,appointment.getService().getServiceID());
     }
-
-
 
 }
