@@ -32,11 +32,4 @@ public class ParkingSpot
     number = aNumber;
   }
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "parkingSpotID" + ":" + getParkingSpotID()+ "," +
-            "floor" + ":" + getFloor()+ "," +
-            "number" + ":" + getNumber()+ "]";
-  }
 }

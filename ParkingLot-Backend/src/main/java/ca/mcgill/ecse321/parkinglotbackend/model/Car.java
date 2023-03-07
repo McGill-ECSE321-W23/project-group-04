@@ -35,12 +35,6 @@ public class Car
     licensePlate = aLicensePlate;
     make = aMake;
     model = aModel;
-    /*
-    if (!setOwner(aOwner))
-    {
-      throw new RuntimeException("Unable to create Car due to aOwner. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    */
   }
 
 
@@ -127,14 +121,4 @@ public class Car
     owner = null;
   }
 
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "carID" + ":" + getCarID()+ "," +
-            "licensePlate" + ":" + getLicensePlate()+ "," +
-            "make" + ":" + getMake()+ "," +
-            "model" + ":" + getModel()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "owner = "+(getOwner()!=null?Integer.toHexString(System.identityHashCode(getOwner())):"null");
-  }
 }

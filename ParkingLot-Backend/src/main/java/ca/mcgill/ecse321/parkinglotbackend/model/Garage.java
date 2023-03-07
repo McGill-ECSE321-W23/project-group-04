@@ -71,11 +71,4 @@ public boolean setGarageID(String aGarageID)
   public void delete()
   {}
 
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "garageID" + ":" + getGarageID()+ "," +
-            "garageNumber" + ":" + getGarageNumber()+ "]";
-  }
 }

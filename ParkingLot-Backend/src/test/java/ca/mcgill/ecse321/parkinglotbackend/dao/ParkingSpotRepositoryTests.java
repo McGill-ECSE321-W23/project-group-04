@@ -14,6 +14,7 @@ public class ParkingSpotRepositoryTests {
     @Autowired
     private ParkingSpotRepository parkingSpotRepository;
 
+    // clear database after testing
     @AfterEach
     public void clearDatabase() {
         parkingSpotRepository.deleteAll();

@@ -12,11 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 public class CarRepositoryTest {
+
     @Autowired
     private PersonRepository personRepository;
     @Autowired
     private CarRepository carRepository;
 
+    // clear database after testing
     @AfterEach
     public void clearDatabase() {
         // Delete the registrations first to avoid violating not-null constraint
@@ -27,6 +29,8 @@ public class CarRepositoryTest {
     @Test
     public void testPersistAndLoadCar() {
 
+        // create a Person object and save to database
+
         String ownerName = "Annie Gouchee";
         String phoneNumber = "5149628668";
         Person owner = new Person();
@@ -35,10 +39,11 @@ public class CarRepositoryTest {
         owner = personRepository.save(owner);
         Long ownerId = owner.getPersonID();
 
+        // create a Car object and save to database
+
         String licensePlate = "E99VFK";
         String make = "Tesla";
         String model = "Model 3";
-
         Car car = new Car();
         car.setLicensePlate(licensePlate);
         car.setMake(make);
@@ -50,14 +55,16 @@ public class CarRepositoryTest {
         car = null;
         owner = null;
 
+        // retrieve the Car object
+
         car = carRepository.findCarByCarID(carId);
+
+        // check that the Car was retrieved correctly
 
         assertNotNull(car);
         assertEquals(carId, car.getCarID());
-
         assertNotNull(car.getOwner());
         assertEquals(ownerName,car.getOwner().getName() );
-
         assertNotNull(car.getLicensePlate());
         assertEquals(licensePlate,car.getLicensePlate() );
 

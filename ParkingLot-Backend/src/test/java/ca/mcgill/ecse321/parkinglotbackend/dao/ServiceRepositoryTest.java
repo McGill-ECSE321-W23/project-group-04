@@ -13,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class ServiceRepositoryTest {
 	@Autowired
 	private ServiceRepository serviceRepository;
-	
+
+	// clear database after testing
 	@AfterEach
 	public void clearDatabase() {
 		serviceRepository.deleteAll();

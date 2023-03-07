@@ -31,12 +31,4 @@ public class Account
     this.person = person;
   }
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "accountID" + ":" + getAccountID()+ "," +
-            "email" + ":" + getEmail()+ "," +
-            "password" + ":" + getPassword()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "person = "+(getPerson()!=null?Integer.toHexString(System.identityHashCode(getPerson())):"null");
-  }
 }

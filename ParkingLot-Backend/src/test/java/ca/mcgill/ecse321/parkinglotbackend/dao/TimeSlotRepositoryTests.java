@@ -23,6 +23,7 @@ public class TimeSlotRepositoryTests {
     @Autowired
     private ParkingLotSoftwareSystemRepository parkingLotSoftwareSystemRepository;
 
+    // clear database after testing
     @AfterEach
 	public void clearDatabase() {
 		timeSlotRepository.deleteAll();
