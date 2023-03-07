@@ -17,17 +17,11 @@ import lombok.NoArgsConstructor;
 public class Garage
 {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //Garage Attributes
+  // Garage Attributes
   private Long garageID;
   private int garageNumber;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+  // Constructor
   public Garage(int aGarageNumber)
   {
     garageNumber = aGarageNumber;
