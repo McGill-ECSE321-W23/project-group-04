@@ -82,6 +82,7 @@ public class ServiceAppointmentRepositoryTest {
         appointment.setService(carWash);
         appointment.setCar(car);
         appointment.setGarage(garage);
+        serviceAppointmentRepository.save(appointment);
 
         Long appointmentID = appointment.getServiceAppointmentID();
 
