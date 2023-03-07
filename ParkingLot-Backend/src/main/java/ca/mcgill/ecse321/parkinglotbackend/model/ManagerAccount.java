@@ -11,5 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ManagerAccount extends StaffAccount
 {
-
+    public ManagerAccount(Person person, String email, String password, float salary) {
+        super(person, email, password, salary);
+    }
 }

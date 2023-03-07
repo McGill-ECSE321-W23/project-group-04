@@ -22,7 +22,8 @@ public class Account
   private String password;
 
   //Account Associations
-  @OneToOne(optional = false, cascade = CascadeType.PERSIST)
+  // save person when saving account, but person is not deleted with account
+  @OneToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
   private Person person;
 
   public Account(String email, String password, Person person) {

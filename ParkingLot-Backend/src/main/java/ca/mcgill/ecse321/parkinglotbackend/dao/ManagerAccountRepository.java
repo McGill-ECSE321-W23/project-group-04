@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ManagerAccountRepository extends CrudRepository<ManagerAccount, Long> {
     ManagerAccount getManagerAccountByAccountIDIsNotNull();
+
+    Integer deleteManagerAccountByAccountIDNotNull();
 }
