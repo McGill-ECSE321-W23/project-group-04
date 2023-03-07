@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.parkinglotbackend.dao;
 
+import ca.mcgill.ecse321.parkinglotbackend.data.PersonMockBuilder;
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
+import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.Service;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment.AppointmentStatus;
@@ -26,7 +28,8 @@ public class ServiceAppointmentRepositoryTest {
     private CarRepository carRepository;
     @Autowired
     private ServiceAppointmentRepository serviceAppointmentRepository;
-
+    @Autowired
+    private PersonRepository personRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -41,10 +44,14 @@ public class ServiceAppointmentRepositoryTest {
         String make = "Tesla";
         String model = "Model 3";
 
+        Person person = new PersonMockBuilder().build();
+        Person savedPerson = personRepository.save(person);
+
         Car car = new Car();
         car.setLicensePlate(licensePlate);
         car.setMake(make);
         car.setModel(model);
+        car.setOwner(savedPerson);
         carRepository.save(car);
         Long carId = car.getCarID();
 
@@ -56,7 +63,7 @@ public class ServiceAppointmentRepositoryTest {
         carWash.setDescription(serviceDescription);
         carWash.setDuration(duration);
         serviceRepository.save(carWash);
-        String serviceID = carWash.getServiceID();
+        Long serviceID = carWash.getServiceID();
 
         LocalDateTime startTime = LocalDateTime.of(2022, Month.MARCH,4,5, 6, 7 );
         AppointmentStatus status = AppointmentStatus.Completed;
