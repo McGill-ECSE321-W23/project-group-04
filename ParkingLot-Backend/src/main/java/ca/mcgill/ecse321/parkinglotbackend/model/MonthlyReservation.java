@@ -32,12 +32,4 @@ public class MonthlyReservation
     this.person = aPerson;
   }
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "monthlyReservationID" + ":" + getMonthlyReservationID()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "startDate" + "=" + (getStartDate() != null ? !getStartDate().equals(this)  ? getStartDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endDate" + "=" + (getEndDate() != null ? !getEndDate().equals(this)  ? getEndDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "person = "+(getPerson()!=null?Integer.toHexString(System.identityHashCode(getPerson())):"null");
-  }
 }

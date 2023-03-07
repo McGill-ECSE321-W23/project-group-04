@@ -16,6 +16,7 @@ public class ParkingLotSoftwareSystemRepositoryTests {
     @Autowired
     private ParkingLotSoftwareSystemRepository parkingLotSoftwareSystemRepository;
 
+    // clear database after testing
     @AfterEach
     public void clearDatabase() {
         parkingLotSoftwareSystemRepository.deleteAll();

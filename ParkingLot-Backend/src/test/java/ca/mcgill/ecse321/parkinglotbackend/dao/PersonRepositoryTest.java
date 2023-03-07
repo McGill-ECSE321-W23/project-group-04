@@ -15,6 +15,7 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 public class PersonRepositoryTest {
     @Autowired PersonRepository personRepository;
 
+    // clear database after testing
     @AfterEach
     void setup() {
         personRepository.deleteAll();

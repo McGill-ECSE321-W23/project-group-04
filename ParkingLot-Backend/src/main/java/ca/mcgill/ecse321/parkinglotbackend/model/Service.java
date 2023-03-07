@@ -36,20 +36,7 @@ public class Service
     description = aDescription;
     cost = aCost;
     duration = aDuration;
-    /*
-        if (!setService(aService))
-    {
-      throw new RuntimeException("Unable to create ServiceAppointment due to aService. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    if (!setGarage(aGarage))
-    {
-      throw new RuntimeException("Unable to create ServiceAppointment due to aGarage. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    if (!setCar(aCar))
-    {
-      throw new RuntimeException("Unable to create ServiceAppointment due to aCar. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-     */
+   
   }
 
   //------------------------
@@ -117,12 +104,4 @@ public boolean setServiceID(Long aServiceID)
   {}
 
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "serviceID" + ":" + getServiceID()+ "," +
-            "description" + ":" + getDescription()+ "," +
-            "cost" + ":" + getCost()+ "," +
-            "duration" + ":" + getDuration()+ "]";
-  }
 }

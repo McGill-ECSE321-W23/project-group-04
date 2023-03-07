@@ -14,10 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class AccountRepositoryTest {
-    @Autowired AccountRepository accountRepository;
 
+    @Autowired AccountRepository accountRepository;
     @Autowired PersonRepository personRepository;
 
+
+    // clear database after testing
     @AfterEach
     void setup() {
         accountRepository.deleteAll();

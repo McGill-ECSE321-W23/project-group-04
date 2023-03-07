@@ -20,6 +20,7 @@ public class MonthlyReservationRepositoryTest {
 
     @Autowired PersonRepository personRepository;
 
+    // clear database after testing
     @AfterEach
     void setup() {
         monthlyReservationRepository.deleteAll();

@@ -29,6 +29,7 @@ public class TimeSlotRepositoryTests {
     @Autowired
     private StaffAccountRepository staffAccountRepository;
 
+    // clear database after testing
     @AfterEach
 	public void clearDatabase() {
 		timeSlotRepository.deleteAll();

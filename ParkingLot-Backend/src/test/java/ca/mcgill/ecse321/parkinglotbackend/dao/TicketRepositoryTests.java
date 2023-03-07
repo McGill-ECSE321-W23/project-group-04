@@ -22,6 +22,7 @@ public class TicketRepositoryTests {
     @Autowired
     private TicketRepository ticketRepository;
 
+    // clear database after testing
     @AfterEach
     public void clearDatabase() {
         ticketRepository.deleteAll();
@@ -42,7 +43,7 @@ public class TicketRepositoryTests {
         Ticket ticket = new Ticket(entryTime, carType);
         ticket.setParkingLotSoftwareSystem(parkingLotSoftwareSystem);
 
-        // Save object
+        // Save Ticket object
         ticket = ticketRepository.save(ticket);
         Long id = ticket.getTicketID();
 

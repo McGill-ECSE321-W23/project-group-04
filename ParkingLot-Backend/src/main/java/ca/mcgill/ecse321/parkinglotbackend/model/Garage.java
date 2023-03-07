@@ -17,17 +17,11 @@ import lombok.NoArgsConstructor;
 public class Garage
 {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //Garage Attributes
+  // Garage Attributes
   private Long garageID;
   private int garageNumber;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+  // Constructor
   public Garage(int aGarageNumber)
   {
     garageNumber = aGarageNumber;
@@ -71,11 +65,4 @@ public boolean setGarageID(Long aGarageID)
   public void delete()
   {}
 
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "garageID" + ":" + getGarageID()+ "," +
-            "garageNumber" + ":" + getGarageNumber()+ "]";
-  }
 }

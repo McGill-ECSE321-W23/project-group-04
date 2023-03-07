@@ -15,17 +15,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StaffAccount extends Account
 {
-  //StaffAccount Attributes
+  // StaffAccount Attributes
   private float salary;
 
+  // Constructor
   public StaffAccount(Person person, String email, String password, float salary) {
     super(email, password, person);
     this.salary = salary;
   }
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "salary" + ":" + getSalary()+ "]";
-  }
 }

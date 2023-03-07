@@ -18,23 +18,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Ticket
 {
-  //------------------------
-  // ENUMERATIONS
-  //------------------------
+  // enumeration class
   public enum CarType { Regular, Large }
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //Ticket Attributes
+  // Ticket Attributes
   @Id
   @GeneratedValue
   private Long ticketID;
   private LocalDateTime entryTime;
   private CarType carType;
 
-  //Ticket Associations
+  // Ticket Associations
   @ManyToOne(optional=false)
   private ParkingLotSoftwareSystem parkingLotSoftwareSystem;
 
@@ -44,12 +38,5 @@ public class Ticket
     entryTime = aEntryTime;
     carType = aCarType;
   }
-  
-  public String toString()
-  {
-    return super.toString() + "["+
-            "ticketForRegularCarID" + ":" + getTicketID()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "entryTime" + "=" + (getEntryTime() != null ? !getEntryTime().equals(this)  ? getEntryTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "carType" + "=" + (getCarType() != null ? !getCarType().equals(this)  ? getCarType().toString().replaceAll("  ","    ") : "this" : "null");
-  }
+
 }

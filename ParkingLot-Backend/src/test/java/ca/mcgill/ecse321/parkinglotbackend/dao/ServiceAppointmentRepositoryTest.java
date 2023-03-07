@@ -33,6 +33,7 @@ public class ServiceAppointmentRepositoryTest {
     @Autowired
     private GarageRepository garageRepository;
 
+    // clear database after testing
     @AfterEach
     public void clearDatabase() {
         serviceAppointmentRepository.deleteAll();
@@ -44,9 +45,8 @@ public class ServiceAppointmentRepositoryTest {
 
     @Test
     public void testPersistAndLoadServiceAppointment() {
-        String licensePlate = "E99VFK";
-        String make = "Tesla";
-        String model = "Model 3";
+
+        // create a Person object and save to database
 
         String ownerName = "Annie Gouchee";
         String phoneNumber = "5149628668";
@@ -56,6 +56,11 @@ public class ServiceAppointmentRepositoryTest {
         owner = personRepository.save(owner);
         Long ownerId = owner.getPersonID();
 
+        // create a Car object and save to database
+
+        String licensePlate = "E99VFK";
+        String make = "Tesla";
+        String model = "Model 3";
         Car car = new Car();
         car.setLicensePlate(licensePlate);
         car.setMake(make);
@@ -65,6 +70,7 @@ public class ServiceAppointmentRepositoryTest {
         carRepository.save(car);
         Long carId = car.getCarID();
 
+        // create a car wash object and save to database
         String serviceDescription = "Car Wash";
         int duration = 20;
         float cost = 15;
@@ -75,11 +81,13 @@ public class ServiceAppointmentRepositoryTest {
         serviceRepository.save(carWash);
         Long serviceID = carWash.getServiceID();
 
+        // create a Garage object and save to database
         Garage garage = new Garage();
         garage.setGarageNumber(2);
         garageRepository.save(garage);
         Long garageID = garage.getGarageID();
 
+        // create a Service Appointment object and save to database
         LocalDateTime startTime = LocalDateTime.of(2022, Month.MARCH,4,5, 6, 7 );
         AppointmentStatus status = AppointmentStatus.Completed;
         ServiceAppointment appointment = new ServiceAppointment();
@@ -98,13 +106,14 @@ public class ServiceAppointmentRepositoryTest {
         garage = null;
         owner = null;
 
+        // Retrieve the Service Appointment
         appointment = serviceAppointmentRepository.findAppointmentByServiceAppointmentID(appointmentID);
+
+        // Assert that the retrieved information is correct
         assertNotNull(appointment);
         assertEquals(appointmentID, appointment.getServiceAppointmentID());
-
         assertNotNull(appointment.getCar());
         assertEquals(carId,appointment.getCar().getCarID());
-
         assertNotNull(appointment.getService());
         assertEquals(serviceID,appointment.getService().getServiceID());
     }

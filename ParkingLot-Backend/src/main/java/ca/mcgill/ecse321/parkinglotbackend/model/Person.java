@@ -24,16 +24,11 @@ public class Person
 
   private String name;
 
+  // constructor
+
   public Person(String nbr, String name) {
     phoneNumber = nbr;
     this.name = name;
   }
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "personID" + ":" + getPersonID()+ "," +
-            "phoneNumber" + ":" + getPhoneNumber()+ "," +
-            "name" + ":" + getName()+ "]";
-  }
 }
