@@ -56,14 +56,6 @@ public class Service
   // INTERFACE
   //------------------------
 
-  public Service() {
-	// TODO Auto-generated constructor stub
-	serviceID = null;
-	description = null;
-	cost = -1;
-	duration = -1;
-  }
-
 public boolean setServiceID(Long aServiceID)
   {
     boolean wasSet = false;
