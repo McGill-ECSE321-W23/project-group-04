@@ -6,6 +6,7 @@ package ca.mcgill.ecse321.parkinglotbackend.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -36,13 +37,13 @@ public class Garage
   // INTERFACE
   //------------------------
 
-// public boolean setGarageID(String aGarageID)
-//   {
-//     boolean wasSet = false;
-//     garageID = aGarageID;
-//     wasSet = true;
-//     return wasSet;
-//   }
+public boolean setGarageID(Long aGarageID)
+  {
+    boolean wasSet = false;
+    garageID = aGarageID;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setGarageNumber(int aGarageNumber)
   {

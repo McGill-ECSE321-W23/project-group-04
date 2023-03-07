@@ -6,6 +6,7 @@ package ca.mcgill.ecse321.parkinglotbackend.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -55,13 +56,21 @@ public class Service
   // INTERFACE
   //------------------------
 
-// public boolean setServiceID(String aServiceID)
-//   {
-//     boolean wasSet = false;
-//     serviceID = aServiceID;
-//     wasSet = true;
-//     return wasSet;
-//   }
+  public Service() {
+	// TODO Auto-generated constructor stub
+	serviceID = null;
+	description = null;
+	cost = -1;
+	duration = -1;
+  }
+
+public boolean setServiceID(Long aServiceID)
+  {
+    boolean wasSet = false;
+    serviceID = aServiceID;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setDescription(String aDescription)
   {
