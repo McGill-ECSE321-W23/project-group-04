@@ -40,7 +40,6 @@ public class TimeSlotRepositoryTests {
     @Test
     public void testPersistAndLoadTimeSlot() {
         // Create system object for timeslot
-        Long parkingLotSoftwareSystemID = (long) 5;
         float monthlyFee = 12;
         float feePer15m = 5;
         int maxStay = 20;
@@ -50,7 +49,6 @@ public class TimeSlotRepositoryTests {
         int numberOfMonthlySpotsPerFloor = 100;
         int numberOfGarages = 4;
         ParkingLotSoftwareSystem parkingSystem = new ParkingLotSoftwareSystem();
-        parkingSystem.setParkingLotSoftwareSystemID(parkingLotSoftwareSystemID);
         parkingSystem.setMonthlyFee(monthlyFee);
         parkingSystem.setFeePer15m(feePer15m);
         parkingSystem.setMaxStay(maxStay);
@@ -61,6 +59,7 @@ public class TimeSlotRepositoryTests {
         parkingSystem.setNumberOfGarages(numberOfGarages);
         // Save system to database
         parkingLotSoftwareSystemRepository.save(parkingSystem);
+        Long parkingLotSoftwareSystemID = parkingSystem.getParkingLotSoftwareSystemID();
 
         // Create staff acount + person for timeslot
         String phoneNumber = "32103217";

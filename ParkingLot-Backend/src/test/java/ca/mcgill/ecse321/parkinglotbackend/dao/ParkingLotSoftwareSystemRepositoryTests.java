@@ -24,7 +24,6 @@ public class ParkingLotSoftwareSystemRepositoryTests {
     @Test
     public void testPersistAndLoadParkingLotSoftwareSystem() {
         // Create object
-        Long parkingLotSoftwareSystemID = (long) 1;
         float monthlyFee = 12;
         float feePer15m = 5;
         int maxStay = 20;
@@ -34,7 +33,6 @@ public class ParkingLotSoftwareSystemRepositoryTests {
         int numberOfMonthlySpotsPerFloor = 100;
         int numberOfGarages = 4;
         ParkingLotSoftwareSystem parkingSystem = new ParkingLotSoftwareSystem();
-        parkingSystem.setParkingLotSoftwareSystemID(parkingLotSoftwareSystemID);
         parkingSystem.setMonthlyFee(monthlyFee);
         parkingSystem.setFeePer15m(feePer15m);
         parkingSystem.setMaxStay(maxStay);
@@ -46,6 +44,7 @@ public class ParkingLotSoftwareSystemRepositoryTests {
 
         // Save object to database
         parkingLotSoftwareSystemRepository.save(parkingSystem);
+        Long parkingLotSoftwareSystemID = parkingSystem.getParkingLotSoftwareSystemID();
 
         // Read object from database
         parkingSystem = null;
