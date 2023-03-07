@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.parkinglotbackend.dao;
 
+import ca.mcgill.ecse321.parkinglotbackend.data.PersonMockBuilder;
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
+import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.Service;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment.AppointmentStatus;
@@ -61,6 +63,7 @@ public class ServiceAppointmentRepositoryTest {
         car.setLicensePlate(licensePlate);
         car.setMake(make);
         car.setModel(model);
+
         car.setOwner(owner);
         carRepository.save(car);
         Long carId = car.getCarID();
@@ -79,7 +82,6 @@ public class ServiceAppointmentRepositoryTest {
         garage.setGarageNumber(2);
         garageRepository.save(garage);
         Long garageID = garage.getGarageID();
-
 
         LocalDateTime startTime = LocalDateTime.of(2022, Month.MARCH,4,5, 6, 7 );
         AppointmentStatus status = AppointmentStatus.Completed;

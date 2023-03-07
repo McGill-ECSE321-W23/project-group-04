@@ -6,10 +6,14 @@ package ca.mcgill.ecse321.parkinglotbackend.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 // line 76 "../../../../../ParkingLot.ump"
 @Entity
+@Data
+@NoArgsConstructor
 public class Garage
 {
 
@@ -32,12 +36,6 @@ public class Garage
   //------------------------
   // INTERFACE
   //------------------------
-
-  public Garage() {
-	// TODO Auto-generated constructor stub
-	garageID = null;
-	garageNumber = -1;
-}
 
 public boolean setGarageID(Long aGarageID)
   {

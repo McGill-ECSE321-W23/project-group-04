@@ -6,10 +6,14 @@ package ca.mcgill.ecse321.parkinglotbackend.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 // line 69 "../../../../../ParkingLot.ump"
 @Entity
+@Data
+@NoArgsConstructor
 public class Service
 {
 
