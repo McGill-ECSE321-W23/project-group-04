@@ -12,6 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -30,12 +31,16 @@ public class ServiceAppointmentRepositoryTest {
     private ServiceAppointmentRepository serviceAppointmentRepository;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private GarageRepository garageRepository;
 
     @AfterEach
     public void clearDatabase() {
         carRepository.deleteAll();
         serviceRepository.deleteAll();
         serviceAppointmentRepository.deleteAll();
+        garageRepository.deleteAll();
+        personRepository.deleteAll();
     }
 
     @Test
@@ -72,6 +77,8 @@ public class ServiceAppointmentRepositoryTest {
 
         Garage garage = new Garage();
         garage.setGarageNumber(2);
+        garageRepository.save(garage);
+        Long garageID = garage.getGarageID();
 
 
         LocalDateTime startTime = LocalDateTime.of(2022, Month.MARCH,4,5, 6, 7 );
@@ -89,6 +96,7 @@ public class ServiceAppointmentRepositoryTest {
         car = null;
         carWash = null;
         appointment = null;
+        garage = null;
         owner = null;
 
         appointment = serviceAppointmentRepository.findAppointmentByServiceAppointmentID(appointmentID);
