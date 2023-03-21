@@ -4,14 +4,12 @@
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.NoArgsConstructor;
 
-// line 47 "../../../../../ParkingLot.ump"
+// line 44 "../../../../../ParkingLot.ump"
 @Entity
-@NoArgsConstructor
 public class Car
 {
 
@@ -20,8 +18,7 @@ public class Car
   //------------------------
 
   //Car Attributes
-
-  private Long carID;
+  private long carID;
   private String licensePlate;
   private String make;
   private String model;
@@ -29,20 +26,29 @@ public class Car
   //Car Associations
   private Person owner;
 
-  // Constructor
-  public Car(String aLicensePlate, String aMake, String aModel, Person aOwner)
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public Car(long aCarID, String aLicensePlate, String aMake, String aModel, Person aOwner)
   {
+    carID = aCarID;
     licensePlate = aLicensePlate;
     make = aMake;
     model = aModel;
+    if (!setOwner(aOwner))
+    {
+      throw new RuntimeException("Unable to create Car due to aOwner. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
   }
 
+  public Car() {}
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setCarID(Long aCarID)
+  public boolean setCarID(long aCarID)
   {
     boolean wasSet = false;
     carID = aCarID;
@@ -76,7 +82,7 @@ public class Car
 
   @Id
   @GeneratedValue
-  public Long getCarID()
+  public long getCarID()
   {
     return carID;
   }
@@ -121,4 +127,14 @@ public class Car
     owner = null;
   }
 
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "carID" + ":" + getCarID()+ "," +
+            "licensePlate" + ":" + getLicensePlate()+ "," +
+            "make" + ":" + getMake()+ "," +
+            "model" + ":" + getModel()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "owner = "+(getOwner()!=null?Integer.toHexString(System.identityHashCode(getOwner())):"null");
+  }
 }

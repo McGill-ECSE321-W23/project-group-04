@@ -24,6 +24,7 @@ public class ServiceRepositoryTest {
 	public void testPersistAndLoadService() {
 		// Create object
 		Service changeTire = new Service();
+		changeTire.setServiceID((long)1234);
 		String description = "Change the 4 tires of you car";
 		float cost = 50;
 		int duration = 2;

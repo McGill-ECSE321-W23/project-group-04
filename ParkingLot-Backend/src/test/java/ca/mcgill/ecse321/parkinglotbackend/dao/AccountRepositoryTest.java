@@ -49,7 +49,7 @@ public class AccountRepositoryTest {
         assertEquals(savedAccount.getAccountID(), retrievedAccount.getAccountID());
         assertEquals(savedAccount.getEmail(), retrievedAccount.getEmail());
         assertEquals(savedAccount.getPassword(), retrievedAccount.getPassword());
-        assertEquals(savedAccount.getPerson(), retrievedAccount.getPerson());
+        assertEquals(savedAccount.getPerson().getPersonID(), retrievedAccount.getPerson().getPersonID());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class AccountRepositoryTest {
         assertEquals(savedAccount.getAccountID(), retrievedAccount.getAccountID());
         assertEquals(savedAccount.getEmail(), retrievedAccount.getEmail());
         assertEquals(savedAccount.getPassword(), retrievedAccount.getPassword());
-        assertEquals(savedAccount.getPerson(), retrievedAccount.getPerson());
+        assertEquals(savedAccount.getPerson().getPersonID(), retrievedAccount.getPerson().getPersonID());
     }
 
     @Test

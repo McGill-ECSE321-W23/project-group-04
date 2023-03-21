@@ -14,9 +14,9 @@ public class TimeSlotMockBuilder {
 
     public TimeSlot build() {
         timeSlot = new TimeSlot(
+        		DayOfWeek.FRIDAY,
                 LocalTime.MIN,
-                LocalTime.MAX,
-                DayOfWeek.FRIDAY
+                LocalTime.MAX
         );
         return timeSlot;
     }

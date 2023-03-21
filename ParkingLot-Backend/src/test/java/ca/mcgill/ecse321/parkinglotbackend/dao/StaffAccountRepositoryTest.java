@@ -28,7 +28,7 @@ public class StaffAccountRepositoryTest {
         // create account
         float salary = 999;
         Person person = PersonMockBuilder.builder().build();
-        StaffAccount account = new StaffAccount(person, "garage@mail.mcgill.ca", "123", salary);
+        StaffAccount account = new StaffAccount("garage@mail.mcgill.ca", "123", person, salary);
 
         // save and retrieve account
         staffAccountRepository.save(account);
@@ -45,7 +45,7 @@ public class StaffAccountRepositoryTest {
         // create account
         Long personId = null;
         Person person = new Person("5554443333", "newJon" );
-        StaffAccount account = new StaffAccount(person, "garage@mail.mcgill.ca", "123", 999);
+        StaffAccount account = new StaffAccount("garage@mail.mcgill.ca", "123", person, 999);
 
         // deleted account and retrieve related person
         account = staffAccountRepository.save(account);
@@ -65,7 +65,7 @@ public class StaffAccountRepositoryTest {
         // create and save account
         String newEmail = "newEmail@email.com";
         Person person = PersonMockBuilder.builder().build();
-        StaffAccount account = new StaffAccount(person, "garage@mail.mcgill.ca", "123", 999);
+        StaffAccount account = new StaffAccount("garage@mail.mcgill.ca", "123", person, 999);
         account = staffAccountRepository.save(account);
 
         // retrieve the saved account and modify its email
@@ -84,7 +84,7 @@ public class StaffAccountRepositoryTest {
         // create and save account
         Person newPerson = new Person("5554443333", "newJon" );
         Person person =  new Person("5554443333", "oldJon" );
-        StaffAccount account = new StaffAccount(person, "garage@mail.mcgill.ca", "123", 999);
+        StaffAccount account = new StaffAccount("garage@mail.mcgill.ca", "123", person, 999);
         account = staffAccountRepository.save(account);
 
         // retrieve account and link to a new person

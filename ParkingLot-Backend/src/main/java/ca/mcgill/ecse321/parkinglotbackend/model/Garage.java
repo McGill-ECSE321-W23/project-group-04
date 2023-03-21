@@ -1,5 +1,5 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.32.1.6535.66c005ced modeling language!*/
+/*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
@@ -7,31 +7,36 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-// line 76 "../../../../../ParkingLot.ump"
+// line 73 "../../../../../ParkingLot.ump"
 @Entity
-@Data
-@NoArgsConstructor
 public class Garage
 {
 
-  // Garage Attributes
-  private Long garageID;
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
+
+  //Garage Attributes
+  private long garageID;
   private int garageNumber;
 
-  // Constructor
-  public Garage(int aGarageNumber)
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public Garage(long aGarageID, int aGarageNumber)
   {
+    garageID = aGarageID;
     garageNumber = aGarageNumber;
   }
+
+  public Garage() {}
 
   //------------------------
   // INTERFACE
   //------------------------
 
-public boolean setGarageID(Long aGarageID)
+  public boolean setGarageID(long aGarageID)
   {
     boolean wasSet = false;
     garageID = aGarageID;
@@ -49,7 +54,7 @@ public boolean setGarageID(Long aGarageID)
 
   @Id
   @GeneratedValue
-  public Long getGarageID()
+  public long getGarageID()
   {
     return garageID;
   }
@@ -65,4 +70,11 @@ public boolean setGarageID(Long aGarageID)
   public void delete()
   {}
 
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "garageID" + ":" + getGarageID()+ "," +
+            "garageNumber" + ":" + getGarageNumber()+ "]";
+  }
 }

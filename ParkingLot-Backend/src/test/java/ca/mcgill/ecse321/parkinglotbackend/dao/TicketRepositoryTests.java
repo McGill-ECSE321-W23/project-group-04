@@ -40,8 +40,8 @@ public class TicketRepositoryTests {
         // Create a ticket
         CarType carType = CarType.Regular;
         LocalDateTime entryTime = LocalDateTime.of(2022, Month.MARCH,6,6, 6, 6 );
-        Ticket ticket = new Ticket(entryTime, carType);
-        ticket.setParkingLotSoftwareSystem(parkingLotSoftwareSystem);
+        Ticket ticket = new Ticket(entryTime, carType, parkingLotSoftwareSystem);
+//        ticket.setParkingLotSoftwareSystem(parkingLotSoftwareSystem);
 
         // Save Ticket object
         ticket = ticketRepository.save(ticket);
