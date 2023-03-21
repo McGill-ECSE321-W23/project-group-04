@@ -99,12 +99,12 @@ public class MonthlyReservation
     return endDate;
   }
   /* Code from template association_GetOne */
+  @ManyToOne
   public Person getPerson()
   {
     return person;
   }
   /* Code from template association_SetUnidirectionalOne */
-  @ManyToOne
   public boolean setPerson(Person aNewPerson)
   {
     boolean wasSet = false;

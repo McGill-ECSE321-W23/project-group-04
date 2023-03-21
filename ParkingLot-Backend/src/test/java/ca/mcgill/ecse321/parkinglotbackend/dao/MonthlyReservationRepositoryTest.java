@@ -51,7 +51,7 @@ public class MonthlyReservationRepositoryTest {
         assertEquals(savedMonthlyReservation.getMonthlyReservationID(), retrievedMonthlyReservation.getMonthlyReservationID());
         assertEquals(savedMonthlyReservation.getStartDate(), retrievedMonthlyReservation.getStartDate());
         assertEquals(savedMonthlyReservation.getEndDate(), retrievedMonthlyReservation.getEndDate());
-        assertEquals(savedMonthlyReservation.getPerson(), retrievedMonthlyReservation.getPerson());
+        assertEquals(savedMonthlyReservation.getPerson().getPersonID(), retrievedMonthlyReservation.getPerson().getPersonID());
     }
 
     @Test
@@ -80,16 +80,16 @@ public class MonthlyReservationRepositoryTest {
         assertEquals(savedMonthlyReservation.getMonthlyReservationID(), monthlyReservations.get(0).getMonthlyReservationID());
         assertEquals(savedMonthlyReservation.getStartDate(), monthlyReservations.get(0).getStartDate());
         assertEquals(savedMonthlyReservation.getEndDate(), monthlyReservations.get(0).getEndDate());
-        assertEquals(savedMonthlyReservation.getPerson(), monthlyReservations.get(0).getPerson());
+        assertEquals(savedMonthlyReservation.getPerson().getPersonID(), monthlyReservations.get(0).getPerson().getPersonID());
 
         assertEquals(savedMonthlyReservation2.getMonthlyReservationID(), monthlyReservations.get(1).getMonthlyReservationID());
         assertEquals(savedMonthlyReservation2.getStartDate(), monthlyReservations.get(1).getStartDate());
         assertEquals(savedMonthlyReservation2.getEndDate(), monthlyReservations.get(1).getEndDate());
-        assertEquals(savedMonthlyReservation2.getPerson(), monthlyReservations.get(1).getPerson());
+        assertEquals(savedMonthlyReservation2.getPerson().getPersonID(), monthlyReservations.get(1).getPerson().getPersonID());
 
         assertEquals(savedMonthlyReservation3.getMonthlyReservationID(), monthlyReservations.get(2).getMonthlyReservationID());
         assertEquals(savedMonthlyReservation3.getStartDate(), monthlyReservations.get(2).getStartDate());
         assertEquals(savedMonthlyReservation3.getEndDate(), monthlyReservations.get(2).getEndDate());
-        assertEquals(savedMonthlyReservation3.getPerson(), monthlyReservations.get(2).getPerson());
+        assertEquals(savedMonthlyReservation3.getPerson().getPersonID(), monthlyReservations.get(2).getPerson().getPersonID());
     }
 }
