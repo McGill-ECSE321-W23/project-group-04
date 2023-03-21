@@ -1,5 +1,5 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.32.1.6535.66c005ced modeling language!*/
+/*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
 
@@ -7,13 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-// line 69 "../../../../../ParkingLot.ump"
+// line 66 "../../../../../ParkingLot.ump"
 @Entity
-@Data
-@NoArgsConstructor
 public class Service
 {
 
@@ -22,7 +17,7 @@ public class Service
   //------------------------
 
   //Service Attributes
-  private Long serviceID;
+  private long serviceID;
   private String description;
   private float cost;
   private int duration;
@@ -31,19 +26,21 @@ public class Service
   // CONSTRUCTOR
   //------------------------
 
-  public Service(String aDescription, float aCost, int aDuration)
+  public Service(long aServiceID, String aDescription, float aCost, int aDuration)
   {
+    serviceID = aServiceID;
     description = aDescription;
     cost = aCost;
     duration = aDuration;
-   
   }
+
+  public Service() {}
 
   //------------------------
   // INTERFACE
   //------------------------
 
-public boolean setServiceID(Long aServiceID)
+  public boolean setServiceID(long aServiceID)
   {
     boolean wasSet = false;
     serviceID = aServiceID;
@@ -77,7 +74,7 @@ public boolean setServiceID(Long aServiceID)
 
   @Id
   @GeneratedValue
-  public Long getServiceID()
+  public long getServiceID()
   {
     return serviceID;
   }
@@ -104,4 +101,12 @@ public boolean setServiceID(Long aServiceID)
   {}
 
 
+  public String toString()
+  {
+    return super.toString() + "["+
+            "serviceID" + ":" + getServiceID()+ "," +
+            "description" + ":" + getDescription()+ "," +
+            "cost" + ":" + getCost()+ "," +
+            "duration" + ":" + getDuration()+ "]";
+  }
 }

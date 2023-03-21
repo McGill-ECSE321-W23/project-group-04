@@ -90,7 +90,7 @@ public class TimeSlotRepositoryTests {
         mondaySlot.setDayOfTheWeek(dayOfTheWeek);
         mondaySlot.setStartTime(startTime);
         mondaySlot.setEndTime(endTime);
-        mondaySlot.setParkingLotSoftwareSystem(parkingSystem);
+        mondaySlot.setSystem(parkingSystem);
         mondaySlot.setStaffAccount(staffAccount);
         // Save timeslot to database
         timeSlotRepository.save(mondaySlot);
@@ -107,8 +107,8 @@ public class TimeSlotRepositoryTests {
         assertEquals(startTime, mondaySlot.getStartTime());
         assertEquals(endTime, mondaySlot.getEndTime());
 
-        assertNotNull(mondaySlot.getParkingLotSoftwareSystem());
-        assertEquals(parkingLotSoftwareSystemID, mondaySlot.getParkingLotSoftwareSystem().getParkingLotSoftwareSystemID());
+        assertNotNull(mondaySlot.getSystem());
+        assertEquals(parkingLotSoftwareSystemID, mondaySlot.getSystem().getParkingLotSoftwareSystemID());
 
         assertNotNull(mondaySlot.getStaffAccount());
         assertEquals(staffId, mondaySlot.getStaffAccount().getAccountID());

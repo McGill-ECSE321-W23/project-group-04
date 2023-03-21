@@ -1,19 +1,17 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.32.1.6535.66c005ced modeling language!*/
+/*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
 package ca.mcgill.ecse321.parkinglotbackend.model;
+
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
-// line 82 "../../../../../../ParkingLot.ump"
+// line 79 "../../../../../ParkingLot.ump"
 @Entity
-@NoArgsConstructor
 public class ServiceAppointment
 {
 
@@ -28,7 +26,7 @@ public class ServiceAppointment
   //------------------------
 
   //ServiceAppointment Attributes
-  private Long serviceAppointmentID;
+  private long serviceAppointmentID;
   private LocalDateTime startTime;
   private AppointmentStatus appointmentStatus;
 
@@ -37,19 +35,36 @@ public class ServiceAppointment
   private Garage garage;
   private Car car;
 
-  // Constructor
-  public ServiceAppointment(LocalDateTime aStartTime, AppointmentStatus aAppointmentStatus)
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public ServiceAppointment(long aServiceAppointmentID, LocalDateTime aStartTime, AppointmentStatus aAppointmentStatus, Service aService, Garage aGarage, Car aCar)
   {
+    serviceAppointmentID = aServiceAppointmentID;
     startTime = aStartTime;
     appointmentStatus = aAppointmentStatus;
+    if (!setService(aService))
+    {
+      throw new RuntimeException("Unable to create ServiceAppointment due to aService. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    if (!setGarage(aGarage))
+    {
+      throw new RuntimeException("Unable to create ServiceAppointment due to aGarage. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    if (!setCar(aCar))
+    {
+      throw new RuntimeException("Unable to create ServiceAppointment due to aCar. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
   }
 
+  public ServiceAppointment() {}
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setServiceAppointmentID(Long aServiceAppointmentID)
+  public boolean setServiceAppointmentID(long aServiceAppointmentID)
   {
     boolean wasSet = false;
     serviceAppointmentID = aServiceAppointmentID;
@@ -75,7 +90,7 @@ public class ServiceAppointment
 
   @Id
   @GeneratedValue
-  public Long getServiceAppointmentID()
+  public long getServiceAppointmentID()
   {
     return serviceAppointmentID;
   }
@@ -102,7 +117,6 @@ public class ServiceAppointment
     return garage;
   }
   /* Code from template association_GetOne */
-
   @ManyToOne(optional = false)
   public Car getCar()
   {
@@ -149,4 +163,15 @@ public class ServiceAppointment
     car = null;
   }
 
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "serviceAppointmentID" + ":" + getServiceAppointmentID()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "appointmentStatus" + "=" + (getAppointmentStatus() != null ? !getAppointmentStatus().equals(this)  ? getAppointmentStatus().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "service = "+(getService()!=null?Integer.toHexString(System.identityHashCode(getService())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "garage = "+(getGarage()!=null?Integer.toHexString(System.identityHashCode(getGarage())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "car = "+(getCar()!=null?Integer.toHexString(System.identityHashCode(getCar())):"null");
+  }
 }

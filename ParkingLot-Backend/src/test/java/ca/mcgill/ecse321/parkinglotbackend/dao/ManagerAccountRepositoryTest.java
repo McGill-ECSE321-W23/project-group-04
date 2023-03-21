@@ -28,7 +28,7 @@ public class ManagerAccountRepositoryTest {
         // create accounts
         String managerEmail = "garage@mail.mcgill.ca";
         Person person = new Person("5554443333", "Jon" );
-        ManagerAccount account = new ManagerAccount(person, managerEmail, "123", 999);
+        ManagerAccount account = new ManagerAccount(managerEmail, "123", person, 999);
 
         // save and retrieve accounts
         managerAccountRepository.save(account);
@@ -45,7 +45,7 @@ public class ManagerAccountRepositoryTest {
         // create account
         Long personId = null;
         Person person = new Person("5554443333", "newJon" );
-        ManagerAccount account = new ManagerAccount(person, "garage@mail.mcgill.ca", "123", 999);
+        ManagerAccount account = new ManagerAccount("garage@mail.mcgill.ca", "123", person, 999);
 
         // deleted account and retrieve related person
         account = managerAccountRepository.save(account);
@@ -65,7 +65,7 @@ public class ManagerAccountRepositoryTest {
         // create and save account
         String newEmail = "newEmail@email.com";
         Person person = PersonMockBuilder.builder().build();
-        ManagerAccount account = new ManagerAccount(person, "garage@mail.mcgill.ca", "123", 999);
+        ManagerAccount account = new ManagerAccount("garage@mail.mcgill.ca", "123", person, 999);
         managerAccountRepository.save(account);
 
         // retrieve the saved account and modify its email
@@ -84,7 +84,7 @@ public class ManagerAccountRepositoryTest {
         // create and save account
         Person newPerson = new Person("5554443333", "newJon" );
         Person person =  new Person("5554443333", "oldJon" );
-        ManagerAccount account = new ManagerAccount(person, "garage@mail.mcgill.ca", "123", 999);
+        ManagerAccount account = new ManagerAccount("garage@mail.mcgill.ca", "123", person, 999);
         managerAccountRepository.save(account);
 
         // retrieve account and link to a new person
