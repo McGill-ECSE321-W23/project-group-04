@@ -37,7 +37,7 @@ public class OfferedServiceRepositoryTest {
 		Long id = changeTireDB.getServiceID();
 		
 		// Read service object from database
-		OfferedService changeTireTest = serviceRepository.findServiceByServiceID(id);
+		OfferedService changeTireTest = serviceRepository.findOfferedServiceByServiceID(id);
 		
 		// Assert that service object has the correct attributes
 		assertNotNull(changeTireTest);
