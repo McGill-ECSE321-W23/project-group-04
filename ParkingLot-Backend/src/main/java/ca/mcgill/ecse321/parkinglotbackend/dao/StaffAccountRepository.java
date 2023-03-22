@@ -10,4 +10,6 @@ public interface StaffAccountRepository extends CrudRepository<StaffAccount, Lon
     StaffAccount getStaffAccountBySalary(float salary);
 
     Integer deleteStaffAccountByAccountID(Long accountId);
+
+    StaffAccount getStaffAccountByEmail(String email);
 }
