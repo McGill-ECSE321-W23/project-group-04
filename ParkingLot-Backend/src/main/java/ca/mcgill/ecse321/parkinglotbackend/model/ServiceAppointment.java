@@ -31,7 +31,7 @@ public class ServiceAppointment
   private AppointmentStatus appointmentStatus;
 
   //ServiceAppointment Associations
-  private Service service;
+  private OfferedService service;
   private Garage garage;
   private Car car;
 
@@ -39,7 +39,7 @@ public class ServiceAppointment
   // CONSTRUCTOR
   //------------------------
 
-  public ServiceAppointment(long aServiceAppointmentID, LocalDateTime aStartTime, AppointmentStatus aAppointmentStatus, Service aService, Garage aGarage, Car aCar)
+  public ServiceAppointment(long aServiceAppointmentID, LocalDateTime aStartTime, AppointmentStatus aAppointmentStatus, OfferedService aService, Garage aGarage, Car aCar)
   {
     serviceAppointmentID = aServiceAppointmentID;
     startTime = aStartTime;
@@ -106,7 +106,7 @@ public class ServiceAppointment
   }
   /* Code from template association_GetOne */
   @ManyToOne(optional = false)
-  public Service getService()
+  public OfferedService getService()
   {
     return service;
   }
@@ -123,7 +123,7 @@ public class ServiceAppointment
     return car;
   }
   /* Code from template association_SetUnidirectionalOne */
-  public boolean setService(Service aNewService)
+  public boolean setService(OfferedService aNewService)
   {
     boolean wasSet = false;
     if (aNewService != null)
