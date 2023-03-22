@@ -17,7 +17,7 @@ public class OfferedServiceModificationService {
 
     // This method changes all the attributes of the OfferedService provided through the id in the db
     @Transactional
-    public OfferedService modifyOfferedServiceAttributes(long serviceID, String description, float cost, int duration) throws Exception {
+    public OfferedService modifyOfferedServiceService(long serviceID, String description, float cost, int duration) throws Exception {
         // Fetch the service we want to edit through the id in the db
         OfferedService offeredService = offeredServiceRepository.findOfferedServiceByServiceID(serviceID);
 
@@ -33,7 +33,7 @@ public class OfferedServiceModificationService {
 
         // If the service was found
         else {
-            // Create the service by adding all the necessary components, one by one
+            // Edit the service by adding all the necessary components, one by one
             offeredService.setDescription(description);
             offeredService.setCost(cost);
             offeredService.setDuration(duration);
@@ -43,14 +43,14 @@ public class OfferedServiceModificationService {
     }
 
     @Transactional
-    public OfferedService getOfferedService(long serviceID) {
+    public OfferedService getOfferedServiceService(long serviceID) {
         // Fetch the service we want through the id in the db
         OfferedService offeredService = offeredServiceRepository.findOfferedServiceByServiceID(serviceID);
         return offeredService;
     }
 
     @Transactional
-    public List<OfferedService> getAllOfferedService() {
+    public List<OfferedService> getAllOfferedServiceService() {
         return toList(offeredServiceRepository.findAll());
     }
 

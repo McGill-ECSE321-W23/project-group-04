@@ -17,7 +17,7 @@ public class OfferedServiceCreationService {
     OfferedServiceRepository offeredServiceRepository;
 
     @Transactional
-    public OfferedService createOfferedService(String description, float cost, int duration) throws Exception {
+    public OfferedService createOfferedServiceService(String description, float cost, int duration) throws Exception {
         // If the description was empty
         if (description ==  null || description.isEmpty()) {
             throw new Exception("Description cannot be empty.");
@@ -35,14 +35,14 @@ public class OfferedServiceCreationService {
     }
 
     @Transactional
-    public OfferedService getOfferedService(long serviceID) {
+    public OfferedService getOfferedServiceService(long serviceID) {
         // Fetch the service we want through the id in the db
         OfferedService offeredService = offeredServiceRepository.findOfferedServiceByServiceID(serviceID);
         return offeredService;
     }
 
     @Transactional
-    public List<OfferedService> getAllOfferedService() {
+    public List<OfferedService> getAllOfferedServiceService() {
         return toList(offeredServiceRepository.findAll());
     }
 

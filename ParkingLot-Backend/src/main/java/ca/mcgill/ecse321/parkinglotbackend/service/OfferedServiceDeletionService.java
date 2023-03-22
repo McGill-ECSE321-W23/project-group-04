@@ -16,7 +16,7 @@ public class OfferedServiceDeletionService {
     OfferedServiceRepository offeredServiceRepository;
 
     @Transactional
-    public OfferedService deleteOfferedService(long serviceID) throws Exception {
+    public OfferedService deleteOfferedServiceService(long serviceID) throws Exception {
         // Fetch the service we want to delete through the id in the db
         OfferedService offeredService = offeredServiceRepository.findOfferedServiceByServiceID(serviceID);
 
@@ -33,14 +33,14 @@ public class OfferedServiceDeletionService {
     }
 
     @Transactional
-    public OfferedService getOfferedService(long serviceID) {
+    public OfferedService getOfferedServiceService(long serviceID) {
         // Fetch the service we want through the id in the db
         OfferedService offeredService = offeredServiceRepository.findOfferedServiceByServiceID(serviceID);
         return offeredService;
     }
 
     @Transactional
-    public List<OfferedService> getAllOfferedService() {
+    public List<OfferedService> getAllOfferedServiceService() {
         return toList(offeredServiceRepository.findAll());
     }
 
