@@ -37,7 +37,11 @@ public class ServiceRepositoryTest {
 		Long id = changeTireDB.getServiceID();
 		
 		// Read service object from database
+<<<<<<< Updated upstream:ParkingLot-Backend/src/test/java/ca/mcgill/ecse321/parkinglotbackend/dao/ServiceRepositoryTest.java
 		Service changeTireTest = serviceRepository.findServiceByServiceID(id);
+=======
+		OfferedService changeTireTest = serviceRepository.findOfferedServiceByServiceID(id);
+>>>>>>> Stashed changes:ParkingLot-Backend/src/test/java/ca/mcgill/ecse321/parkinglotbackend/dao/OfferedServiceRepositoryTest.java
 		
 		// Assert that service object has the correct attributes
 		assertNotNull(changeTireTest);
