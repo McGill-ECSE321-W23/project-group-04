@@ -34,3 +34,15 @@ The application will improve the overall experience for customers, employees and
 | Estefania Vazquez |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Meeting Minutes, Wiki| 28     |
 | Qin Xuan Xu       |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test|   27   |
 | Edwin You Zhou    |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Create Repository, Spring Boot Project Set Up|   30   |
+
+Sprint 2
+
+### Contributions
+| Team Member       | Contributions                                   | Hours  |
+| ----------------- | ----------------------------------------------- | ------ |
+| Faiza Chowdhury   ||        |
+| Annie Gouchee     | |       |
+| Lin Wei Li        | Iteration 1 Fixes|      |
+| Estefania Vazquez |Iteration 1 Fixes|      |
+| Qin Xuan Xu       | |      |
+| Edwin You Zhou    | |      |
