@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class AuthenticationUtility {
 
-    enum Role {
+    public enum Role {
         CUSTOMER, STAFF, MANAGER
     }
     
