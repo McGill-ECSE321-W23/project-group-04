@@ -51,6 +51,18 @@ public class PersonService {
     }
 
     /**
+     * Get all persons
+     * @param name
+     * @param phoneNumber
+     * @return Iterable<Person>
+     * @author Lin Wei Li
+     */
+    @Transactional
+    public Iterable<Person> getAllPersons() {
+        return personRepository.findAll();
+    }
+
+    /**
      * Create a person
      * @param name
      * @param phoneNumber
@@ -58,14 +70,14 @@ public class PersonService {
      * @author Lin Wei Li
      */
     @Transactional
-    public Person createPerson(String name, String phoneNumber) {
+    public Person createPerson(String name, String phoneNumber) throws Exception {
 
         // Check input
         if (name == null || name.trim().length() == 0) {
-            throw new IllegalArgumentException("Name cannot be empty!");
+            throw new Exception("Name cannot be empty!");
         }
         if (phoneNumber == null || phoneNumber.trim().length() == 0) {
-            throw new IllegalArgumentException("Phone number cannot be empty!");
+            throw new Exception("Phone number cannot be empty!");
         }
 
         Person person = new Person(phoneNumber, name);
