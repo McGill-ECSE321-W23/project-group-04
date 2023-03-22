@@ -34,7 +34,7 @@ public class AuthenticationService {
     public Account authenticate(String email, String password) throws Exception {
 
         // Check input
-        if (email == null || password == null) {
+        if (email == null || email.trim().length() == 0 || password == null || password.trim().length() == 0) {
             throw new Exception("Please enter a email and password");
         }
 
