@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 
 // line 66 "../../../../../ParkingLot.ump"
 @Entity
-public class Service
+public class OfferedService
 {
 
   //------------------------
@@ -26,7 +26,7 @@ public class Service
   // CONSTRUCTOR
   //------------------------
 
-  public Service(long aServiceID, String aDescription, float aCost, int aDuration)
+  public OfferedService(long aServiceID, String aDescription, float aCost, int aDuration)
   {
     serviceID = aServiceID;
     description = aDescription;
@@ -34,7 +34,7 @@ public class Service
     duration = aDuration;
   }
 
-  public Service() {}
+  public OfferedService() {}
 
   //------------------------
   // INTERFACE

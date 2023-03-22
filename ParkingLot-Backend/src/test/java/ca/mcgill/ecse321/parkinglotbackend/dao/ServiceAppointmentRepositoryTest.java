@@ -2,7 +2,7 @@ package ca.mcgill.ecse321.parkinglotbackend.dao;
 
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
-import ca.mcgill.ecse321.parkinglotbackend.model.Service;
+import ca.mcgill.ecse321.parkinglotbackend.model.OfferedService;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment.AppointmentStatus;
 import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class ServiceAppointmentRepositoryTest {
 
     @Autowired
-    private ServiceRepository serviceRepository;
+    private OfferedServiceRepository serviceRepository;
     @Autowired
     private CarRepository carRepository;
     @Autowired
@@ -74,7 +74,7 @@ public class ServiceAppointmentRepositoryTest {
         String serviceDescription = "Car Wash";
         int duration = 20;
         float cost = 15;
-        Service carWash = new Service();
+        OfferedService carWash = new OfferedService();
         carWash.setCost(cost);
         carWash.setDescription(serviceDescription);
         carWash.setDuration(duration);

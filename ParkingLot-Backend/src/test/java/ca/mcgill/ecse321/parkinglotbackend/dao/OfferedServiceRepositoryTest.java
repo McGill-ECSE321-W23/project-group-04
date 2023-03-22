@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321.parkinglotbackend.dao;
 
-import ca.mcgill.ecse321.parkinglotbackend.model.Service;
+import ca.mcgill.ecse321.parkinglotbackend.model.OfferedService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-public class ServiceRepositoryTest {
+public class OfferedServiceRepositoryTest {
 	@Autowired
-	private ServiceRepository serviceRepository;
+	private OfferedServiceRepository serviceRepository;
 
 	// clear database after testing
 	@AfterEach
@@ -23,7 +23,7 @@ public class ServiceRepositoryTest {
 	@Test
 	public void testPersistAndLoadService() {
 		// Create object
-		Service changeTire = new Service();
+		OfferedService changeTire = new OfferedService();
 		changeTire.setServiceID((long)1234);
 		String description = "Change the 4 tires of you car";
 		float cost = 50;
@@ -33,11 +33,11 @@ public class ServiceRepositoryTest {
 		changeTire.setDuration(duration);
 		
 		// Save service object to database
-		Service changeTireDB = serviceRepository.save(changeTire);
+		OfferedService changeTireDB = serviceRepository.save(changeTire);
 		Long id = changeTireDB.getServiceID();
 		
 		// Read service object from database
-		Service changeTireTest = serviceRepository.findServiceByServiceID(id);
+		OfferedService changeTireTest = serviceRepository.findServiceByServiceID(id);
 		
 		// Assert that service object has the correct attributes
 		assertNotNull(changeTireTest);
