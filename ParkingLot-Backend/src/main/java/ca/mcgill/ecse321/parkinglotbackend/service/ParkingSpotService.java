@@ -1,7 +1,9 @@
 package ca.mcgill.ecse321.parkinglotbackend.service;
 
+import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingSpotRepository;
 import ca.mcgill.ecse321.parkinglotbackend.dao.PersonRepository;
 import ca.mcgill.ecse321.parkinglotbackend.dao.TicketRepository;
+import ca.mcgill.ecse321.parkinglotbackend.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
 import org.springframework.beans.factory.annotation.*;
@@ -13,38 +15,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TicketService {
-	@Autowired
-	TicketRepository ticketRepository;
+public class ParkingSpotService {
+    @Autowired
+    ParkingSpotRepository parkingSpotRepository;
 
 
 
-	@Transactional
-	public Ticket createTicket(LocalDateTime entryTime) {
-		Ticket ticket = new Ticket();
+    @Transactional
+    public ParkingSpot createParkingSpot(LocalDateTime entryTime) {
+        Ticket ticket = new Ticket();
 
-		long ticketID = ticket.getTicketID();
+        long ticketID = ticket.getTicketID();
 
-		// set entry time
-		//LocalDateTime currentTime = LocalDateTime.now();
-		ticket.setEntryTime(entryTime);
+        // set entry time
+        //LocalDateTime currentTime = LocalDateTime.now();
+        ticket.setEntryTime(entryTime);
 
-		ticketRepository.save(ticket);
+        ticketRepository.save(ticket);
 
 
-		return ticket;
-	}
+        return ticket;
+    }
 
-	@Transactional
-	public Ticket getTicket(long ticketID) {
-		Ticket ticket = ticketRepository.findTicketByTicketID(ticketID);
-		return ticket;
-	}
+    @Transactional
+    public Ticket getTicket(long ticketID) {
+        Ticket ticket = ticketRepository.findTicketByTicketID(ticketID);
+        return ticket;
+    }
 
-	@Transactional
-	public List<Ticket> getAllTickets() {
-		return toList(ticketRepository.findAll());
-	}
+    @Transactional
+    public List<Ticket> getAllTickets() {
+        return toList(ticketRepository.findAll());
+    }
 
 //	@Transactional
 //	public Event createEvent(String name, Date date, Time startTime, Time endTime) {
@@ -94,14 +96,14 @@ public class TicketService {
 //		return eventsAttendedByPerson;
 //	}
 
-	private <T> List<T> toList(Iterable<T> iterable){
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
-	}
+    private <T> List<T> toList(Iterable<T> iterable){
+        List<T> resultList = new ArrayList<T>();
+        for (T t : iterable) {
+            resultList.add(t);
+        }
+        return resultList;
+    }
 
 }
-    
+
 

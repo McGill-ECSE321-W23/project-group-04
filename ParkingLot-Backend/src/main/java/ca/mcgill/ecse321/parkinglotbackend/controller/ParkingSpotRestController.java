@@ -16,7 +16,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-public class TicketRestController {
+public class ParkingSpotRestController {
     @Autowired
     private TicketService ticketService;
 

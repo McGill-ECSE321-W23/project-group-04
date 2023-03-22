@@ -1,5 +1,8 @@
 package ca.mcgill.ecse321.parkinglotbackend.dto;
 
+import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
+import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
+import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
 import java.time.LocalDateTime;
 
 
@@ -7,7 +10,7 @@ public class TicketDto {
 
     private long ticketID;
     private LocalDateTime entryTime;
-    private CarType carType;
+    private Ticket.CarType carType;
 
      //Ticket Associations
      private ParkingLotSoftwareSystem parkingLotSoftwareSystem;
@@ -15,13 +18,13 @@ public class TicketDto {
 	public TicketDto() {
 	}
 
-	// @SuppressWarnings("unchecked")
-	// public TicketDto(long aTicketID) {
-		
-	// }
+	 @SuppressWarnings("unchecked")
+	 public TicketDto(LocalDateTime aEntryTime) {
+		this.setEntryTime(aEntryTime);
+	 }
 
-	public TicketDto(long aTicketID, LocalDateTime aEntryTime, 
-    CarType aCarType, ParkingLotSoftwareSystem aParkingLotSoftwareSystem) {
+	public TicketDto(long aTicketID, LocalDateTime aEntryTime,
+                     Ticket.CarType aCarType, ParkingLotSoftwareSystem aParkingLotSoftwareSystem) {
         this.parkingLotSoftwareSystem = aParkingLotSoftwareSystem;
         this.ticketID = aTicketID;
         this.entryTime = aEntryTime;
@@ -41,7 +44,7 @@ public class TicketDto {
     public CarType getCarType() {
 		return carType;
 	}
-    public void getSystem() {
+    public ParkingLotSoftwareSystem getSystem() {
         return parkingLotSoftwareSystem;
     }
 
