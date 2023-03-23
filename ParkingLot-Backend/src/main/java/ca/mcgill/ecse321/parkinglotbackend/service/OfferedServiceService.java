@@ -75,7 +75,7 @@ public class OfferedServiceService {
 
         // If the service was found
         else {
-            // Create the service by adding all the necessary components, one by one
+            // Edit the service by adding all the necessary components, one by one
             offeredService.setDescription(description);
             offeredService.setCost(cost);
             offeredService.setDuration(duration);
