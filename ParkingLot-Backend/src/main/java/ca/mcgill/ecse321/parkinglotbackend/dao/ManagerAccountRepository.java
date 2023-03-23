@@ -7,4 +7,6 @@ public interface ManagerAccountRepository extends CrudRepository<ManagerAccount,
     ManagerAccount getManagerAccountByAccountIDIsNotNull();
 
     Integer deleteManagerAccountByAccountIDNotNull();
+
+    ManagerAccount getManagerAccountByEmail(String email);
 }
