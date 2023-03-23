@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.service.AccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.PersonService;
@@ -56,6 +57,17 @@ public class AccountController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateAccount(HttpServletRequest request, @PathVariable(value = "id") long id,
     @RequestBody String email, @RequestBody String password) {
+        // Check authorization (own account or staff)
+        try {
+            long accountId = AuthenticationUtility.getAccountId(request);
+            if (accountId != id && !AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+
+        // Authorized
         try {
             accountService.updateAccount(id, email, password);
             return ResponseEntity.ok().build();
@@ -66,6 +78,17 @@ public class AccountController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAccount(HttpServletRequest request, @PathVariable(value = "id") long id) {
+        // Check authorization (own account or staff)
+        try {
+            long accountId = AuthenticationUtility.getAccountId(request);
+            if (accountId != id && !AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+
+        // Authorized
         try {
             accountService.deleteAccount(id);
             return ResponseEntity.ok().build();
@@ -76,6 +99,17 @@ public class AccountController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getAccount(HttpServletRequest request, @PathVariable(value = "id") long id) {
+        // Check authorization (own account or staff)
+        try {
+            long accountId = AuthenticationUtility.getAccountId(request);
+            if (accountId != id && !AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+
+        // Authorized
         try {
             return ResponseEntity.ok().body(accountService.getAccountByID(id));
         } catch (Exception e) {
@@ -85,6 +119,16 @@ public class AccountController {
 
     @GetMapping("/get")
     public ResponseEntity<?> getAllAccounts(HttpServletRequest request) {
+        // Check authorization (staff)
+        try {
+            if (!AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+
+        // Authorized
         return ResponseEntity.ok().body(accountService.getAllAccounts());
     }
 
