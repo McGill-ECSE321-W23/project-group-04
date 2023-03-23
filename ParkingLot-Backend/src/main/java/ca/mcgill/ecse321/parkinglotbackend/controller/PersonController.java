@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
+import ca.mcgill.ecse321.parkinglotbackend.service.AccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.PersonService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -22,6 +24,9 @@ public class PersonController {
 
     @Autowired
     private PersonService personService;
+
+    @Autowired
+    private AccountService accountService;
     
     @PostMapping("/register")
     public ResponseEntity<?> registerPerson(HttpServletRequest request,
@@ -37,6 +42,18 @@ public class PersonController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updatePerson(HttpServletRequest request, @PathVariable(value = "id") long id,
     @RequestBody String name, @RequestBody String phoneNumber) {
+        // Check authorization (own person or staff)
+        try {
+            long personID = accountService.getAccountByID(id).getPerson().getPersonID();
+            if (personID != id && !AuthenticationUtility.isStaff(request)) {
+                // Not authorized
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).body("Not authorized");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+
+        // Authorized
         try {
             personService.updatePerson(id, name, phoneNumber);
             return ResponseEntity.ok().build();
@@ -47,6 +64,18 @@ public class PersonController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deletePerson(HttpServletRequest request, @PathVariable(value = "id") long id) {
+        // Check authorization (own person or staff)
+        try {
+            long personID = accountService.getAccountByID(id).getPerson().getPersonID();
+            if (personID != id && !AuthenticationUtility.isStaff(request)) {
+                // Not authorized
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).body("Not authorized");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+
+        // Authorized
         try {
             personService.deletePerson(id);
             return ResponseEntity.ok().build();
@@ -57,6 +86,18 @@ public class PersonController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getPerson(HttpServletRequest request, @PathVariable(value = "id") long id) {
+        // Check authorization (own person or staff)
+        try {
+            long personID = accountService.getAccountByID(id).getPerson().getPersonID();
+            if (personID != id && !AuthenticationUtility.isStaff(request)) {
+                // Not authorized
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).body("Not authorized");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+
+        // Authorized
         try {
             return ResponseEntity.ok().body(personService.getPersonByName("John"));
         } catch (Exception e) {
@@ -66,6 +107,17 @@ public class PersonController {
 
     @GetMapping("/get")
     public ResponseEntity<?> getAllPersons(HttpServletRequest request) {
+        // Check authorization (staff)
+        try {
+            if (!AuthenticationUtility.isStaff(request)) {
+                // Not authorized
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).body("Not authorized");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+
+        // Authorized
         return ResponseEntity.ok().body(personService.getAllPersons());
     }
 
