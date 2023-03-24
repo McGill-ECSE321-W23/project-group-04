@@ -23,6 +23,7 @@ public class ParkingLotSoftwareSystemService {
         system.setNumberOfMonthlyFloors(aNumberOfMonthlyFloors);
         system.setNumberOfMonthlySpotsPerFloor(aNumberOfMonthlySpotsPerFloor);
         system.setNumberOfGarages(aNumberOfGarages);
+        parkingLotSoftwareSystemRepository.save(system);
         return system;
     }
 
