@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.dto.TimeSlotDto;
+import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
+import ca.mcgill.ecse321.parkinglotbackend.model.StaffAccount;
 import ca.mcgill.ecse321.parkinglotbackend.model.TimeSlot;
+import ca.mcgill.ecse321.parkinglotbackend.service.ParkingLotSoftwareSystemService;
+import ca.mcgill.ecse321.parkinglotbackend.service.StaffAccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.TimeSlotService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -28,6 +32,10 @@ import jakarta.servlet.http.HttpServletRequest;
 public class TimeSlotController {
     @Autowired
     private TimeSlotService timeSlotService;
+    @Autowired
+    private ParkingLotSoftwareSystemService parkingLotSoftwareSystemService;
+    @Autowired
+    private StaffAccountService staffAccountService;
 
     // Get timeslot by id
     @GetMapping("/get/{timeSlotID}")
@@ -63,20 +71,22 @@ public class TimeSlotController {
     // Create timeslot
     @PostMapping("/create")
     public ResponseEntity<?> createTimeSlot(HttpServletRequest request, @RequestBody DayOfWeek dayOfTheWeek, @RequestBody LocalTime startTime, @RequestBody LocalTime endTime, @RequestBody long parkingLotSoftwareSystemID, @RequestBody long accountID) {
-        // TODO: Check if system and staff account exist
+        ParkingLotSoftwareSystem system = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID);
+        StaffAccount staffAccount = staffAccountService.getStaffAccount(accountID);
+        if (staffAccount == null || system == null) {
+            return ResponseEntity.badRequest().body("There is no such system or staff account");
+        }
 
         // Check authorization
         try {
             if (AuthenticationUtility.isManager(request)) {
-                return ResponseEntity.ok(convertToDto(timeSlotService.createTimeSlot(dayOfTheWeek, startTime, endTime, null, null)));
+                return ResponseEntity.ok(convertToDto(timeSlotService.createTimeSlot(dayOfTheWeek, startTime, endTime, system, null)));
             } else {
                 return ResponseEntity.badRequest().body("Only manager can create TimeSlot");
             }
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        // return ResponseEntity.badRequest().body("There is no system or staff account to assign");
     }
 
     // Update timeslot
