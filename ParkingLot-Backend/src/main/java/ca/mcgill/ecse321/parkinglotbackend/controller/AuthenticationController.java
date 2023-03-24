@@ -81,7 +81,7 @@ public class AuthenticationController {
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
 
-        // Check if logged in
+        // Check if not logged in
         if (!AuthenticationUtility.isLoggedIn(request)) {
             return ResponseEntity.badRequest().body("Not logged in");
         }
