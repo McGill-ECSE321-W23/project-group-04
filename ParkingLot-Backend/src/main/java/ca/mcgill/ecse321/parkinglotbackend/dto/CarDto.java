@@ -1,12 +1,13 @@
 package ca.mcgill.ecse321.parkinglotbackend.dto;
 
+import ca.mcgill.ecse321.parkinglotbackend.model.Person;
+
 public class CarDto {
     
     private long carID;
     private String licensePlate;
     private String make;
     private String model;
-
     private PersonDto owner;
 
     public CarDto(){
@@ -52,6 +53,10 @@ public class CarDto {
 
     public void setModel (String newModel) {
         this.model = newModel;
+    }
+
+    public PersonDto getOwner() {
+        return owner;
     }
 
     public void setOwner (PersonDto newOwner){
