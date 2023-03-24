@@ -88,6 +88,18 @@ public class PersonServiceTest {
             return persons;
         });
 
+        lenient().when(personRepository.existsPersonByPhoneNumber(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(P1.getPhoneNumber())) {
+                return true;
+            } else if (invocation.getArgument(0).equals(P2.getPhoneNumber())) {
+                return true;
+            } else if (invocation.getArgument(0).equals(P3.getPhoneNumber())) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
         lenient().when(personRepository.save(any(Person.class))).thenAnswer((InvocationOnMock invocation) -> {
             return invocation.getArgument(0);
         });
@@ -226,7 +238,22 @@ public class PersonServiceTest {
         assertEquals(null, person);
     }
 
-    // TODO: consider preventing duplicate phone numbers
+    @Test
+    public void testCreatePerson_DuplicatePhoneNumber() {
+        String eMSG = "";
+        Person person = null;
+
+        // Create person
+        try {
+            person = personService.createPerson(TEST_NAME, P1.getPhoneNumber());
+        } catch (Exception e) {
+            eMSG = e.getMessage();
+        }
+
+        // Check if person was created
+        assertEquals("Phone number already exists!", eMSG);
+        assertEquals(null, person);
+    }
 
     @Test
     public void testDeletePerson_Success() {
@@ -324,6 +351,23 @@ public class PersonServiceTest {
 
         // Check if person was updated
         assertEquals("Phone number cannot be empty!", eMSG);
+        assertNull(person);
+    }
+
+    @Test
+    public void testUpdatePerson_DuplicatePhoneNumber() {
+        String eMSG = "";
+        Person person = null;
+
+        // Update person
+        try {
+            person = personService.updatePerson(P1.getPersonID(), TEST_NAME, P2.getPhoneNumber());
+        } catch (Exception e) {
+            eMSG = e.getMessage();
+        }
+
+        // Check if person was updated
+        assertEquals("Phone number already exists!", eMSG);
         assertNull(person);
     }
 

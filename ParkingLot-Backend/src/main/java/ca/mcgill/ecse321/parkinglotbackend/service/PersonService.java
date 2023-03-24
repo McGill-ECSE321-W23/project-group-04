@@ -74,6 +74,10 @@ public class PersonService {
      */
     @Transactional
     public Person createPerson(String name, String phoneNumber) throws Exception {
+        // Check for duplicate phone number
+        if (personRepository.existsPersonByPhoneNumber(phoneNumber)) {
+            throw new Exception("Phone number already exists!");
+        }
 
         // Check input
         if (name == null || name.trim().length() == 0) {
@@ -111,6 +115,11 @@ public class PersonService {
      */
     @Transactional
     public Person updatePerson(long personID, String name, String phoneNumber) throws Exception {
+        // Check for duplicate phone number
+        if (personRepository.existsPersonByPhoneNumber(phoneNumber)) {
+            throw new Exception("Phone number already exists!");
+        }
+
         Person person = personRepository.findPersonByPersonID(personID);
 
         // Check input
