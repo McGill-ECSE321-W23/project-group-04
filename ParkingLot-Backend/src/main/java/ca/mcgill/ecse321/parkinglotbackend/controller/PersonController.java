@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
+import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.DtoUtility;
+import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.service.AccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.PersonService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,8 +32,8 @@ public class PersonController {
     @Autowired
     private AccountService accountService;
     
-    @PostMapping("/register")
-    public ResponseEntity<?> registerPerson(HttpServletRequest request,
+    @PostMapping("/create")
+    public ResponseEntity<?> createPerson(HttpServletRequest request,
     @RequestBody String name, @RequestBody String phoneNumber) {
         try {
             personService.createPerson(name, phoneNumber);
@@ -99,7 +103,8 @@ public class PersonController {
 
         // Authorized
         try {
-            return ResponseEntity.ok().body(personService.getPersonByName("John"));
+            Person person = personService.getPersonByID(id);
+            return ResponseEntity.ok().body(DtoUtility.convertToDto(person));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -118,7 +123,7 @@ public class PersonController {
         }
 
         // Authorized
-        return ResponseEntity.ok().body(personService.getAllPersons());
+        return ResponseEntity.ok().body(personService.getAllPersons().stream().map(DtoUtility::convertToDto).collect(Collectors.toList()));
     }
 
 }

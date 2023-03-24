@@ -8,34 +8,34 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 public class DtoUtility {
     
     // Person
-    public static PersonDto convertToDto(Person person) throws Exception {
+    public static PersonDto convertToDto(Person person) {
         if (person == null) {
-            throw new Exception("There is no such Person!");
+            return null;
         }
         PersonDto personDto = new PersonDto(person.getPersonID(), person.getPhoneNumber(), person.getName());
         return personDto;
     }
 
-    public static Person convertToEntity(PersonDto personDto) throws Exception {
+    public static Person convertToEntity(PersonDto personDto) {
         if (personDto == null) {
-            throw new Exception("There is no such PersonDto!");
+            return null;
         }
         Person person = new Person(personDto.getPersonID(), personDto.getPhoneNumber(), personDto.getName());
         return person;
     }
 
     // Account
-    public static AccountDto convertToDto(Account account) throws Exception {
+    public static AccountDto convertToDto(Account account) {
         if (account == null) {
-            throw new Exception("There is no such Account!");
+            return null;
         }
         AccountDto accountDto = new AccountDto(account.getAccountID(), account.getEmail(), account.getPassword(), convertToDto(account.getPerson()));
         return accountDto;
     }
 
-    public static Account convertToEntity(AccountDto accountDto) throws Exception {
+    public static Account convertToEntity(AccountDto accountDto) {
         if (accountDto == null) {
-            throw new Exception("There is no such AccountDto!");
+            return null;
         }
         Account account = new Account(accountDto.getAccountID(), accountDto.getEmail(), accountDto.getPassword(), convertToEntity(accountDto.getPerson()));
         return account;
