@@ -20,7 +20,8 @@ public class TimeSlotService {
     private TimeSlotRepository timeSlotRepository;
 
     @Transactional
-    public TimeSlot createTimeSlot(DayOfWeek dayOfTheWeek, LocalTime startTime, LocalTime endTime, ParkingLotSoftwareSystem parkingLotSoftwareSystem, StaffAccount staffAccount) {
+    public TimeSlot createTimeSlot(DayOfWeek dayOfTheWeek, LocalTime startTime, LocalTime endTime,
+            ParkingLotSoftwareSystem parkingLotSoftwareSystem, StaffAccount staffAccount) {
         TimeSlot timeSlot = new TimeSlot();
         timeSlot.setDayOfTheWeek(dayOfTheWeek);
         timeSlot.setStartTime(startTime);
@@ -42,11 +43,34 @@ public class TimeSlotService {
         return toList(timeSlotRepository.findAll());
     }
 
-    private <T> List<T> toList(Iterable<T> iterable){
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
-	}
+    @Transactional
+    public TimeSlot updateTimeSlot(long timeSlotID, DayOfWeek dayOfTheWeek, LocalTime startTime, LocalTime endTime) throws Exception {
+        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByTimeSlotID(timeSlotID);
+        if (timeSlot == null) {
+            throw new Exception("No account with this id exists!");
+        }
+        timeSlot.setDayOfTheWeek(dayOfTheWeek);
+        timeSlot.setStartTime(startTime);
+        timeSlot.setEndTime(endTime);
+        timeSlotRepository.save(timeSlot);
+        return timeSlot;
+    }
+
+    @Transactional
+    public TimeSlot deleteTimeSlot(long timeSlotID) throws Exception {
+        TimeSlot timeSlot = timeSlotRepository.findTimeSlotByTimeSlotID(timeSlotID);
+        if (timeSlot == null) {
+            throw new Exception("No account with this id exists!");
+        }
+        timeSlotRepository.delete(timeSlot);
+        return timeSlot;
+    }
+
+    private <T> List<T> toList(Iterable<T> iterable) {
+        List<T> resultList = new ArrayList<T>();
+        for (T t : iterable) {
+            resultList.add(t);
+        }
+        return resultList;
+    }
 }
