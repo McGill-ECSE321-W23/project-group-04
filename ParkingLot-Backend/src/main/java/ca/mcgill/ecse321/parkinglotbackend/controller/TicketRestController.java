@@ -1,15 +1,20 @@
 
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
+import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.dto.TicketDto;
+import ca.mcgill.ecse321.parkinglotbackend.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
 
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
+import ca.mcgill.ecse321.parkinglotbackend.service.ParkingLotSoftwareSystemService;
+import ca.mcgill.ecse321.parkinglotbackend.service.ParkingSpotService;
 import ca.mcgill.ecse321.parkinglotbackend.service.TicketService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,15 +29,77 @@ public class TicketRestController {
     @Autowired
     private TicketService ticketService;
 
+    //TODO: add the system to create, delete, update methods?
+    private ParkingLotSoftwareSystemService parkingLotSoftwareSystemService;
 
-    @GetMapping(value = { "/tickets", "/tickets/" })
-    public int numberOfTickets() {
-        int number = ticketService.numberOfTickets();
-        return number;
+
+    // create a ticket in the system
+    @PostMapping(value = {"/create", "/create/" })
+    public ResponseEntity<?> createTicket (HttpServletRequest request,  @RequestBody CarType carType, @PathVariable ParkingLotSoftwareSystem parkingLotSoftwareSystem) {
+
+        // Check authorization (staff)
+        try {
+            if (!AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+
+        try {
+            LocalDateTime entryTime = LocalDateTime.now();
+            ticketService.createTicket(entryTime, carType, parkingLotSoftwareSystem);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // delete a ticket by id
+
+    @DeleteMapping(value = {"/delete/{id}", "/delete/{id}/" })
+    public ResponseEntity<?> deleteTicket (HttpServletRequest request, @RequestBody long id) {
+
+        // Check authorization (staff)
+        try {
+            if (!AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+
+        try {
+            ticketService.deleteTicket(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // Get a ticket by ID
+    @GetMapping(value = { "/get/{id}", "/get/{id}/" })
+    public ResponseEntity<?> getTicketByID(HttpServletRequest request, @RequestBody long ticketID) throws Exception {
+        // Check authorization (staff)
+        try {
+            if (!AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+
+        try {
+            Ticket ticket = ticketService.getTicketByID(ticketID);
+            TicketDto ticketDto = convertToDto(ticket);
+            return ResponseEntity.ok().body(ticketDto);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 
-
+    // get a list of all the tickets
     @GetMapping(value = { "/tickets", "/tickets/" })
     public ResponseEntity<?> getAllTickets(HttpServletRequest request) {
         // Check authorization (staff)
@@ -43,44 +110,28 @@ public class TicketRestController {
         } catch (Exception e) {
             return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
         }
-
-
-        List<TicketDto> ticketDtos = new ArrayList<>();
-        for (Ticket ticket : ticketService.getAllTickets()) {
-            ticketDtos.add(convertToDto(ticket));
-        }
-        return ticketDtos;
-    }
-
-
-
-    @PostMapping(value = {"/createTicket", "/createTicket/" })
-    public ResponseEntity<?> createTicket (HttpServletRequest request, @RequestBody LocalDateTime
-            entryTime, @RequestBody CarType carType, @PathVariable ParkingLotSoftwareSystem parkingLotSoftwareSystem) {
         try {
-            ticketService.createTicket(entryTime, carType, parkingLotSoftwareSystem);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
+            List<TicketDto> ticketDtos = new ArrayList<>();
+            for (Ticket ticket : ticketService.getAllTickets()) {
+                ticketDtos.add(convertToDto(ticket));
+            }
+
+            return ResponseEntity.ok().body(ticketDtos);
+        }
+        catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-//    @PostMapping(value = { "/tickets/{entryTime}", "/tickets/{entryTime}/" })
-//    public TicketDto createTicket(@PathVariable("entryTime") LocalDateTime entryTime) throws IllegalArgumentException {
-//        Ticket ticket = ticketService.createTicket(entryTime);
-//        return convertToDto(ticket);
-//    }
+    // get no. of tickets in the system
 
-    // Get a ticket by ID
-    @GetMapping(value = { "/ticket/{ticketID}", "/ticket/{ticketID}/" })
-    public TicketDto getTicket(@PathVariable("ticketID") long ticketID) throws Exception {
-        return convertToDto(ticketService.getTicketByID(ticketID));
-    }
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteTicket(HttpServletRequest request, @PathVariable(value = "id") long id) {
+    @GetMapping(value = {"/getCount", "/getCount/"})
+    public ResponseEntity<?> getTicketCount(HttpServletRequest request) {
         try {
-            ticketService.deleteTicket(id);
-            return ResponseEntity.ok().build();
+            List <Ticket> tickets = ticketService.getAllTickets();
+            int count = tickets.size();
+            return ResponseEntity.ok().body(count);
+
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

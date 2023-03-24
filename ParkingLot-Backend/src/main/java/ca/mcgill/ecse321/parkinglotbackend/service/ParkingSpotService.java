@@ -48,7 +48,7 @@ public class ParkingSpotService {
     }
 
     @Transactional
-    public List<ParkingSpot> getAllTickets() {
+    public List<ParkingSpot> getAllParkingSpots() {
         return toList(parkingSpotRepository.findAll());
     }
 

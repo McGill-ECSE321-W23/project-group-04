@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.parkinglotbackend.dto;
 
+import ca.mcgill.ecse321.parkinglotbackend.model.MonthlyReservation;
+
 import java.time.LocalDateTime;
 
 
@@ -30,41 +32,37 @@ public class ParkingSpotDto {
 
     // getters
 
-	public LocalDateTime getParkingSpotID() {
+	public long getParkingSpotID() {
 		return parkingSpotID;
 	}
 
-    public CarType getFloor() {
-		return floor;
+    public int getFloor() {
+
+        return floor;
 	}
-    public void getNumber() {
+    public int getNumber() {
+
         return number;
     }
 
-    public void getSystem(){
-        return parkingLotSoftwareSystem;
-    }
 
     // setters
 
     public void setParkingSpotID(long aParkingSpotID) {
-       parkingSpotID = aParkingSpotID;
+
+        parkingSpotID = aParkingSpotID;
 	}
 
 	public void setFloor(int aFloor) {
+
         floor = aFloor;
      }
 
      public void setNumber(int aNumber) {
+
         number = aNumber;
      }
 
-     public void setSystem(ParkingLotSoftwareSystem aNewParkingLotSoftwareSystem) {
-        if (aNewParkingLotSoftwareSystem != null) {
-            parkingLotSoftwareSystem = aNewParkingLotSoftwareSystem;
-           
-        }
-    }
 
 
 }
