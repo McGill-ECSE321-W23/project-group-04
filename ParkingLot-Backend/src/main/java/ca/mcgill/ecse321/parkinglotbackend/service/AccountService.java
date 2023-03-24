@@ -110,12 +110,14 @@ public class AccountService {
         if (account == null) {
             throw new Exception("No account with this id exists!");
         }
-        if (email != null && email.trim().length() > 0) {
-            account.setEmail(email);
+        if (email == null || email.trim().length() == 0) {
+            throw new Exception("Email cannot be empty!");
         }
-        if (password != null && password.trim().length() > 0) {
-            account.setPassword(password);
+        if (password == null || password.trim().length() == 0) {
+            throw new Exception("Password cannot be empty!");
         }
+        account.setEmail(email);
+        account.setPassword(password);
         accountRepository.save(account);
         return account;
     }
