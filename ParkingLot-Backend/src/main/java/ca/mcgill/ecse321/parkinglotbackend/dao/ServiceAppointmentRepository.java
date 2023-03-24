@@ -15,7 +15,4 @@ public interface ServiceAppointmentRepository extends CrudRepository<ServiceAppo
     List<ServiceAppointment> findAppointmentByCar(Car car);
     List<ServiceAppointment> findAppointmentByService(OfferedService service);
 
-    boolean existsByCarAndService(Car car, OfferedService service);
-    List<ServiceAppointment> findAppointmentByCarAndService(Car car, OfferedService service);
-
 }

@@ -32,46 +32,53 @@ public class CarRestController {
 
     @GetMapping(value = { "/cars", "/cars/" })
     public List<CarDto> getAllCars() {
-        return service.getAllCars().stream().map(c -> convertToDto(c, c.getOwner())).collect(Collectors.toList());
+        return service.getAllCars().stream().map(c -> convertToDto(c)).collect(Collectors.toList());
     }
 
     @GetMapping(value = { "/cars/{licensePlate}", "/cars/{licensePlate}/" })
     public CarDto getCarByLicensePlate(@PathVariable("licensePlate") String licensePlate) throws Exception{
         Car c = service.getCarByLicensePlate(licensePlate);
-        return convertToDto(c, c.getOwner());
+        return convertToDto(c);
     }
+
+
+    @GetMapping(value = { "/cars/{id}", "/cars/{id}/" })
+    public CarDto getCarByLicensePlate(@PathVariable("id") Long id) throws Exception{
+        Car c = service.getCarByID(id);
+        return convertToDto(c);
+    }
+
 
     @GetMapping(value = { "/cars/{licensePlate}", "/cars/{licensePlate}/" })
     public List<CarDto> getCarsByOwner(Long id){
-        return service.findCarByOwnerID(id).stream().map(c -> convertToDto(c, c.getOwner())).collect(Collectors.toList());
+        return service.findCarByOwnerID(id).stream().map(c -> convertToDto(c)).collect(Collectors.toList());
     }
-
 
     @PostMapping(value = "/register/cars/{licensePLate}, /register/cars/{licensePlate}/")
     public CarDto registerCarUnderAccount(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person){
        Person p = service.findPersonByID(person.getID());
        Car c = service.registerCar(p, licensePlate, make, model);
-        return convertToDto(c, p);
+        return convertToDto(c);
 
     }
 
     @PostMapping(value = "/register/cars/{name}, /register/cars/{name}/")
     public CarDto createCar(@PathVariable("name") String name, String phoneNumber, String licensePlate, String make, String model){
         Car car = service.createCar(name, phoneNumber, licensePlate, make, model);
-        return convertToDto(car, car.getOwner());
+        return convertToDto(car);
     }
 
     @PutMapping("/update/{id}, /update/{id}/")
     public CarDto updateCar(@PathVariable("id") Long id, String licensePlate, String make, String model, PersonDto person) throws Exception{
         Car car = service.updateCar(id, licensePlate, make, model, convertToDomainObject(person));
-        return convertToDto(car, car.getOwner()ss)
+        return convertToDto(car);
     }
 
 
     @DeleteMapping("/delete/{licensePlate}, /delete/{licensePlate}/")
     public CarDto deleteCar(@PathVariable("licensePlate") String licensePlate){
         Car car = service.deleteCar(licensePlate);
-        return convertToDto(car, car.getOwner());
+        return convertToDto(car);
     }
 
     private PersonDto convertToDto(Person p){
@@ -83,12 +90,11 @@ public class CarRestController {
     }
 
 
-    private CarDto convertToDto(Car c, Person p) {
+    private CarDto convertToDto(Car c) {
         if (c == null) {
             throw new IllegalArgumentException("There is no such Car!");
         }
-        PersonDto person = convertToDto(p);
-        CarDto carDto = new CarDto(c.getCarID(), c.getLicensePlate(), c.getMake(), c.getModel(), person);
+        CarDto carDto = new CarDto(c.getCarID(), c.getLicensePlate(), c.getMake(), c.getModel(), convertToDto(c.getOwner()));
         return carDto;
     }
 
