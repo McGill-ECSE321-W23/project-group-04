@@ -62,6 +62,12 @@ public class AccountService {
      * @author Lin Wei Li
      */
     public Account createAccount(String email, String password, Person person) throws Exception {
+        // Check for duplicate emails
+        if (accountRepository.existsAccountByEmail(email)) {
+            throw new Exception("An account with this email already exists!");
+        }
+
+        // Attempt to create account
         if (email == null || email.trim().length() == 0) {
             throw new Exception("Email cannot be empty!");
         }
@@ -106,6 +112,12 @@ public class AccountService {
      * @author Lin Wei Li
      */
     public Account updateAccount(long id, String email, String password) throws Exception {
+        // Check for duplicate emails
+        if (accountRepository.existsAccountByEmail(email)) {
+            throw new Exception("An account with this email already exists!");
+        }
+
+        // Attemp to update account
         Account account = accountRepository.findAccountByAccountID(id);
         if (account == null) {
             throw new Exception("No account with this id exists!");

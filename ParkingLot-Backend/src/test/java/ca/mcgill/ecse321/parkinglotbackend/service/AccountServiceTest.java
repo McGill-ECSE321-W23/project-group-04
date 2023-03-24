@@ -79,6 +79,18 @@ public class AccountServiceTest {
             return Arrays.asList(A1, A2, A3);
         });
 
+        lenient().when(accountRepository.existsAccountByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(A1.getEmail())) {
+                return true;
+            } else if (invocation.getArgument(0).equals(A2.getEmail())) {
+                return true;
+            } else if (invocation.getArgument(0).equals(A3.getEmail())) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
         lenient().when(accountRepository.save(any(Account.class))).thenAnswer((InvocationOnMock invocation) -> {
             return invocation.getArgument(0);
         });
@@ -215,9 +227,6 @@ public class AccountServiceTest {
         assertEquals(TEST_PERSON, account.getPerson());
     }
 
-    // TODO: Prevent duplicate emails
-
-    /*
     @Test
     public void testCreateAccount_DuplicateEmail() {
         String eMSG = "";
@@ -234,7 +243,6 @@ public class AccountServiceTest {
         assertEquals("An account with this email already exists!", eMSG);
         assertNull(account);
     }
-    */
 
     @Test
     public void testCreateAccount_InvalidEmail() {
@@ -389,6 +397,23 @@ public class AccountServiceTest {
         
         // Check
         assertEquals("Password cannot be empty!", eMSG);
+        assertNull(account);
+    }
+
+    @Test
+    public void testUpdateAccount_DuplicateEmail() {
+        String eMSG = "";
+        Account account = null;
+
+        // Update account
+        try {
+            account = accountService.updateAccount(A1.getAccountID(), A2.getEmail(), TEST_PASSWORD);
+        } catch (Exception e) {
+            eMSG = e.getMessage();
+        }
+        
+        // Check
+        assertEquals("An account with this email already exists!", eMSG);
         assertNull(account);
     }
 
