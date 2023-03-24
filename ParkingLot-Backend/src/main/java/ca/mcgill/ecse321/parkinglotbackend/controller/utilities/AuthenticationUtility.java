@@ -4,6 +4,14 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class AuthenticationUtility {
 
+    // HTTP Status Codes
+    public static int OK = 200;
+    // public static int CREATED = 201;     // dont use this: front end will always confirm success with 200
+    public static int BAD_REQUEST = 400;
+    public static int UNAUTHORIZED = 401;
+    public static int FORBIDDEN = 403;
+    public static int NOT_FOUND = 404;
+    public static int INTERNAL_SERVER_ERROR = 500;
 
     public enum Role {
         CUSTOMER, STAFF, MANAGER
@@ -60,6 +68,5 @@ public class AuthenticationUtility {
         }
         return request.getSession().getAttribute("role") == Role.MANAGER;
     }
-
 
 }
