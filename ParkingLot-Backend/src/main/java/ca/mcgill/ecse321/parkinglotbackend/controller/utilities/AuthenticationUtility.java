@@ -38,8 +38,6 @@ public class AuthenticationUtility {
         if (!isLoggedIn(request)) {
             throw new Exception("Not logged in");
         }
-        // Long out = new Long(Integer.parseInt(request.getSession().getAttribute("accountID").toString()));
-        
         return (long) Integer.parseInt(request.getSession().getAttribute("accountID").toString());
     }
 
