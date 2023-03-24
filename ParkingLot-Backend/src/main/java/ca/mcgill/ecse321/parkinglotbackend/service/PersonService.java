@@ -115,7 +115,7 @@ public class PersonService {
 
         // Check input
         if (person == null) {
-            throw new Exception("Person does not exist!");
+            throw new Exception("No person with this id exists!");
         }
         if (name == null || name.trim().length() == 0) {
             throw new Exception("Name cannot be empty!");
