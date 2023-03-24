@@ -3,14 +3,18 @@ package ca.mcgill.ecse321.parkinglotbackend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
+import ca.mcgill.ecse321.parkinglotbackend.dao.AccountRepository;
+import ca.mcgill.ecse321.parkinglotbackend.dao.PersonRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Account;
 import ca.mcgill.ecse321.parkinglotbackend.model.ManagerAccount;
+import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.StaffAccount;
 import ca.mcgill.ecse321.parkinglotbackend.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -91,6 +95,51 @@ public class AuthenticationController {
         session.invalidate();
 
         return ResponseEntity.ok().build();
+
+    }
+
+    /**
+     * Smoke testing
+     * @param request
+     * @return Http response
+     * @author Lin Wei Li
+     */
+    @GetMapping("/smokeTest")
+    public ResponseEntity<?> smokeTest(HttpServletRequest request) {
+
+        // Make manager
+        HttpSession session = request.getSession(true);
+        session.setAttribute("accountID", 1);
+        session.setAttribute("role", AuthenticationUtility.Role.MANAGER);
+        session.setMaxInactiveInterval(60*60*24);
+
+        return ResponseEntity.ok().body(AuthenticationUtility.isLoggedIn(request));
+
+    }
+
+    @Autowired
+    private PersonRepository personRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+
+    /**
+     * Add test data for smoke testing
+     * @param request
+     * @return
+     * @author Lin Wei Li
+     */
+    @GetMapping("/addTestData")
+    public ResponseEntity<?> addTestData(HttpServletRequest request) {
+
+        // Person
+        Person p1 = new Person("5141231234", "john");
+        personRepository.save(p1);
+
+        // Account
+        Account a1 = new Account("john@gmail.com", "wasd", p1);
+        accountRepository.save(a1);
+
+        return ResponseEntity.ok().body(AuthenticationUtility.isLoggedIn(request));
 
     }
     
