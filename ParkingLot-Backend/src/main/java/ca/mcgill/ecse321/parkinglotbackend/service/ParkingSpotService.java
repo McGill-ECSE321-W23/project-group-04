@@ -20,81 +20,38 @@ public class ParkingSpotService {
     ParkingSpotRepository parkingSpotRepository;
 
 
-
     @Transactional
-    public ParkingSpot createParkingSpot(LocalDateTime entryTime) {
-        Ticket ticket = new Ticket();
-
-        long ticketID = ticket.getTicketID();
-
-        // set entry time
-        //LocalDateTime currentTime = LocalDateTime.now();
-        ticket.setEntryTime(entryTime);
-
-        ticketRepository.save(ticket);
-
-
-        return ticket;
+    public ParkingSpot createParkingSpot(int floor, int number) {
+        ParkingSpot parkingSpot = new ParkingSpot();
+        parkingSpot.setNumber(number);
+        parkingSpot.setFloor(floor);
+        return parkingSpot;
     }
 
     @Transactional
-    public Ticket getTicket(long ticketID) {
-        Ticket ticket = ticketRepository.findTicketByTicketID(ticketID);
-        return ticket;
+    public ParkingSpot updateParkingSpot(long ParkingSpotID, int floor, int number) {
+        ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotByParkingSpotID(ParkingSpotID);
+        parkingSpot.setFloor(floor);
+        parkingSpot.setNumber(number);
+        return parkingSpot;
+    }
+    @Transactional
+    public ParkingSpot deleteParkingSpot(long ParkingSpotID) {
+        ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotByParkingSpotID(ParkingSpotID);
+        parkingSpotRepository.delete(parkingSpot);
+        return parkingSpot;
+    }
+    @Transactional
+    public ParkingSpot findParkingSpotByID(long ParkingSpotID) {
+        ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotByParkingSpotID(ParkingSpotID);
+        return parkingSpot;
     }
 
     @Transactional
-    public List<Ticket> getAllTickets() {
-        return toList(ticketRepository.findAll());
+    public List<ParkingSpot> getAllTickets() {
+        return toList(parkingSpotRepository.findAll());
     }
 
-//	@Transactional
-//	public Event createEvent(String name, Date date, Time startTime, Time endTime) {
-//		Event event = new Event();
-//		event.setName(name);
-//		event.setDate(date);
-//		event.setStartTime(startTime);
-//		event.setEndTime(endTime);
-//		eventRepository.save(event);
-//		return event;
-//	}
-//
-//	@Transactional
-//	public Event getEvent(String name) {
-//		Event event = eventRepository.findEventByName(name);
-//		return event;
-//	}
-//
-//	@Transactional
-//	public List<Event> getAllEvents() {
-//		return toList(eventRepository.findAll());
-//	}
-//
-//	@Transactional
-//	public Registration register(Person person, Event event) {
-//		Registration registration = new Registration();
-//		registration.setId(person.getName().hashCode() * event.getName().hashCode());
-//		registration.setPerson(person);
-//		registration.setEvent(event);
-//
-//		registrationRepository.save(registration);
-//
-//		return registration;
-//	}
-//
-//	@Transactional
-//	public List<Registration> getAllRegistrations(){
-//		return toList(registrationRepository.findAll());
-//	}
-//
-//	@Transactional
-//	public List<Event> getEventsAttendedByPerson(Person person) {
-//		List<Event> eventsAttendedByPerson = new ArrayList<>();
-//		for (Registration r : registrationRepository.findByPerson(person)) {
-//			eventsAttendedByPerson.add(r.getEvent());
-//		}
-//		return eventsAttendedByPerson;
-//	}
 
     private <T> List<T> toList(Iterable<T> iterable){
         List<T> resultList = new ArrayList<T>();

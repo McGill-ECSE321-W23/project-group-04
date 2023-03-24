@@ -2,11 +2,16 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
 import ca.mcgill.ecse321.parkinglotbackend.dto.TicketDto;
+import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
+import ca.mcgill.ecse321.parkinglotbackend.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
+import ca.mcgill.ecse321.parkinglotbackend.service.ParkingSpotService;
 import ca.mcgill.ecse321.parkinglotbackend.service.TicketService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -18,52 +23,49 @@ import java.util.List;
 @RestController
 public class ParkingSpotRestController {
     @Autowired
-    private TicketService ticketService;
+    private ParkingSpotService parkingSpotService;
 
-    @GetMapping(value = { "/tickets", "/tickets/" })
-    public List<TicketDto> getAllTickets() {
-        List<TicketDto> ticketDtos = new ArrayList<>();
-        for (Ticket ticket : ticketService.getAllTickets()) {
-            ticketDtos.add(convertToDto(ticket));
+    @PostMapping("/view/{id}")
+    public ResponseEntity<?> viewParkingSpot(HttpServletRequest request, @PathVariable(value = "id") long id) {
+        try {
+            ParkingSpot parkingSpot = parkingSpotService.findParkingSpotByID(id);
+            int floor = parkingSpot.getFloor();
+            int number = parkingSpot.getNumber();
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ticketDtos;
     }
 
-    @PostMapping(value = { "/tickets/{entryTime}", "/tickets/{entryTime}/" })
-    public TicketDto createTicket(@PathVariable("entryTime") LocalDateTime entryTime) throws IllegalArgumentException {
-        Ticket ticket = ticketService.createTicket(entryTime);
-        return convertToDto(ticket);
-    }
-
-    // Get a ticket by ID
-    @GetMapping(value = { "/ticket/{ticketID}", "/ticket/{ticketID}/" })
-    public TicketDto getTicket(@PathVariable("ticketID") long ticketID) {
-        return convertToDto(ticketService.getTicket(ticketID));
-    }
-
-
-    private TicketDto convertToDto(Ticket t) {
-        if (t == null) {
-            throw new IllegalArgumentException("There is no such Ticket!");
+    @PostMapping(value = {"/createParkingSpot", "/createParkingSpot/" })
+    public ResponseEntity<?> createParkingSpot (HttpServletRequest request, @RequestBody int floor
+            , @RequestBody int number) {
+        try {
+            parkingSpotService.createParkingSpot(floor, number);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        TicketDto ticketDto = new TicketDto(t.getEntryTime());
-
-        ticketDto.setSystem(t.getSystem());
-        ticketDto.setCarType(t.getCarType());
-        ticketDto.setTicketID(t.getTicketID());
-
-
-        return ticketDto;
     }
-    private Ticket convertToDomainObject(TicketDto tDto) {
-        List<Ticket> tickets = ticketService.getAllTickets();
-        for (Ticket ticket : tickets) {
-            if (ticket.getTicketID() ==  (tDto.getTicketID())) {
-                return ticket;
-            }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateParkingSpot(HttpServletRequest request, @PathVariable(value = "id") long id,
+                                           @RequestBody int floor, @RequestBody int number) {
+        try {
+            parkingSpotService.updateParkingSpot(id, floor, number);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return null;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteParkingSpot(HttpServletRequest request, @PathVariable(value = "id") long id) {
+        try {
+            parkingSpotService.deleteParkingSpot(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 
