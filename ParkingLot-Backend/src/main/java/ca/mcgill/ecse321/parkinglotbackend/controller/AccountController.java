@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
+import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.DtoUtility;
+import ca.mcgill.ecse321.parkinglotbackend.model.Account;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.service.AccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.PersonService;
@@ -111,7 +115,8 @@ public class AccountController {
 
         // Authorized
         try {
-            return ResponseEntity.ok().body(accountService.getAccountByID(id));
+            Account account = accountService.getAccountByID(id);
+            return ResponseEntity.ok().body(DtoUtility.convertToDto(account));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -129,7 +134,7 @@ public class AccountController {
         }
 
         // Authorized
-        return ResponseEntity.ok().body(accountService.getAllAccounts());
+        return ResponseEntity.ok().body(accountService.getAllAccounts().stream().map(DtoUtility::convertToDto).collect(Collectors.toList()));
     }
 
 }

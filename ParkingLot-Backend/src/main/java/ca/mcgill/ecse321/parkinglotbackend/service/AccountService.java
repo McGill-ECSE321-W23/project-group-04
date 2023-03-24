@@ -1,5 +1,8 @@
 package ca.mcgill.ecse321.parkinglotbackend.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,11 +46,11 @@ public class AccountService {
 
     /**
      * Get all accounts
-     * @return Iterable<Account>
+     * @return List<Account>
      * @author Lin Wei Li
      */
-    public Iterable<Account> getAllAccounts() {
-        return accountRepository.findAll();
+    public List<Account> getAllAccounts() {
+        return toList(accountRepository.findAll());
     }
 
     /**
@@ -117,4 +120,17 @@ public class AccountService {
         return account;
     }
 
+    /**
+     * Helper method to convert Iterable to List
+     * @param iterable
+     * @return List<Account>
+     * @author Lin Wei Li
+     */
+    private <T> List<T> toList(Iterable<T> iterable) {
+        List<T> resultList = new ArrayList<T>();
+        for (T t : iterable) {
+            resultList.add(t);
+        }
+        return resultList;
+    }
 }
