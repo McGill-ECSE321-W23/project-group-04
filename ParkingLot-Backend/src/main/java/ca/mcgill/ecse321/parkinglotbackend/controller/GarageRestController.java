@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping("/api/garages")
 public class GarageRestController {
     @Autowired
     private GarageService garageService;
 
     // Get a garage by id
-    @GetMapping("/garages/{garageID}")
-    ResponseEntity<?> getGarageByID(HttpServletRequest request, @PathVariable(value = "garageID") long garageID) {
+    @GetMapping("get/{garageID}")
+    ResponseEntity<?> getGarage(HttpServletRequest request, @PathVariable(value = "garageID") long garageID) {
         try {
             // If the user trying to get a garage is not staff
             if (AuthenticationUtility.isStaff(request)) { // Check which user is trying to call this method
@@ -39,8 +39,8 @@ public class GarageRestController {
     }
 
     // Get all of the garages
-    @GetMapping("/garages/{garageID}")
-    ResponseEntity<?> getGarageByID(HttpServletRequest request) {
+    @GetMapping("/get")
+    ResponseEntity<?> getAllGarages(HttpServletRequest request) {
         try {
             // If the user trying to get all the garages is staff
             if (AuthenticationUtility.isStaff(request)) { // Check which user is trying to call this method
@@ -58,7 +58,7 @@ public class GarageRestController {
     }
 
     // Create a garage
-    @PostMapping("/garages/")
+    @PostMapping("/create")
     ResponseEntity<?> createGarage(HttpServletRequest request, @RequestBody int garageNumber) {
         try {
             // If the user is the manager
@@ -76,7 +76,7 @@ public class GarageRestController {
     }
 
     // Deleting a garage
-    @PostMapping("/garages/{garageID}")
+    @PostMapping("/delete/{garageID}")
     ResponseEntity<?> deleteGarage(HttpServletRequest request, @PathVariable(value = "garageID") long garageID) {
         try {
             // If the user is the manager
@@ -94,7 +94,7 @@ public class GarageRestController {
     }
 
     // Modifying a garage
-    @PostMapping("/garages/{garageID}")
+    @PostMapping("/modify/{garageID}")
     ResponseEntity<?> modifyGarage(HttpServletRequest request, @PathVariable(value = "garageID") long garageID,
                                    @RequestBody int garageNumber) {
         try {

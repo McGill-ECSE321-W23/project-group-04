@@ -15,14 +15,14 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping("/api/offeredServices")
 public class OfferedServiceRestController {
     @Autowired
     private OfferedServiceService offeredServiceService;
 
     // Get an offered service by id
-    @GetMapping("/offeredServices/{offeredServiceID}")
-    ResponseEntity<?> getOfferedServiceByID(HttpServletRequest request, @PathVariable(value = "offeredServiceID") long offeredServiceID) {
+    @GetMapping("/get/{offeredServiceID}")
+    ResponseEntity<?> getOfferedService(HttpServletRequest request, @PathVariable(value = "offeredServiceID") long offeredServiceID) {
         try {
             // If the user trying to get a service is not staff
             if (AuthenticationUtility.isStaff(request)) { // Check which user is trying to call this method
@@ -40,7 +40,7 @@ public class OfferedServiceRestController {
     }
 
     // Get all of the offered services
-    @GetMapping("/offeredServices/")
+    @GetMapping("/get")
     ResponseEntity<?> getAllOfferedServices(HttpServletRequest request) {
         try {
             // If the user trying to get all services is not staff
@@ -59,7 +59,7 @@ public class OfferedServiceRestController {
     }
 
     // Creating an offered service
-    @PostMapping("/offeredServices/")
+    @PostMapping("/create")
     ResponseEntity<?> createOfferedService(HttpServletRequest request, @RequestBody String description,
                                            @RequestBody float cost, @RequestBody int duration) {
         try {
@@ -78,7 +78,7 @@ public class OfferedServiceRestController {
     }
 
     // Deleting an offered service
-    @PostMapping("/offeredServices/{offeredServiceID}")
+    @PostMapping("/delete/{offeredServiceID}")
     ResponseEntity<?> deleteOfferedService(HttpServletRequest request, @PathVariable(value = "serviceID") long serviceID) {
         try {
             // If the user is the manager
@@ -96,7 +96,7 @@ public class OfferedServiceRestController {
     }
 
     // Modifying an offered service
-    @PostMapping("/offeredServices/{offeredServiceID}")
+    @PostMapping("/modify/{offeredServiceID}")
     ResponseEntity<?> modifyOfferedService(HttpServletRequest request, @PathVariable(value = "offeredServiceID") long offeredServiceID,
                                    @RequestBody String description, @RequestBody float cost, @RequestBody int duration) {
         try {
