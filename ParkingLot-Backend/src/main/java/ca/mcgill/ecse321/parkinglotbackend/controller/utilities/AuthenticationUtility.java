@@ -24,7 +24,7 @@ public class AuthenticationUtility {
      * @author Lin Wei Li
      */
     public static boolean isLoggedIn(HttpServletRequest request) {
-        return request.getSession().getAttribute("accountId") != null;
+        return request.getSession().getAttribute("accountID") != null;
     }
 
     /**
@@ -38,7 +38,9 @@ public class AuthenticationUtility {
         if (!isLoggedIn(request)) {
             throw new Exception("Not logged in");
         }
-        return (long) request.getSession().getAttribute("accountId");
+        // Long out = new Long(Integer.parseInt(request.getSession().getAttribute("accountID").toString()));
+        
+        return (long) Integer.parseInt(request.getSession().getAttribute("accountID").toString());
     }
 
     /**
