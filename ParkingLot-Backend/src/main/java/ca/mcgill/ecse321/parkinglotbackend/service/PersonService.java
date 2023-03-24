@@ -1,5 +1,8 @@
 package ca.mcgill.ecse321.parkinglotbackend.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +64,20 @@ public class PersonService {
     public Iterable<Person> getAllPersons() {
         return personRepository.findAll();
     }
+
+    @Transactional
+    public List<Person> listAllPersons() {
+        return toList(personRepository.findAll());
+    }
+
+    private <T> List<T> toList(Iterable<T> iterable){
+		List<T> resultList = new ArrayList<T>();
+		for (T t : iterable) {
+			resultList.add(t);
+		}
+		return resultList;
+    }
+
 
     /**
      * Create a person
