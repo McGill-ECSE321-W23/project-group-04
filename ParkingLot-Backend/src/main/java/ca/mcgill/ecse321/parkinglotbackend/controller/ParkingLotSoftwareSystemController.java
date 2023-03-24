@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/parkinglotsoftwaresystemcontroller")
+@RequestMapping("/api/parkinglotsoftwaresystem")
 public class ParkingLotSoftwareSystemController {
     @Autowired
     private ParkingLotSoftwareSystemService parkingLotSoftwareSystemService;
@@ -28,13 +28,8 @@ public class ParkingLotSoftwareSystemController {
     // Get system by id
     @GetMapping("/get/{parkingLotSoftwareSystemID}")
     public ResponseEntity<?> getParkingLotSoftwareSystem(HttpServletRequest request, @PathVariable(value = "parkingLotSoftwareSystemID") long parkingLotSoftwareSystemID) {
-        // Check authorization
         try {
-            if (AuthenticationUtility.isManager(request)) {
-                return ResponseEntity.ok(convertToDto(parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID)));
-            } else {
-                return ResponseEntity.badRequest().body("Only manager can get a system");
-            }
+            return ResponseEntity.ok(convertToDto(parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID)));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

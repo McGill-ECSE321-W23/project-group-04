@@ -37,7 +37,7 @@ public class ParkingLotSoftwareSystemService {
     public ParkingLotSoftwareSystem updateParkingLotSoftwareSystem(long parkingLotSoftwareSystemID, float aMonthlyFee, float aFeePer15m, int aMaxStay, int aNumberOfRegularParkingSpots, int aNumberOfLargeParkingSpots, int aNumberOfMonthlyFloors, int aNumberOfMonthlySpotsPerFloor, int aNumberOfGarages) throws Exception {
         ParkingLotSoftwareSystem system = parkingLotSoftwareSystemRepository.findParkingLotSoftwareSystemByParkingLotSoftwareSystemID(parkingLotSoftwareSystemID);
         if (system == null) {
-            throw new Exception("No account with this id exists!");
+            throw new Exception("No system with this id exists!");
         }
         system.setMonthlyFee(aMonthlyFee);
         system.setFeePer15m(aFeePer15m);
@@ -55,7 +55,7 @@ public class ParkingLotSoftwareSystemService {
     public ParkingLotSoftwareSystem deleteParkingLotSoftwareSystem(long parkingLotSoftwareSystemID) throws Exception {
         ParkingLotSoftwareSystem system = parkingLotSoftwareSystemRepository.findParkingLotSoftwareSystemByParkingLotSoftwareSystemID(parkingLotSoftwareSystemID);
         if (system == null) {
-            throw new Exception("No account with this id exists!");
+            throw new Exception("No system with this id exists!");
         }
         parkingLotSoftwareSystemRepository.delete(system);
         return system;

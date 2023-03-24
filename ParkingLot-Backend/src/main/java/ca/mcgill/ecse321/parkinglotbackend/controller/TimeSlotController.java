@@ -57,11 +57,40 @@ public class TimeSlotController {
     public ResponseEntity<?> getAllTimeSlots(HttpServletRequest request) {
         // Check authorization
         try {
-            if (AuthenticationUtility.isStaff(request)) {
-                return ResponseEntity.ok(timeSlotService.getAllTimeSlots().stream().map(g -> convertToDto(g))
-                        .collect(Collectors.toList()));
+            if (AuthenticationUtility.isManager(request)) {
+                return ResponseEntity.ok(timeSlotService.getAllTimeSlots().stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
             } else {
-                return ResponseEntity.badRequest().body("Only staff can get all TimeSlots");
+                return ResponseEntity.badRequest().body("Only manager can get all TimeSlots");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // Get all timeslots of one employee
+    @GetMapping("/get/{accountID}")
+    public ResponseEntity<?> getAllTimeSlotsByAccountID(HttpServletRequest request, @PathVariable(value = "accountID") long accountID) {
+        // Check authorization
+        try {
+            if (AuthenticationUtility.isManager(request)) {
+                return ResponseEntity.ok(timeSlotService.getTimeSlotsByAccountID(accountID).stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
+            } else {
+                return ResponseEntity.badRequest().body("Only manager can get all TimeSlots by accountID");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // Get all timeslots as opening hours
+    @GetMapping("/getopen}")
+    public ResponseEntity<?> getAllTimeSlotsByStaffAccount(HttpServletRequest request, StaffAccount staffAccount) {
+        // Check authorization
+        try {
+            if (AuthenticationUtility.isManager(request)) {
+                return ResponseEntity.ok(timeSlotService.getTimeSlotsByStaffAccount(staffAccount).stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
+            } else {
+                return ResponseEntity.badRequest().body("Only manager can get opening hours");
             }
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -73,14 +102,18 @@ public class TimeSlotController {
     public ResponseEntity<?> createTimeSlot(HttpServletRequest request, @RequestBody DayOfWeek dayOfTheWeek, @RequestBody LocalTime startTime, @RequestBody LocalTime endTime, @RequestBody long parkingLotSoftwareSystemID, @RequestBody long accountID) {
         ParkingLotSoftwareSystem system = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID);
         StaffAccount staffAccount = staffAccountService.getStaffAccount(accountID);
-        if (staffAccount == null || system == null) {
-            return ResponseEntity.badRequest().body("There is no such system or staff account");
+        if ((staffAccount == null && system == null) || (staffAccount != null && system != null)) {
+            return ResponseEntity.badRequest().body("Cannot create timeslot");
         }
 
         // Check authorization
         try {
             if (AuthenticationUtility.isManager(request)) {
-                return ResponseEntity.ok(convertToDto(timeSlotService.createTimeSlot(dayOfTheWeek, startTime, endTime, system, null)));
+                if (system == null) {
+                    return ResponseEntity.ok(convertToDto(timeSlotService.createTimeSlot(dayOfTheWeek, startTime, endTime, null, staffAccount)));
+                } else {
+                    return ResponseEntity.ok(convertToDto(timeSlotService.createTimeSlot(dayOfTheWeek, startTime, endTime, system, null)));
+                }
             } else {
                 return ResponseEntity.badRequest().body("Only manager can create TimeSlot");
             }

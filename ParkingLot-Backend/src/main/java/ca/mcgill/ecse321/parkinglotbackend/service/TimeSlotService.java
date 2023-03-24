@@ -44,10 +44,20 @@ public class TimeSlotService {
     }
 
     @Transactional
+    public List<TimeSlot> getTimeSlotsByAccountID(long accountID) {
+        return toList(timeSlotRepository.findByAccountID(accountID));
+    }
+
+    @Transactional
+    public List<TimeSlot> getTimeSlotsByStaffAccount(StaffAccount staffAccount) {
+        return toList(timeSlotRepository.findByStaffAccount(staffAccount));
+    }
+
+    @Transactional
     public TimeSlot updateTimeSlot(long timeSlotID, DayOfWeek dayOfTheWeek, LocalTime startTime, LocalTime endTime) throws Exception {
         TimeSlot timeSlot = timeSlotRepository.findTimeSlotByTimeSlotID(timeSlotID);
         if (timeSlot == null) {
-            throw new Exception("No account with this id exists!");
+            throw new Exception("No TimeSlot with this id exists!");
         }
         timeSlot.setDayOfTheWeek(dayOfTheWeek);
         timeSlot.setStartTime(startTime);
@@ -60,7 +70,7 @@ public class TimeSlotService {
     public TimeSlot deleteTimeSlot(long timeSlotID) throws Exception {
         TimeSlot timeSlot = timeSlotRepository.findTimeSlotByTimeSlotID(timeSlotID);
         if (timeSlot == null) {
-            throw new Exception("No account with this id exists!");
+            throw new Exception("No TimeSlot with this id exists!");
         }
         timeSlotRepository.delete(timeSlot);
         return timeSlot;
