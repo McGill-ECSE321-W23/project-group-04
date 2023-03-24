@@ -83,7 +83,7 @@ public class TimeSlotController {
     }
 
     // Get all timeslots as opening hours
-    @GetMapping("/getopen}")
+    @GetMapping("/getopen")
     public ResponseEntity<?> getAllTimeSlotsByStaffAccount(HttpServletRequest request, StaffAccount staffAccount) {
         // Check authorization
         try {
