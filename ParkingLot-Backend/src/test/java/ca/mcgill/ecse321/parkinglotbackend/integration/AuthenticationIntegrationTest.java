@@ -20,6 +20,7 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Account;
 import ca.mcgill.ecse321.parkinglotbackend.model.ManagerAccount;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.StaffAccount;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AuthenticationIntegrationTest {
 
@@ -155,7 +156,7 @@ public class AuthenticationIntegrationTest {
     }
 
     @Test
-    public void testLogin() {
+    public void testLogin_Success() {
         // Login
         Account data = new Account();
         data.setEmail(CUSTOMER_EMAIL);
