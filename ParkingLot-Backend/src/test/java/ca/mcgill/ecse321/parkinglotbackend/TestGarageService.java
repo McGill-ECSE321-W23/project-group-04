@@ -8,23 +8,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.parkinglotbackend.dao.GarageRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
+
+import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 public class TestGarageService {
@@ -54,10 +53,6 @@ public class TestGarageService {
             fail();
         }
         assertNotNull(garage);
-        checkResultCreateGarage(garage, garageNumber);
-    }
-
-    private void checkResultCreateGarage(Garage garage, int garageNumber) {
         assertEquals(garageNumber, garage.getGarageNumber());
     }
 
@@ -131,10 +126,6 @@ public class TestGarageService {
             fail();
         }
         assertNotNull(garageDeleted);
-        checkResultDeleteGarage(garageCreated, garageDeleted);
-    }
-
-    private void checkResultDeleteGarage(Garage garageCreated, Garage garageDeleted) {
         assertEquals(garageCreated.getGarageID(), garageDeleted.getGarageID());
         assertEquals(garageCreated.getGarageNumber(), garageDeleted.getGarageNumber());
         try {
@@ -187,10 +178,6 @@ public class TestGarageService {
             fail();
         }
         assertNotNull(garageModified);
-        checkResultModifyGarage(garageCreated, garageModified);
-    }
-
-    private void checkResultModifyGarage(Garage garageCreated, Garage garageModified) {
         assertEquals(garageCreated.getGarageID(), garageModified.getGarageID());
         assertNotEquals(garageCreated.getGarageNumber(), garageModified.getGarageNumber());
     }
@@ -297,12 +284,68 @@ public class TestGarageService {
 
     @Test
     public void testGetGarage() {
-
+        int garageNumber = 1;
+        Garage garageCreated = null;
+        Garage garageRetrieved = null;
+        try {
+            garageCreated = garageService.createGarageService(garageNumber);
+            garageRetrieved = garageService.getGarageService(garageCreated.getGarageID());
+        } catch (Exception e) {
+            fail();
+        }
+        assertNotNull(garageRetrieved);
+        assertEquals(garageNumber, garageRetrieved.getGarageNumber());
     }
 
-    private void checkResultGetGarage(Garage garageCreated, Garage garageModified) {
-        assertEquals(garageCreated.getGarageID(), garageModified.getGarageID());
-        assertNotEquals(garageCreated.getGarageNumber(), garageModified.getGarageNumber());
+    @Test
+    public void testGetGarageEmptyGarageList() {
+        String error = null;
+        int garageID = 0;
+        Garage garage = null;
+        try {
+            garage = garageService.getGarageService(garageID);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(garage);
+        assertEquals("No garages exist.", error);
     }
 
+    @Test
+    public void testGetGarageNonExistent() {
+        String error = null;
+        int garageNumber = 1;
+        Garage garage = null;
+        int garageID = 0;
+        try {
+            garageService.createGarageService(garageNumber);
+            garage = garageService.getGarageService(garageID);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(garage);
+        assertEquals("Garage not found.", error);
+    }
+
+    @Test
+    public void testGetAllGarages() {
+        int garageNumber1 = 1;
+        Garage garage1 = null;
+        int garageNumber2 = 1;
+        Garage garage2 = null;
+        try {
+            garage1 = garageService.createGarageService(garageNumber1);
+            garage2 = garageService.createGarageService(garageNumber2);
+        } catch (Exception e) {
+            fail();
+        }
+        List<Garage> garages = garageService.getAllGarageService();
+        assertEquals(2, garages.size());
+    }
+
+    @Test
+    public void testGetAllGaragesEmptyGarageList() {
+        List<Garage> garages = garageService.getAllGarageService();
+        assertTrue(garages.isEmpty());
+    }
 }
