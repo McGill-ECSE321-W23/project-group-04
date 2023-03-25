@@ -57,12 +57,12 @@ public class PersonService {
      * Get all persons
      * @param name
      * @param phoneNumber
-     * @return Iterable<Person>
+     * @return List<Person>
      * @author Lin Wei Li
      */
     @Transactional
-    public Iterable<Person> getAllPersons() {
-        return personRepository.findAll();
+    public List<Person> getAllPersons() {
+        return toList(personRepository.findAll());
     }
 
     @Transactional
@@ -142,6 +142,20 @@ public class PersonService {
         person.setPhoneNumber(phoneNumber);
         personRepository.save(person);
         return person;
+    }
+
+    /**
+     * Helper method to convert an Iterable to a List
+     * @param iterable
+     * @return List<T>
+     * @author Lin Wei Li
+     */
+    private <T> List<T> toList(Iterable<T> iterable) {
+        List<T> resultList = new ArrayList<T>();
+        for (T t : iterable) {
+            resultList.add(t);
+        }
+        return resultList;
     }
     
 }
