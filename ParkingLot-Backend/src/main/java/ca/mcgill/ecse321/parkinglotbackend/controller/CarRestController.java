@@ -58,7 +58,7 @@ public class CarRestController {
     public CarDto registerCarUnderAccount(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person){
        Person p = service.findPersonByID(person.getID());
        Car c = service.registerCar(p, licensePlate, make, model);
-        return convertToDto(c);
+       return convertToDto(c);
 
     }
 

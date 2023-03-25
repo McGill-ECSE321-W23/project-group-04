@@ -30,11 +30,11 @@ public class ServiceAppointmentDto {
         this.car = car;
     }
 
-    public long serviceAppointmentID() {
+    public long getServiceAppointmentID() {
         return serviceAppointmentID;
     }
 
-    public void serviceAppointmentID (long newID) {
+    public void setServiceAppointmentID (long newID) {
         this.serviceAppointmentID = newID;
     }
 
@@ -54,13 +54,8 @@ public class ServiceAppointmentDto {
     public void setAppointmentStatus (AppointmentStatus newAppointmentStatus) {
         this.appointmentStatus = newAppointmentStatus;
     }
-
-
-    private OfferedServiceDto service;
-    private GarageDto garage;
-    private CarDto car;
     
-    public OfferedSeviceDto getService() {
+    public OfferedServiceDto getService() {
         return service;
     }
 
