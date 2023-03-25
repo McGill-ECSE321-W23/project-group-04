@@ -17,7 +17,26 @@ public class GarageService {
     GarageRepository garageRepository;
 
     @Transactional
-    public Garage createGarageService(int garageNumber) {
+    public Garage createGarageService(int garageNumber) throws Exception {
+        // Check that this garage number is not negative
+        if (garageNumber < 0) {
+            throw new Exception("Garage number cannot be negative.");
+        }
+
+        // Check that this garage number is not 0
+        if (garageNumber == 0) {
+            throw new Exception("Garage number cannot be zero.");
+        }
+
+        // Check that this garage number has not been assigned yet
+        for (Garage garage : getAllGarageService()) {
+            // If this garage number already exists
+            if (garage.getGarageNumber() == garageNumber) {
+                throw new Exception("This garage number already exists.");
+            }
+        }
+
+        // If this garage number doesn't yet exist and is valid
         // Create the garage by adding all the necessary components
         Garage garage = new Garage();
         garage.setGarageNumber(garageNumber);
@@ -27,24 +46,32 @@ public class GarageService {
 
     @Transactional
     public Garage deleteGarageService(long garageID) throws Exception {
+        // If there are no garages
+        if (getAllGarageService().isEmpty()) {
+            throw new Exception("No garages exist.");
+        }
+
         // Fetch the garage we want to delete through the id in the db
-        Garage garageService = garageRepository.findGarageByGarageID(garageID);
+        Garage garage = garageRepository.findGarageByGarageID(garageID);
 
         // If we could not find the garage to delete
-        if (garageService == null) {
+        if (garage == null) {
             throw new Exception("Garage not found.");
         }
 
         // If we found the garage to delete
-        else {
-            garageRepository.delete(garageService);
-            return garageService;
-        }
+        garageRepository.delete(garage);
+        return garage;
     }
 
     // This method changes all the attributes of the Garage provided through the id in the db
     @Transactional
     public Garage modifyGarage(long garageID, int garageNumber) throws Exception {
+        // If there are no garages
+        if (getAllGarageService().isEmpty()) {
+            throw new Exception("No garages exist.");
+        }
+
         // Fetch the garage we want to edit through the id in the db
         Garage garage = garageRepository.findGarageByGarageID(garageID);
 
@@ -53,19 +80,45 @@ public class GarageService {
             throw new Exception("Garage not found.");
         }
 
-        // If the service was found
-        else {
-            // Edit the garage by adding all the necessary components
-            garage.setGarageNumber(garageNumber);
-            garageRepository.save(garage);
-            return garage;
+        // Check that this garage number is not negative
+        if (garageNumber < 0) {
+            throw new Exception("Garage number cannot be negative.");
         }
+
+        // Check that this garage number is not 0
+        if (garageNumber == 0) {
+            throw new Exception("Garage number cannot be zero.");
+        }
+
+        // Check that this garage number has not been assigned yet
+        for (Garage g : getAllGarageService()) {
+            // If this garage number already exists
+            if (g.getGarageNumber() == garageNumber) {
+                throw new Exception("This garage number already exists.");
+            }
+        }
+
+        // If the service was found
+        // Edit the garage by adding all the necessary components
+        garage.setGarageNumber(garageNumber);
+        garageRepository.save(garage);
+        return garage;
     }
 
     @Transactional
-    public Garage getGarageService(long garageID) {
-        // Fetch the garage we want through the id in the db
+    public Garage getGarageService(long garageID) throws Exception {
+        // If there are no garages
+        if (getAllGarageService().isEmpty()) {
+            throw new Exception("No garages exist.");
+        }
+
+        // Fetch the garage we want to delete through the id in the db
         Garage garage = garageRepository.findGarageByGarageID(garageID);
+
+        // If we could not find the garage to delete
+        if (garage == null) {
+            throw new Exception("Garage not found.");
+        }
         return garage;
     }
 
