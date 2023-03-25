@@ -18,8 +18,25 @@ public class OfferedServiceService {
     @Transactional
     public OfferedService createOfferedServiceService(String description, float cost, int duration) throws Exception {
         // If the description was empty
-        if (description ==  null || description.isEmpty()) {
+        if (description ==  null || description.trim().isEmpty()) {
             throw new Exception("Description cannot be empty.");
+        }
+
+        // If description already exists
+        for (OfferedService offeredService : getAllOfferedServiceService()) {
+            if (offeredService.getDescription().equals(description)) {
+                throw new Exception("Description already exists.");
+            }
+        }
+
+        // If cost was negative
+        if (cost < 0) {
+            throw new Exception("Cost cannot be negative.");
+        }
+
+        // If duration was negative or 0
+        if (duration <= 0) {
+            throw new Exception("Duration must be positive.");
         }
 
         // Create the service by adding all the necessary components, one by one
@@ -50,13 +67,6 @@ public class OfferedServiceService {
         }
     }
 
-    @Transactional
-    public OfferedService getOfferedServiceService(long serviceID) {
-        // Fetch the service we want through the id in the db
-        OfferedService offeredService = offeredServiceRepository.findOfferedServiceByServiceID(serviceID);
-        return offeredService;
-    }
-
     // This method changes all the attributes of the OfferedService provided through the id in the db
     @Transactional
     public OfferedService modifyOfferedServiceService(long serviceID, String description, float cost, int duration) throws Exception {
@@ -68,9 +78,26 @@ public class OfferedServiceService {
             throw new Exception("Service not found.");
         }
 
-        // If the description is empty
-        if (description == null || description.isEmpty()) {
+        // If the description was empty
+        if (description ==  null || description.trim().isEmpty()) {
             throw new Exception("Description cannot be empty.");
+        }
+
+        // If description already exists
+        for (OfferedService os : getAllOfferedServiceService()) {
+            if (os.getDescription().equals(description)) {
+                throw new Exception("Description already exists.");
+            }
+        }
+
+        // If cost was negative
+        if (cost < 0) {
+            throw new Exception("Cost cannot be negative.");
+        }
+
+        // If duration was negative or 0
+        if (duration <= 0) {
+            throw new Exception("Duration must be positive.");
         }
 
         // If the service was found
@@ -82,6 +109,18 @@ public class OfferedServiceService {
             offeredServiceRepository.save(offeredService);
             return offeredService;
         }
+    }
+
+    @Transactional
+    public OfferedService getOfferedServiceService(long serviceID) throws Exception {
+        // Fetch the service we want through the id in the db
+        OfferedService offeredService = offeredServiceRepository.findOfferedServiceByServiceID(serviceID);
+
+        // If we could not find the offered service to delete
+        if (offeredService == null) {
+            throw new Exception("Service not found.");
+        }
+        return offeredService;
     }
 
     @Transactional

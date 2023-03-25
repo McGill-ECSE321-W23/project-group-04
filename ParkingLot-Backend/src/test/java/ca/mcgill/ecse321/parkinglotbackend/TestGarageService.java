@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.parkinglotbackend;
 
-import ca.mcgill.ecse321.parkinglotbackend.service.GarageService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -20,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import ca.mcgill.ecse321.parkinglotbackend.service.GarageService;
 import ca.mcgill.ecse321.parkinglotbackend.dao.GarageRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
 
@@ -38,9 +38,13 @@ public class TestGarageService {
     private static final int garageNumberExisting1 = 1;
     private static final int garageNumberExisting2 = 2;
     private static final int garageNumberExisting3 = 3;
+
     private static final int garageNumberNewCreation = 4;
+
     private static final int garageNumberModification = 5;
+
     private static final int garageNumberNonExistent = 6;
+
     private static final int garageNumberNegative = -1;
     private static final int garageNumberZero = 0;
     private static final int garageNumberExceed = Integer.MAX_VALUE + 1;
@@ -158,17 +162,17 @@ public class TestGarageService {
     @Test
     public void testModifyGarage() {
         String error = null;
-        Garage garageModified = null;
+        Garage garage = null;
         try {
-            garageModified = garageService.modifyGarage(garageNumberExisting1, garageNumberModification);
+            garage = garageService.modifyGarage(garageNumberExisting1, garageNumberModification);
         } catch (Exception e) {
             error = e.getMessage();
             assertEquals("", error);
             fail();
         }
-        assertNotNull(garageModified);
-        assertEquals(garageNumberExisting1, garageModified.getGarageID());
-        assertNotEquals(garageNumberExisting1, garageModified.getGarageNumber());
+        assertNotNull(garage);
+        assertEquals(garageNumberExisting1, garage.getGarageID());
+        assertNotEquals(garageNumberExisting1, garage.getGarageNumber());
     }
 
     @Test
@@ -187,39 +191,39 @@ public class TestGarageService {
     @Test
     public void testModifyGarageNonPositiveGarageNumber() {
         String error = null;
-        Garage garageModified = null;
+        Garage garage = null;
         try {
-            garageModified = garageService.modifyGarage(garageNumberExisting1, garageNumberZero);
+            garage = garageService.modifyGarage(garageNumberExisting1, garageNumberZero);
         } catch (Exception e) {
             error = e.getMessage();
         }
-        assertNull(garageModified);
+        assertNull(garage);
         assertEquals("Garage number must be positive.", error);
     }
 
     @Test
     public void testModifyGarageExistentGarageNumber() {
         String error = null;
-        Garage garageModified = null;
+        Garage garage = null;
         try {
-            garageModified = garageService.modifyGarage(garageNumberExisting1, garageNumberExisting2);
+            garage = garageService.modifyGarage(garageNumberExisting1, garageNumberExisting2);
         } catch (Exception e) {
             error = e.getMessage();
         }
-        assertNull(garageModified);
+        assertNull(garage);
         assertEquals("This garage number already exists.", error);
     }
 
     @Test
     public void testGetGarage() {
-        Garage garageRetrieved = null;
+        Garage garage = null;
         try {
-            garageRetrieved = garageService.getGarageService(garageNumberExisting2);
+            garage = garageService.getGarageService(garageNumberExisting2);
         } catch (Exception e) {
             fail();
         }
-        assertNotNull(garageRetrieved);
-        assertEquals(garageNumberExisting2, garageRetrieved.getGarageNumber());
+        assertNotNull(garage);
+        assertEquals(garageNumberExisting2, garage.getGarageNumber());
     }
 
     @Test
