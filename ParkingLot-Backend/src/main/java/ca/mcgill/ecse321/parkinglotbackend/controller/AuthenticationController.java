@@ -31,13 +31,13 @@ public class AuthenticationController {
     /**
      * Login to the system
      * @param request
-     * @param username
+     * @param email
      * @param password
      * @return Http response
      * @author Lin Wei Li
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(HttpServletRequest request, @RequestBody String username, @RequestBody String password) {
+    public ResponseEntity<?> login(HttpServletRequest request, @RequestBody String email, @RequestBody String password) {
 
         // Check if already logged in
         if (AuthenticationUtility.isLoggedIn(request)) {
@@ -46,7 +46,7 @@ public class AuthenticationController {
 
         // Attempt to authenticate
         try {
-            Account account = authenticationService.authenticate(username, password);
+            Account account = authenticationService.authenticate(email, password);
 
             // Respond with success
             HttpSession session = request.getSession(true);
