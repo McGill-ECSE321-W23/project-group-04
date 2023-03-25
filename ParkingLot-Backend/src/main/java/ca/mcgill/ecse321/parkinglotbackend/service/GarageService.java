@@ -18,14 +18,9 @@ public class GarageService {
 
     @Transactional
     public Garage createGarageService(int garageNumber) throws Exception {
-        // Check that this garage number is not negative
-        if (garageNumber < 0) {
-            throw new Exception("Garage number cannot be negative.");
-        }
-
-        // Check that this garage number is not 0
-        if (garageNumber == 0) {
-            throw new Exception("Garage number cannot be zero.");
+        // Check that this garage number is not negative or equal to 0
+        if (garageNumber <= 0) {
+            throw new Exception("Garage number must be positive.");
         }
 
         // Check that this garage number has not been assigned yet
@@ -46,11 +41,6 @@ public class GarageService {
 
     @Transactional
     public Garage deleteGarageService(long garageID) throws Exception {
-        // If there are no garages
-        if (getAllGarageService().isEmpty()) {
-            throw new Exception("No garages exist.");
-        }
-
         // Fetch the garage we want to delete through the id in the db
         Garage garage = garageRepository.findGarageByGarageID(garageID);
 
@@ -67,11 +57,6 @@ public class GarageService {
     // This method changes all the attributes of the Garage provided through the id in the db
     @Transactional
     public Garage modifyGarage(long garageID, int garageNumber) throws Exception {
-        // If there are no garages
-        if (getAllGarageService().isEmpty()) {
-            throw new Exception("No garages exist.");
-        }
-
         // Fetch the garage we want to edit through the id in the db
         Garage garage = garageRepository.findGarageByGarageID(garageID);
 
@@ -81,13 +66,8 @@ public class GarageService {
         }
 
         // Check that this garage number is not negative
-        if (garageNumber < 0) {
-            throw new Exception("Garage number cannot be negative.");
-        }
-
-        // Check that this garage number is not 0
-        if (garageNumber == 0) {
-            throw new Exception("Garage number cannot be zero.");
+        if (garageNumber <= 0) {
+            throw new Exception("Garage number must be positive.");
         }
 
         // Check that this garage number has not been assigned yet
@@ -107,11 +87,6 @@ public class GarageService {
 
     @Transactional
     public Garage getGarageService(long garageID) throws Exception {
-        // If there are no garages
-        if (getAllGarageService().isEmpty()) {
-            throw new Exception("No garages exist.");
-        }
-
         // Fetch the garage we want to delete through the id in the db
         Garage garage = garageRepository.findGarageByGarageID(garageID);
 
