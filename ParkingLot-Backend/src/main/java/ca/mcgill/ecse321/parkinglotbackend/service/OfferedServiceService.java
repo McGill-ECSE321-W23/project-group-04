@@ -40,14 +40,12 @@ public class OfferedServiceService {
         }
 
         // Create the service by adding all the necessary components, one by one
-        else {
-            OfferedService offeredService = new OfferedService();
-            offeredService.setDescription(description);
-            offeredService.setCost(cost);
-            offeredService.setDuration(duration);
-            offeredServiceRepository.save(offeredService);
-            return offeredService;
-        }
+        OfferedService offeredService = new OfferedService();
+        offeredService.setDescription(description);
+        offeredService.setCost(cost);
+        offeredService.setDuration(duration);
+        offeredServiceRepository.save(offeredService);
+        return offeredService;
     }
 
     @Transactional
@@ -61,10 +59,8 @@ public class OfferedServiceService {
         }
 
         // If we found the service to delete
-        else {
-            offeredServiceRepository.delete(offeredService);
-            return offeredService;
-        }
+        offeredServiceRepository.delete(offeredService);
+        return offeredService;
     }
 
     // This method changes all the attributes of the OfferedService provided through the id in the db
@@ -101,14 +97,12 @@ public class OfferedServiceService {
         }
 
         // If the service was found
-        else {
-            // Edit the service by adding all the necessary components, one by one
-            offeredService.setDescription(description);
-            offeredService.setCost(cost);
-            offeredService.setDuration(duration);
-            offeredServiceRepository.save(offeredService);
-            return offeredService;
-        }
+        // Edit the service by adding all the necessary components, one by one
+        offeredService.setDescription(description);
+        offeredService.setCost(cost);
+        offeredService.setDuration(duration);
+        offeredServiceRepository.save(offeredService);
+        return offeredService;
     }
 
     @Transactional

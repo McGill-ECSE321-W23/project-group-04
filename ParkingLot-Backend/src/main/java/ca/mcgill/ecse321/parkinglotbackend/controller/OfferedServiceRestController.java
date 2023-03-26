@@ -60,8 +60,8 @@ public class OfferedServiceRestController {
 
     // Creating an offered service
     @PostMapping("/create")
-    ResponseEntity<?> createOfferedService(HttpServletRequest request, @RequestBody String description,
-                                           @RequestBody float cost, @RequestBody int duration) {
+    ResponseEntity<?> createOfferedService(HttpServletRequest request, @RequestParam String description,
+                                           @RequestParam float cost, @RequestParam int duration) {
         try {
             // If the user is the manager
             if (AuthenticationUtility.isManager(request)) {
@@ -98,7 +98,7 @@ public class OfferedServiceRestController {
     // Modifying an offered service
     @PostMapping("/modify/{offeredServiceID}")
     ResponseEntity<?> modifyOfferedService(HttpServletRequest request, @PathVariable(value = "offeredServiceID") long offeredServiceID,
-                                   @RequestBody String description, @RequestBody float cost, @RequestBody int duration) {
+                                   @RequestParam String description, @RequestParam float cost, @RequestParam int duration) {
         try {
             // If the user is the manager
             if (AuthenticationUtility.isManager(request)) {

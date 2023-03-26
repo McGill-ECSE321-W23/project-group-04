@@ -59,7 +59,7 @@ public class GarageRestController {
 
     // Create a garage
     @PostMapping("/create")
-    ResponseEntity<?> createGarage(HttpServletRequest request, @RequestBody int garageNumber) {
+    ResponseEntity<?> createGarage(HttpServletRequest request, @RequestParam int garageNumber) {
         try {
             // If the user is the manager
             if (AuthenticationUtility.isManager(request)) {
@@ -96,7 +96,7 @@ public class GarageRestController {
     // Modifying a garage
     @PostMapping("/modify/{garageID}")
     ResponseEntity<?> modifyGarage(HttpServletRequest request, @PathVariable(value = "garageID") long garageID,
-                                   @RequestBody int garageNumber) {
+                                   @RequestParam int garageNumber) {
         try {
             // If the user is the manager
             if (AuthenticationUtility.isManager(request)) {
