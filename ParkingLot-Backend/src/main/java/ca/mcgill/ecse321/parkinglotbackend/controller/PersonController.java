@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
@@ -34,7 +35,7 @@ public class PersonController {
     
     @PostMapping("/create")
     public ResponseEntity<?> createPerson(HttpServletRequest request,
-    @RequestBody String name, @RequestBody String phoneNumber) {
+    @RequestParam String name, @RequestParam String phoneNumber) {
         try {
             personService.createPerson(name, phoneNumber);
             return ResponseEntity.ok().build();

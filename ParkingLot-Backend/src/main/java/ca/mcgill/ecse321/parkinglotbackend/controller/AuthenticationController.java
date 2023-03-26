@@ -117,6 +117,22 @@ public class AuthenticationController {
 
     }
 
+    @GetMapping("/getRole")
+    public ResponseEntity<?> getRole(HttpServletRequest request) {
+
+        // Check if not logged in
+        if (!AuthenticationUtility.isLoggedIn(request)) {
+            return ResponseEntity.badRequest().body("Not logged in");
+        }
+
+        // Get role
+        HttpSession session = request.getSession();
+        AuthenticationUtility.Role role = (AuthenticationUtility.Role) session.getAttribute("role");
+
+        return ResponseEntity.ok().body(role);
+
+    }
+
     @Autowired
     private PersonRepository personRepository;
     @Autowired

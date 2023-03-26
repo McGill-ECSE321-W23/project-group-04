@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.parkinglotbackend.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +40,10 @@ public class AuthenticationIntegrationTest {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private SessionFactory sessionFactory;
+    private Session session;
 
     // Test data
     private static final String CUSTOMER_EMAIL = "customer@gmail.com";
@@ -116,6 +122,10 @@ public class AuthenticationIntegrationTest {
 
     @BeforeEach
     public void setUpTest() {
+
+        session = sessionFactory.openSession();
+
+        // Clear database
         accountRepository.deleteAll();
         personRepository.deleteAll();
 
@@ -124,21 +134,24 @@ public class AuthenticationIntegrationTest {
         customerPerson.setName(CUSTOMER_NAME);
         customerPerson.setPhoneNumber(CUSTOMER_PHONE_NUMBER);
 
-        // Person savedCustomerPerson = personRepository.save(customerPerson);
-        // Person retrievedCustomerPerson = personRepository.findPersonByPhoneNumber(savedCustomerPerson.getPhoneNumber());
+        Person savedCustomerPerson = personRepository.save(customerPerson);
+        Person retrievedCustomerPerson = personRepository.findPersonByPhoneNumber(savedCustomerPerson.getPhoneNumber());
 
         Account customerAccount = new Account();
         customerAccount.setEmail(CUSTOMER_EMAIL);
         customerAccount.setPassword(CUSTOMER_PASSWORD);
-        customerAccount.setPerson(customerPerson);
+        customerAccount.setPerson(retrievedCustomerPerson);
 
         accountRepository.save(customerAccount);
     }
 
     @AfterEach
     public void clearDatabase() {
+
         accountRepository.deleteAll();
         personRepository.deleteAll();
+
+        session.close();
     }
 
     @Test
