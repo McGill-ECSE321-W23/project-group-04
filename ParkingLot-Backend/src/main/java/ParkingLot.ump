@@ -63,7 +63,7 @@ class ParkingSpot {
   int number;
 }
 
-class Service {
+class OfferedService {
   long serviceID;
   description;
   float cost;
@@ -86,7 +86,7 @@ class ServiceAppointment {
   LocalDateTime startTime;
   AppointmentStatus appointmentStatus;
 
-  * appointments -> 1 Service service;
+  * appointments -> 1 OfferedService service;
   * appointments -> 1 Garage garage;
   * appointments -> 1 Car car;
   }
