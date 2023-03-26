@@ -26,6 +26,12 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class tests the Service class for Garage.
+ *
+ * This class followed the template from the tutorials provided:
+ * https://mcgill-ecse321-w23.github.io/#_service_unit_testing_setup_with_mockito
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestGarageService {
     @Mock
@@ -49,7 +55,11 @@ public class TestGarageService {
     private static final int garageNumberZero = 0;
     private static final int garageNumberExceed = Integer.MAX_VALUE + 1;
 
-
+    /**
+     * Set up the DAO mock for garage
+     *
+     * @author Estefania Vazquez
+     */
     @BeforeEach
     public void setMockOutput() {
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -82,8 +92,11 @@ public class TestGarageService {
         });
     }
 
-    // Tests
-
+    /**
+     * Test the creation of a garage, when all attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testCreateGarage() {
         Garage garage = null;
@@ -96,6 +109,11 @@ public class TestGarageService {
         assertEquals(garageNumberNewCreation, garage.getGarageNumber());
     }
 
+    /**
+     * Test the creation of a garage, when the number is negative
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testCreateGarageNonPositiveGarageNumber() {
         String error = null;
@@ -109,6 +127,11 @@ public class TestGarageService {
         assertEquals("Garage number must be positive.", error);
     }
 
+    /**
+     * Test the creation of a garage, when the number already exists
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testCreateGarageExistentGarageNumber() {
         String error = null;
@@ -122,6 +145,11 @@ public class TestGarageService {
         assertEquals("This garage number already exists.", error);
     }
 
+    /**
+     * Test the creation of a garage, when the number is exceeds the maximum value of an integer
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testCreateGarageExceedingIntLimitGarageNumber() {
         String error = null;
@@ -135,6 +163,11 @@ public class TestGarageService {
         assertEquals("Garage number must be positive.", error);
     }
 
+    /**
+     * Test the deletion of a garage, when all attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testDeleteGarage() {
         Garage garage = null;
@@ -146,6 +179,11 @@ public class TestGarageService {
         assertNotNull(garage);
     }
 
+    /**
+     * Test the deletion of a garage, when the provided ID corresponds to no garage
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testDeleteNonExistentGarage() {
         String error = null;
@@ -159,6 +197,11 @@ public class TestGarageService {
         assertEquals("Garage not found.", error);
     }
 
+    /**
+     * Test the modification of a garage, when all attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testModifyGarage() {
         String error = null;
@@ -175,6 +218,11 @@ public class TestGarageService {
         assertNotEquals(garageNumberExisting1, garage.getGarageNumber());
     }
 
+    /**
+     * Test the modification of a garage, when the provided ID corresponds to no a garage but all other attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testModifyNonExistentGarage() {
         String error = null;
@@ -188,6 +236,11 @@ public class TestGarageService {
         assertEquals("Garage not found.", error);
     }
 
+    /**
+     * Test the modification of a garage, when the garage number is zero
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testModifyGarageNonPositiveGarageNumber() {
         String error = null;
@@ -201,6 +254,11 @@ public class TestGarageService {
         assertEquals("Garage number must be positive.", error);
     }
 
+    /**
+     * Test the modification of a garage, when the provided number already exists
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testModifyGarageExistentGarageNumber() {
         String error = null;
@@ -214,6 +272,11 @@ public class TestGarageService {
         assertEquals("This garage number already exists.", error);
     }
 
+    /**
+     * Test getting a garage, when the attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testGetGarage() {
         Garage garage = null;
@@ -226,6 +289,11 @@ public class TestGarageService {
         assertEquals(garageNumberExisting2, garage.getGarageNumber());
     }
 
+    /**
+     * Test getting a garage when the provided ID corresponds to no garage
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testGetGarageNonExistent() {
         String error = null;
@@ -239,6 +307,11 @@ public class TestGarageService {
         assertEquals("Garage not found.", error);
     }
 
+    /**
+     * Test getting all garages (make sure that the number retrieved is the same as the number of garages added in the mock)
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testGetAllGarages() {
         List<Garage> garages = garageService.getAllGarageService();

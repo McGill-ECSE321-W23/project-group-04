@@ -26,6 +26,12 @@ import ca.mcgill.ecse321.parkinglotbackend.dao.OfferedServiceRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class tests the Service class for OfferedService.
+ *
+ * This class followed the template from the tutorials provided:
+ * https://mcgill-ecse321-w23.github.io/#_service_unit_testing_setup_with_mockito
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestOfferedServiceService {
     @Mock
@@ -68,7 +74,11 @@ public class TestOfferedServiceService {
 
     private static final long offeredServiceIDNonExistent = 5;
 
-
+    /**
+     * Set up the DAO mock for offered service
+     *
+     * @Author Estefania Vazquez
+     */
     @BeforeEach
     public void setMockOutput() {
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -101,8 +111,11 @@ public class TestOfferedServiceService {
         });
     }
 
-    // Tests
-
+    /**
+     * Test the creation of an offered service, when all attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testCreateOfferedService() {
         OfferedService offeredService = null;
@@ -117,6 +130,11 @@ public class TestOfferedServiceService {
         assertEquals(offeredServiceDurationCreation, offeredService.getDuration());
     }
 
+    /**
+     * Test the creation of an offered service, when the description is empty
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testCreateOfferedServiceEmptyDescription() {
         String error = null;
@@ -130,6 +148,11 @@ public class TestOfferedServiceService {
         assertEquals("Description cannot be empty.", error);
     }
 
+    /**
+     * Test the creation of an offered service, when the description already exists
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testCreateOfferedServiceExistingDescription() {
         String error = null;
@@ -143,6 +166,11 @@ public class TestOfferedServiceService {
         assertEquals("Description already exists.", error);
     }
 
+    /**
+     * Test the creation of an offered service, when the cost is negative
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testCreateOfferedServiceNegativeCost() {
         String error = null;
@@ -156,6 +184,11 @@ public class TestOfferedServiceService {
         assertEquals("Cost cannot be negative.", error);
     }
 
+    /**
+     * Test the creation of an offered service, when the duration is negative
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testCreateOfferedServiceDurationNonPositive() {
         String error = null;
@@ -169,6 +202,11 @@ public class TestOfferedServiceService {
         assertEquals("Duration must be positive.", error);
     }
 
+    /**
+     * Test the deletion of an offered service, when all attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testDeleteOfferedService() {
         OfferedService offeredService = null;
@@ -180,6 +218,11 @@ public class TestOfferedServiceService {
         assertNotNull(offeredService);
     }
 
+    /**
+     * Test the deletion of an offered service, when the provided ID corresponds to no offered service
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testDeleteNonExistentOfferedService() {
         String error = null;
@@ -193,6 +236,11 @@ public class TestOfferedServiceService {
         assertEquals("Service not found.", error);
     }
 
+    /**
+     * Test the modification of an offered service, when all attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testModifyOfferedService() {
         String error = null;
@@ -211,6 +259,11 @@ public class TestOfferedServiceService {
         assertNotEquals(offeredServiceDurationModification, offeredServiceDurationExistent2);
     }
 
+    /**
+     * Test the modification of an offered service, when the provided ID corresponds to no offered service but all other attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testModifyNonExistentOfferedService() {
         String error = null;
@@ -224,6 +277,11 @@ public class TestOfferedServiceService {
         assertEquals("Service not found.", error);
     }
 
+    /**
+     * Test the modification of an offered service, when the description only contains space but all other attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testModifyOfferedServiceSpaceDescription() {
         String error = null;
@@ -237,6 +295,11 @@ public class TestOfferedServiceService {
         assertEquals("Description cannot be empty.", error);
     }
 
+    /**
+     * Test the modification of an offered service, when the provided ID corresponds to no offered service but all other attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testModifyOfferedServiceExistingDescription() {
         String error = null;
@@ -250,6 +313,11 @@ public class TestOfferedServiceService {
         assertEquals("Description already exists.", error);
     }
 
+    /**
+     * Test the modification of an offered service, when the cost is negative but all other attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testModifyOfferedServiceNegativeCost() {
         String error = null;
@@ -263,6 +331,11 @@ public class TestOfferedServiceService {
         assertEquals("Cost cannot be negative.", error);
     }
 
+    /**
+     * Test the modification of an offered service, when the duration is zero but all other attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testModifyOfferedServiceZeroDuration() {
         String error = null;
@@ -276,6 +349,11 @@ public class TestOfferedServiceService {
         assertEquals("Duration must be positive.", error);
     }
 
+    /**
+     * Test getting an offered service, when the attributes respect our design decisions
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testGetOfferedService() {
         OfferedService offeredService = null;
@@ -288,6 +366,11 @@ public class TestOfferedServiceService {
         assertEquals(offeredServiceIDExistent1, offeredService.getServiceID());
     }
 
+    /**
+     * Test getting an offered service when the provided ID corresponds to no offered service
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testGetOfferedServiceNonExistent() {
         String error = null;
@@ -301,6 +384,11 @@ public class TestOfferedServiceService {
         assertEquals("Service not found.", error);
     }
 
+    /**
+     * Test getting all offered services (make sure that the number retrieved is the same as the number of offered services added in the mock)
+     *
+     * @author Estefania Vazquez
+     */
     @Test
     public void testGetAllOfferedService() {
         List<OfferedService> offeredServices = offeredServiceService.getAllOfferedServiceService();
