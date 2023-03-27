@@ -9,6 +9,6 @@ import ca.mcgill.ecse321.parkinglotbackend.model.TimeSlot;
 
 public interface TimeSlotRepository extends CrudRepository<TimeSlot, Long>{
     TimeSlot findTimeSlotByTimeSlotID(Long timeSlotID);
-    List<TimeSlot> findByAccountID(Long accountID);
-    List<TimeSlot> findByStaffAccount(StaffAccount staffAccount);
+    List<TimeSlot> findTimeSlotByStaffAccountAccountID(Long accountID);
+    List<TimeSlot> findTimeSlotByStaffAccount(StaffAccount staffAccount);
 }

@@ -18,6 +18,10 @@ import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.service.ParkingLotSoftwareSystemService;
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * @author Qin Xuan Xu
+ * using template from tutorials
+ */
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/parkinglotsoftwaresystem")
@@ -28,6 +32,7 @@ public class ParkingLotSoftwareSystemController {
     // Get system by id
     @GetMapping("/get/{parkingLotSoftwareSystemID}")
     public ResponseEntity<?> getParkingLotSoftwareSystem(HttpServletRequest request, @PathVariable(value = "parkingLotSoftwareSystemID") long parkingLotSoftwareSystemID) {
+        // Everyone can get system
         try {
             return ResponseEntity.ok(convertToDto(parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID)));
         } catch (Exception e) {

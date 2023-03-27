@@ -81,14 +81,15 @@ public class TimeSlotService {
         return toList(timeSlotRepository.findAll());
     }
 
+    // TODO: check this works in test
     @Transactional
     public List<TimeSlot> getTimeSlotsByAccountID(long accountID) {
-        return toList(timeSlotRepository.findByAccountID(accountID));
+        return toList(timeSlotRepository.findTimeSlotByStaffAccountAccountID(accountID));
     }
     
     @Transactional
     public List<TimeSlot> getTimeSlotsByStaffAccount(StaffAccount staffAccount) {
-        return toList(timeSlotRepository.findByStaffAccount(staffAccount));
+        return toList(timeSlotRepository.findTimeSlotByStaffAccount(staffAccount));
     }
 
     /**
