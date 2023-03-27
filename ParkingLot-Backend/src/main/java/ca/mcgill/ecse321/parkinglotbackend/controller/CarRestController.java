@@ -102,7 +102,7 @@ public class CarRestController {
         List<Person> allPersons = personService.listAllPersons();
         
         for (Person person : allPersons) {
-            if (person.getPersonID().equals(pDto.getPersonID())) {
+            if (person.getPersonID() == pDto.getPersonID()) {
                 return person;
             }
         }
