@@ -11,6 +11,7 @@ import static org.mockito.Mockito.lenient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,7 +20,6 @@ import org.mockito.stubbing.Answer;
 import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingLotSoftwareSystemRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.service.ParkingLotSoftwareSystemService;
-import jakarta.inject.Inject;
 
 /**
  * @author Qin Xuan Xu
@@ -29,7 +29,7 @@ import jakarta.inject.Inject;
 public class TestParkingLotSoftwareSystemService {
     @Mock
     private ParkingLotSoftwareSystemRepository parkingLotSoftwareSystemRepository;
-    @Inject
+    @InjectMocks
     private ParkingLotSoftwareSystemService parkingLotSoftwareSystemService;
 
     // Data for testing
