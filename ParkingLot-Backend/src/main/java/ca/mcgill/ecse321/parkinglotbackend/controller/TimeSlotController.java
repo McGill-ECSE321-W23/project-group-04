@@ -100,14 +100,13 @@ public class TimeSlotController {
     // Create timeslot
     @PostMapping("/create")
     public ResponseEntity<?> createTimeSlot(HttpServletRequest request, @RequestBody DayOfWeek dayOfTheWeek, @RequestBody LocalTime startTime, @RequestBody LocalTime endTime, @RequestBody long parkingLotSoftwareSystemID, @RequestBody long accountID) {
-        ParkingLotSoftwareSystem system = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID);
-        StaffAccount staffAccount = staffAccountService.getStaffAccount(accountID);
-        if ((staffAccount == null && system == null) || (staffAccount != null && system != null)) {
-            return ResponseEntity.badRequest().body("Cannot create timeslot");
-        }
-
-        // Check authorization
         try {
+            ParkingLotSoftwareSystem system = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID);
+            StaffAccount staffAccount = staffAccountService.getStaffAccount(accountID);
+            if ((staffAccount == null && system == null) || (staffAccount != null && system != null)) {
+                return ResponseEntity.badRequest().body("Cannot create timeslot");
+            }
+            // Check authorization
             if (AuthenticationUtility.isManager(request)) {
                 if (system == null) {
                     return ResponseEntity.ok(convertToDto(timeSlotService.createTimeSlot(dayOfTheWeek, startTime, endTime, null, staffAccount)));
