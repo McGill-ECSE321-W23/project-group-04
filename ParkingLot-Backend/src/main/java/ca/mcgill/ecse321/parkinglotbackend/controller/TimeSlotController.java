@@ -1,21 +1,5 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.dto.TimeSlotDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
@@ -25,6 +9,13 @@ import ca.mcgill.ecse321.parkinglotbackend.service.ParkingLotSoftwareSystemServi
 import ca.mcgill.ecse321.parkinglotbackend.service.StaffAccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.TimeSlotService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -156,7 +147,7 @@ public class TimeSlotController {
             throw new IllegalArgumentException("TimeSlot does not exist");
         }
         TimeSlotDto timeSlotDto = new TimeSlotDto(t.getTimeSlotID(), t.getDayOfTheWeek(), t.getStartTime(),
-                t.getEndTime(), t.getSystem(), t.getStaffAccount());
+                t.getEndTime(), t.getSystem().getParkingLotSoftwareSystemID(), t.getStaffAccount().getAccountID());
         return timeSlotDto;
     }
 

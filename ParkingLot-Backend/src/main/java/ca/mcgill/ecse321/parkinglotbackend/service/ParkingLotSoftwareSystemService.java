@@ -57,7 +57,7 @@ public class ParkingLotSoftwareSystemService {
      */
     @Transactional
     public ParkingLotSoftwareSystem getParkingLotSoftwareSystem(long parkingLotSoftwareSystemID) throws Exception {
-        ParkingLotSoftwareSystem system = parkingLotSoftwareSystemRepository.findParkingLotSoftwareSystemByParkingLotSoftwareSystemID(parkingLotSoftwareSystemID);
+        ParkingLotSoftwareSystem system = parkingLotSoftwareSystemRepository.getParkingLotSoftwareSystemByParkingLotSoftwareSystemIDNotNull();
         if (system == null) {
             throw new Exception("No system with this id exists!");
         }
