@@ -4,13 +4,16 @@ import ca.mcgill.ecse321.parkinglotbackend.dao.StaffAccountRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.StaffAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StaffAccountService {
     @Autowired
-    StaffAccountRepository staffAccountRepository;
+    public StaffAccountRepository staffAccountRepository;
 
-    StaffAccount findAccountById(Long id) {
-        return staffAccountRepository.getStaffAccountByAccountID(id);
+    @Transactional
+    public StaffAccount getStaffAccount(long id) {
+        StaffAccount account = staffAccountRepository.getStaffAccountByAccountID(id);
+        return account;
     }
 }
