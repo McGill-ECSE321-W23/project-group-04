@@ -17,7 +17,7 @@ public class AuthenticationUtility {
     public enum Role {
         CUSTOMER, STAFF, MANAGER
     }
-    
+
     /**
      * Check if the user is logged in
      * @param request
