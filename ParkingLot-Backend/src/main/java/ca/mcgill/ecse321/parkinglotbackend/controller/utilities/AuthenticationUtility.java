@@ -13,6 +13,7 @@ public class AuthenticationUtility {
     public static int NOT_FOUND = 404;
     public static int INTERNAL_SERVER_ERROR = 500;
 
+    // Role enum
     public enum Role {
         CUSTOMER, STAFF, MANAGER
     }
@@ -42,7 +43,7 @@ public class AuthenticationUtility {
     }
 
     /**
-     * Check if the logged in user is staff
+     * Check if the logged in user is staff (or manager)
      * @param request
      * @return boolean
      * @throws Exception
