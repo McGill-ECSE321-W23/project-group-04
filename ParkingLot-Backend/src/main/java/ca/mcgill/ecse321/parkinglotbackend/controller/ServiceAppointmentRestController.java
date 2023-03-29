@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.dto.CarDto;
@@ -33,6 +34,7 @@ import ca.mcgill.ecse321.parkinglotbackend.service.OfferedServiceService;
 
 @CrossOrigin(origins = "*")
 @RestController
+@RequestMapping("/api/appointments")
 public class ServiceAppointmentRestController {
 
     @Autowired
@@ -45,30 +47,30 @@ public class ServiceAppointmentRestController {
     GarageService garageService;
 
 
-    @GetMapping(value = { "/appointments", "/appointments/" })
+    @GetMapping(value = { "/get/all", "/get/all/" })
     public List<ServiceAppointmentDto> getAllAppointments() {
         return service.getAllAppointments().stream().map(a -> convertToDto(a)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = {"/appointment/byID/{id}", "/appointment/byID/{id}/"})
+    @GetMapping(value = {"/get/{id}", "/get/{id}/"})
     public ServiceAppointmentDto getAppointmentById(@PathVariable("id") Long id) throws Exception{
         return convertToDto(service.findAppointmentByID(id));
     }
 
-    @GetMapping(value = {"/appointment/{licensePlate}", "/appointment/{licensePlate}/"})
+    @GetMapping(value = {"/get/{licensePlate}", "/appointment/{licensePlate}/"})
     public List<ServiceAppointmentDto> getAppointmentByCarID(@PathVariable("licensePlate") String licensePlate) throws Exception{
         Car car = carService.getCarByLicensePlate(licensePlate);
         return service.getAppointmentsByCarID(car.getCarID()).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = {"/appointment/byServiceID/{serviceID}", "/appointment/byServiceID/{serviceID}/"})
+    @GetMapping(value = {"/get/byServiceID/{serviceID}", "/get/byServiceID/{serviceID}/"})
     public List<ServiceAppointmentDto> getAppointmentByServiceID(@PathVariable("serviceID") Long serviceID) throws Exception{
         OfferedService offeredService = offeredServiceService.getOfferedServiceService(serviceID);
         return service.getAppointmentsByServiceID(offeredService.getServiceID()).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
     }
 
 
-    @PostMapping(value = {"/create/appointment", "/create/appointment/"})
+    @PostMapping(value = {"/create", "/create/"})
     public ServiceAppointmentDto createAppointment(GarageDto garage, OfferedServiceDto offeredService, CarDto car) {
         ServiceAppointment appointment = service.createAppointment(convertToDomainObject(garage), convertToDomainObject(offeredService),convertToDomainObject(car));
         return convertToDto(appointment);

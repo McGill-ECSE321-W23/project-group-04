@@ -344,7 +344,7 @@ public class TestServiceAppointmentService {
             eMSG = e.getMessage();
         }
 
-        assertEquals("No service with this ID exists", eMSG);
+        assertEquals("No appointment with this ID exists", eMSG);
         assertNull(appointments);
     }
 
@@ -360,7 +360,7 @@ public class TestServiceAppointmentService {
             eMSG = e.getMessage();
         }
         
-        assertEquals("No service with this ID exists", eMSG);
+        assertEquals("No appointment with this ID exists", eMSG);
         assertNull(appointments);
     }
 
@@ -374,7 +374,7 @@ public class TestServiceAppointmentService {
     }
 
     @Test
-    public void testDeleteCar_Success() {
+    public void testDeleteAppointment_Success() {
         String eMSG = "";
         ServiceAppointment appointment = null;
 
@@ -390,7 +390,7 @@ public class TestServiceAppointmentService {
     }
 
     @Test
-    public void testDeleteCar_InvalidID() {
+    public void testDeleteAppointment_InvalidID() {
         String eMSG = "";
         ServiceAppointment appointment = null;
 
@@ -400,12 +400,12 @@ public class TestServiceAppointmentService {
             eMSG = e.getMessage();
         }
 
-        assertEquals("No service with this ID exists", eMSG);
+        assertEquals("No appointment with this ID exists", eMSG);
         assertNull(appointment);
     }
 
     @Test
-    public void testDeleteCar_NullID() {
+    public void testDeleteAppointment_NullID() {
         String eMSG = "";
         ServiceAppointment appointment = null;
 
@@ -415,7 +415,7 @@ public class TestServiceAppointmentService {
             eMSG = e.getMessage();
         }
 
-        assertEquals("No service with this ID exists", eMSG);
+        assertEquals("No appointment with this ID exists", eMSG);
         assertNull(appointment);
     }
 
@@ -451,7 +451,7 @@ public class TestServiceAppointmentService {
             eMSG = e.getMessage();
         }
 
-        assertEquals("No service with this ID exists", eMSG);
+        assertEquals("No appointment with this ID exists", eMSG);
         assertNull(appointment);
     }
 
@@ -466,7 +466,7 @@ public class TestServiceAppointmentService {
             eMSG = e.getMessage();
         }
 
-        assertEquals("No car with this ID exists", eMSG);
+        assertEquals("No appointment with this ID exists", eMSG);
         assertNull(appointment);
     }
 

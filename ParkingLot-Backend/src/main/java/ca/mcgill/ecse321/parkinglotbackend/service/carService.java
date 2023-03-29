@@ -94,7 +94,7 @@ public class CarService {
     public Car deleteCar(Long id) throws Exception{
         Car car = carRepository.findCarByCarID(id);
         if (car == null){
-            throw new Exception("No car with this id exists");
+            throw new Exception("No car with this ID exists");
         }
         carRepository.delete(car);
         return car;
@@ -105,39 +105,47 @@ public class CarService {
         
         String error = "";
 
-        Car car = getCarByID(carID);
+        Car car = null;
 
-        if (car == null){
-            error += "No car with this id exists";
-        }
-        
-        if (licensePlate == null || licensePlate.trim().length() == 0) {
-            error += ("License Plate cannot be empty");
-        }
-
-        if (make == null || make.trim().length() == 0) {
-            error += ("Make cannot be empty");
-        }
-
-        if (model == null || model.trim().length() == 0) {
-            error += ("Model cannot be empty");
-        }
-
-        if (person == null){
-            error += "Owner cannot be null";
-        }
-
-        error = error.trim();
-
-        if (error.length() > 0){
+        if (carID == null) {
+            error += "No car with this ID exists";
             throw new IllegalArgumentException(error);
-        }
+        } else {
 
-        car.setLicensePlate(licensePlate);
-        car.setMake(make);
-        car.setModel(model);
-        car.setOwner(person);
-        carRepository.save(car);
+            car = getCarByID(carID);
+
+            if (car == null){
+                error += "No car with this ID exists";
+            }
+            
+            if (licensePlate == null || licensePlate.trim().length() == 0) {
+                error += ("License plate cannot be empty");
+            }
+
+            if (make == null || make.trim().length() == 0) {
+                error += ("Make cannot be empty");
+            }
+
+            if (model == null || model.trim().length() == 0) {
+                error += ("Model cannot be empty");
+            }
+
+            if (person == null){
+                error += "Owner cannot be null";
+            }
+
+            error = error.trim();
+
+            if (error.length() > 0){
+                throw new IllegalArgumentException(error);
+            }
+
+            car.setLicensePlate(licensePlate);
+            car.setMake(make);
+            car.setModel(model);
+            car.setOwner(person);
+            carRepository.save(car);
+        }
 
         return car;
     }

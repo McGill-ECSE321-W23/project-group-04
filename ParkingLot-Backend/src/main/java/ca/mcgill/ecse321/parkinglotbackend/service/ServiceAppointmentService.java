@@ -99,7 +99,7 @@ public class ServiceAppointmentService {
         ServiceAppointment appointment = appointmentRepository.findAppointmentByServiceAppointmentID(id);
 
         if (appointment == null){
-            throw new Exception("No appointment with this id exists");
+            throw new Exception("No appointment with this ID exists");
         }
 
         appointmentRepository.delete(appointment);
@@ -119,7 +119,7 @@ public class ServiceAppointmentService {
             error += "Start time cannot be empty";
         }
         if (status == null){
-            error += "Status time cannot be empty";
+            error += "Status cannot be empty";
         }
         if (garage == null){
             error += "Garage cannot be empty";

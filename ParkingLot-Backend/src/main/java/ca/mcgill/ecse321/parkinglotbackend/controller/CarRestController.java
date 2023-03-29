@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.service.annotation.DeleteExchange;
 
@@ -23,6 +24,7 @@ import ca.mcgill.ecse321.parkinglotbackend.service.PersonService;
 
 @CrossOrigin(origins = "*")
 @RestController
+@RequestMapping("/api/cars")
 public class CarRestController {
 
     @Autowired
@@ -30,31 +32,31 @@ public class CarRestController {
     @Autowired
     private PersonService personService;
 
-    @GetMapping(value = { "/cars", "/cars/" })
+    @GetMapping(value = { "/getAll", "/getAll/" })
     public List<CarDto> getAllCars() {
         return service.getAllCars().stream().map(c -> convertToDto(c)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = { "/cars/byLicensePlate/{licensePlate}", "/cars/byLicensePlate/{licensePlate}/" })
+    @GetMapping(value = { "/get/{licensePlate}", "/get/{licensePlate}/" })
     public CarDto getCarByLicensePlate(@PathVariable("licensePlate") String licensePlate) throws Exception{
         Car c = service.getCarByLicensePlate(licensePlate);
         return convertToDto(c);
     }
 
 
-    @GetMapping(value = { "/cars/{id}", "/cars/{id}/" })
-    public CarDto getCarByLicensePlate(@PathVariable("id") Long id) throws Exception{
+    @GetMapping(value = { "/get/{id}", "/get/{id}/" })
+    public CarDto getCarByID(@PathVariable("id") Long id) throws Exception{
         Car c = service.getCarByID(id);
         return convertToDto(c);
     }
 
 
-    @GetMapping(value = { "/cars/{licensePlate}", "/cars/{licensePlate}/" })
-    public List<CarDto> getCarsByOwner(Long id) throws Exception{
+    @GetMapping(value = { "/get/ByOwner/{id}", "/get/ByOwner/{id}/" })
+    public List<CarDto> getCarsByOwner(@PathVariable("id")Long id) throws Exception{
         return service.findCarByOwnerID(id).stream().map(c -> convertToDto(c)).collect(Collectors.toList());
     }
 
-    @PostMapping(value = {"/register/cars/{licensePLate}", "/register/cars/{licensePlate}/"})
+    @PostMapping(value = {"/register/{licensePLate}", "/register/{licensePlate}/"})
     public CarDto registerCar(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person) throws Exception{
        Person p = personService.getPersonByID(person.getPersonID());
        Car c = service.registerCar(p, licensePlate, make, model);
