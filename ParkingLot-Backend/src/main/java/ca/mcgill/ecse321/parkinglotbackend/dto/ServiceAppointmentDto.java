@@ -2,16 +2,13 @@ package ca.mcgill.ecse321.parkinglotbackend.dto;
 
 import java.time.LocalDateTime;
 
-import ca.mcgill.ecse321.parkinglotbackend.model.OfferedService;
-
-
 public class ServiceAppointmentDto {
 
-    private enum AppointmentStatus { Ready, InProgress, Completed }
+    public enum AppointmentStatusDto { Ready, InProgress, Completed }
 
     private long serviceAppointmentID;
     private LocalDateTime startTime;
-    private AppointmentStatus appointmentStatus;
+    private AppointmentStatusDto appointmentStatus;
 
     private OfferedServiceDto service;
     private GarageDto garage;
@@ -20,7 +17,7 @@ public class ServiceAppointmentDto {
     public ServiceAppointmentDto(){
     }
 
-    public ServiceAppointmentDto(long serviceAppointmentID, LocalDateTime startTime, AppointmentStatus appointmentStatus, 
+    public ServiceAppointmentDto(long serviceAppointmentID, LocalDateTime startTime, AppointmentStatusDto appointmentStatus, 
         OfferedServiceDto service, GarageDto garage, CarDto car){
         this.serviceAppointmentID = serviceAppointmentID;
         this.startTime = startTime;
@@ -47,11 +44,11 @@ public class ServiceAppointmentDto {
     }
 
 
-    public AppointmentStatus getAppointmentStatus() {
+    public AppointmentStatusDto getAppointmentStatus() {
         return appointmentStatus;
     }
 
-    public void setAppointmentStatus (AppointmentStatus newAppointmentStatus) {
+    public void setAppointmentStatus (AppointmentStatusDto newAppointmentStatus) {
         this.appointmentStatus = newAppointmentStatus;
     }
     
@@ -74,10 +71,9 @@ public class ServiceAppointmentDto {
         return car;
     }
 
-    public void setService (CarDto newCar) {
+    public void setCar (CarDto newCar) {
         this.car = newCar;
     }
-
 
 
 }
