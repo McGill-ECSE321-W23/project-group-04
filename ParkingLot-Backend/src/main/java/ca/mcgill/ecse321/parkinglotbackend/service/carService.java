@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.parkinglotbackend.controller.CarRestController;
 import ca.mcgill.ecse321.parkinglotbackend.dao.CarRepository;
 import ca.mcgill.ecse321.parkinglotbackend.dao.PersonRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 
+@Service
 public class CarService {
 
     @Autowired
@@ -20,38 +20,33 @@ public class CarService {
     @Autowired
     PersonRepository personRepository;
 
-    
-    @Transactional
-    public Person createPerson(String name, String phoneNumber){
-        Person person = new Person();
-        person.setName(name);
-        person.setPhoneNumber(phoneNumber);
-        personRepository.save(person);
-        return person;
-    }
-
-    @Transactional
-    public Person findPersonByID(Long id) throws Exception{
-        Person person = personRepository.findPersonByPersonID(id);
-        if (person == null){
-            throw new Exception("No person with this ID exists");
-        }
-        return person;
-    }
-
-    @Transactional 
-    public Car createCar(String name, String phoneNumber, String licensePlate, String make, String model){
-        Car car = new Car();
-        car.setLicensePlate(licensePlate);
-        car.setMake(make);
-        car.setModel(model);
-        car.setOwner(createPerson(name, phoneNumber));
-        carRepository.save(car);
-        return car;
-    }
-
     @Transactional
     public Car registerCar(Person person, String licensePlate, String make, String model){
+
+        String error = "";
+
+        if (person == null){
+            error += "Owner cannot be empty";
+        }
+
+        if (licensePlate == null || licensePlate.trim().length() == 0){
+            error += "License plate cannot be empty";
+        }
+
+        if (make == null || make.trim().length() == 0){
+            error += "Make cannot be empty";
+        }
+        
+        if (model == null || model.trim().length() == 0){
+            error += "Model cannot be empty";
+        }
+
+        error = error.trim();
+
+        if (error.length() > 0){
+            throw new IllegalArgumentException(error);
+        }
+
         Car car = new Car();
         car.setLicensePlate(licensePlate);
         car.setMake(make);
@@ -74,13 +69,16 @@ public class CarService {
     public Car getCarByLicensePlate (String licensePlate) throws Exception{
         Car car = carRepository.findCarByLicensePlate(licensePlate);
         if (car == null){
-            throw new Exception("No car with this license plate exists");
+            throw new Exception("No car with this license exists");
         }
         return car;
     }
 
     @Transactional
-    public List<Car> findCarByOwnerID(Long id){
+    public List<Car> findCarByOwnerID(Long id) throws Exception{
+        if (!personRepository.existsById(id)){
+            throw new Exception("No person with this id exists");
+        }
         List<Car> carsOfPerson = carRepository.findCarByOwner_PersonID(id);
         return carsOfPerson;
     }
@@ -93,22 +91,46 @@ public class CarService {
 
 
     @Transactional
-    public Car deleteCar(String licensePlate) {
-        Car car = carRepository.findCarByLicensePlate(licensePlate);
+    public Car deleteCar(Long id) throws Exception{
+        Car car = carRepository.findCarByCarID(id);
+        if (car == null){
+            throw new Exception("No car with this id exists");
+        }
         carRepository.delete(car);
         return car;
     }
 
     @Transactional
-    public Car updateCar(long carId, String licensePlate, String make, String model, Person person) throws Exception {
+    public Car updateCar(Long carID, String licensePlate, String make, String model, Person person) throws Exception {
         
-        Car car = getCarByID(carId);
-        
-        if (person == null) {
-            throw new Exception("A car requires an owner.");
+        String error = "";
+
+        Car car = getCarByID(carID);
+
+        if (car == null){
+            error += "No car with this id exists";
         }
+        
         if (licensePlate == null || licensePlate.trim().length() == 0) {
-            throw new Exception("License Plate cannot be empty!");
+            error += ("License Plate cannot be empty");
+        }
+
+        if (make == null || make.trim().length() == 0) {
+            error += ("Make cannot be empty");
+        }
+
+        if (model == null || model.trim().length() == 0) {
+            error += ("Model cannot be empty");
+        }
+
+        if (person == null){
+            error += "Owner cannot be null";
+        }
+
+        error = error.trim();
+
+        if (error.length() > 0){
+            throw new IllegalArgumentException(error);
         }
 
         car.setLicensePlate(licensePlate);
@@ -120,10 +142,7 @@ public class CarService {
         return car;
     }
 
-
     /**
-     * Taken from 321 tutorial 
-     * Takes an 
      * 
      * @param <T>
      * @param iterable

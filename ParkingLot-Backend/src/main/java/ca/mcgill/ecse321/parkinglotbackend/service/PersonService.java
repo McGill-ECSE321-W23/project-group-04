@@ -65,20 +65,6 @@ public class PersonService {
         return toList(personRepository.findAll());
     }
 
-    @Transactional
-    public List<Person> listAllPersons() {
-        return toList(personRepository.findAll());
-    }
-
-    private <T> List<T> toList(Iterable<T> iterable){
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
-    }
-
-
     /**
      * Create a person
      * @param name
