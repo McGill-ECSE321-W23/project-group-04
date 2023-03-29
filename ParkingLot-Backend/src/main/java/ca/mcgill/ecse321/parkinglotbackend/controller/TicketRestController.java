@@ -38,8 +38,8 @@ public class TicketRestController {
     @PostMapping("/create" )
     public ResponseEntity<?> createTicket (HttpServletRequest request,  @RequestBody CarType carType,
                                            @RequestBody ParkingLotSoftwareSystem parkingLotSoftwareSystem) {
-        // Check authorization (staff)
-
+        
+         // Check authorization (staff)
         try {
             if (!AuthenticationUtility.isStaff(request)) {
                 return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
