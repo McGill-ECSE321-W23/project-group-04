@@ -57,7 +57,7 @@ public class TimeSlotController {
     }
 
     // Get all timeslots
-    @GetMapping("/get")
+    @GetMapping("/getAll")
     public ResponseEntity<?> getAllTimeSlots(HttpServletRequest request) {
         // Check authorization
         try {
@@ -72,7 +72,7 @@ public class TimeSlotController {
     }
 
     // Get all timeslots of one employee
-    @GetMapping("/get/{accountID}")
+    @GetMapping("/getAll/{accountID}")
     public ResponseEntity<?> getAllTimeSlotsByAccountID(HttpServletRequest request, @PathVariable(value = "accountID") long accountID) {
         // Check authorization
         try {
@@ -87,7 +87,7 @@ public class TimeSlotController {
     }
 
     // Get all timeslots as opening hours
-    @GetMapping("/getopen")
+    @GetMapping("/getOpen")
     public ResponseEntity<?> getAllOpenHours(HttpServletRequest request) {
         // Check authorization
         try {
