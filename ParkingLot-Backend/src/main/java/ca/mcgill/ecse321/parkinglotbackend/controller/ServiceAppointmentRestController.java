@@ -50,7 +50,7 @@ public class ServiceAppointmentRestController {
         return service.getAllAppointments().stream().map(a -> convertToDto(a)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = {"/appointment/{id}", "/appointment/{id}/"})
+    @GetMapping(value = {"/appointment/byID/{id}", "/appointment/byID/{id}/"})
     public ServiceAppointmentDto getAppointmentById(@PathVariable("id") Long id) throws Exception{
         return convertToDto(service.findAppointmentByID(id));
     }
@@ -61,21 +61,21 @@ public class ServiceAppointmentRestController {
         return service.getAppointmentsByCarID(car.getCarID()).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = {"/appointment/{serviceID}", "/appointment/{serviceID}/"})
+    @GetMapping(value = {"/appointment/byServiceID/{serviceID}", "/appointment/byServiceID/{serviceID}/"})
     public List<ServiceAppointmentDto> getAppointmentByServiceID(@PathVariable("serviceID") Long serviceID) throws Exception{
         OfferedService offeredService = offeredServiceService.getOfferedServiceService(serviceID);
         return service.getAppointmentsByServiceID(offeredService.getServiceID()).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
     }
 
 
-    @PostMapping(value = "/create/appointment, /create/appointment/")
+    @PostMapping(value = {"/create/appointment", "/create/appointment/"})
     public ServiceAppointmentDto createAppointment(GarageDto garage, OfferedServiceDto offeredService, CarDto car) {
         ServiceAppointment appointment = service.createAppointment(convertToDomainObject(garage), convertToDomainObject(offeredService),convertToDomainObject(car));
         return convertToDto(appointment);
     }
     
 
-    @PutMapping("/update/{id}, /update/{id}/")
+    @PutMapping(value = {"/update/{id}", "/update/{id}/"})
     public ServiceAppointmentDto updateAppointment(@PathVariable("id") Long id, LocalDateTime startTime, AppointmentStatus status, GarageDto garage, OfferedServiceDto offeredService, CarDto car) throws Exception{
         ServiceAppointment appointment = service.updateAppointment(id, startTime, status, convertToDomainObject(garage), convertToDomainObject(offeredService),convertToDomainObject(car));
         
@@ -83,7 +83,7 @@ public class ServiceAppointmentRestController {
         return convertToDto(appointment);
     }
 
-    @DeleteMapping("/delete/{id}, /delete/{id}/")
+    @DeleteMapping(value = {"/delete/{id}", "/delete/{id}/"})
     public ServiceAppointmentDto deleteServiceAppointment(@PathVariable("id") Long id) throws Exception{
         ServiceAppointment appointment = service.deleteAppointment(id);
         return convertToDto(appointment);

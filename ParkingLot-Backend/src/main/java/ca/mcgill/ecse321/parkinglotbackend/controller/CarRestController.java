@@ -35,7 +35,7 @@ public class CarRestController {
         return service.getAllCars().stream().map(c -> convertToDto(c)).collect(Collectors.toList());
     }
 
-    @GetMapping(value = { "/cars/{licensePlate}", "/cars/{licensePlate}/" })
+    @GetMapping(value = { "/cars/byLicensePlate/{licensePlate}", "/cars/byLicensePlate/{licensePlate}/" })
     public CarDto getCarByLicensePlate(@PathVariable("licensePlate") String licensePlate) throws Exception{
         Car c = service.getCarByLicensePlate(licensePlate);
         return convertToDto(c);
