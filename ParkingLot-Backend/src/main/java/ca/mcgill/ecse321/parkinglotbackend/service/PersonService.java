@@ -26,7 +26,7 @@ public class PersonService {
     public Person getPersonByID(long id) throws Exception {
         Person person = personRepository.findPersonByPersonID(id);
         if (person == null) {
-            throw new Exception("No person with id {" + id + "} exists!");
+            throw new Exception("No person with this id exists!");
         }
         return person;
     }

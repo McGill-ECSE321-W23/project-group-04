@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
@@ -37,7 +37,7 @@ public class AuthenticationController {
      * @author Lin Wei Li
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(HttpServletRequest request, @RequestBody String email, @RequestBody String password) {
+    public ResponseEntity<?> login(HttpServletRequest request, @RequestParam String email, @RequestParam String password) {
 
         // Check if already logged in
         if (AuthenticationUtility.isLoggedIn(request)) {

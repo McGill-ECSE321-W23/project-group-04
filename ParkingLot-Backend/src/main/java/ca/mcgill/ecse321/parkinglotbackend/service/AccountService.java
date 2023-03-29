@@ -19,7 +19,7 @@ public class AccountService {
     /**
      * Find an account by id
      * @param id
-     * @return Person
+     * @return Account
      * @author Lin Wei Li
      */
     public Account getAccountByID(long id) throws Exception {
@@ -31,9 +31,24 @@ public class AccountService {
     }
 
     /**
+     * Find an account by person id
+     * @param personID
+     * @return Account
+     * @throws Exception
+     * @author Lin Wei Li
+     */
+    public Account getAccountByPersonID(long personID) throws Exception {
+        Account account = accountRepository.findAccountByPerson_PersonID(personID);
+        if (account == null) {
+            throw new Exception("No account with this person exists!");
+        }
+        return account;
+    }
+
+    /**
      * Find an account by email
      * @param email
-     * @return Person
+     * @return Account
      * @author Lin Wei Li
      */
     public Account getAccountByEmail(String email) throws Exception {
