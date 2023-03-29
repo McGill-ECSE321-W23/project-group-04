@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.parkinglotbackend.dto;
 
+import ca.mcgill.ecse321.parkinglotbackend.dto.MonthlyReservationDto;
 
 /**
  * Parking Spot Data Transfer Object
