@@ -1,29 +1,32 @@
 package ca.mcgill.ecse321.parkinglotbackend.dto;
 
-import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
-
 import java.time.LocalDateTime;
+
 
 /**
  * Ticket Data Transfer Object
  * @author faizachowdhury
  */
 public class TicketDto {
+
+  public enum CarTypeDto{
+    Regular, Large
+  }
     
     // Attributes
     private long ticketID;
-    private CarType carType;
+    private CarTypeDto carTypeDto;
     private LocalDateTime entryTime;
 
     private ParkingLotSoftwareSystemDto plsDto;
 
     // constructors
 
-    public TicketDto(long aTicketID, LocalDateTime aEntryTime, CarType aCarType, ParkingLotSoftwareSystemDto aPlsDto)
+    public TicketDto(long aTicketID, LocalDateTime aEntryTime, CarTypeDto aCarTypeDto, ParkingLotSoftwareSystemDto aPlsDto)
   {
     ticketID = aTicketID;
     entryTime = aEntryTime;
-    carType = aCarType;
+    carTypeDto = aCarTypeDto;
     if (!setSystem(aPlsDto))
     {
       throw new RuntimeException("Unable to create Ticket due to aParkingLotSoftwareSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
@@ -32,10 +35,10 @@ public class TicketDto {
   public TicketDto() {
   }
   
-  public TicketDto(LocalDateTime aEntryTime, CarType aCarType, ParkingLotSoftwareSystemDto aPlsDto)
+  public TicketDto(LocalDateTime aEntryTime, CarTypeDto aCarTypeDto, ParkingLotSoftwareSystemDto aPlsDto)
   {
     entryTime = aEntryTime;
-    carType = aCarType;
+    carTypeDto = aCarTypeDto;
     if (!setSystem(aPlsDto))
     {
       throw new RuntimeException("Unable to create Ticket due to aParkingLotSoftwareSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
@@ -67,10 +70,10 @@ public class TicketDto {
     return wasSet;
   }
 
-  public boolean setCarType(CarType aCarType)
+  public boolean setCarType(CarTypeDto aCarTypeDto)
   {
     boolean wasSet = false;
-    carType = aCarType;
+    carTypeDto = aCarTypeDto;
     wasSet = true;
     return wasSet;
   }
@@ -86,9 +89,10 @@ public class TicketDto {
     return entryTime;
   }
 
-  public CarType getCarType()
+  public CarTypeDto getCarTypeDto()
   {
-    return carType;
+
+    return carTypeDto;
   }
 
   public ParkingLotSoftwareSystemDto getSystem()

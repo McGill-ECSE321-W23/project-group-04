@@ -5,6 +5,7 @@ import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUt
 import ca.mcgill.ecse321.parkinglotbackend.dto.ParkingLotSoftwareSystemDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.dto.TicketDto;
+import ca.mcgill.ecse321.parkinglotbackend.dto.TicketDto.CarTypeDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
 
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
@@ -120,7 +121,6 @@ public class TicketRestController {
         }
     }
 
-
     /**
      * Get all the tickets in the system
      * @param request - staff can call this method
@@ -190,7 +190,11 @@ public class TicketRestController {
         ticketDto.setEntryTime(t.getEntryTime());
         ticketDto.setTicketID(t.getTicketID());
         ticketDto.setSystem(convertToDto(t.getSystem()));
-        ticketDto.setCarType(t.getCarType());
+
+        switch (t.getCarType()) {
+            case Regular ->  ticketDto.setCarType(CarTypeDto.Regular);
+            case Large -> ticketDto.setCarType(CarTypeDto.Large);
+        }
 
         return ticketDto;
     }
