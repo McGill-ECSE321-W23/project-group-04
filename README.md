@@ -38,11 +38,12 @@ The application will improve the overall experience for customers, employees and
 Sprint 2
 
 ### Contributions
+## Effort Table
 | Team Member       | Contributions                                   | Hours  |
 | ----------------- | ----------------------------------------------- | ------ |
-| Faiza Chowdhury   ||        |
-| Annie Gouchee     | |       |
-| Lin Wei Li        | Iteration 1 Fixes|      |
-| Estefania Vazquez |Iteration 1 Fixes|      |
-| Qin Xuan Xu       | |      |
-| Edwin You Zhou    | |      |
+| Faiza Chowdhury   |RESTful HTTP Methods, Controller, DTO and Unit Testing for Ticket and Parking Spot|        |
+| Annie Gouchee     |RESTful HTTP Methods, Controller, DTO and Unit Testing for ServiceAppointment and Car|       |
+| Lin Wei Li        |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Persona and Account|      |
+| Estefania Vazquez |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Garage and OfferedService|      |
+| Qin Xuan Xu       |RESTful HTTP Methods, Controller, DTO and Unit Testing for System and TimeSlot|
+| Edwin You Zhou    |RESTful HTTP Methods, Controller, DTO and Unit Testing for StaffAccount, ManagerAccount and MonthlyReservation|      |
