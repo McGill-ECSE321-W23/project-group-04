@@ -75,7 +75,7 @@ public class CarService {
     @Transactional
     public List<Car> findCarByOwnerID(Long id) throws Exception{
         List<Car> carsOfPerson = carRepository.findCarByOwner_PersonID(id);
-        if (carsOfPerson.isEmpty() || carsOfPerson == null){
+        if (carsOfPerson == null || carsOfPerson.isEmpty()){
             throw new Exception("No person with this ID exists");
         }
         return carsOfPerson;

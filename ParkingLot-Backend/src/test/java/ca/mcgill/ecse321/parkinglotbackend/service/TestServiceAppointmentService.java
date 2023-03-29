@@ -96,11 +96,11 @@ public class TestServiceAppointmentService {
 
             lenient().when(aRepository.findAppointmentByCar_CarID(anyLong())).thenAnswer( (InvocationOnMock invocation) -> {
                 if(invocation.getArgument(0).equals(A1.getCar().getCarID())) {
-                    return A1;
+                    return Arrays.asList(A1);
                 } else if (invocation.getArgument(0).equals(A2.getCar().getCarID())) {
-                    return A2;
+                    return Arrays.asList(A2);
                 } else if (invocation.getArgument(0).equals(A3.getCar().getCarID())) {
-                    return A3;
+                    return Arrays.asList(A3);
                 } else {
                     return null;
                 }
@@ -108,11 +108,11 @@ public class TestServiceAppointmentService {
 
             lenient().when(aRepository.findAppointmentByService_ServiceID(anyLong())).thenAnswer( (InvocationOnMock invocation) -> {
                 if(invocation.getArgument(0).equals(A1.getService().getServiceID())) {
-                    return A1;
+                    return Arrays.asList(A1);
                 } else if (invocation.getArgument(0).equals(A2.getService().getServiceID())) {
-                    return A2;
+                    return Arrays.asList(A2);
                 } else if (invocation.getArgument(0).equals(A3.getService().getServiceID())) {
-                    return A3;
+                    return Arrays.asList(A3);
                 } else {
                     return null;
                 }
@@ -348,7 +348,7 @@ public class TestServiceAppointmentService {
             eMSG = e.getMessage();
         }
 
-        assertEquals("No appointment with this ID exists", eMSG);
+        assertEquals("No service with this ID exists", eMSG);
         assertNull(appointments);
     }
 
@@ -364,7 +364,7 @@ public class TestServiceAppointmentService {
             eMSG = e.getMessage();
         }
         
-        assertEquals("No appointment with this ID exists", eMSG);
+        assertEquals("No service with this ID exists", eMSG);
         assertNull(appointments);
     }
 

@@ -68,7 +68,7 @@ public class ServiceAppointmentService {
     @Transactional
     public  List<ServiceAppointment> getAppointmentsByCarID(Long carID) throws Exception{
         List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByCar_CarID(carID);
-        if (appointments.isEmpty() || appointments == null){
+        if (appointments == null || appointments.isEmpty()){
             throw new Exception("No car with this ID exists");
         }
         return appointments;
@@ -77,7 +77,7 @@ public class ServiceAppointmentService {
     @Transactional
     public  List<ServiceAppointment> getAppointmentsByServiceID(Long serviceID) throws Exception{
         List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByService_ServiceID(serviceID);
-        if (appointments.isEmpty() || appointments == null){
+        if (appointments == null || appointments.isEmpty()){
             throw new Exception("No service with this ID exists");
         }
         return appointments;

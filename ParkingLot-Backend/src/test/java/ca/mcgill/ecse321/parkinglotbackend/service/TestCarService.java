@@ -96,11 +96,11 @@ public class TestCarService {
 
         lenient().when(carRepository.findCarByOwner_PersonID(anyLong())).thenAnswer( (InvocationOnMock invocation) -> {
             if(invocation.getArgument(0).equals(C1.getOwner().getPersonID())) {
-                return C1;
+                return Arrays.asList(C1);
             } else if (invocation.getArgument(0).equals(C2.getOwner().getPersonID())){
-                return C2;
+                return Arrays.asList(C2);
             } else if (invocation.getArgument(0).equals(C3.getOwner().getPersonID())){
-                return C3;
+                return Arrays.asList(C3);
             } else {
                 return null;
             }
@@ -356,7 +356,7 @@ public class TestCarService {
             eMSG = e.getMessage();
         }
         
-        assertEquals("No person with this id exists", eMSG);
+        assertEquals("No person with this ID exists", eMSG);
         assertNull(car);
     }
 
@@ -372,7 +372,7 @@ public class TestCarService {
             eMSG = e.getMessage();
         }
         
-        assertEquals("No person with this id exists", eMSG);
+        assertEquals("No person with this ID exists", eMSG);
         assertNull(car);
     }
 
