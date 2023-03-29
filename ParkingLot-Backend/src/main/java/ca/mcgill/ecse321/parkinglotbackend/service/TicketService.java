@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.parkinglotbackend.service;
 
+import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingLotSoftwareSystemRepository;
 import ca.mcgill.ecse321.parkinglotbackend.dao.TicketRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
@@ -7,7 +8,6 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,16 @@ import java.util.List;
 public class TicketService {
 	@Autowired
 	TicketRepository ticketRepository;
+	ParkingLotSoftwareSystemRepository parkingLotSoftwareSystemRepository;
 
+	/**
+	 * @param entryTime time when ticket is created
+	 * @param carType 	either Regular or Large
+	 * @param parkingLotSoftwareSystem	the instance of the system
+	 * @return	the ticket that was created
+	 * @throws Exception	returns an error message if any of the params were not correct
+	 * @author faizachowdhury
+	 */
 	@Transactional
 	public Ticket createTicket(LocalDateTime entryTime, CarType carType,
 							   ParkingLotSoftwareSystem parkingLotSoftwareSystem) throws Exception {
@@ -28,31 +37,20 @@ public class TicketService {
 		Ticket ticket = new Ticket();
 		ticket.setSystem(parkingLotSoftwareSystem);
 		ticket.setCarType(carType);
-
-		// set entry time
-		//LocalDateTime currentTime = LocalDateTime.now();
 		ticket.setEntryTime(entryTime);
 		long ticketID = ticket.getTicketID();
 
 		ticketRepository.save(ticket);
 		return ticket;
 	}
-	@Transactional
-	public Ticket createTicketWithID(long ticketID, LocalDateTime entryTime, CarType carType,
-							   ParkingLotSoftwareSystem parkingLotSoftwareSystem) throws Exception {
-		// create ticket
-		if (parkingLotSoftwareSystem == null) {
-			throw new Exception("Please provide a valid system");
-		}
-		Ticket ticket = ticketRepository.findTicketByTicketID(ticketID);
-		if (ticket == null) {
-			throw new Exception("There is already a ticket int he system with this ID");
-		}
-		ticket = new Ticket(ticketID,entryTime,carType,parkingLotSoftwareSystem);
-		ticketRepository.save(ticket);
-		return ticket;
-	}
 
+	/**
+	 * Delete a ticket in the system
+	 * @param ticketID	unique identifier of the ticket
+	 * @return	Ticket object that was deleted
+	 * @throws Exception error message if encountered
+	 * @author faizachowdhury
+	 */
 	@Transactional
 	public Ticket deleteTicket(long ticketID) throws Exception {
 		Ticket ticket = ticketRepository.findTicketByTicketID(ticketID);
@@ -62,6 +60,13 @@ public class TicketService {
 		ticketRepository.delete(ticket);
 		return ticket;
 	}
+
+	/**
+	 * Get a ticket by ID
+	 * @param ticketID    unique identifier of the ticket
+	 * @return	Ticket object that was found
+	 * @throws Exception error message if encountered
+	 */
 	@Transactional
 	public Ticket getTicketByID(long ticketID) throws Exception {
 		Ticket ticket = ticketRepository.findTicketByTicketID(ticketID);
@@ -71,11 +76,21 @@ public class TicketService {
 		return ticket;
 	}
 
+	/**
+	 * get all the Tickets in the system currently
+	 * @return	List of all Tickets
+	 * @author faizachowdhury
+	 */
 	@Transactional
 	public List<Ticket> getAllTickets() {
 		return toList(ticketRepository.findAll());
 	}
 
+	/**
+	 * Find number of Tickets in the system
+	 * @return 	the number of tickets that are in the system
+	 * @author faizachowdhury
+	 */
 	@Transactional
 	public int numberOfTickets() {
 		List <Ticket> allTickets = getAllTickets();
@@ -83,7 +98,13 @@ public class TicketService {
 		return number;
 	}
 
-
+	/**
+	 * Convert to List object
+	 * @param iterable
+	 * @param <T>
+	 * @return	List of iterable objects
+	 * Code taken from tutorial notes
+	 */
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {

@@ -37,9 +37,9 @@ public class TicketServiceTest {
     @Mock
     private TicketRepository ticketDao;
 
+    // create three tickets in the system
     @InjectMocks
     private TicketService ticketService;
-    //private static final long TICKET_KEY = 111;
 
     LocalDateTime time1 = LocalDateTime.now();
     LocalDateTime time2 = LocalDateTime.now();
@@ -86,6 +86,10 @@ public class TicketServiceTest {
             }
         });
     }
+
+    /**
+     * Testing the creation of a ticket in the system
+     */
     @Test
     public void testCreateTicket() {
         assertEquals(3, ticketService.getAllTickets().size());
@@ -100,7 +104,12 @@ public class TicketServiceTest {
         }
         assertNotNull(ticket);
         assertEquals(time4, ticket.getEntryTime());
+       // System.out.println("hello world " + ticket1.getTicketID());
     }
+
+    /**
+     * Testing Create Ticket when the system provided is null
+     */
     @Test
     public void testCreateTicketNullSystem() {
         LocalDateTime entryTime = LocalDateTime.now();
@@ -119,6 +128,11 @@ public class TicketServiceTest {
         // check error
         assertEquals("Please provide a valid system", error);
     }
+
+    /**
+     * Testing delete ticket
+     * @throws Exception
+     */
     @Test
     public void testDeleteTicket() throws Exception {
         String error = null;
@@ -134,6 +148,11 @@ public class TicketServiceTest {
         // check error
         assertEquals(ticket, ticket1);
     }
+
+    /**
+     * testing delete ticket when ticket id provided is wrong
+     * @throws Exception
+     */
     @Test
     public void testDeleteTicketNull() throws Exception {
         String error = null;
@@ -150,6 +169,11 @@ public class TicketServiceTest {
         // check error
         assertEquals("There is no ticket in the system with this ID.", error);
     }
+
+    /**
+     * testing get ticket by TicketID
+     * @throws Exception
+     */
     @Test
     public void testGetTicketByID() throws Exception {
         String error = null;
@@ -165,6 +189,11 @@ public class TicketServiceTest {
         // check error
         assertEquals(ticket1, ticket4);
     }
+
+    /**
+     * Testing get ticket when ID provided is null
+     * @throws Exception
+     */
     @Test
     public void testGetTicketByIDNull() throws Exception {
         String error = null;
@@ -181,6 +210,11 @@ public class TicketServiceTest {
         // check error
         assertEquals("There is no ticket in the system with this ID.", error);
     }
+
+    /**
+     * Testing get all tickets in the system
+     * @throws Exception
+     */
     @Test
     public void testGetAllTickets() throws Exception {
         String error = null;

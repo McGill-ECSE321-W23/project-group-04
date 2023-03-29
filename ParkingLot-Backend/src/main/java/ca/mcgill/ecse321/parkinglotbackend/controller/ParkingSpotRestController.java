@@ -15,6 +15,7 @@ import java.util.List;
 
 
 @CrossOrigin(origins = "*")
+@RequestMapping("/api/parkingSpot")
 @RestController
 public class ParkingSpotRestController {
      @Autowired
@@ -37,7 +38,7 @@ public class ParkingSpotRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-     @PostMapping("/update/{id}")
+     @PutMapping("/update/{id}")
      public ResponseEntity<?> updateParkingSpot(HttpServletRequest request, @RequestBody long id,
                                                 @RequestBody int newFloor, @RequestBody int newNumber) {
          // Check authorization (manager)
@@ -55,7 +56,7 @@ public class ParkingSpotRestController {
              return ResponseEntity.badRequest().body(e.getMessage());
          }
      }
-     @PostMapping("/delete/{id}")
+     @DeleteMapping("/delete/{id}")
      public ResponseEntity<?> deleteParkingSpot(HttpServletRequest request, @RequestBody long id) {
          // Check authorization (manager)
          try {
@@ -73,7 +74,7 @@ public class ParkingSpotRestController {
          }
      }
 //
-     @PostMapping("/get/{id}")
+     @GetMapping("/get/{id}")
      public ResponseEntity<?> getParkingSpotByID(HttpServletRequest request, @RequestBody long id) {
          // Check authorization (own a/c or staff)
          try {
@@ -95,8 +96,8 @@ public class ParkingSpotRestController {
              return ResponseEntity.badRequest().body(e.getMessage());
          }
      }
-////
-     @PostMapping("/getParkingSpots")
+
+     @GetMapping("/getParkingSpots")
      public ResponseEntity<?> getAllParkingSpots(HttpServletRequest request) {
          // Check authorization (staff)
          try {
@@ -123,7 +124,7 @@ public class ParkingSpotRestController {
              return ResponseEntity.badRequest().body(e.getMessage());
          }
      }
-     @PostMapping("/getCount")
+     @GetMapping("/getCount")
      public ResponseEntity<?> getParkingSpotCount(HttpServletRequest request) {
          try {
              List <ParkingSpot> parkingSpots = parkingSpotService.findAllParkingSpots();

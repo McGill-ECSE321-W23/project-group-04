@@ -1,17 +1,13 @@
 package ca.mcgill.ecse321.parkinglotbackend.service;
 
 import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingSpotRepository;
-import ca.mcgill.ecse321.parkinglotbackend.dao.PersonRepository;
-import ca.mcgill.ecse321.parkinglotbackend.dao.TicketRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.MonthlyReservation;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingSpot;
-import ca.mcgill.ecse321.parkinglotbackend.model.Person;
-import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.*;
 
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +16,12 @@ public class ParkingSpotService {
     @Autowired
     ParkingSpotRepository parkingSpotRepository;
 
-
+    /**
+     * create a parking spot in the system
+     * @param floor which floor the parking spot is in
+     * @param number
+     * @return
+     */
     @Transactional
     public ParkingSpot createParkingSpot(int floor, int number) {
         ParkingSpot parkingSpot = new ParkingSpot();

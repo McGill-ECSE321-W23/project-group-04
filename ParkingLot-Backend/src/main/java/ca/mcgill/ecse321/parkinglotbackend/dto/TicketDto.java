@@ -5,6 +5,10 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
 
 import java.time.LocalDateTime;
 
+/**
+ * Ticket Data Transfer Object
+ * @author faizachowdhury
+ */
 public class TicketDto {
     
     // Attributes
