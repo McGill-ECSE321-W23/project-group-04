@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
@@ -103,7 +103,7 @@ public class TimeSlotController {
 
     // Create timeslot
     @PostMapping("/create")
-    public ResponseEntity<?> createTimeSlot(HttpServletRequest request, @RequestBody DayOfWeek dayOfTheWeek, @RequestBody LocalTime startTime, @RequestBody LocalTime endTime, @RequestBody long parkingLotSoftwareSystemID, @RequestBody long accountID) {
+    public ResponseEntity<?> createTimeSlot(HttpServletRequest request, @RequestParam DayOfWeek dayOfTheWeek, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime, @RequestParam long parkingLotSoftwareSystemID, @RequestParam long accountID) {
         try {
             ParkingLotSoftwareSystem system = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID);
             StaffAccount staffAccount = staffAccountService.getStaffAccount(accountID);
@@ -127,7 +127,7 @@ public class TimeSlotController {
 
     // Update timeslot
     @PutMapping("/update/{timeSlotID}")
-    public ResponseEntity<?> updateTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID, @RequestBody DayOfWeek dayOfTheWeek, @RequestBody LocalTime startTime, @RequestBody LocalTime endTime) {
+    public ResponseEntity<?> updateTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID, @RequestParam DayOfWeek dayOfTheWeek, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime) {
         // Check authorization
         try {
             if (AuthenticationUtility.isManager(request)) {
