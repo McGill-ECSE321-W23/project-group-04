@@ -13,14 +13,22 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/parkingSpot")
 @RestController
 public class ParkingSpotRestController {
+
      @Autowired
      private ParkingSpotService parkingSpotService;
-    @PutMapping("/create")
+
+    /**
+     * Create a parking spot
+     * @param request - only manager can call this method
+     * @param floor - floor of the parking spot
+     * @param number - number of the parking spot
+     * @return success/error message
+     */
+    @PostMapping("/create")
     public ResponseEntity<?> createParkingSpot (HttpServletRequest request,
                                                 @RequestBody int floor, @RequestBody int number) {
         // Check authorization (manager)
@@ -38,6 +46,16 @@ public class ParkingSpotRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    /**
+     * update an existing parking spot
+     * @param request - only manager can call this method
+     * @param id - parking spot id
+     * @param newFloor - new floor
+     * @param newNumber - new number
+     * @return success/error message
+     * @author faizachowdhury
+     */
      @PutMapping("/update/{id}")
      public ResponseEntity<?> updateParkingSpot(HttpServletRequest request, @RequestBody long id,
                                                 @RequestBody int newFloor, @RequestBody int newNumber) {
@@ -56,6 +74,14 @@ public class ParkingSpotRestController {
              return ResponseEntity.badRequest().body(e.getMessage());
          }
      }
+
+    /**
+     * delete a parking spot
+     * @param request only manager can call this method
+     * @param id parking spot id
+     * @return success/error message
+     * @author faizachowdhury
+     */
      @DeleteMapping("/delete/{id}")
      public ResponseEntity<?> deleteParkingSpot(HttpServletRequest request, @RequestBody long id) {
          // Check authorization (manager)
@@ -73,7 +99,14 @@ public class ParkingSpotRestController {
              return ResponseEntity.badRequest().body(e.getMessage());
          }
      }
-//
+
+    /**
+     * get a parking spot by ID
+     * @param request - only staff or customer getting info for their own id can call this method
+     * @param id - parking spot id
+     * @return  the parking spot information
+     * @author faizachowdhury
+     */
      @GetMapping("/get/{id}")
      public ResponseEntity<?> getParkingSpotByID(HttpServletRequest request, @RequestBody long id) {
          // Check authorization (own a/c or staff)
@@ -97,6 +130,12 @@ public class ParkingSpotRestController {
          }
      }
 
+    /**
+     * Get a list of all the parking spots
+     * @param request - only staff can call this method
+     * @return a list of all parking spots
+     * @author faizachowdhury
+     */
      @GetMapping("/getParkingSpots")
      public ResponseEntity<?> getAllParkingSpots(HttpServletRequest request) {
          // Check authorization (staff)
@@ -124,6 +163,13 @@ public class ParkingSpotRestController {
              return ResponseEntity.badRequest().body(e.getMessage());
          }
      }
+
+    /**
+     * Return the number of parking spots
+     * @param request - anyone can call this method
+     * @return  count if successful
+     * @author faizachowdhury
+     */
      @GetMapping("/getCount")
      public ResponseEntity<?> getParkingSpotCount(HttpServletRequest request) {
          try {
@@ -135,32 +181,6 @@ public class ParkingSpotRestController {
              return ResponseEntity.badRequest().body(e.getMessage());
          }
      }
-//
-//     private ParkingSpotDto convertToDto(ParkingSpot p) {
-//         if (p == null) {
-//             throw new IllegalArgumentException("There is no such Parking Spot!");
-//         }
-//
-//         long id = p.getParkingSpotID();
-//         int floor = p.getFloor();
-//         int number = p.getNumber();
-//         ParkingSpotDto parkingSpotDto = new ParkingSpotDto(id, floor, number);
-//
-//
-//         return parkingSpotDto;
-//     }
-//     private ParkingSpot convertToDomainObject(ParkingSpotDto pDto) {
-//         List<ParkingSpot> parkingSpots = parkingSpotService.findAllParkingSpots();
-//         for (ParkingSpot parkingSpot : parkingSpots) {
-//             if (parkingSpot.getParkingSpotID() ==  (pDto.getParkingSpotID())) {
-//                 return parkingSpot;
-//             }
-//         }
-//         return null;
-//     }
-
-
-
 
 
 }

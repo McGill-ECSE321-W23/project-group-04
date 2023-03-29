@@ -4,17 +4,14 @@ package ca.mcgill.ecse321.parkinglotbackend.controller;
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.dto.TicketDto;
-import ca.mcgill.ecse321.parkinglotbackend.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
 
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
 import ca.mcgill.ecse321.parkinglotbackend.service.ParkingLotSoftwareSystemService;
-import ca.mcgill.ecse321.parkinglotbackend.service.ParkingSpotService;
 import ca.mcgill.ecse321.parkinglotbackend.service.TicketService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,12 +27,19 @@ public class TicketRestController {
     @Autowired
     private TicketService ticketService;
 
-    //TODO: add the system to create, delete, update methods?
+
     @Autowired
     private ParkingLotSoftwareSystemService parkingLotSoftwareSystemService;
 
+    /**
+     * Create a ticket in the system
+     * @param request - staff can call this method
+     * @param carType - either Regular/Large
+     * @param parkingLotSoftwareSystem  - the system
+     * @return success/error message
+     * @author faizchowdhury
+     */
 
-    //create a ticket in the system
     @PostMapping("/create" )
     public ResponseEntity<?> createTicket (HttpServletRequest request,  @RequestBody CarType carType,
                                            @RequestBody ParkingLotSoftwareSystem parkingLotSoftwareSystem) {
@@ -58,9 +62,13 @@ public class TicketRestController {
         }
     }
 
-
-
-    // delete a ticket by id
+    /**
+     * Delete a ticket from the system
+     * @param request - staff can call this method
+     * @param id - ticket id
+     * @return success/error message
+     * @author faizchowdhury
+     */
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteTicket (HttpServletRequest request, @RequestBody long id) {
@@ -73,7 +81,6 @@ public class TicketRestController {
         } catch (Exception e) {
             return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
         }
-
         try {
             ticketService.deleteTicket(id);
             return ResponseEntity.ok().build();
@@ -82,7 +89,13 @@ public class TicketRestController {
         }
     }
 
-    // Get a ticket by ID
+    /**
+     * Get a ticket from the system
+     * @param request - staff can call this method
+     * @param ticketID - ticket ID
+     * @return success/error message
+     * @author faizchowdhury
+     */
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getTicketByID(HttpServletRequest request, @RequestBody long ticketID) throws Exception {
         // Check authorization (staff)
@@ -98,10 +111,10 @@ public class TicketRestController {
             Ticket t = ticketService.getTicketByID(ticketID);
             TicketDto ticketDto = new TicketDto();
 
-                ticketDto.setSystem(t.getSystem());
-                ticketDto.setCarType(t.getCarType());
-                ticketDto.setTicketID(t.getTicketID());
-                ticketDto.setEntryTime(t.getEntryTime());
+            ticketDto.setSystem(t.getSystem());
+            ticketDto.setCarType(t.getCarType());
+            ticketDto.setTicketID(t.getTicketID());
+            ticketDto.setEntryTime(t.getEntryTime());
 
             return ResponseEntity.ok().body(ticketDto);
         } catch (Exception e) {
@@ -110,9 +123,16 @@ public class TicketRestController {
     }
 
 
-    // get a list of all the tickets
+    /**
+     * Get all the tickets in the system
+     * @param request - staff can call this method
+     * @param parkingLotSoftwareSystem -  the system
+     * @return success/error message
+     * @author faizchowdhury
+     */
     @GetMapping("/tickets")
-    public ResponseEntity<?> getAllTickets(HttpServletRequest request) {
+    public ResponseEntity<?> getAllTickets(HttpServletRequest request, @RequestBody ParkingLotSoftwareSystem
+            parkingLotSoftwareSystem) {
         // Check authorization (staff)
         try {
             if (!AuthenticationUtility.isStaff(request)) {
@@ -123,7 +143,7 @@ public class TicketRestController {
         }
         try {
             List<TicketDto> ticketDtos = new ArrayList<>();
-            for (Ticket t : ticketService.getAllTickets()) {
+            for (Ticket t : ticketService.getAllTickets(parkingLotSoftwareSystem)) {
                 TicketDto ticketDto = new TicketDto();
 
                 ticketDto.setSystem(t.getSystem());
@@ -140,12 +160,19 @@ public class TicketRestController {
         }
     }
 
-    // get no. of tickets in the system
+    /**
+     * Get a count of all the tickets in the system
+     * @param request - anyone can call this method
+     * @param parkingLotSoftwareSystem - the system
+     * @return success/error message
+     * @author faizchowdhury
+     */
 
     @GetMapping("/getCount")
-    public ResponseEntity<?> getTicketCount(HttpServletRequest request) {
+    public ResponseEntity<?> getTicketCount(HttpServletRequest request, @RequestBody ParkingLotSoftwareSystem
+            parkingLotSoftwareSystem) {
         try {
-            List <Ticket> tickets = ticketService.getAllTickets();
+            List <Ticket> tickets = ticketService.getAllTickets(parkingLotSoftwareSystem);
             int count = tickets.size();
             return ResponseEntity.ok().body(count);
 
@@ -153,34 +180,6 @@ public class TicketRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-
-    private TicketDto convertToDto(Ticket t) {
-        if (t == null) {
-            throw new IllegalArgumentException("There is no such Ticket!");
-        }
-
-        TicketDto ticketDto = new TicketDto();
-
-        ticketDto.setSystem(t.getSystem());
-        ticketDto.setCarType(t.getCarType());
-        ticketDto.setTicketID(t.getTicketID());
-        ticketDto.setEntryTime(t.getEntryTime());
-
-
-        return ticketDto;
-    }
-    private Ticket convertToDomainObject(TicketDto tDto) {
-        List<Ticket> tickets = ticketService.getAllTickets();
-        for (Ticket ticket : tickets) {
-            if (ticket.getTicketID() ==  (tDto.getTicketID())) {
-                return ticket;
-            }
-        }
-        return null;
-    }
-
-
 
 
 }

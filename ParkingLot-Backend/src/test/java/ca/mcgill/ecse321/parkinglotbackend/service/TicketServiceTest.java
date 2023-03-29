@@ -10,28 +10,24 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.parkinglotbackend.dao.TicketRepository;
 
+/**
+ * A class to test the Ticket Service
+ * @author faizachowdhury
+ */
 @ExtendWith(MockitoExtension.class)
 public class TicketServiceTest {
     @Mock
@@ -41,6 +37,10 @@ public class TicketServiceTest {
     @InjectMocks
     private TicketService ticketService;
 
+    long id1 = 123;
+    long id2 = 456;
+    long id3 = 789;
+
     LocalDateTime time1 = LocalDateTime.now();
     LocalDateTime time2 = LocalDateTime.now();
     LocalDateTime time3 = LocalDateTime.now();
@@ -48,12 +48,10 @@ public class TicketServiceTest {
     CarType carType = CarType.valueOf("Regular");
     ParkingLotSoftwareSystem parkingLotSoftwareSystem = new ParkingLotSoftwareSystem();
 
-    Ticket ticket1 = new Ticket(time1, carType, parkingLotSoftwareSystem);
-    long id1 = ticket1.getTicketID();
-    Ticket ticket2 = new Ticket(time2, carType, parkingLotSoftwareSystem);
-    long id2 = ticket2.getTicketID();
-    Ticket ticket3 = new Ticket(time3, carType, parkingLotSoftwareSystem);
-    long id3 = ticket3.getTicketID();
+    Ticket ticket1 = new Ticket(id1, time1, carType, parkingLotSoftwareSystem);
+    Ticket ticket2 = new Ticket(id2, time2, carType, parkingLotSoftwareSystem);
+    Ticket ticket3 = new Ticket(id3, time3, carType, parkingLotSoftwareSystem);
+
 
     @BeforeEach
     public void setMockOutput() {
@@ -89,10 +87,11 @@ public class TicketServiceTest {
 
     /**
      * Testing the creation of a ticket in the system
+     *  @author faizachowdhury
      */
     @Test
     public void testCreateTicket() {
-        assertEquals(3, ticketService.getAllTickets().size());
+        assertEquals(3, ticketService.getAllTickets(parkingLotSoftwareSystem).size());
         LocalDateTime time4 = LocalDateTime.now();
         ParkingLotSoftwareSystem parkingLotSoftwareSystem = new ParkingLotSoftwareSystem();
         Ticket ticket = null;
@@ -109,6 +108,7 @@ public class TicketServiceTest {
 
     /**
      * Testing Create Ticket when the system provided is null
+     *  @author faizachowdhury
      */
     @Test
     public void testCreateTicketNullSystem() {
@@ -131,7 +131,8 @@ public class TicketServiceTest {
 
     /**
      * Testing delete ticket
-     * @throws Exception
+     * @throws Exception if error occurred
+     *  @author faizachowdhury
      */
     @Test
     public void testDeleteTicket() throws Exception {
@@ -151,14 +152,15 @@ public class TicketServiceTest {
 
     /**
      * testing delete ticket when ticket id provided is wrong
-     * @throws Exception
+     * @throws Exception if error occurred
+     *  @author faizachowdhury
      */
     @Test
     public void testDeleteTicketNull() throws Exception {
         String error = null;
         Ticket ticket = null;
         // ticket = ticketService.createTicket(entryTime, carType, parkingLotSoftwareSystem);
-        long ticketID = 123;
+        long ticketID = 321;
         try {
             ticket = ticketService.deleteTicket(ticketID);
         }
@@ -172,7 +174,8 @@ public class TicketServiceTest {
 
     /**
      * testing get ticket by TicketID
-     * @throws Exception
+     * @throws Exception if error occurred
+     *  @author faizachowdhury
      */
     @Test
     public void testGetTicketByID() throws Exception {
@@ -192,14 +195,15 @@ public class TicketServiceTest {
 
     /**
      * Testing get ticket when ID provided is null
-     * @throws Exception
+     * @throws Exception if error occurred
+     *  @author faizachowdhury
      */
     @Test
     public void testGetTicketByIDNull() throws Exception {
         String error = null;
         Ticket ticket4 = null;
         // ticketService.createTicket(entryTime, carType, parkingLotSoftwareSystem);
-        long ticketID = 123;
+        long ticketID = 321;
         try {
             ticket4 = ticketService.getTicketByID(ticketID);
         }
@@ -213,22 +217,20 @@ public class TicketServiceTest {
 
     /**
      * Testing get all tickets in the system
-     * @throws Exception
+     * @throws Exception if error occurred
+     *  @author faizachowdhury
      */
     @Test
     public void testGetAllTickets() throws Exception {
         String error = null;
         List<Ticket> tickets2 = null;
         try {
-            tickets2 = ticketService.getAllTickets();
+            tickets2 = ticketService.getAllTickets(parkingLotSoftwareSystem);
         }
         catch (Exception e) {
             error = e.getMessage();
         }
         assertEquals(tickets2.size(), 3);
-
-        // check error
-
     }
 
 

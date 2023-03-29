@@ -17,6 +17,8 @@ public class TicketDto {
     private LocalDateTime entryTime;
     private ParkingLotSoftwareSystem parkingLotSoftwareSystem;
 
+    // constructors
+
     public TicketDto(long aTicketID, LocalDateTime aEntryTime, CarType aCarType, ParkingLotSoftwareSystem aParkingLotSoftwareSystem)
   {
     ticketID = aTicketID;
@@ -27,7 +29,6 @@ public class TicketDto {
       throw new RuntimeException("Unable to create Ticket due to aParkingLotSoftwareSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
-
   public TicketDto() {
   }
   
@@ -49,7 +50,7 @@ public class TicketDto {
     this.parkingLotSoftwareSystem = parkingLotSoftwareSystem;
   }
 
-
+// setters
   public boolean setTicketID(long aTicketID)
   {
     boolean wasSet = false;
@@ -73,6 +74,7 @@ public class TicketDto {
     wasSet = true;
     return wasSet;
   }
+// getters
 
   public long getTicketID()
   {
@@ -88,7 +90,7 @@ public class TicketDto {
   {
     return carType;
   }
-  
+
   public ParkingLotSoftwareSystem getSystem()
   {
     return parkingLotSoftwareSystem;

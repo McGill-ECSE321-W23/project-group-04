@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.parkinglotbackend.service;
 
 
 import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingSpotRepository;
+import ca.mcgill.ecse321.parkinglotbackend.model.MonthlyReservation;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingSpot;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -22,7 +23,10 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 
-
+/**
+ * A class to test the Parking Spot Service
+ * @author faizachowdhury
+ */
 @ExtendWith(MockitoExtension.class)
 public class ParkingSpotServiceTest {
     @Mock
@@ -32,17 +36,21 @@ public class ParkingSpotServiceTest {
     private ParkingSpotService parkingSpotService;
     //private static final long TICKET_KEY = 111;
 
+    long id1 = 123;
+    long id2 = 456;
+
     int floor1 = 1;
     int floor2 = 2;
 
     int num1 = 10;
     int num2 = 20;
 
-    ParkingSpot parkingSpot1 = new ParkingSpot(floor1, num1);
-    long id1 = parkingSpot1.getParkingSpotID();
+    ParkingSpot parkingSpot1 = new ParkingSpot(id1, floor1, num1);
 
-    ParkingSpot parkingSpot2 = new ParkingSpot(floor2, num2);
-    long id2 = parkingSpot2.getParkingSpotID();
+
+
+    ParkingSpot parkingSpot2 = new ParkingSpot(id2, floor2, num2);
+
 
     @BeforeEach
     public void setMockOutput() {
@@ -70,7 +78,13 @@ public class ParkingSpotServiceTest {
                 return null;
             }
         });
+
     }
+
+    /**
+     * Test the creation of a Parking Spot
+     * @author faizachowdhury
+     */
     @Test
     public void testCreateParkingSpot() {
         assertEquals(2, parkingSpotService.findAllParkingSpots().size());
@@ -84,6 +98,10 @@ public class ParkingSpotServiceTest {
         assertNotNull(parkingSpot);
         assertEquals(3, parkingSpot.getFloor());
     }
+    /**
+     * Testing updating a Parking Spot in the system
+     * @author faizachowdhury
+     */
     @Test
     public void testUpdateParkingSpot() {
         ParkingSpot parkingSpot = null;
@@ -97,6 +115,10 @@ public class ParkingSpotServiceTest {
         assertEquals(parkingSpot1.getFloor(), 5);
     }
 
+    /**
+     * Testing deleting a Parking Spot in the system
+     * @author faizachowdhury
+     */
     @Test
     public void testDeleteParkingSpot() throws Exception {
         String error = null;
@@ -112,10 +134,14 @@ public class ParkingSpotServiceTest {
         // check error
         assertEquals(parkingSpot, parkingSpot1);
     }
+    /**
+     * Testing delete a Parking Spot when it is null
+     * @author faizachowdhury
+     */
     @Test
     public void testDeleteParkingSpotNull() throws Exception {
         String error = null;
-        long parkingSpotID = 123;
+        long parkingSpotID = 789;
         ParkingSpot parkingSpot = null;
         try {
             parkingSpot = parkingSpotService.deleteParkingSpot(parkingSpotID);
@@ -128,6 +154,10 @@ public class ParkingSpotServiceTest {
         // check error
         assertEquals("There is no Parking Spot in the system with this ID.", error);
     }
+    /**
+     * Testing getting a Parking Spot from the system
+     * @author faizachowdhury
+     */
     @Test
     public void testGetParkingSpotByID() throws Exception {
         String error = null;
@@ -142,12 +172,16 @@ public class ParkingSpotServiceTest {
         // check error
         assertEquals(parkingSpot1, parkingSpot4);
     }
+    /**
+     * Testing getting a Parking Spot from the system when it is null
+     * @author faizachowdhury
+     */
     @Test
     public void testGetTicketByIDNull() throws Exception {
         String error = null;
         ParkingSpot parkingSpot4 = null;
         try {
-            parkingSpot4 = parkingSpotService.findParkingSpotByID(123);
+            parkingSpot4 = parkingSpotService.findParkingSpotByID(789);
         }
         catch (Exception e) {
             error = e.getMessage();
@@ -157,6 +191,48 @@ public class ParkingSpotServiceTest {
         // check error
         assertEquals("There is no Parking Spot in the system with this ID.", error);
     }
+    /**
+     * Testing getting the monthly reservation of a parking spot
+     * @author faizachowdhury
+     */
+    @Test
+    public void testGetMonthlyReservation() throws Exception {
+        String error = null;
+        MonthlyReservation monthlyReservation = new MonthlyReservation();
+        MonthlyReservation monthlyReservation2 = null;
+        parkingSpot1.setMonthlyReservation(monthlyReservation);
+        try {
+            monthlyReservation2 = parkingSpotService.findMonthlyReservation(123);
+        }
+        catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNotNull(monthlyReservation2);
+        // check error
+        assertEquals(monthlyReservation, monthlyReservation2);
+    }
+    /**
+     * Testing getting the monthly reservation of a parking spot when it is null
+     * @author faizachowdhury
+     */
+    @Test
+    public void testGetMonthlyReservationNull() throws Exception {
+        String error = null;
+        MonthlyReservation monthlyReservation = null;
+        try {
+            monthlyReservation = parkingSpotService.findMonthlyReservation(456);
+        }
+        catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(monthlyReservation);
+        // check error
+        assertEquals(error, "There is no monthly reservation for this Parking Spot.");
+    }
+    /**
+     * Testing getting a list of all the parking spots in the system
+     * @author faizachowdhury
+     */
     @Test
     public void testGetAllParkingSpots() throws Exception {
         String error = null;

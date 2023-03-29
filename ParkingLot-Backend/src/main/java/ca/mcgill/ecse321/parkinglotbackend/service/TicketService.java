@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.parkinglotbackend.service;
 
 import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingLotSoftwareSystemRepository;
 import ca.mcgill.ecse321.parkinglotbackend.dao.TicketRepository;
+import ca.mcgill.ecse321.parkinglotbackend.dto.TicketDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
@@ -17,7 +18,7 @@ import java.util.List;
 public class TicketService {
 	@Autowired
 	TicketRepository ticketRepository;
-	ParkingLotSoftwareSystemRepository parkingLotSoftwareSystemRepository;
+
 
 	/**
 	 * @param entryTime time when ticket is created
@@ -82,8 +83,14 @@ public class TicketService {
 	 * @author faizachowdhury
 	 */
 	@Transactional
-	public List<Ticket> getAllTickets() {
-		return toList(ticketRepository.findAll());
+	public List<Ticket> getAllTickets(ParkingLotSoftwareSystem parkingLotSoftwareSystem) {
+		List<Ticket> tickets = new ArrayList<Ticket>();
+		for (Ticket ticket: ticketRepository.findAll()) {
+			if (ticket.getSystem() == parkingLotSoftwareSystem) {
+				tickets.add(ticket);
+			}
+		}
+		return tickets;
 	}
 
 	/**
@@ -92,26 +99,26 @@ public class TicketService {
 	 * @author faizachowdhury
 	 */
 	@Transactional
-	public int numberOfTickets() {
-		List <Ticket> allTickets = getAllTickets();
+	public int numberOfTickets(ParkingLotSoftwareSystem parkingLotSoftwareSystem) {
+		List <Ticket> allTickets = getAllTickets(parkingLotSoftwareSystem);
 		int number = allTickets.size();
 		return number;
 	}
 
-	/**
-	 * Convert to List object
-	 * @param iterable
-	 * @param <T>
-	 * @return	List of iterable objects
-	 * Code taken from tutorial notes
-	 */
-	private <T> List<T> toList(Iterable<T> iterable){
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
-	}
+//	/**
+//	 * Convert to List object
+//	 * @param iterable
+//	 * @param <T>
+//	 * @return	List of iterable objects
+//	 * Code taken from tutorial notes
+//	 */
+//	private <T> List<T> toList(Iterable<T> iterable){
+//		List<T> resultList = new ArrayList<T>();
+//		for (T t : iterable) {
+//			resultList.add(t);
+//		}
+//		return resultList;
+//	}
 
 }
     

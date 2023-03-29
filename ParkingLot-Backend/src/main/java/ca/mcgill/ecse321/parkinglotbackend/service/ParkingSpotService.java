@@ -18,9 +18,10 @@ public class ParkingSpotService {
 
     /**
      * create a parking spot in the system
-     * @param floor which floor the parking spot is in
-     * @param number
-     * @return
+     * @param floor parking spot floor
+     * @param number  parking spot number
+     * @return the new Parking Spot
+     * @author faizachowdhury
      */
     @Transactional
     public ParkingSpot createParkingSpot(int floor, int number) {
@@ -30,6 +31,14 @@ public class ParkingSpotService {
         return parkingSpot;
     }
 
+    /**
+     * update a parking spot already in the system
+     * @param parkingSpotID ID of the spot
+     * @param newFloor  new parking spot floor
+     * @param newNumber new parking spot number
+     * @return the updated Parking Spot
+     * @author faizachowdhury
+     */
     @Transactional
     public ParkingSpot updateParkingSpot(long parkingSpotID, int newFloor, int newNumber) {
         ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotByParkingSpotID(parkingSpotID);
@@ -37,40 +46,71 @@ public class ParkingSpotService {
         parkingSpot.setNumber(newNumber);
         return parkingSpot;
     }
+    /**
+     * delete a parking spot from the system
+     * @param parkingSpotID ID of the parking spot
+     * @return the deleted Parking Spot
+     * @author faizachowdhury
+     */
     @Transactional
-    public ParkingSpot deleteParkingSpot(long ParkingSpotID) throws Exception {
-        ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotByParkingSpotID(ParkingSpotID);
+    public ParkingSpot deleteParkingSpot(long parkingSpotID) throws Exception {
+        ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotByParkingSpotID(parkingSpotID);
         if (parkingSpot == null) {
             throw new Exception("There is no Parking Spot in the system with this ID.");
         }
         parkingSpotRepository.delete(parkingSpot);
         return parkingSpot;
     }
+    /**
+     * find a parking spot in the system
+     * @param parkingSpotID id of the parking spot
+     * @return the required Parking Spot
+     * @author faizachowdhury
+     */
     @Transactional
-    public ParkingSpot findParkingSpotByID(long ParkingSpotID) throws Exception {
-        ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotByParkingSpotID(ParkingSpotID);
+    public ParkingSpot findParkingSpotByID(long parkingSpotID) throws Exception {
+        ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotByParkingSpotID(parkingSpotID);
         if (parkingSpot == null) {
             throw new Exception("There is no Parking Spot in the system with this ID.");
         }
         return parkingSpot;
     }
+    /**
+     * find monthly reservation of a parking spot if it exists
+     * @param parkingSpotID id of the parking spot
+     * @return the monthly reservation
+     * @author faizachowdhury
+     */
     @Transactional
-    public MonthlyReservation findMonthlyReservation(long ParkingSpotID) throws Exception {
-        ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotByParkingSpotID(ParkingSpotID);
+    public MonthlyReservation findMonthlyReservation(long parkingSpotID) throws Exception {
+        ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotByParkingSpotID(parkingSpotID);
         if (parkingSpot == null) {
             throw new Exception("There is no Parking Spot in the system with this ID.");
         }
+        if (!parkingSpot.hasMonthlyReservation()) {
+            throw new Exception("There is no monthly reservation for this Parking Spot.");
+        }
         MonthlyReservation monthlyReservation = parkingSpot.getMonthlyReservation();
-
         return monthlyReservation;
     }
 
+    /**
+     * find a list of all the parking spots in the system
+     * @return the required list
+     * @author faizachowdhury
+     */
     @Transactional
     public List<ParkingSpot> findAllParkingSpots() {
         return toList(parkingSpotRepository.findAll());
     }
 
 
+    /**
+     * code taken from tutorial notes
+     * @param iterable
+     * @param <T>
+     * @return list of iterable
+     */
     private <T> List<T> toList(Iterable<T> iterable){
         List<T> resultList = new ArrayList<T>();
         for (T t : iterable) {
