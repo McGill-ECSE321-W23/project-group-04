@@ -77,7 +77,6 @@ public class TestTimeSlotService {
     private static final LocalTime endTimeOverlap = LocalTime.of(22, 0);
 
     private static final long timeSlotIdNonexistent = 69L;
-    private static final StaffAccount nullAccount = null;
 
     // Setup mock repository
     @BeforeEach
@@ -120,15 +119,11 @@ public class TestTimeSlotService {
             }
         });
 
-        lenient().when(timeSlotRepository.findTimeSlotByStaffAccount(any(StaffAccount.class))).thenAnswer((InvocationOnMock invocation) -> {
-            if (invocation.getArgument(0).equals(nullAccount)) {
-                List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
-                timeSlots.add(makeOpenHours(timeSlotId4, dayOfTheWeek4, startTime4, endTime4, parkingLotSoftwareSystem1));
-                timeSlots.add(makeOpenHours(timeSlotId5, dayOfTheWeek5, startTime5, endTime5, parkingLotSoftwareSystem1));
-                return timeSlots;
-            } else {
-                return null;
-            }
+        lenient().when(timeSlotRepository.findTimeSlotByStaffAccount(null)).thenAnswer((InvocationOnMock invocation) -> {
+            List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
+            timeSlots.add(makeOpenHours(timeSlotId4, dayOfTheWeek4, startTime4, endTime4, parkingLotSoftwareSystem1));
+            timeSlots.add(makeOpenHours(timeSlotId5, dayOfTheWeek5, startTime5, endTime5, parkingLotSoftwareSystem1));
+            return timeSlots;
         });
 
         // Whenever anything is saved, just return the parameter object
@@ -333,7 +328,7 @@ public class TestTimeSlotService {
     public void testGetAllTimeSlotsWithNullStaffAccount() {
         List<TimeSlot> timeSlots = null;
         try {
-            timeSlots = timeSlotService.getTimeSlotsByStaffAccount(null);
+            timeSlots = timeSlotService.getAllOpenHours();
         } catch (Exception e) {
             fail();
         }

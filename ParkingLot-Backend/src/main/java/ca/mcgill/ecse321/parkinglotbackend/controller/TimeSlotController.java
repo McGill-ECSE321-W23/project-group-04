@@ -88,11 +88,11 @@ public class TimeSlotController {
 
     // Get all timeslots as opening hours
     @GetMapping("/getopen")
-    public ResponseEntity<?> getAllTimeSlotsByStaffAccount(HttpServletRequest request, StaffAccount staffAccount) {
+    public ResponseEntity<?> getAllOpenHours(HttpServletRequest request) {
         // Check authorization
         try {
             if (AuthenticationUtility.isManager(request)) {
-                return ResponseEntity.ok(timeSlotService.getTimeSlotsByStaffAccount(staffAccount).stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
+                return ResponseEntity.ok(timeSlotService.getAllOpenHours().stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
             } else {
                 return ResponseEntity.badRequest().body("Only manager can get opening hours");
             }
