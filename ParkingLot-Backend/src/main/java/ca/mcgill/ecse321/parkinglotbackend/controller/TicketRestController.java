@@ -2,12 +2,14 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
+import ca.mcgill.ecse321.parkinglotbackend.dto.ParkingLotSoftwareSystemDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.dto.TicketDto;
 import ca.mcgill.ecse321.parkinglotbackend.dto.TicketDto.CarTypeDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
 
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
+import ca.mcgill.ecse321.parkinglotbackend.service.ParkingLotSoftwareSystemService;
 import ca.mcgill.ecse321.parkinglotbackend.service.TicketService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
