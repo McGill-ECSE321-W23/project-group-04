@@ -103,7 +103,6 @@ public class TicketServiceTest {
         }
         assertNotNull(ticket);
         assertEquals(time4, ticket.getEntryTime());
-       // System.out.println("hello world " + ticket1.getTicketID());
     }
 
     /**

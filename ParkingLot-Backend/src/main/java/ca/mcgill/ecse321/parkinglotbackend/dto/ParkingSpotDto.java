@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.parkinglotbackend.dto;
 
-import ca.mcgill.ecse321.parkinglotbackend.model.MonthlyReservation;
 
 /**
  * Parking Spot Data Transfer Object
@@ -13,7 +12,8 @@ private int floor;
 private int number;
 
 // parking spot association
-private MonthlyReservation monthlyReservation;
+private  MonthlyReservationDto monthlyReservationDto;
+
 
 // constructors
 public ParkingSpotDto(long aParkingSpotID, int aFloor, int aNumber)
@@ -71,21 +71,21 @@ public int getNumber()
 }
 
 
-public MonthlyReservation getMonthlyReservation()
+public MonthlyReservationDto getMonthlyReservation()
 {
-  return monthlyReservation;
+  return monthlyReservationDto;
 }
 
 public boolean hasMonthlyReservation()
 {
-  boolean has = monthlyReservation != null;
+  boolean has = monthlyReservationDto != null;
   return has;
 }
 
-public boolean setMonthlyReservation(MonthlyReservation aNewMonthlyReservation)
+public boolean setMonthlyReservation(MonthlyReservationDto aNewMonthlyReservationDto)
 {
   boolean wasSet = false;
-  monthlyReservation = aNewMonthlyReservation;
+  monthlyReservationDto = aNewMonthlyReservationDto;
   wasSet = true;
   return wasSet;
 }

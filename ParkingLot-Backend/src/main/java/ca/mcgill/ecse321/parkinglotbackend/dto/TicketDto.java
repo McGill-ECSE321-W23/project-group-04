@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.parkinglotbackend.dto;
 
-import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
 
 import java.time.LocalDateTime;
@@ -15,16 +14,17 @@ public class TicketDto {
     private long ticketID;
     private CarType carType;
     private LocalDateTime entryTime;
-    private ParkingLotSoftwareSystem parkingLotSoftwareSystem;
+
+    private ParkingLotSoftwareSystemDto plsDto;
 
     // constructors
 
-    public TicketDto(long aTicketID, LocalDateTime aEntryTime, CarType aCarType, ParkingLotSoftwareSystem aParkingLotSoftwareSystem)
+    public TicketDto(long aTicketID, LocalDateTime aEntryTime, CarType aCarType, ParkingLotSoftwareSystemDto aPlsDto)
   {
     ticketID = aTicketID;
     entryTime = aEntryTime;
     carType = aCarType;
-    if (!setSystem(aParkingLotSoftwareSystem))
+    if (!setSystem(aPlsDto))
     {
       throw new RuntimeException("Unable to create Ticket due to aParkingLotSoftwareSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
@@ -32,22 +32,22 @@ public class TicketDto {
   public TicketDto() {
   }
   
-  public TicketDto(LocalDateTime aEntryTime, CarType aCarType, ParkingLotSoftwareSystem aParkingLotSoftwareSystem)
+  public TicketDto(LocalDateTime aEntryTime, CarType aCarType, ParkingLotSoftwareSystemDto aPlsDto)
   {
     entryTime = aEntryTime;
     carType = aCarType;
-    if (!setSystem(aParkingLotSoftwareSystem))
+    if (!setSystem(aPlsDto))
     {
       throw new RuntimeException("Unable to create Ticket due to aParkingLotSoftwareSystem. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
-  public ParkingLotSoftwareSystem getParkingLotSoftwareSystem() {
-    return parkingLotSoftwareSystem;
+  public ParkingLotSoftwareSystemDto getParkingLotSoftwareSystem() {
+    return plsDto;
   }
 
-  public void setParkingLotSoftwareSystem(ParkingLotSoftwareSystem parkingLotSoftwareSystem) {
-    this.parkingLotSoftwareSystem = parkingLotSoftwareSystem;
+  public void setParkingLotSoftwareSystem(ParkingLotSoftwareSystemDto plsDto) {
+    this.plsDto = plsDto;
   }
 
 // setters
@@ -91,17 +91,17 @@ public class TicketDto {
     return carType;
   }
 
-  public ParkingLotSoftwareSystem getSystem()
+  public ParkingLotSoftwareSystemDto getSystem()
   {
-    return parkingLotSoftwareSystem;
+    return plsDto;
   }
   /* Code from template association_SetUnidirectionalOne */
-  public boolean setSystem(ParkingLotSoftwareSystem aNewParkingLotSoftwareSystem)
+  public boolean setSystem(ParkingLotSoftwareSystemDto aNewPlsDto)
   {
     boolean wasSet = false;
-    if (aNewParkingLotSoftwareSystem != null)
+    if (aNewPlsDto != null)
     {
-      parkingLotSoftwareSystem = aNewParkingLotSoftwareSystem;
+      plsDto = aNewPlsDto;
       wasSet = true;
     }
     return wasSet;

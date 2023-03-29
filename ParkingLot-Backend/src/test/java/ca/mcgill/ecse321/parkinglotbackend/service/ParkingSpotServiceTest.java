@@ -245,7 +245,6 @@ public class ParkingSpotServiceTest {
         }
         assertEquals(parkingSpots2.size(), 2);
 
-        // check error
 
     }
 
