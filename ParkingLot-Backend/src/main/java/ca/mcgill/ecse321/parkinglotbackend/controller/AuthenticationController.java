@@ -99,7 +99,7 @@ public class AuthenticationController {
     }
 
     /**
-     * Smoke testing
+     * Log in as manager for smoke testing
      * @param request
      * @return Http response
      * @author Lin Wei Li
@@ -117,6 +117,11 @@ public class AuthenticationController {
 
     }
 
+    /**
+     * Helper method for smoke testing
+     * @param request
+     * @return
+     */
     @GetMapping("/getRole")
     public ResponseEntity<?> getRole(HttpServletRequest request) {
 

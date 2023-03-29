@@ -20,6 +20,7 @@ public class PersonService {
      * Find a person by id
      * @param id
      * @return Person
+     * @throws Exception
      * @author Lin Wei Li
      */
     @Transactional
@@ -99,8 +100,11 @@ public class PersonService {
      * @author Lin Wei Li
      */
     @Transactional
-    public Person deletePerson(long personID) {
+    public Person deletePerson(long personID) throws Exception {
         Person person = personRepository.findPersonByPersonID(personID);
+        if (person == null) {
+            throw new Exception("No person with this id exists!");
+        }
         personRepository.delete(person);
         return person;
     }
@@ -108,9 +112,10 @@ public class PersonService {
     /**
      * Update a person
      * @param personID
-     * @param name
-     * @param phoneNumber
+     * @param name - new name
+     * @param phoneNumber - new phone number
      * @return Person
+     * @throws Exception
      * @author Lin Wei Li
      */
     @Transactional

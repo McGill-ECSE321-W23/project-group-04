@@ -33,6 +33,14 @@ public class PersonController {
     @Autowired
     private AccountService accountService;
     
+    /**
+     * Create a new Person
+     * @param request
+     * @param name
+     * @param phoneNumber
+     * @return
+     * @author Lin Wei Li
+     */
     @PostMapping("/create")
     public ResponseEntity<?> createPerson(HttpServletRequest request,
     @RequestParam String name, @RequestParam String phoneNumber) {
@@ -44,6 +52,15 @@ public class PersonController {
         }
     }
 
+    /**
+     * Update an existing Person
+     * @param request
+     * @param id
+     * @param name - new name
+     * @param phoneNumber - new phone number
+     * @return
+     * @author Lin Wei Li
+     */
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updatePerson(HttpServletRequest request, @PathVariable(value = "id") long id,
     @RequestParam String name, @RequestParam String phoneNumber) {
@@ -67,8 +84,19 @@ public class PersonController {
         }
     }
 
+    /**
+     * NOT ALLOWED ANYMORE
+     * Delete a Person
+     * @param request
+     * @param id
+     * @return
+     * @author Lin Wei Li
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deletePerson(HttpServletRequest request, @PathVariable(value = "id") long id) {
+
+        return ResponseEntity.badRequest().body("Not allowed to delete a Person");
+/*
         // Check authorization (own person or staff)
         try {
             long personID = accountService.getAccountByID(id).getPerson().getPersonID();
@@ -87,8 +115,16 @@ public class PersonController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+*/
     }
 
+    /**
+     * Get a Person by their id
+     * @param request
+     * @param id
+     * @return
+     * @author Lin Wei Li
+     */
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getPerson(HttpServletRequest request, @PathVariable(value = "id") long id) {
         try {
@@ -114,6 +150,12 @@ public class PersonController {
         }
     }
 
+    /**
+     * Get all Persons
+     * @param request
+     * @return
+     * @author Lin Wei Li
+     */
     @GetMapping("/get")
     public ResponseEntity<?> getAllPersons(HttpServletRequest request) {
         // Check authorization (staff)

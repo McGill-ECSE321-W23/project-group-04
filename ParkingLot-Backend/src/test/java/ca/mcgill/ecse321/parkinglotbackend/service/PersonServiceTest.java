@@ -275,12 +275,18 @@ public class PersonServiceTest {
 
     @Test
     public void testDeletePerson_InvalidID() {
+        String eMSG = "";
         Person person = null;
 
         // Delete person
-        person = personService.deletePerson(TEST_ID);
+        try {
+            person = personService.deletePerson(TEST_ID);
+        } catch (Exception e) {
+            eMSG = e.getMessage();
+        }
 
         // Check if person was deleted
+        assertEquals("No person with this id exists!", eMSG);
         assertNull(person);
     }
 

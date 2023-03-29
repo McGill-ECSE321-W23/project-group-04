@@ -33,6 +33,16 @@ public class AccountController {
     @Autowired
     private PersonService personService;
 
+    /**
+     * Register a new Account
+     * @param request
+     * @param email
+     * @param password
+     * @param name
+     * @param phoneNumber
+     * @return
+     * @author Lin Wei Li
+     */
     @PostMapping("/register")
     public ResponseEntity<?> registerAccount(HttpServletRequest request, @RequestParam String email,
     @RequestParam String password, @RequestParam String name, @RequestParam String phoneNumber) {
@@ -41,6 +51,12 @@ public class AccountController {
         if (person != null && person.getPhoneNumber().equals(phoneNumber)) {
             // Person exists
             try {
+                // Check if that person doesn't already have an Account
+                if (accountService.getAccountByPersonID(person.getPersonID()) != null) {
+                    // Already has an Account
+                    return ResponseEntity.badRequest().body("An account is already associated with this person");
+                }
+                // Person exists and doesn't have an Account
                 accountService.createAccount(email, password, person);
                 return ResponseEntity.ok().build();
             } catch (Exception e) {
@@ -58,6 +74,15 @@ public class AccountController {
         }
     }
 
+    /**
+     * Update an existing Account
+     * @param request
+     * @param id
+     * @param email
+     * @param password
+     * @return
+     * @author Lin Wei Li
+     */
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateAccount(HttpServletRequest request, @PathVariable(value = "id") long id,
     @RequestParam String email, @RequestParam String password) {
@@ -80,6 +105,13 @@ public class AccountController {
         }
     }
 
+    /**
+     * Delete an existing Account
+     * @param request
+     * @param id
+     * @return
+     * @author Lin Wei Li
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAccount(HttpServletRequest request, @PathVariable(value = "id") long id) {
         // Check authorization (own account or staff)
@@ -101,6 +133,13 @@ public class AccountController {
         }
     }
 
+    /**
+     * Get an existing Account
+     * @param request
+     * @param id
+     * @return
+     * @author Lin Wei Li
+     */
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getAccount(HttpServletRequest request, @PathVariable(value = "id") long id) {
         // Check authorization (own account or staff)
@@ -122,6 +161,12 @@ public class AccountController {
         }
     }
 
+    /**
+     * Get all existing Accounts
+     * @param request
+     * @return
+     * @author Lin Wei Li
+     */
     @GetMapping("/get")
     public ResponseEntity<?> getAllAccounts(HttpServletRequest request) {
         // Check authorization (staff)
