@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.parkinglotbackend.dto;
 
-import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 
 public class CarDto {
     
