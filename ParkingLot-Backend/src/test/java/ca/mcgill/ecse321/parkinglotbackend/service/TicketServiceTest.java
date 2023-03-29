@@ -25,7 +25,7 @@ import org.mockito.stubbing.Answer;
 import ca.mcgill.ecse321.parkinglotbackend.dao.TicketRepository;
 
 /**
- * A class to test the Ticket Service
+ * A class to test the Ticket Service class
  * @author faizachowdhury
  */
 @ExtendWith(MockitoExtension.class)
@@ -54,6 +54,10 @@ public class TicketServiceTest {
     Ticket ticket3 = new Ticket(id3, time3, carType, parkingLotSoftwareSystem);
 
 
+    /**
+     * Create mock DAO
+     * @author faizachowdhury
+     */
     @BeforeEach
     public void setMockOutput() {
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {

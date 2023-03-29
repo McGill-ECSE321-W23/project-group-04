@@ -125,7 +125,7 @@ public class TicketRestController {
      * @return success/error message
      * @author faizchowdhury
      */
-    @GetMapping("/tickets")
+    @GetMapping("/getAll")
     public ResponseEntity<?> getAllTickets(HttpServletRequest request, @RequestBody ParkingLotSoftwareSystemDto
             plsDto) {
         // Check authorization (staff)

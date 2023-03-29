@@ -24,7 +24,7 @@ import org.mockito.stubbing.Answer;
 
 
 /**
- * A class to test the Parking Spot Service
+ * A class to test the Parking Spot Service class
  * @author faizachowdhury
  */
 @ExtendWith(MockitoExtension.class)
@@ -46,12 +46,13 @@ public class ParkingSpotServiceTest {
     int num2 = 20;
 
     ParkingSpot parkingSpot1 = new ParkingSpot(id1, floor1, num1);
-
-
-
     ParkingSpot parkingSpot2 = new ParkingSpot(id2, floor2, num2);
 
 
+    /**
+     * Create mock DAO
+     * @author faizachowdhury
+     */
     @BeforeEach
     public void setMockOutput() {
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {

@@ -136,7 +136,7 @@ public class ParkingSpotRestController {
      * @return a list of all parking spots
      * @author faizachowdhury
      */
-     @GetMapping("/getParkingSpots")
+     @GetMapping("/getAll")
      public ResponseEntity<?> getAllParkingSpots(HttpServletRequest request) {
          // Check authorization (staff)
          try {
