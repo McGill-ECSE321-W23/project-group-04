@@ -34,7 +34,7 @@ public class TicketRestController {
     /**
      * Create a ticket in the system
      * @param request - staff can call this method
-     * @param carType - either Regular/Large
+     * @param carTypeDto - either Regular/Large
      * @param plsDto  - the system TO
      * @return success/error message
      * @author faizchowdhury
@@ -42,7 +42,7 @@ public class TicketRestController {
 
     @PostMapping("/create" )
     public ResponseEntity<?> createTicket (HttpServletRequest request,  @RequestBody LocalDateTime entryTime,
-                                           @RequestBody CarType carType,
+                                           @RequestBody CarTypeDto carTypeDto,
                                            @RequestBody ParkingLotSoftwareSystemDto plsDto) {
         
          // Check authorization (staff)
@@ -56,6 +56,11 @@ public class TicketRestController {
         try {
             //LocalDateTime entryTime = LocalDateTime.now();
             ParkingLotSoftwareSystem parkingLotSoftwareSystem = convertToDomainObject(plsDto);
+            CarType carType = null;
+            switch(carTypeDto) {
+                case Large -> carType = CarType.Large;
+                case Regular -> carType = CarType.Regular;
+            }
             ticketService.createTicket(entryTime, carType, parkingLotSoftwareSystem);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
