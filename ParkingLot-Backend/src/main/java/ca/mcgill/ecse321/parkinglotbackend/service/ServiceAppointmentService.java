@@ -22,7 +22,7 @@ import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment.AppointmentS
 public class ServiceAppointmentService {
 
     @Autowired
-    ServiceAppointmentRepository appointmentRepositoy;
+    ServiceAppointmentRepository appointmentRepository;
     @Autowired
     CarRepository carRepository;
     @Autowired
@@ -32,19 +32,39 @@ public class ServiceAppointmentService {
 
     @Transactional
     public ServiceAppointment createAppointment(Garage garage, OfferedService service, Car car){
+        String error = "";
+
+        if (garage == null){
+            error += "Garage cannot be empty";
+        }
+
+        if (service == null){
+            error += "Service cannot be empty";
+        }
+
+        if (car == null){
+            error += "Car cannot be empty";
+        }
+
+        error = error.trim();
+
+        if (error.length() > 0){
+            throw new IllegalArgumentException(error);
+        }
+
         ServiceAppointment appointment = new ServiceAppointment();
         appointment.setAppointmentStatus(AppointmentStatus.InProgress);
         appointment.setCar(car);
         appointment.setGarage(garage);
         appointment.setService(service);
         //appointment.setStartTime(null);
-        appointmentRepositoy.save(appointment);
+        appointmentRepository.save(appointment);
         return appointment;
     }
 
     @Transactional
     public ServiceAppointment findAppointmentByID(Long id) throws Exception{
-        ServiceAppointment appointment = appointmentRepositoy.findAppointmentByServiceAppointmentID(id);
+        ServiceAppointment appointment = appointmentRepository.findAppointmentByServiceAppointmentID(id);
         if (appointment == null){
             throw new Exception("No appointment with this ID exists");
         }
@@ -52,44 +72,69 @@ public class ServiceAppointmentService {
     }
 
     @Transactional
-    public  List<ServiceAppointment> getAppointmentsByCar(Car car){
-        List<ServiceAppointment> appointments = appointmentRepositoy.findAppointmentByCar(car);
+    public  List<ServiceAppointment> getAppointmentsByCarID(Long carID) throws Exception{
+        if (carRepository.findCarByCarID(carID) == null){
+            throw new Exception("No car with this ID exists");
+        }
+        List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByCarID(carID);
         return appointments;
     }
 
     @Transactional
-    public  List<ServiceAppointment> getAppointmentsByService(OfferedService s){
-        List<ServiceAppointment> appointments = appointmentRepositoy.findAppointmentByService(s);
+    public  List<ServiceAppointment> getAppointmentsByServiceID(Long serviceID) throws Exception{
+        if (!serviceRepository.existsById(serviceID)){
+            throw new Exception("No service with this ID exists");
+        }
+        List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByServiceID(serviceID);
         return appointments;
     }
 
     @Transactional
     public List<ServiceAppointment> getAllAppointments() {
-        return toList(appointmentRepositoy.findAll());
+        return toList(appointmentRepository.findAll());
     }
 
     @Transactional
-    public ServiceAppointment deleteAppointment(Long id){
-        ServiceAppointment appointment = appointmentRepositoy.findAppointmentByServiceAppointmentID(id);
-        appointmentRepositoy.delete(appointment);
+    public ServiceAppointment deleteAppointment(Long id) throws Exception{
+        ServiceAppointment appointment = appointmentRepository.findAppointmentByServiceAppointmentID(id);
+
+        if (appointment == null){
+            throw new Exception("No appointment with this id exists");
+        }
+
+        appointmentRepository.delete(appointment);
         return appointment;
     }
 
     @Transactional
     public ServiceAppointment updateAppointment(Long id, LocalDateTime startTime, AppointmentStatus status, Garage garage, OfferedService service, Car car) throws Exception{
+        String error = "";
+
         ServiceAppointment appointment = findAppointmentByID(id);
 
+        if (appointment == null){
+            error += "No appointment with this ID exists";
+        }
+        if (startTime == null){
+            error += "Start time cannot be empty";
+        }
         if (status == null){
-            throw new Exception("An appointment requires a status.");
+            error += "Status time cannot be empty";
         }
         if (garage == null){
-            throw new Exception("An appointment requires a garage.");
+            error += "Garage cannot be empty";
         }
-        if (service == null){
-            throw new Exception("An appointment needs a service type");
+        if (service == null ){
+            error += "Service cannot be empty";
         }
         if (car == null){
-            throw new Exception("An appointment needs a car");
+            error += "Car cannot be empty";
+        }
+
+        error = error.trim();
+
+        if (error.length() > 0){
+            throw new IllegalArgumentException(error);
         }
 
         appointment.setAppointmentStatus(status);
@@ -97,7 +142,7 @@ public class ServiceAppointmentService {
         appointment.setGarage(garage);
         appointment.setService(service);
         appointment.setStartTime(startTime);
-        appointmentRepositoy.save(appointment);
+        appointmentRepository.save(appointment);
 
         return appointment;
 

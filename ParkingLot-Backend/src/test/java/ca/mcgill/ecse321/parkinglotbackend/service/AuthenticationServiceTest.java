@@ -19,7 +19,6 @@ public class AuthenticationServiceTest {
 
     @InjectMocks
     private AuthenticationService service;
-
     
     
 }
