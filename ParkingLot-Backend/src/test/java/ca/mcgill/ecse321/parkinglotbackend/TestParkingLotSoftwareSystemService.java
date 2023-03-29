@@ -71,6 +71,14 @@ public class TestParkingLotSoftwareSystemService {
             if (invocation.getArgument(0).equals(parkingSystemId)) {
                 ParkingLotSoftwareSystem parkingLotSoftwareSystem = new ParkingLotSoftwareSystem();
                 parkingLotSoftwareSystem.setParkingLotSoftwareSystemID(parkingSystemId);
+                parkingLotSoftwareSystem.setMonthlyFee(monthlyFee);
+                parkingLotSoftwareSystem.setFeePer15m(feePer15m);
+                parkingLotSoftwareSystem.setMaxStay(maxStay);
+                parkingLotSoftwareSystem.setNumberOfRegularParkingSpots(numberOfRegularParkingSpots);
+                parkingLotSoftwareSystem.setNumberOfLargeParkingSpots(numberOfLargeParkingSpots);
+                parkingLotSoftwareSystem.setNumberOfMonthlyFloors(numberOfMonthlyFloors);
+                parkingLotSoftwareSystem.setNumberOfMonthlySpotsPerFloor(numberOfMonthlySpotsPerFloor);
+                parkingLotSoftwareSystem.setNumberOfGarages(numberOfGarages);
                 return parkingLotSoftwareSystem;
             } else {
                 return null;
@@ -93,14 +101,14 @@ public class TestParkingLotSoftwareSystemService {
             fail();
         }
         assertNotNull(system);
-        assertEquals(system.getMonthlyFee(), monthlyFee);
-        assertEquals(system.getFeePer15m(), feePer15m);
-        assertEquals(system.getMaxStay(), maxStay);
-        assertEquals(system.getNumberOfRegularParkingSpots(), numberOfRegularParkingSpots);
-        assertEquals(system.getNumberOfLargeParkingSpots(), numberOfLargeParkingSpots);
-        assertEquals(system.getNumberOfMonthlyFloors(), numberOfMonthlyFloors);
-        assertEquals(system.getNumberOfMonthlySpotsPerFloor(), numberOfMonthlySpotsPerFloor);
-        assertEquals(system.getNumberOfGarages(), numberOfGarages);
+        assertEquals(monthlyFee, system.getMonthlyFee());
+        assertEquals(feePer15m, system.getFeePer15m());
+        assertEquals(maxStay, system.getMaxStay());
+        assertEquals(numberOfRegularParkingSpots, system.getNumberOfRegularParkingSpots());
+        assertEquals(numberOfLargeParkingSpots, system.getNumberOfLargeParkingSpots());
+        assertEquals(numberOfMonthlyFloors, system.getNumberOfMonthlyFloors());
+        assertEquals(numberOfMonthlySpotsPerFloor, system.getNumberOfMonthlySpotsPerFloor());
+        assertEquals(numberOfGarages, system.getNumberOfGarages());
     }
 
     // Test creation of a parking lot software system with negative values
@@ -127,7 +135,15 @@ public class TestParkingLotSoftwareSystemService {
             fail();
         }
         assertNotNull(system);
-        assertEquals(system.getParkingLotSoftwareSystemID(), parkingSystemId);
+        assertEquals(parkingSystemId, system.getParkingLotSoftwareSystemID());
+        assertEquals(monthlyFee, system.getMonthlyFee());
+        assertEquals(feePer15m, system.getFeePer15m());
+        assertEquals(maxStay, system.getMaxStay());
+        assertEquals(numberOfRegularParkingSpots, system.getNumberOfRegularParkingSpots());
+        assertEquals(numberOfLargeParkingSpots, system.getNumberOfLargeParkingSpots());
+        assertEquals(numberOfMonthlyFloors, system.getNumberOfMonthlyFloors());
+        assertEquals(numberOfMonthlySpotsPerFloor, system.getNumberOfMonthlySpotsPerFloor());
+        assertEquals(numberOfGarages, system.getNumberOfGarages());
     }
 
     // Test getting a parking lot software system that doesn't exist
@@ -154,14 +170,15 @@ public class TestParkingLotSoftwareSystemService {
             fail();
         }
         assertNotNull(system);
-        assertEquals(system.getMonthlyFee(), monthlyFeeUpdate);
-        assertEquals(system.getFeePer15m(), feePer15mUpdate);
-        assertEquals(system.getMaxStay(), maxStayUpdate);
-        assertEquals(system.getNumberOfRegularParkingSpots(), numberOfRegularParkingSpotsUpdate);
-        assertEquals(system.getNumberOfLargeParkingSpots(), numberOfLargeParkingSpotsUpdate);
-        assertEquals(system.getNumberOfMonthlyFloors(), numberOfMonthlyFloorsUpdate);
-        assertEquals(system.getNumberOfMonthlySpotsPerFloor(), numberOfMonthlySpotsPerFloorUpdate);
-        assertEquals(system.getNumberOfGarages(), numberOfGaragesUpdate);
+        assertEquals(parkingSystemId, system.getParkingLotSoftwareSystemID());
+        assertEquals(monthlyFeeUpdate, system.getMonthlyFee());
+        assertEquals(feePer15mUpdate, system.getFeePer15m());
+        assertEquals(maxStayUpdate, system.getMaxStay());
+        assertEquals(numberOfRegularParkingSpotsUpdate, system.getNumberOfRegularParkingSpots());
+        assertEquals(numberOfLargeParkingSpotsUpdate, system.getNumberOfLargeParkingSpots());
+        assertEquals(numberOfMonthlyFloorsUpdate, system.getNumberOfMonthlyFloors());
+        assertEquals(numberOfMonthlySpotsPerFloorUpdate, system.getNumberOfMonthlySpotsPerFloor());
+        assertEquals(numberOfGaragesUpdate, system.getNumberOfGarages());
     }
 
     // Test updating a parking lot software system that doesn't exist
@@ -202,6 +219,15 @@ public class TestParkingLotSoftwareSystemService {
             fail();
         }
         assertNotNull(system);
+        assertEquals(parkingSystemId, system.getParkingLotSoftwareSystemID());
+        assertEquals(monthlyFee, system.getMonthlyFee());
+        assertEquals(feePer15m, system.getFeePer15m());
+        assertEquals(maxStay, system.getMaxStay());
+        assertEquals(numberOfRegularParkingSpots, system.getNumberOfRegularParkingSpots());
+        assertEquals(numberOfLargeParkingSpots, system.getNumberOfLargeParkingSpots());
+        assertEquals(numberOfMonthlyFloors, system.getNumberOfMonthlyFloors());
+        assertEquals(numberOfMonthlySpotsPerFloor, system.getNumberOfMonthlySpotsPerFloor());
+        assertEquals(numberOfGarages, system.getNumberOfGarages());
     }
 
     // Test deleting a parking lot software system that doesn't exist

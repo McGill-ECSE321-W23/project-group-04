@@ -26,6 +26,10 @@ import ca.mcgill.ecse321.parkinglotbackend.service.StaffAccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.TimeSlotService;
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * @author Qin Xuan Xu
+ * using template from tutorials
+ */
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/timeslot")
@@ -73,7 +77,7 @@ public class TimeSlotController {
         // Check authorization
         try {
             if (AuthenticationUtility.isManager(request)) {
-                return ResponseEntity.ok(timeSlotService.getTimeSlotsByAccountID(accountID).stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
+                return ResponseEntity.ok(timeSlotService.getTimeSlotsByStaffAccountID(accountID).stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
             } else {
                 return ResponseEntity.badRequest().body("Only manager can get all TimeSlots by accountID");
             }

@@ -36,14 +36,24 @@ public class TimeSlotService {
      */
     @Transactional
     public TimeSlot createTimeSlot(DayOfWeek dayOfTheWeek, LocalTime startTime, LocalTime endTime, ParkingLotSoftwareSystem parkingLotSoftwareSystem, StaffAccount staffAccount) throws Exception {
-        if (startTime.isBefore(LocalTime.of(0, 0)) || startTime.isAfter(LocalTime.of(23, 59)) || endTime.isBefore(LocalTime.of(0, 0)) || endTime.isAfter(LocalTime.of(23, 59))) {
-            throw new Exception("Time must be between 00:00 and 23:59!");
-        }
         if (endTime.isBefore(startTime)) {
             throw new Exception("End time cannot be before start time!");
         }
-        if (parkingLotSoftwareSystem == null) {
-            throw new Exception("System cannot be null!");
+        if ((parkingLotSoftwareSystem == null && staffAccount == null) || (parkingLotSoftwareSystem != null && staffAccount != null)) {
+            throw new Exception("TimeSlot must be associated with either a ParkingLotSoftwareSystem or a StaffAccount!");
+        }
+        if (staffAccount == null && parkingLotSoftwareSystem != null) { // creating open hours
+            for (TimeSlot timeSlot : getTimeSlotsByStaffAccount(staffAccount)) {
+                if (parkingLotSoftwareSystem.getParkingLotSoftwareSystemID() == timeSlot.getSystem().getParkingLotSoftwareSystemID() && dayOfTheWeek == timeSlot.getDayOfTheWeek() && ((startTime.isAfter(timeSlot.getStartTime()) && startTime.isBefore(timeSlot.getEndTime())) || (endTime.isAfter(timeSlot.getStartTime()) && endTime.isBefore(timeSlot.getEndTime())) || (startTime.isBefore(timeSlot.getStartTime()) && endTime.isAfter(timeSlot.getEndTime())))) {
+                    throw new Exception("TimeSlot overlaps with existing TimeSlot for open hours!");
+                }
+            }
+        } else { // creating staff hours
+            for (TimeSlot timeSlot : getTimeSlotsByStaffAccountID(staffAccount.getAccountID())) {
+                if (dayOfTheWeek == timeSlot.getDayOfTheWeek() && ((startTime.isAfter(timeSlot.getStartTime()) && startTime.isBefore(timeSlot.getEndTime())) || (endTime.isAfter(timeSlot.getStartTime()) && endTime.isBefore(timeSlot.getEndTime())) || (startTime.isBefore(timeSlot.getStartTime()) && endTime.isAfter(timeSlot.getEndTime())))) {
+                    throw new Exception("TimeSlot overlaps with existing TimeSlot for this staff!");
+                }
+            }
         }
         TimeSlot timeSlot = new TimeSlot();
         timeSlot.setDayOfTheWeek(dayOfTheWeek);
@@ -81,15 +91,30 @@ public class TimeSlotService {
         return toList(timeSlotRepository.findAll());
     }
 
-    // TODO: check this works in test
+    /**
+     * Get all time slots by staff account id
+     * 
+     * @param accountID - id of the staff account
+     * @return list of all time slots with the associated staff id
+     */
     @Transactional
-    public List<TimeSlot> getTimeSlotsByAccountID(long accountID) {
-        return toList(timeSlotRepository.findTimeSlotByStaffAccountAccountID(accountID));
+    public List<TimeSlot> getTimeSlotsByStaffAccountID(long accountID) throws Exception {
+        List<TimeSlot> list = timeSlotRepository.findTimeSlotByStaffAccountAccountID(accountID);
+        if (list == null) {
+            throw new Exception("No StaffAccount with this id exists!");
+        }
+        return list;
     }
     
+    /**
+     * Get all time slots by staff account
+     * 
+     * @param staffAccount - staff account
+     * @return list of all time slots with the associated staff account
+     */
     @Transactional
     public List<TimeSlot> getTimeSlotsByStaffAccount(StaffAccount staffAccount) {
-        return toList(timeSlotRepository.findTimeSlotByStaffAccount(staffAccount));
+        return timeSlotRepository.findTimeSlotByStaffAccount(staffAccount);
     }
 
     /**
@@ -108,11 +133,21 @@ public class TimeSlotService {
         if (timeSlot == null) {
             throw new Exception("No TimeSlot with this id exists!");
         }
-        if (startTime.isBefore(LocalTime.of(0, 0)) || startTime.isAfter(LocalTime.of(23, 59)) || endTime.isBefore(LocalTime.of(0, 0)) || endTime.isAfter(LocalTime.of(23, 59))) {
-            throw new Exception("Time must be between 00:00 and 23:59!");
-        }
         if (endTime.isBefore(startTime)) {
             throw new Exception("End time cannot be before start time!");
+        }
+        if (timeSlot.getStaffAccount() == null) { // creating open hours
+            for (TimeSlot t : getTimeSlotsByStaffAccount(timeSlot.getStaffAccount())) {
+                if (timeSlot.getSystem().getParkingLotSoftwareSystemID() == t.getSystem().getParkingLotSoftwareSystemID() && dayOfTheWeek == t.getDayOfTheWeek() && ((startTime.isAfter(t.getStartTime()) && startTime.isBefore(t.getEndTime())) || (endTime.isAfter(t.getStartTime()) && endTime.isBefore(t.getEndTime())) || (startTime.isBefore(t.getStartTime()) && endTime.isAfter(t.getEndTime())))) {
+                    throw new Exception("TimeSlot overlaps with existing TimeSlot for open hours!");
+                }
+            }
+        } else { // creating staff hours
+            for (TimeSlot t : getTimeSlotsByStaffAccountID(timeSlot.getStaffAccount().getAccountID())) {
+                if (dayOfTheWeek == t.getDayOfTheWeek() && ((startTime.isAfter(t.getStartTime()) && startTime.isBefore(t.getEndTime())) || (endTime.isAfter(t.getStartTime()) && endTime.isBefore(t.getEndTime())) || (startTime.isBefore(t.getStartTime()) && endTime.isAfter(t.getEndTime())))) {
+                    throw new Exception("TimeSlot overlaps with existing TimeSlot for this staff!");
+                }
+            }
         }
         timeSlot.setDayOfTheWeek(dayOfTheWeek);
         timeSlot.setStartTime(startTime);
