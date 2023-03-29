@@ -1,12 +1,16 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.dto.CarDto;
@@ -14,6 +18,7 @@ import ca.mcgill.ecse321.parkinglotbackend.dto.GarageDto;
 import ca.mcgill.ecse321.parkinglotbackend.dto.OfferedServiceDto;
 import ca.mcgill.ecse321.parkinglotbackend.dto.PersonDto;
 import ca.mcgill.ecse321.parkinglotbackend.dto.ServiceAppointmentDto;
+import ca.mcgill.ecse321.parkinglotbackend.dto.ServiceAppointmentDto.AppointmentStatusDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
 import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
 import ca.mcgill.ecse321.parkinglotbackend.model.OfferedService;
@@ -21,7 +26,10 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment.AppointmentStatus;
 import ca.mcgill.ecse321.parkinglotbackend.service.CarService;
+import ca.mcgill.ecse321.parkinglotbackend.service.GarageService;
 import ca.mcgill.ecse321.parkinglotbackend.service.ServiceAppointmentService;
+import net.bytebuddy.implementation.bytecode.constant.NullConstant;
+import ca.mcgill.ecse321.parkinglotbackend.service.OfferedServiceService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -32,7 +40,9 @@ public class ServiceAppointmentRestController {
     @Autowired
     CarService carService;
     @Autowired
-    OfferedServiceService 
+    OfferedServiceService offeredServiceService;
+    @Autowired
+    GarageService garageService;
 
 
     @GetMapping(value = { "/appointments", "/appointments/" })
@@ -46,26 +56,35 @@ public class ServiceAppointmentRestController {
     }
 
     @GetMapping(value = {"/appointment/{licensePlate}", "/appointment/{licensePlate}/"})
-    public List<ServiceAppointmentDto> getAppointmentByCar(@PathVariable("licensePlate") String licensePlate) throws Exception{
+    public List<ServiceAppointmentDto> getAppointmentByCarID(@PathVariable("licensePlate") String licensePlate) throws Exception{
         Car car = carService.getCarByLicensePlate(licensePlate);
-        return service.getAppointmentsByCar(car).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
+        return service.getAppointmentsByCarID(car.getCarID()).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
     }
 
     @GetMapping(value = {"/appointment/{serviceID}", "/appointment/{serviceID}/"})
-    public List<ServiceAppointmentDto> getAppointmentByCar(@PathVariable("service") Long serviceID){
-        Service offeredService = OfferedServiceService.getOfferedService(serviceID);
-        return service.getAppointmentsByService(offeredService).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
+    public List<ServiceAppointmentDto> getAppointmentByServiceID(@PathVariable("serviceID") Long serviceID) throws Exception{
+        OfferedService offeredService = offeredServiceService.getOfferedServiceService(serviceID);
+        return service.getAppointmentsByServiceID(offeredService.getServiceID()).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
     }
+
+
+    @PostMapping(value = "/create/appointment, /create/appointment/")
+    public ServiceAppointmentDto createAppointment(GarageDto garage, OfferedServiceDto offeredService, CarDto car) {
+        ServiceAppointment appointment = service.createAppointment(convertToDomainObject(garage), convertToDomainObject(offeredService),convertToDomainObject(car));
+        return convertToDto(appointment);
+    }
+    
 
     @PutMapping("/update/{id}, /update/{id}/")
     public ServiceAppointmentDto updateAppointment(@PathVariable("id") Long id, LocalDateTime startTime, AppointmentStatus status, GarageDto garage, OfferedServiceDto offeredService, CarDto car) throws Exception{
-        ServiceAppointment appointment = service.updateAppointment(id, startTime, status, garage, offeredService, car);
+        ServiceAppointment appointment = service.updateAppointment(id, startTime, status, convertToDomainObject(garage), convertToDomainObject(offeredService),convertToDomainObject(car));
+        
+        updateAppointment(id, startTime, status, garage, offeredService, car);
         return convertToDto(appointment);
-        // not sure if im doing this right for enum class
     }
 
     @DeleteMapping("/delete/{id}, /delete/{id}/")
-    public CarDto deleteCar(@PathVariable("id") Long id){
+    public ServiceAppointmentDto deleteServiceAppointment(@PathVariable("id") Long id) throws Exception{
         ServiceAppointment appointment = service.deleteAppointment(id);
         return convertToDto(appointment);
     }
@@ -74,9 +93,26 @@ public class ServiceAppointmentRestController {
         if (appointment == null) {
             throw new IllegalArgumentException("There is no such Appointment!");
         }
-        ServiceAppointmentDto appointmentDto = new ServiceAppointmentDto(appointment.getServiceAppointmentID(), appointment.getStartTime(), appointment.getAppointmentStatus(),
-            convertToDto(appointment.getService()), convertToDto(appointment.getGarage()), convertToDto(appointment.getCar()));
-        return appointmentDto;
+
+        ServiceAppointmentDto appointmentDto = new ServiceAppointmentDto();
+        appointmentDto.setServiceAppointmentID(appointment.getServiceAppointmentID());
+        appointmentDto.setStartTime(appointment.getStartTime());
+        appointmentDto.setService(convertToDto(appointment.getService()));
+        appointmentDto.setGarage(convertToDto(appointment.getGarage()));
+        appointmentDto.setCar(convertToDto(appointment.getCar()));
+
+        switch(appointment.getAppointmentStatus()){
+            case Ready:
+                appointmentDto.setAppointmentStatus(AppointmentStatusDto.Ready);
+                return appointmentDto;
+            case Completed:
+                appointmentDto.setAppointmentStatus(AppointmentStatusDto.Completed);
+                return appointmentDto;
+            case InProgress:
+                appointmentDto.setAppointmentStatus(AppointmentStatusDto.InProgress);
+                return appointmentDto;
+        }
+        return appointmentDto; 
     }
 
     private GarageDto convertToDto(Garage garage) {
@@ -110,6 +146,39 @@ public class ServiceAppointmentRestController {
         CarDto carDto = new CarDto(c.getCarID(), c.getLicensePlate(), c.getMake(), c.getModel(), convertToDto(c.getOwner()));
         return carDto;
     }
+
+    private Garage convertToDomainObject(GarageDto gDto) {
+        List<Garage> garages = garageService.getAllGarageService();        
+        for (Garage g : garages) {
+            if (g.getGarageID() == gDto.getGarageID()){
+                return g;
+            }
+        }
+        return null;
+    }
+
+    private OfferedService convertToDomainObject(OfferedServiceDto sDto) {
+        List<OfferedService> services = offeredServiceService.getAllOfferedServiceService();
+        
+        for (OfferedService s : services) {
+            if (s.getServiceID()== sDto.getOfferedServiceID()) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    private Car convertToDomainObject(CarDto cDto) {
+        List<Car> cars = carService.getAllCars();
+        
+        for (Car c : cars) {
+            if (c.getCarID()== cDto.getCarID()) {
+                return c;
+            }
+        }
+        return null;
+    }
+
 
 
 }

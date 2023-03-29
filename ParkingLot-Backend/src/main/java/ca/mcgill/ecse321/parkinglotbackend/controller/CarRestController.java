@@ -50,22 +50,16 @@ public class CarRestController {
 
 
     @GetMapping(value = { "/cars/{licensePlate}", "/cars/{licensePlate}/" })
-    public List<CarDto> getCarsByOwner(Long id){
+    public List<CarDto> getCarsByOwner(Long id) throws Exception{
         return service.findCarByOwnerID(id).stream().map(c -> convertToDto(c)).collect(Collectors.toList());
     }
 
     @PostMapping(value = "/register/cars/{licensePLate}, /register/cars/{licensePlate}/")
-    public CarDto registerCarUnderAccount(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person){
-       Person p = service.findPersonByID(person.getID());
+    public CarDto registerCar(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person) throws Exception{
+       Person p = personService.getPersonByID(person.getPersonID());
        Car c = service.registerCar(p, licensePlate, make, model);
        return convertToDto(c);
 
-    }
-
-    @PostMapping(value = "/register/cars/{name}, /register/cars/{name}/")
-    public CarDto createCar(@PathVariable("name") String name, String phoneNumber, String licensePlate, String make, String model){
-        Car car = service.createCar(name, phoneNumber, licensePlate, make, model);
-        return convertToDto(car);
     }
 
     @PutMapping("/update/{id}, /update/{id}/")
@@ -75,9 +69,9 @@ public class CarRestController {
     }
 
 
-    @DeleteMapping("/delete/{licensePlate}, /delete/{licensePlate}/")
-    public CarDto deleteCar(@PathVariable("licensePlate") String licensePlate){
-        Car car = service.deleteCar(licensePlate);
+    @DeleteMapping("/delete/{id}, /delete/{id}/")
+    public CarDto deleteCar(@PathVariable("id") Long id) throws Exception{
+        Car car = service.deleteCar(id);
         return convertToDto(car);
     }
 
@@ -99,7 +93,7 @@ public class CarRestController {
     }
 
     private Person convertToDomainObject(PersonDto pDto) {
-        List<Person> allPersons = personService.listAllPersons();
+        List<Person> allPersons = personService.getAllPersons();
         
         for (Person person : allPersons) {
             if (person.getPersonID() == pDto.getPersonID()) {
