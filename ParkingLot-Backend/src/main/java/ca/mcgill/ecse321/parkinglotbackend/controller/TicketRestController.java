@@ -42,9 +42,9 @@ public class TicketRestController {
      */
 
     @PostMapping("/create" )
-    public ResponseEntity<?> createTicket (HttpServletRequest request,  @RequestBody LocalDateTime entryTime,
-                                           @RequestBody CarTypeDto carTypeDto,
-                                           @RequestBody ParkingLotSoftwareSystemDto plsDto) {
+    public ResponseEntity<?> createTicket (HttpServletRequest request,  @RequestParam LocalDateTime entryTime,
+                                           @RequestParam CarTypeDto carTypeDto,
+                                           @RequestParam ParkingLotSoftwareSystemDto plsDto) {
         
          // Check authorization (staff)
         try {
@@ -78,7 +78,7 @@ public class TicketRestController {
      */
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteTicket (HttpServletRequest request, @RequestBody long id) {
+    public ResponseEntity<?> deleteTicket (HttpServletRequest request, @PathVariable(value = "id") long id) {
 
         // Check authorization (staff)
         try {
@@ -104,7 +104,7 @@ public class TicketRestController {
      * @author faizchowdhury
      */
     @GetMapping("/get/{id}")
-    public ResponseEntity<?> getTicketByID(HttpServletRequest request, @RequestBody long ticketID) throws Exception {
+    public ResponseEntity<?> getTicketByID(HttpServletRequest request, @PathVariable(value = "id") long id) throws Exception {
         // Check authorization (staff)
         try {
             if (!AuthenticationUtility.isStaff(request)) {
@@ -114,7 +114,7 @@ public class TicketRestController {
             return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
         }
         try {
-            Ticket t = ticketService.getTicketByID(ticketID);
+            Ticket t = ticketService.getTicketByID(id);
             TicketDto ticketDto = convertToDto(t);
 
 

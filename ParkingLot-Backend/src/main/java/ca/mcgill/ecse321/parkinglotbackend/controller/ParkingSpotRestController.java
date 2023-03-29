@@ -30,7 +30,7 @@ public class ParkingSpotRestController {
      */
     @PostMapping("/create")
     public ResponseEntity<?> createParkingSpot (HttpServletRequest request,
-                                                @RequestBody int floor, @RequestBody int number) {
+                                                @RequestParam int floor, @RequestParam int number) {
         // Check authorization (manager)
         try {
             if (!AuthenticationUtility.isManager(request)) {
@@ -57,8 +57,8 @@ public class ParkingSpotRestController {
      * @author faizachowdhury
      */
      @PutMapping("/update/{id}")
-     public ResponseEntity<?> updateParkingSpot(HttpServletRequest request, @RequestBody long id,
-                                                @RequestBody int newFloor, @RequestBody int newNumber) {
+     public ResponseEntity<?> updateParkingSpot(HttpServletRequest request, @PathVariable(value = "id") long id,
+                                                @RequestParam int newFloor, @RequestParam int newNumber) {
          // Check authorization (manager)
          try {
              if (!AuthenticationUtility.isManager(request)) {
@@ -83,7 +83,7 @@ public class ParkingSpotRestController {
      * @author faizachowdhury
      */
      @DeleteMapping("/delete/{id}")
-     public ResponseEntity<?> deleteParkingSpot(HttpServletRequest request, @RequestBody long id) {
+     public ResponseEntity<?> deleteParkingSpot(HttpServletRequest request,  @PathVariable(value = "id") long id) {
          // Check authorization (manager)
          try {
              if (!AuthenticationUtility.isManager(request)) {
@@ -108,7 +108,7 @@ public class ParkingSpotRestController {
      * @author faizachowdhury
      */
      @GetMapping("/get/{id}")
-     public ResponseEntity<?> getParkingSpotByID(HttpServletRequest request, @RequestBody long id) {
+     public ResponseEntity<?> getParkingSpotByID(HttpServletRequest request,@PathVariable(value = "id") long id) {
          // Check authorization (own a/c or staff)
          try {
              long accountId = AuthenticationUtility.getAccountId(request);
