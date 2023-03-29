@@ -76,7 +76,7 @@ public class ServiceAppointmentService {
         if (carRepository.findCarByCarID(carID) == null){
             throw new Exception("No car with this ID exists");
         }
-        List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByCarID(carID);
+        List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByCar_CarID(carID);
         return appointments;
     }
 
@@ -85,7 +85,7 @@ public class ServiceAppointmentService {
         if (!serviceRepository.existsById(serviceID)){
             throw new Exception("No service with this ID exists");
         }
-        List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByServiceID(serviceID);
+        List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByService_ServiceID(serviceID);
         return appointments;
     }
 

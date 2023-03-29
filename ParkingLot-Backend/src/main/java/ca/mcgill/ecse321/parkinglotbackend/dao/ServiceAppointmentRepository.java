@@ -10,7 +10,7 @@ public interface ServiceAppointmentRepository extends CrudRepository<ServiceAppo
 
     ServiceAppointment findAppointmentByServiceAppointmentID(Long serviceAppointmentID);
 
-    List<ServiceAppointment> findAppointmentByCarID(Long carID);
-    List<ServiceAppointment> findAppointmentByServiceID(Long serviceID);
+    List<ServiceAppointment> findAppointmentByCar_CarID(Long carID);
+    List<ServiceAppointment> findAppointmentByService_ServiceID(Long serviceID);
 
 }

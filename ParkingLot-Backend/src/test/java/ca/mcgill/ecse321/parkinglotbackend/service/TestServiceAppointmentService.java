@@ -94,7 +94,7 @@ public class TestServiceAppointmentService {
                 }
             });
 
-            lenient().when(aRepository.findAppointmentByCarID(anyLong())).thenAnswer( (InvocationOnMock invocation) -> {
+            lenient().when(aRepository.findAppointmentByCar_CarID(anyLong())).thenAnswer( (InvocationOnMock invocation) -> {
                 if(invocation.getArgument(0).equals(A1.getCar().getCarID())) {
                     return A1;
                 } else if (invocation.getArgument(0).equals(A2.getCar().getCarID())) {
@@ -106,7 +106,7 @@ public class TestServiceAppointmentService {
                 }
             });
 
-            lenient().when(aRepository.findAppointmentByServiceID(anyLong())).thenAnswer( (InvocationOnMock invocation) -> {
+            lenient().when(aRepository.findAppointmentByService_ServiceID(anyLong())).thenAnswer( (InvocationOnMock invocation) -> {
                 if(invocation.getArgument(0).equals(A1.getService().getServiceID())) {
                     return A1;
                 } else if (invocation.getArgument(0).equals(A2.getService().getServiceID())) {

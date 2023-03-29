@@ -54,7 +54,7 @@ public class CarRestController {
         return service.findCarByOwnerID(id).stream().map(c -> convertToDto(c)).collect(Collectors.toList());
     }
 
-    @PostMapping(value = "/register/cars/{licensePLate}, /register/cars/{licensePlate}/")
+    @PostMapping(value = {"/register/cars/{licensePLate}", "/register/cars/{licensePlate}/"})
     public CarDto registerCar(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person) throws Exception{
        Person p = personService.getPersonByID(person.getPersonID());
        Car c = service.registerCar(p, licensePlate, make, model);
@@ -62,14 +62,14 @@ public class CarRestController {
 
     }
 
-    @PutMapping("/update/{id}, /update/{id}/")
+    @PutMapping(value = {"/update/{id}", "/update/{id}/"})
     public CarDto updateCar(@PathVariable("id") Long id, String licensePlate, String make, String model, PersonDto person) throws Exception{
         Car car = service.updateCar(id, licensePlate, make, model, convertToDomainObject(person));
         return convertToDto(car);
     }
 
 
-    @DeleteMapping("/delete/{id}, /delete/{id}/")
+    @DeleteMapping(value = {"/delete/{id}", "/delete/{id}/"})
     public CarDto deleteCar(@PathVariable("id") Long id) throws Exception{
         Car car = service.deleteCar(id);
         return convertToDto(car);
