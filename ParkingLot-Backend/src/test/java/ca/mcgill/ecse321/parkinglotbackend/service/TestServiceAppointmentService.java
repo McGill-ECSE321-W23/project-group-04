@@ -118,6 +118,10 @@ public class TestServiceAppointmentService {
                 }
             });
 
+            lenient().when(aRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+                return Arrays.asList(A1, A2, A3);
+            });
+
             lenient().when(aRepository.save(any(ServiceAppointment.class))).thenAnswer((InvocationOnMock invocation) -> {
                 return invocation.getArgument(0);
             });    

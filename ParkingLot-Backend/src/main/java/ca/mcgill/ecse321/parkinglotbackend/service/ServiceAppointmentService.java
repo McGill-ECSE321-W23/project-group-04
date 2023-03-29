@@ -23,12 +23,6 @@ public class ServiceAppointmentService {
 
     @Autowired
     ServiceAppointmentRepository appointmentRepository;
-    @Autowired
-    CarRepository carRepository;
-    @Autowired
-    GarageRepository garageRepository;
-    @Autowired
-    OfferedServiceRepository serviceRepository;
 
     @Transactional
     public ServiceAppointment createAppointment(Garage garage, OfferedService service, Car car){
@@ -73,19 +67,19 @@ public class ServiceAppointmentService {
 
     @Transactional
     public  List<ServiceAppointment> getAppointmentsByCarID(Long carID) throws Exception{
-        if (carRepository.findCarByCarID(carID) == null){
+        List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByCar_CarID(carID);
+        if (appointments.isEmpty() || appointments == null){
             throw new Exception("No car with this ID exists");
         }
-        List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByCar_CarID(carID);
         return appointments;
     }
 
     @Transactional
     public  List<ServiceAppointment> getAppointmentsByServiceID(Long serviceID) throws Exception{
-        if (!serviceRepository.existsById(serviceID)){
+        List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByService_ServiceID(serviceID);
+        if (appointments.isEmpty() || appointments == null){
             throw new Exception("No service with this ID exists");
         }
-        List<ServiceAppointment> appointments = appointmentRepository.findAppointmentByService_ServiceID(serviceID);
         return appointments;
     }
 

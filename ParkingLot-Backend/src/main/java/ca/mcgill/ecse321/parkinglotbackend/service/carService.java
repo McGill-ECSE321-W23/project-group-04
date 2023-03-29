@@ -17,8 +17,6 @@ public class CarService {
 
     @Autowired
     CarRepository carRepository;
-    @Autowired
-    PersonRepository personRepository;
 
     @Transactional
     public Car registerCar(Person person, String licensePlate, String make, String model){
@@ -76,10 +74,10 @@ public class CarService {
 
     @Transactional
     public List<Car> findCarByOwnerID(Long id) throws Exception{
-        if (!personRepository.existsById(id)){
-            throw new Exception("No person with this id exists");
-        }
         List<Car> carsOfPerson = carRepository.findCarByOwner_PersonID(id);
+        if (carsOfPerson.isEmpty() || carsOfPerson == null){
+            throw new Exception("No person with this ID exists");
+        }
         return carsOfPerson;
     }
 
