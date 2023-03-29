@@ -27,7 +27,6 @@ public class TicketRestController {
     @Autowired
     private TicketService ticketService;
 
-
     @Autowired
     private ParkingLotSoftwareSystemService parkingLotSoftwareSystemService;
 
@@ -155,6 +154,71 @@ public class TicketRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    /**
+     * Get all the Regular tickets in the system
+     * @param request - staff can call this method
+     * @param plsDto -  the system TO
+     * @return success/error message
+     * @author faizchowdhury
+     */
+    @GetMapping("/getAllRegular")
+    public ResponseEntity<?> getAllTicketsRegular(HttpServletRequest request, @RequestBody ParkingLotSoftwareSystemDto
+            plsDto) {
+        // Check authorization (staff)
+        try {
+            if (!AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+        try {
+            List<TicketDto> ticketDtos = new ArrayList<>();
+            ParkingLotSoftwareSystem parkingLotSoftwareSystem = convertToDomainObject(plsDto);
+            for (Ticket t : ticketService.getAllTicketsRegular(parkingLotSoftwareSystem)) {
+                TicketDto ticketDto = convertToDto(t);
+                ticketDtos.add(ticketDto);
+            }
+
+            return ResponseEntity.ok().body(ticketDtos);
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    /**
+     * Get all the Regular tickets in the system
+     * @param request - staff can call this method
+     * @param plsDto -  the system TO
+     * @return success/error message
+     * @author faizchowdhury
+     */
+    @GetMapping("/getAllLarge")
+    public ResponseEntity<?> getAllTicketsLarge(HttpServletRequest request, @RequestBody ParkingLotSoftwareSystemDto
+            plsDto) {
+        // Check authorization (staff)
+        try {
+            if (!AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
+        try {
+            List<TicketDto> ticketDtos = new ArrayList<>();
+            ParkingLotSoftwareSystem parkingLotSoftwareSystem = convertToDomainObject(plsDto);
+            for (Ticket t : ticketService.getAllTicketsLarge(parkingLotSoftwareSystem)) {
+                TicketDto ticketDto = convertToDto(t);
+                ticketDtos.add(ticketDto);
+            }
+
+            return ResponseEntity.ok().body(ticketDtos);
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
     /**
      * Get a count of all the tickets in the system

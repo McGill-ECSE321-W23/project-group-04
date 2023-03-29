@@ -97,6 +97,36 @@ public class TicketService {
 		}
 		return tickets;
 	}
+	/**
+	 * get all the Regular Tickets in the system currently
+	 * @return	List of all Regular Tickets
+	 * @author faizachowdhury
+	 */
+	@Transactional
+	public List<Ticket> getAllTicketsRegular(ParkingLotSoftwareSystem parkingLotSoftwareSystem) {
+		List<Ticket> tickets = new ArrayList<Ticket>();
+		for (Ticket ticket: ticketRepository.findAll()) {
+			if (ticket.getSystem() == parkingLotSoftwareSystem && ticket.getCarType() == CarType.Regular) {
+				tickets.add(ticket);
+			}
+		}
+		return tickets;
+	}
+	/**
+	 * get all the large Tickets in the system currently
+	 * @return	List of all Large Tickets
+	 * @author faizachowdhury
+	 */
+	@Transactional
+	public List<Ticket> getAllTicketsLarge(ParkingLotSoftwareSystem parkingLotSoftwareSystem) {
+		List<Ticket> tickets = new ArrayList<Ticket>();
+		for (Ticket ticket: ticketRepository.findAll()) {
+			if (ticket.getSystem() == parkingLotSoftwareSystem && ticket.getCarType() == CarType.Large) {
+				tickets.add(ticket);
+			}
+		}
+		return tickets;
+	}
 
 	/**
 	 * Find number of Tickets in the system

@@ -284,6 +284,57 @@ public class TicketServiceTest {
         assertEquals(tickets2.get(1), ticket2);
         assertEquals(tickets2.get(2), ticket3);
     }
+    /**
+     * Testing get all Regular tickets in the system
+     * @throws Exception if error occurred
+     *  @author faizachowdhury
+     */
+    @Test
+    public void testGetAllTicketsRegular() throws Exception {
+        String error = null;
+        List<Ticket> tickets2 = null;
+        try {
+            tickets2 = ticketService.getAllTicketsRegular(parkingLotSoftwareSystem);
+        }
+        catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertEquals(tickets2.size(), 2);
+    }
+    /**
+     * Testing get all Large tickets in the system
+     * @throws Exception if error occurred
+     *  @author faizachowdhury
+     */
+    @Test
+    public void testGetAllTicketsLarge() throws Exception {
+        String error = null;
+        List<Ticket> tickets2 = null;
+        try {
+            tickets2 = ticketService.getAllTicketsLarge(parkingLotSoftwareSystem);
+        }
+        catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertEquals(tickets2.size(), 1);
+    }
+    /**
+     * Testing get ticket count in the system
+     * @throws Exception if error occurred
+     *  @author faizachowdhury
+     */
+    @Test
+    public void testGetTicketCount() throws Exception {
+        String error = null;
+        int count = 0;
+        try {
+           count = ticketService.numberOfTickets(parkingLotSoftwareSystem);
+        }
+        catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertEquals(count, 3);
+    }
 
 
 }
