@@ -43,7 +43,8 @@ public class TicketRestController {
      */
 
     @PostMapping("/create" )
-    public ResponseEntity<?> createTicket (HttpServletRequest request,  @RequestBody CarType carType,
+    public ResponseEntity<?> createTicket (HttpServletRequest request,  @RequestBody LocalDateTime entryTime,
+                                           @RequestBody CarType carType,
                                            @RequestBody ParkingLotSoftwareSystemDto plsDto) {
         
          // Check authorization (staff)
@@ -54,9 +55,8 @@ public class TicketRestController {
         } catch (Exception e) {
             return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
         }
-
         try {
-            LocalDateTime entryTime = LocalDateTime.now();
+            //LocalDateTime entryTime = LocalDateTime.now();
             ParkingLotSoftwareSystem parkingLotSoftwareSystem = convertToDomainObject(plsDto);
             ticketService.createTicket(entryTime, carType, parkingLotSoftwareSystem);
             return ResponseEntity.ok().build();
@@ -109,7 +109,6 @@ public class TicketRestController {
         } catch (Exception e) {
             return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
         }
-
         try {
             Ticket t = ticketService.getTicketByID(ticketID);
             TicketDto ticketDto = convertToDto(t);

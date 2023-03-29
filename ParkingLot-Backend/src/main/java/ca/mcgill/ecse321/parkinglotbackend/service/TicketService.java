@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.parkinglotbackend.service;
 
 import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingLotSoftwareSystemRepository;
 import ca.mcgill.ecse321.parkinglotbackend.dao.TicketRepository;
-import ca.mcgill.ecse321.parkinglotbackend.dto.TicketDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket.CarType;
@@ -19,7 +18,6 @@ public class TicketService {
 	@Autowired
 	TicketRepository ticketRepository;
 
-
 	/**
 	 * @param entryTime time when ticket is created
 	 * @param carType 	either Regular or Large
@@ -34,6 +32,13 @@ public class TicketService {
 		if (parkingLotSoftwareSystem == null) {
 			throw new Exception("Please provide a valid system");
 		}
+		if (carType == null) {
+			throw new Exception("Please provide a valid Car Type");
+		}
+		if (entryTime == null) {
+			throw new Exception("Please provide a valid entry time");
+		}
+
 		// create ticket
 		Ticket ticket = new Ticket();
 		ticket.setSystem(parkingLotSoftwareSystem);
@@ -105,20 +110,6 @@ public class TicketService {
 		return number;
 	}
 
-//	/**
-//	 * Convert to List object
-//	 * @param iterable
-//	 * @param <T>
-//	 * @return	List of iterable objects
-//	 * Code taken from tutorial notes
-//	 */
-//	private <T> List<T> toList(Iterable<T> iterable){
-//		List<T> resultList = new ArrayList<T>();
-//		for (T t : iterable) {
-//			resultList.add(t);
-//		}
-//		return resultList;
-//	}
 
 }
     

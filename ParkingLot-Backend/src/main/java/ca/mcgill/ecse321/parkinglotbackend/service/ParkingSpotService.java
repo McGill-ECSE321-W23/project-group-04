@@ -40,8 +40,11 @@ public class ParkingSpotService {
      * @author faizachowdhury
      */
     @Transactional
-    public ParkingSpot updateParkingSpot(long parkingSpotID, int newFloor, int newNumber) {
+    public ParkingSpot updateParkingSpot(long parkingSpotID, int newFloor, int newNumber) throws Exception {
         ParkingSpot parkingSpot = parkingSpotRepository.findParkingSpotByParkingSpotID(parkingSpotID);
+        if (parkingSpot == null) {
+            throw new Exception("There is no Parking Spot in the system with this ID.");
+        }
         parkingSpot.setFloor(newFloor);
         parkingSpot.setNumber(newNumber);
         return parkingSpot;

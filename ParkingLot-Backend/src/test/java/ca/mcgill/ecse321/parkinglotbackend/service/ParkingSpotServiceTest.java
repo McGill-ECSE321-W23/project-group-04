@@ -114,6 +114,23 @@ public class ParkingSpotServiceTest {
         assertNotNull(parkingSpot);
         assertEquals(parkingSpot1.getFloor(), 5);
     }
+    /**
+     * Testing updating a Parking Spot when it doesn't exist in the system
+     * @author faizachowdhury
+     */
+    @Test
+    public void testUpdateParkingSpotNullID() throws Exception {
+        String error = null;
+        ParkingSpot parkingSpot = null;
+        try {
+            parkingSpot = parkingSpotService.updateParkingSpot(789, 5, 50);
+        } catch (Exception e) {
+            error = e.getMessage();
+
+        }
+        assertNull(parkingSpot);
+        assertEquals(error,"There is no Parking Spot in the system with this ID.");
+    }
 
     /**
      * Testing deleting a Parking Spot in the system
@@ -148,7 +165,6 @@ public class ParkingSpotServiceTest {
         }
         catch (Exception e) {
             error = e.getMessage();
-
         }
         assertNull(parkingSpot);
         // check error
@@ -244,8 +260,8 @@ public class ParkingSpotServiceTest {
             error = e.getMessage();
         }
         assertEquals(parkingSpots2.size(), 2);
-
-
+        assertEquals(parkingSpots2.get(0), parkingSpot1);
+        assertEquals(parkingSpots2.get(1), parkingSpot2);
     }
 
 

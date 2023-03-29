@@ -45,11 +45,12 @@ public class TicketServiceTest {
     LocalDateTime time2 = LocalDateTime.now();
     LocalDateTime time3 = LocalDateTime.now();
 
-    CarType carType = CarType.valueOf("Regular");
+    CarType carType = CarType.Regular;
+    CarType carType2 = CarType.Large;
     ParkingLotSoftwareSystem parkingLotSoftwareSystem = new ParkingLotSoftwareSystem();
 
     Ticket ticket1 = new Ticket(id1, time1, carType, parkingLotSoftwareSystem);
-    Ticket ticket2 = new Ticket(id2, time2, carType, parkingLotSoftwareSystem);
+    Ticket ticket2 = new Ticket(id2, time2, carType2, parkingLotSoftwareSystem);
     Ticket ticket3 = new Ticket(id3, time3, carType, parkingLotSoftwareSystem);
 
 
@@ -86,7 +87,7 @@ public class TicketServiceTest {
     }
 
     /**
-     * Testing the creation of a ticket in the system
+     * Testing the successful creation of a ticket in the system
      *  @author faizachowdhury
      */
     @Test
@@ -112,7 +113,7 @@ public class TicketServiceTest {
     @Test
     public void testCreateTicketNullSystem() {
         LocalDateTime entryTime = LocalDateTime.now();
-        CarType carType = CarType.valueOf("Regular");
+        CarType carType = CarType.Regular;
         ParkingLotSoftwareSystem parkingLotSoftwareSystem = null;
         String error = null;
         Ticket ticket = null;
@@ -127,6 +128,51 @@ public class TicketServiceTest {
         // check error
         assertEquals("Please provide a valid system", error);
     }
+    /**
+     * Testing Create Ticket when the Car Type provided is null
+     *  @author faizachowdhury
+     */
+    @Test
+    public void testCreateTicketNullCarType() {
+        LocalDateTime entryTime = LocalDateTime.now();
+        CarType carType = null;
+        ParkingLotSoftwareSystem parkingLotSoftwareSystem = new ParkingLotSoftwareSystem();
+        String error = null;
+        Ticket ticket = null;
+        try {
+            ticket = ticketService.createTicket(entryTime, carType, parkingLotSoftwareSystem);
+        } catch (IllegalArgumentException e) {
+            error = e.getMessage();
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(ticket);
+        // check error
+        assertEquals("Please provide a valid Car Type", error);
+    }
+    /**
+     * Testing Create Ticket when entry time provided is null
+     *  @author faizachowdhury
+     */
+    @Test
+    public void testCreateTicketNullEntryTime() {
+        LocalDateTime entryTime = null;
+        CarType carType = CarType.Regular;
+        ParkingLotSoftwareSystem parkingLotSoftwareSystem = new ParkingLotSoftwareSystem();
+        String error = null;
+        Ticket ticket = null;
+        try {
+            ticket = ticketService.createTicket(entryTime, carType, parkingLotSoftwareSystem);
+        } catch (IllegalArgumentException e) {
+            error = e.getMessage();
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(ticket);
+        // check error
+        assertEquals("Please provide a valid entry time", error);
+    }
+
 
     /**
      * Testing delete ticket
@@ -230,6 +276,9 @@ public class TicketServiceTest {
             error = e.getMessage();
         }
         assertEquals(tickets2.size(), 3);
+        assertEquals(tickets2.get(0), ticket1);
+        assertEquals(tickets2.get(1), ticket2);
+        assertEquals(tickets2.get(2), ticket3);
     }
 
 
