@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
@@ -31,13 +31,13 @@ public class AuthenticationController {
     /**
      * Login to the system
      * @param request
-     * @param username
+     * @param email
      * @param password
      * @return Http response
      * @author Lin Wei Li
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(HttpServletRequest request, @RequestBody String username, @RequestBody String password) {
+    public ResponseEntity<?> login(HttpServletRequest request, @RequestParam String email, @RequestParam String password) {
 
         // Check if already logged in
         if (AuthenticationUtility.isLoggedIn(request)) {
@@ -46,7 +46,7 @@ public class AuthenticationController {
 
         // Attempt to authenticate
         try {
-            Account account = authenticationService.authenticate(username, password);
+            Account account = authenticationService.authenticate(email, password);
 
             // Respond with success
             HttpSession session = request.getSession(true);
@@ -99,7 +99,7 @@ public class AuthenticationController {
     }
 
     /**
-     * Smoke testing
+     * Log in as manager for smoke testing
      * @param request
      * @return Http response
      * @author Lin Wei Li
@@ -114,6 +114,27 @@ public class AuthenticationController {
         session.setMaxInactiveInterval(60*60*24);
 
         return ResponseEntity.ok().body(AuthenticationUtility.isLoggedIn(request));
+
+    }
+
+    /**
+     * Helper method for smoke testing
+     * @param request
+     * @return
+     */
+    @GetMapping("/getRole")
+    public ResponseEntity<?> getRole(HttpServletRequest request) {
+
+        // Check if not logged in
+        if (!AuthenticationUtility.isLoggedIn(request)) {
+            return ResponseEntity.badRequest().body("Not logged in");
+        }
+
+        // Get role
+        HttpSession session = request.getSession();
+        AuthenticationUtility.Role role = (AuthenticationUtility.Role) session.getAttribute("role");
+
+        return ResponseEntity.ok().body(role);
 
     }
 

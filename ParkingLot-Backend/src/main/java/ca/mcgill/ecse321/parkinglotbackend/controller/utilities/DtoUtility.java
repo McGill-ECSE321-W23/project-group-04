@@ -5,6 +5,11 @@ import ca.mcgill.ecse321.parkinglotbackend.dto.PersonDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.Account;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 
+/**
+ * Helper methods for converting Person and Account
+ * between DTOs and Entities
+ * @author Lin Wei Li
+ */
 public class DtoUtility {
     
     // Person

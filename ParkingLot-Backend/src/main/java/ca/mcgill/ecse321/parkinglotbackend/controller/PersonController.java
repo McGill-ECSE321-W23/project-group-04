@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
@@ -20,6 +20,7 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.service.AccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.PersonService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -32,9 +33,17 @@ public class PersonController {
     @Autowired
     private AccountService accountService;
     
+    /**
+     * Create a new Person
+     * @param request
+     * @param name
+     * @param phoneNumber
+     * @return
+     * @author Lin Wei Li
+     */
     @PostMapping("/create")
     public ResponseEntity<?> createPerson(HttpServletRequest request,
-    @RequestBody String name, @RequestBody String phoneNumber) {
+    @RequestParam String name, @RequestParam String phoneNumber) {
         try {
             personService.createPerson(name, phoneNumber);
             return ResponseEntity.ok().build();
@@ -43,9 +52,18 @@ public class PersonController {
         }
     }
 
+    /**
+     * Update an existing Person
+     * @param request
+     * @param id
+     * @param name - new name
+     * @param phoneNumber - new phone number
+     * @return
+     * @author Lin Wei Li
+     */
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updatePerson(HttpServletRequest request, @PathVariable(value = "id") long id,
-    @RequestBody String name, @RequestBody String phoneNumber) {
+    @RequestParam String name, @RequestParam String phoneNumber) {
         // Check authorization (own person or staff)
         try {
             long personID = accountService.getAccountByID(id).getPerson().getPersonID();
@@ -66,8 +84,19 @@ public class PersonController {
         }
     }
 
+    /**
+     * NOT ALLOWED ANYMORE
+     * Delete a Person
+     * @param request
+     * @param id
+     * @return
+     * @author Lin Wei Li
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deletePerson(HttpServletRequest request, @PathVariable(value = "id") long id) {
+
+        return ResponseEntity.badRequest().body("Not allowed to delete a Person");
+/*
         // Check authorization (own person or staff)
         try {
             long personID = accountService.getAccountByID(id).getPerson().getPersonID();
@@ -86,30 +115,47 @@ public class PersonController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+*/
     }
 
+    /**
+     * Get a Person by their id
+     * @param request
+     * @param id
+     * @return
+     * @author Lin Wei Li
+     */
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getPerson(HttpServletRequest request, @PathVariable(value = "id") long id) {
-        // Check authorization (own person or staff)
         try {
-            long personID = accountService.getAccountByID(id).getPerson().getPersonID();
-            if (personID != id && !AuthenticationUtility.isStaff(request)) {
-                // Not authorized
+            // Get the person
+            Person person = personService.getPersonByID(id);
+            HttpSession session = request.getSession();
+            long sessionID = session.getAttribute("accountID") == null ? -1 : (long) Integer.parseInt(session.getAttribute("accountID").toString());
+
+            // Authorize staff
+            if (AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.ok().body(DtoUtility.convertToDto(person));
+            }
+            // Authorize own person
+            else if (accountService.getAccountByPersonID(person.getPersonID()).getAccountID() == sessionID) {
+                return ResponseEntity.ok().body(DtoUtility.convertToDto(person));
+            }
+            // Not authorized
+            else {
                 return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).body("Not authorized");
             }
-        } catch (Exception e) {
-            return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
-        }
-
-        // Authorized
-        try {
-            Person person = personService.getPersonByID(id);
-            return ResponseEntity.ok().body(DtoUtility.convertToDto(person));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    /**
+     * Get all Persons
+     * @param request
+     * @return
+     * @author Lin Wei Li
+     */
     @GetMapping("/get")
     public ResponseEntity<?> getAllPersons(HttpServletRequest request) {
         // Check authorization (staff)

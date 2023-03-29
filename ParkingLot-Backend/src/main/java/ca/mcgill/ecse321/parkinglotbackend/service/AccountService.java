@@ -19,7 +19,7 @@ public class AccountService {
     /**
      * Find an account by id
      * @param id
-     * @return Person
+     * @return Account
      * @author Lin Wei Li
      */
     public Account getAccountByID(long id) throws Exception {
@@ -31,9 +31,24 @@ public class AccountService {
     }
 
     /**
+     * Find an account by person id
+     * @param personID
+     * @return Account
+     * @throws Exception
+     * @author Lin Wei Li
+     */
+    public Account getAccountByPersonID(long personID) throws Exception {
+        Account account = accountRepository.findAccountByPerson_PersonID(personID);
+        if (account == null) {
+            throw new Exception("No account with this person exists!");
+        }
+        return account;
+    }
+
+    /**
      * Find an account by email
      * @param email
-     * @return Person
+     * @return Account
      * @author Lin Wei Li
      */
     public Account getAccountByEmail(String email) throws Exception {
@@ -62,6 +77,12 @@ public class AccountService {
      * @author Lin Wei Li
      */
     public Account createAccount(String email, String password, Person person) throws Exception {
+        // Check for duplicate emails
+        if (accountRepository.existsAccountByEmail(email)) {
+            throw new Exception("An account with this email already exists!");
+        }
+
+        // Attempt to create account
         if (email == null || email.trim().length() == 0) {
             throw new Exception("Email cannot be empty!");
         }
@@ -106,16 +127,24 @@ public class AccountService {
      * @author Lin Wei Li
      */
     public Account updateAccount(long id, String email, String password) throws Exception {
+        // Check for duplicate emails
+        if (accountRepository.existsAccountByEmail(email)) {
+            throw new Exception("An account with this email already exists!");
+        }
+
+        // Attemp to update account
         Account account = accountRepository.findAccountByAccountID(id);
         if (account == null) {
             throw new Exception("No account with this id exists!");
         }
-        if (email != null && email.trim().length() > 0) {
-            account.setEmail(email);
+        if (email == null || email.trim().length() == 0) {
+            throw new Exception("Email cannot be empty!");
         }
-        if (password != null && password.trim().length() > 0) {
-            account.setPassword(password);
+        if (password == null || password.trim().length() == 0) {
+            throw new Exception("Password cannot be empty!");
         }
+        account.setEmail(email);
+        account.setPassword(password);
         accountRepository.save(account);
         return account;
     }
