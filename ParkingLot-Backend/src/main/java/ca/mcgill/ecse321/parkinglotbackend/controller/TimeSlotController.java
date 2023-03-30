@@ -41,7 +41,12 @@ public class TimeSlotController {
     @Autowired
     private StaffAccountService staffAccountService;
 
-    // Get timeslot by id
+    /**
+     * Get timeSlot by its id
+     * @param request
+     * @param timeSlotID
+     * @return
+     */
     @GetMapping("/get/{timeSlotID}")
     public ResponseEntity<?> getTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID) {
         // Check authorization
@@ -56,7 +61,11 @@ public class TimeSlotController {
         }
     }
 
-    // Get all timeslots
+    /**
+     * Get all timeSlots
+     * @param request
+     * @return
+     */
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllTimeSlots(HttpServletRequest request) {
         // Check authorization
@@ -71,7 +80,12 @@ public class TimeSlotController {
         }
     }
 
-    // Get all timeslots of one employee
+    /**
+     * Get all timeSlots of a staff account by accountID
+     * @param request
+     * @param accountID
+     * @return
+     */
     @GetMapping("/getAll/{accountID}")
     public ResponseEntity<?> getAllTimeSlotsByAccountID(HttpServletRequest request, @PathVariable(value = "accountID") long accountID) {
         // Check authorization
@@ -86,7 +100,11 @@ public class TimeSlotController {
         }
     }
 
-    // Get all timeslots as opening hours
+    /**
+     * Get all open hours
+     * @param request
+     * @return
+     */
     @GetMapping("/getOpen")
     public ResponseEntity<?> getAllOpenHours(HttpServletRequest request) {
         // Check authorization
@@ -101,7 +119,16 @@ public class TimeSlotController {
         }
     }
 
-    // Create timeslot
+    /**
+     * Create a timeslot
+     * @param request
+     * @param dayOfTheWeek
+     * @param startTime
+     * @param endTime
+     * @param parkingLotSoftwareSystemID
+     * @param accountID
+     * @return
+     */
     @PostMapping("/create")
     public ResponseEntity<?> createTimeSlot(HttpServletRequest request, @RequestParam DayOfWeek dayOfTheWeek, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime, @RequestParam long parkingLotSoftwareSystemID, @RequestParam long accountID) {
         try {
@@ -125,7 +152,15 @@ public class TimeSlotController {
         }
     }
 
-    // Update timeslot
+    /**
+     * Update a timeslot
+     * @param request
+     * @param timeSlotID
+     * @param dayOfTheWeek
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @PutMapping("/update/{timeSlotID}")
     public ResponseEntity<?> updateTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID, @RequestParam DayOfWeek dayOfTheWeek, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime) {
         // Check authorization
@@ -140,7 +175,12 @@ public class TimeSlotController {
         }
     }
 
-    // Delete timeslot by id
+    /**
+     * Delete a timeslot
+     * @param request
+     * @param timeSlotID
+     * @return
+     */
     @DeleteMapping("/delete/{timeSlotID}")
     public ResponseEntity<?> deleteTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID) {
         // Check authorization

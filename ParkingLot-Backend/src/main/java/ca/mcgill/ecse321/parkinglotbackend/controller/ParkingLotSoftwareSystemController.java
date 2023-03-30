@@ -29,7 +29,12 @@ public class ParkingLotSoftwareSystemController {
     @Autowired
     private ParkingLotSoftwareSystemService parkingLotSoftwareSystemService;
 
-    // Get system by id
+    /**
+     * Get a system by its id
+     * @param request
+     * @param parkingLotSoftwareSystemID
+     * @return
+     */
     @GetMapping("/get/{parkingLotSoftwareSystemID}")
     public ResponseEntity<?> getParkingLotSoftwareSystem(HttpServletRequest request, @PathVariable(value = "parkingLotSoftwareSystemID") long parkingLotSoftwareSystemID) {
         // Everyone can get system
@@ -40,7 +45,19 @@ public class ParkingLotSoftwareSystemController {
         }
     }
 
-    // Create system
+    /**
+     * Create a new system
+     * @param request
+     * @param monthlyFee
+     * @param feePer15m
+     * @param maxStay
+     * @param numberOfRegularParkingSpots
+     * @param numberOfLargeParkingSpots
+     * @param numberOfMonthlyFloors
+     * @param numberOfMonthlySpotsPerFloor
+     * @param numberOfGarages
+     * @return
+     */
     @PostMapping("/create")
     public ResponseEntity<?> createParkingLotSoftwareSystem(HttpServletRequest request, @RequestParam float monthlyFee, @RequestParam float feePer15m, @RequestParam int maxStay, @RequestParam int numberOfRegularParkingSpots, @RequestParam int numberOfLargeParkingSpots, @RequestParam int numberOfMonthlyFloors, @RequestParam int numberOfMonthlySpotsPerFloor, @RequestParam int numberOfGarages) {
         // check authorization
@@ -55,7 +72,20 @@ public class ParkingLotSoftwareSystemController {
         }
     }
 
-    // Update system
+    /**
+     * Update a system
+     * @param request
+     * @param parkingLotSoftwareSystemID
+     * @param monthlyFee
+     * @param feePer15m
+     * @param maxStay
+     * @param numberOfRegularParkingSpots
+     * @param numberOfLargeParkingSpots
+     * @param numberOfMonthlyFloors
+     * @param numberOfMonthlySpotsPerFloor
+     * @param numberOfGarages
+     * @return
+     */
     @PutMapping("/update/{parkingLotSoftwareSystemID}")
     public ResponseEntity<?> updateParkingLotSoftwareSystem(HttpServletRequest request, @PathVariable(value = "parkingLotSoftwareSystemID") long parkingLotSoftwareSystemID, @RequestParam float monthlyFee, @RequestParam float feePer15m, @RequestParam int maxStay, @RequestParam int numberOfRegularParkingSpots, @RequestParam int numberOfLargeParkingSpots, @RequestParam int numberOfMonthlyFloors, @RequestParam int numberOfMonthlySpotsPerFloor, @RequestParam int numberOfGarages) {
         // Check authorization
@@ -70,10 +100,15 @@ public class ParkingLotSoftwareSystemController {
         }
     }
 
-    // Delete system
+    /**
+     * Delete system (DEPRECATED)
+     * @param request
+     * @param parkingLotSoftwareSystemID
+     * @return
+     */
     @DeleteMapping("/delete/{parkingLotSoftwareSystemID}")
     public ResponseEntity<?> deleteParkingLotSoftwareSystem(HttpServletRequest request, @PathVariable(value = "parkingLotSoftwareSystemID") long parkingLotSoftwareSystemID) {
-        // Check authorization
+        // Not allowed
         try {
             return ResponseEntity.badRequest().body("Deleting a system is not allowed");
         } catch (Exception e) {
