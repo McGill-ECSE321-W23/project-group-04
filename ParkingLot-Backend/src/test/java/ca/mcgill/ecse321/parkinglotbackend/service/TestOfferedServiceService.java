@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.parkinglotbackend;
+package ca.mcgill.ecse321.parkinglotbackend.service;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
