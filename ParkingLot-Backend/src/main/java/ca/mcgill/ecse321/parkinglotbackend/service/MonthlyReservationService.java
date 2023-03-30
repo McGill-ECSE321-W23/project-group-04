@@ -63,7 +63,7 @@ public class MonthlyReservationService {
     }
 
     private boolean isEnough(float amount) throws Exception {
-        float monthlyPrice = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(1).getMonthlyFee();
+        float monthlyPrice = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem().getMonthlyFee();
         return amount >= monthlyPrice;
     }
 
