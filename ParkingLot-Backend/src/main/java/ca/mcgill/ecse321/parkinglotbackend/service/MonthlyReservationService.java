@@ -62,6 +62,12 @@ public class MonthlyReservationService {
         return DtoUtility.convertToDto(monthlyReservationRepository.save(monthlyReservation));
     }
 
+    /**
+     * check if payment amount is larger than monthly fee
+     * @param amount
+     * @return if payment is success
+     * @throws Exception
+     */
     private boolean isEnough(float amount) throws Exception {
         float monthlyPrice = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem().getMonthlyFee();
         return amount >= monthlyPrice;
