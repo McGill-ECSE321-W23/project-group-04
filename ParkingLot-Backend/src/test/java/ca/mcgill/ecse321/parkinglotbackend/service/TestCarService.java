@@ -132,6 +132,7 @@ public class TestCarService {
         C3.setOwner(P3);
     }
 
+    //Tests a successful car registration
     @Test
     public void testRegisterCar_Success() {
         String eMSG = "";
@@ -152,6 +153,7 @@ public class TestCarService {
        // assertEquals(CAR_ID, car.getCarID());
     }
 
+    //Tests car registration with no owner
     @Test
     public void testRegisterCar_NullOwner() {
         String eMSG = "";
@@ -167,6 +169,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests car registration with no license plate
     @Test
     public void testRegisterCar_NullLicensePlate() {
         String eMSG = "";
@@ -182,6 +185,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests car registration with empty string license plate
     @Test
     public void testRegisterCar_EmptyLicensePlate() {
         String eMSG = "";
@@ -197,6 +201,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests car registration for null make
     @Test
     public void testRegisterCar_NullMake() {
         String eMSG = "";
@@ -212,6 +217,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests car registration for make with empty string
     @Test
     public void testRegisterCar_EmptyMake() {
         String eMSG = "";
@@ -227,6 +233,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests car registraiton for null model
     @Test
     public void testRegisterCar_NullModel() {
         String eMSG = "";
@@ -242,6 +249,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests car registration for model with empty string
     @Test
     public void testRegisterCar_EmptyModel() {
         String eMSG = "";
@@ -257,6 +265,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests successfully getting car by ID 
     @Test
     public void testGetCarByCarID_Success() {
         String eMSG = "";
@@ -275,6 +284,7 @@ public class TestCarService {
     
     }
 
+    //Tests get car by ID with invalid ID
     @Test
     public void testGetCarByCarID_InvalidID() {
         String eMSG = "";
@@ -290,6 +300,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    // Tests successfully get car by license plate
     @Test
     public void testGetCarByLicensePlate_Success() {
         String eMSG = "";
@@ -307,6 +318,7 @@ public class TestCarService {
         assertEquals(C1.getLicensePlate(), car.getLicensePlate());    
     }
 
+    //Tests get car by license plate with invalid license
     @Test
     public void testGetCarByLicensePlate_InvalidLicensePlate() {
         String eMSG = "";
@@ -322,6 +334,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests successful get car by owner
     @Test
     public void testGetCarByOwnerID_Success() {
         String eMSG = "";
@@ -340,6 +353,7 @@ public class TestCarService {
         assertEquals(C1.getOwner().getPersonID(), car.get(0).getOwner().getPersonID());    
     }
 
+    //Tests get car by owener with invalid ID
     @Test
     public void testGetCarByOwnerID_InvalidID() {
         String eMSG = "";
@@ -356,6 +370,7 @@ public class TestCarService {
     }
 
 
+    //Tests get car by ID with null ID
     @Test
     public void testGetCarByOwnerID_NullID() {
         String eMSG = "";
@@ -371,6 +386,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Test get all cars
     @Test
     public void testGetAllCars() {
         List<Car> cars = service.getAllCars();
@@ -380,6 +396,7 @@ public class TestCarService {
         assertEquals(C3, cars.get(2));
     }
 
+    //Tests successfully deleting car
     @Test
     public void testDeleteCar_Success() {
         String eMSG = "";
@@ -396,6 +413,7 @@ public class TestCarService {
         assertEquals(C1, car);
     }
 
+    //Tests deleting car with invalid ID
     @Test
     public void testDeleteCar_InvalidID() {
         String eMSG = "";
@@ -411,6 +429,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests delete car with null ID
     @Test
     public void testDeleteCar_NullID() {
         String eMSG = "";
@@ -426,6 +445,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests update car successfully
     @Test
     public void testUpdateCar_Success() {
         String eMSG = "";
@@ -446,6 +466,7 @@ public class TestCarService {
         assertEquals(CAR_OWNER, car.getOwner());
     }
 
+    //Tests update Car with incalid ID
     @Test
     public void testUpdateCar_InvalidID() {
         String eMSG = "";
@@ -461,6 +482,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests update car with null ID
     @Test
     public void testUpdateCar_NullID() {
         String eMSG = "";
@@ -476,6 +498,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests update car with null license
     @Test
     public void testUpdateCar_NullLicense() {
         String eMSG = "";
@@ -491,6 +514,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests update car with empty license
     @Test
     public void testUpdateCar_EmptyLicense() {
         String eMSG = "";
@@ -506,6 +530,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests update car with null make
     @Test
     public void testUpdateCar_NullMake() {
         String eMSG = "";
@@ -521,6 +546,8 @@ public class TestCarService {
         assertNull(car);
     }
 
+
+    //Tests update car with invalid make
     @Test
     public void testUpdateCar_InvalidMake() {
         String eMSG = "";
@@ -536,6 +563,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests update car wuth empty model
     @Test
     public void testUpdateCar_EmptyModel() {
         String eMSG = "";
@@ -551,6 +579,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests update car with null model
     @Test
     public void testUpdateCar_NullModel() {
         String eMSG = "";
@@ -566,6 +595,7 @@ public class TestCarService {
         assertNull(car);
     }
 
+    //Tests update car with null owner
     @Test
     public void testUpdateCar_NullPerson() {
         String eMSG = "";
