@@ -17,6 +17,16 @@ public class ServiceAppointmentDto {
     public ServiceAppointmentDto(){
     }
 
+    /**
+     * Service DTO constructor
+     * @param serviceAppointmentID 
+     * @param startTime 
+     * @param appointmentStatus
+     * @param service
+     * @param garage
+     * @param car
+     * @author anniegouchee
+     */
     public ServiceAppointmentDto(long serviceAppointmentID, LocalDateTime startTime, AppointmentStatusDto appointmentStatus, 
         OfferedServiceDto service, GarageDto garage, CarDto car){
         this.serviceAppointmentID = serviceAppointmentID;
@@ -27,6 +37,8 @@ public class ServiceAppointmentDto {
         this.car = car;
     }
 
+    //Getters and setters for DTO
+    
     public long getServiceAppointmentID() {
         return serviceAppointmentID;
     }

@@ -29,7 +29,6 @@ import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment.AppointmentS
 import ca.mcgill.ecse321.parkinglotbackend.service.CarService;
 import ca.mcgill.ecse321.parkinglotbackend.service.GarageService;
 import ca.mcgill.ecse321.parkinglotbackend.service.ServiceAppointmentService;
-import net.bytebuddy.implementation.bytecode.constant.NullConstant;
 import ca.mcgill.ecse321.parkinglotbackend.service.OfferedServiceService;
 
 @CrossOrigin(origins = "*")
@@ -46,37 +45,81 @@ public class ServiceAppointmentRestController {
     @Autowired
     GarageService garageService;
 
-
+    /**
+     * RESTful API that gets all service appointments
+     * 
+     * @return List of all service appointments
+     * @author anniegouchee
+     */
     @GetMapping(value = { "/get/all", "/get/all/" })
     public List<ServiceAppointmentDto> getAllAppointments() {
         return service.getAllAppointments().stream().map(a -> convertToDto(a)).collect(Collectors.toList());
     }
 
+    /**
+     * RESTful API that gets the appointment of a given ID
+     * 
+     * @return Appointment witht he given ID
+     * @throws Exception No appointment exists with given ID
+     * @author anniegouchee
+     */
     @GetMapping(value = {"/get/{id}", "/get/{id}/"})
     public ServiceAppointmentDto getAppointmentById(@PathVariable("id") Long id) throws Exception{
         return convertToDto(service.findAppointmentByID(id));
     }
 
+    /**
+     * RESTful API that gets the list of appointments for a given car
+     * @param licensePlate License plate of the car
+     * @return List of service appointments associated to the given car
+     * @throws Exception No car associated with the license plate
+     * @author anniegouchee
+     */
     @GetMapping(value = {"/get/{licensePlate}", "/appointment/{licensePlate}/"})
     public List<ServiceAppointmentDto> getAppointmentByCarID(@PathVariable("licensePlate") String licensePlate) throws Exception{
         Car car = carService.getCarByLicensePlate(licensePlate);
         return service.getAppointmentsByCarID(car.getCarID()).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
     }
 
+    /**
+     * RESTful API that gets a list of aervice appointments for a given service
+     * @param serviceID ID of the service
+     * @return List of service appointments assiciated with the service
+     * @throws Exception No service associated with the given servic ID
+     * @author anniegouchee
+     */
     @GetMapping(value = {"/get/byServiceID/{serviceID}", "/get/byServiceID/{serviceID}/"})
     public List<ServiceAppointmentDto> getAppointmentByServiceID(@PathVariable("serviceID") Long serviceID) throws Exception{
         OfferedService offeredService = offeredServiceService.getOfferedServiceService(serviceID);
         return service.getAppointmentsByServiceID(offeredService.getServiceID()).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
     }
 
-
+    /**
+     * RESTful API that create a servuce appointment
+     * @param garage Garage associated with service appointment
+     * @param offeredService Service of the service appoointment
+     * @param car Car of the service appointment
+     * @return Service appointment with the given parameters
+     * @author anniegouchee
+     */
     @PostMapping(value = {"/create", "/create/"})
     public ServiceAppointmentDto createAppointment(GarageDto garage, OfferedServiceDto offeredService, CarDto car) {
         ServiceAppointment appointment = service.createAppointment(convertToDomainObject(garage), convertToDomainObject(offeredService),convertToDomainObject(car));
         return convertToDto(appointment);
     }
     
-
+    /**
+     * RESTful API for updating a service appointment
+     * @param id ID of the service appointment to be updated
+     * @param startTime Start time of the updated service appointment
+     * @param status Status of the updated service appointment
+     * @param garage Garage of the updated appointment
+     * @param offeredService Service of the updates appointment
+     * @param car Car of the updated appointment
+     * @return Updated Service Appointment
+     * @throws Exception No appointment associated with the ID
+     * @author anniegouchee
+     */
     @PutMapping(value = {"/update/{id}", "/update/{id}/"})
     public ServiceAppointmentDto updateAppointment(@PathVariable("id") Long id, LocalDateTime startTime, AppointmentStatus status, GarageDto garage, OfferedServiceDto offeredService, CarDto car) throws Exception{
         ServiceAppointment appointment = service.updateAppointment(id, startTime, status, convertToDomainObject(garage), convertToDomainObject(offeredService),convertToDomainObject(car));
@@ -85,12 +128,26 @@ public class ServiceAppointmentRestController {
         return convertToDto(appointment);
     }
 
+    /**
+     * RESTful API that deletes a given service appointment
+     * @param id ID of service appointment to be deleted
+     * @return Service appointment that was deleted
+     * @throws Exception No service appointment associated with ID
+     * @author anniegouchee
+     */
     @DeleteMapping(value = {"/delete/{id}", "/delete/{id}/"})
     public ServiceAppointmentDto deleteServiceAppointment(@PathVariable("id") Long id) throws Exception{
         ServiceAppointment appointment = service.deleteAppointment(id);
         return convertToDto(appointment);
     }
 
+    /**
+     * Helper method coverts service appointment to DTO
+     * 
+     * @param appointment Service appointmnet to be converted to Dto
+     * @return Appointment DTO
+     * @author anneigouchee
+     */
     private ServiceAppointmentDto convertToDto(ServiceAppointment appointment) {
         if (appointment == null) {
             throw new IllegalArgumentException("There is no such Appointment!");
@@ -103,6 +160,7 @@ public class ServiceAppointmentRestController {
         appointmentDto.setGarage(convertToDto(appointment.getGarage()));
         appointmentDto.setCar(convertToDto(appointment.getCar()));
 
+        //Checks the appointment status and makes a DTO deoending on the status
         switch(appointment.getAppointmentStatus()){
             case Ready:
                 appointmentDto.setAppointmentStatus(AppointmentStatusDto.Ready);
@@ -117,6 +175,12 @@ public class ServiceAppointmentRestController {
         return appointmentDto; 
     }
 
+    /**
+     * Helper method that converts Garage to DTO
+     * @param garage Garage to be converted to DTO
+     * @return Garage DTO
+     * @author anniegouchee
+     */
     private GarageDto convertToDto(Garage garage) {
         if (garage == null) {
             throw new IllegalArgumentException("There is no such Garage!");
@@ -125,6 +189,12 @@ public class ServiceAppointmentRestController {
         return garageDto;
     }
 
+    /**
+     * Helper method that converts Offered Service to DTO
+     * @param service Service to be converted to DTO
+     * @return Offered Service DTO
+     * @author anniegouchee
+     */
     private OfferedServiceDto convertToDto(OfferedService service) {
         if (service == null) {
             throw new IllegalArgumentException("There is no such Service!");
@@ -133,6 +203,12 @@ public class ServiceAppointmentRestController {
         return serviceDto;
     }
 
+    /**
+     * Helper method that converts Peron to DTO
+     * @param p Person to be converted to DTO
+     * @return Person DTO
+     * @author anniegouchee
+     */
     private PersonDto convertToDto(Person p){
         if (p == null) {
             throw new IllegalArgumentException("There is no such Person!");
@@ -141,6 +217,12 @@ public class ServiceAppointmentRestController {
         return personDto;
     }
 
+    /**
+     * Helper method that converts Car to DTO
+     * @param c Car to be converted
+     * @return Car DTO
+     * @author anniegouchee
+     */
     private CarDto convertToDto(Car c) {
         if (c == null) {
             throw new IllegalArgumentException("There is no such Car!");
@@ -149,6 +231,12 @@ public class ServiceAppointmentRestController {
         return carDto;
     }
 
+    /**
+     * Helper method that converted Garage DTO to domain object
+     * @param gDto Garage DTO to be converted
+     * @return Garage domain object
+     * @author anniegouchee
+     */
     private Garage convertToDomainObject(GarageDto gDto) {
         List<Garage> garages = garageService.getAllGarageService();        
         for (Garage g : garages) {
@@ -159,6 +247,12 @@ public class ServiceAppointmentRestController {
         return null;
     }
 
+    /**
+     * Helper method that converts Offered Service to domain object
+     * @param sDto Offered service DTO to be converted
+     * @return Offered Service domain object
+     * @author anniegouchee
+     */
     private OfferedService convertToDomainObject(OfferedServiceDto sDto) {
         List<OfferedService> services = offeredServiceService.getAllOfferedServiceService();
         
@@ -170,6 +264,12 @@ public class ServiceAppointmentRestController {
         return null;
     }
 
+    /**
+     * Helper method that converts Car to fomain object
+     * @param cDto Car DTO to bo converted
+     * @return Car domain object
+     * @author anniegouchee
+     */
     private Car convertToDomainObject(CarDto cDto) {
         List<Car> cars = carService.getAllCars();
         
