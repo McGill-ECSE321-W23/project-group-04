@@ -46,6 +46,14 @@ public class MonthlyReservationService {
         return toList(monthlyReservationRepository.findAll());
     }
 
+    /**
+     * increments the expiry date by 1 month if payment amount is enough
+      * @param reservationId
+     * @param paidAmount
+     * @return
+     * @throws Exception
+     * @author Edwin You Zhou
+     */
     public MonthlyReservationDto renewPayment(long reservationId, float paidAmount) throws Exception {
         MonthlyReservation monthlyReservation = monthlyReservationRepository.getMonthlyReservationByMonthlyReservationID(reservationId);
         if (isEnough(paidAmount)) {

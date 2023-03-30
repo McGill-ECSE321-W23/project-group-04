@@ -3,10 +3,9 @@ package ca.mcgill.ecse321.parkinglotbackend.service;
 import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingSpotRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.MonthlyReservation;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingSpot;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.*;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +106,12 @@ public class ParkingSpotService {
         return toList(parkingSpotRepository.findAll());
     }
 
+    /**
+     * removes monthly reservation from spot
+     * @param spotId
+     * @return
+     * @throws Exception
+     */
     public MonthlyReservation unbind(Long spotId) throws Exception {
         ParkingSpot parkingSpot = findParkingSpotByID(spotId);
         MonthlyReservation monthlyReservation = parkingSpot.getMonthlyReservation();
@@ -115,6 +120,13 @@ public class ParkingSpotService {
         return monthlyReservation;
     }
 
+    /**
+     * add monthly reservation to spot
+     * @param spotId
+     * @param monthlyReservation
+     * @return
+     * @throws Exception
+     */
     public ParkingSpot attachReservation(Long spotId, MonthlyReservation monthlyReservation) throws Exception {
         ParkingSpot parkingSpot = findParkingSpotByID(spotId);
 
