@@ -16,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.time.LocalDate;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
@@ -71,7 +70,7 @@ public class MonthlyReservationServiceTest {
     @Test
     void RenewPayment_Should_UpdateDate_When_PaymentAmountIsEnough() throws Exception {
         LocalDate date = monthlyReservation.getEndDate();
-        when(parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(anyLong())).thenReturn(new ParkingLotSoftwareSystem());
+        when(parkingLotSoftwareSystemService.getParkingLotSoftwareSystem()).thenReturn(new ParkingLotSoftwareSystem());
         when(monthlyReservationRepository.getMonthlyReservationByMonthlyReservationID(any())).thenReturn(monthlyReservation);
         when(monthlyReservationRepository.save(any())).thenReturn(monthlyReservation);
 
