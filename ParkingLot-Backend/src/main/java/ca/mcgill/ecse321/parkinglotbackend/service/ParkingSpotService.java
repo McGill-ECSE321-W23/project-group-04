@@ -107,6 +107,31 @@ public class ParkingSpotService {
         return toList(parkingSpotRepository.findAll());
     }
 
+    public MonthlyReservation unbind(Long spotId) throws Exception {
+        ParkingSpot parkingSpot = findParkingSpotByID(spotId);
+        MonthlyReservation monthlyReservation = parkingSpot.getMonthlyReservation();
+        parkingSpot.setMonthlyReservation(null);
+        parkingSpotRepository.save(parkingSpot);
+        return monthlyReservation;
+    }
+
+    public ParkingSpot attachReservation(Long spotId, MonthlyReservation monthlyReservation) throws Exception {
+        ParkingSpot parkingSpot = findParkingSpotByID(spotId);
+
+        if (parkingSpot.getMonthlyReservation() != null) {
+            throw new Exception("Reservation already exists on spot");
+        }
+
+        parkingSpot.setMonthlyReservation(monthlyReservation);
+        return parkingSpotRepository.save(parkingSpot);
+    }
+
+    public ParkingSpot getParkingSpotByReservationId(Long reservationId) {
+        if (reservationId != null) {
+            return parkingSpotRepository.findParkingSpotByMonthlyReservation_MonthlyReservationID(reservationId);
+        }
+        throw new IllegalArgumentException("id is null");
+    }
 
     /**
      * code taken from tutorial notes
