@@ -23,6 +23,16 @@ public class StaffAccountService {
         return staffAccountRepository.save(staffAccount);
     }
 
+    /**
+     * Edwin You Zhou
+     * perform null check for arguments and save the new account
+     * @param name
+     * @param phone
+     * @param password
+     * @param email
+     * @param salary
+     * @return
+     */
     public StaffAccount createStaffAccount(String name, String phone, String password, String email, Float salary) {
         if (name != null && phone != null && password != null && email != null && salary != null) {
             Person person = new Person();

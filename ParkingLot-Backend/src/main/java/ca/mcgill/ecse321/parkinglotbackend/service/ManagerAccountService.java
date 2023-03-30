@@ -12,6 +12,11 @@ public class ManagerAccountService {
     @Autowired
     ManagerAccountRepository managerAccountRepository;
 
+    /**
+     * Edwin You Zhou
+     * there is only 1 manager per system, so return the only manager found
+     * @return ManagerAccount
+     */
     public ManagerAccount getManagerAccount() {
         return managerAccountRepository.getManagerAccountByAccountIDIsNotNull();
     }
