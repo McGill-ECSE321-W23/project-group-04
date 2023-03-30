@@ -105,16 +105,16 @@ public class MonthlyReservationController {
             if (AuthenticationUtility.isStaff(request) && reservationIdToUpdate != null && ParkingSpotDto.isValid(parkingSpotDto)) {
                 MonthlyReservation monthlyReservation = monthlyReservationService.getReservationById(reservationIdToUpdate).get();
 
-                ParkingSpot parkingSpot = parkingSpotService.getParkingSpot(parkingSpotDto.getParkingSpotID());
+                ParkingSpot parkingSpot = parkingSpotService.findParkingSpotByID(parkingSpotDto.getParkingSpotID());
 
                 if (parkingSpot.getMonthlyReservation() != null) {
-                    parkingSpotService.attachReservation(parkingSpot.getParkingSpotID(), monthlyReservation);
-                } else {
                     return ResponseEntity.badRequest().body("spot is already taken");
                 }
 
                 ParkingSpot oldSpot = parkingSpotService.getParkingSpotByReservationId(monthlyReservation.getMonthlyReservationID());
                 parkingSpotService.unbind(oldSpot.getParkingSpotID());
+                
+                parkingSpotService.attachReservation(parkingSpot.getParkingSpotID(), monthlyReservation);
 
                 return ResponseEntity.ok().build();
             } else {
