@@ -12,10 +12,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -27,9 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
-import org.springframework.cache.interceptor.AbstractCacheResolver;
+
 
 import ca.mcgill.ecse321.parkinglotbackend.dao.CarRepository;
 import ca.mcgill.ecse321.parkinglotbackend.dao.PersonRepository;
