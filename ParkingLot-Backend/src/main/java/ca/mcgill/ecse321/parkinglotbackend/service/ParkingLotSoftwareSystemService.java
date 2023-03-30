@@ -1,11 +1,10 @@
 package ca.mcgill.ecse321.parkinglotbackend.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingLotSoftwareSystemRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Qin Xuan Xu
@@ -57,7 +56,7 @@ public class ParkingLotSoftwareSystemService {
      */
     @Transactional
     public ParkingLotSoftwareSystem getParkingLotSoftwareSystem(long parkingLotSoftwareSystemID) throws Exception {
-        ParkingLotSoftwareSystem system = parkingLotSoftwareSystemRepository.getParkingLotSoftwareSystemByParkingLotSoftwareSystemIDNotNull();
+        ParkingLotSoftwareSystem system = parkingLotSoftwareSystemRepository.findParkingLotSoftwareSystemByParkingLotSoftwareSystemID(parkingLotSoftwareSystemID);
         if (system == null) {
             throw new Exception("No system with this id exists!");
         }

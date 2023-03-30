@@ -36,7 +36,7 @@ public class StaffAccountController {
     ResponseEntity<?> getSchedule(HttpServletRequest request, @RequestParam Long staffAccountId) {
         try {
             if (AuthenticationUtility.isStaff(request) && AuthenticationUtility.getAccountId(request) == staffAccountId) {
-                timeSlotService.getTimeSlotsByAccountID(staffAccountId);
+                timeSlotService.getTimeSlotsByStaffAccountID(staffAccountId);
             } else {
                 return ResponseEntity.badRequest().build();
             }
@@ -50,7 +50,7 @@ public class StaffAccountController {
     ResponseEntity<?> modifySchedule(HttpServletRequest request, @RequestParam long employeeId, @RequestBody List<TimeSlotDto> schedule) {
         try {
             if (AuthenticationUtility.isManager(request)) {
-                List<TimeSlot> oldSchedule = timeSlotService.getTimeSlotsByAccountID(employeeId);
+                List<TimeSlot> oldSchedule = timeSlotService.getTimeSlotsByStaffAccountID(employeeId);
 
                 for (TimeSlot timeSlot: oldSchedule) {
                     timeSlotService.deleteTimeSlot(timeSlot.getTimeSlotID());

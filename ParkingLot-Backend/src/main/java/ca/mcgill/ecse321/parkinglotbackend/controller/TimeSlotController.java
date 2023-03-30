@@ -150,8 +150,13 @@ public class TimeSlotController {
         if (t == null) {
             throw new IllegalArgumentException("TimeSlot does not exist");
         }
-        TimeSlotDto timeSlotDto = new TimeSlotDto(t.getTimeSlotID(), t.getDayOfTheWeek(), t.getStartTime(),
-                t.getEndTime(), t.getSystem(), t.getStaffAccount());
+        TimeSlotDto timeSlotDto = new TimeSlotDto(
+                t.getTimeSlotID(),
+                t.getDayOfTheWeek(),
+                t.getStartTime(),
+                t.getEndTime(),
+                t.getSystem().getParkingLotSoftwareSystemID(),
+                t.getStaffAccount().getAccountID());
         return timeSlotDto;
     }
 

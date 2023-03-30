@@ -1,36 +1,19 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import ca.mcgill.ecse321.parkinglotbackend.dto.CarDto;
-import ca.mcgill.ecse321.parkinglotbackend.dto.GarageDto;
-import ca.mcgill.ecse321.parkinglotbackend.dto.OfferedServiceDto;
-import ca.mcgill.ecse321.parkinglotbackend.dto.PersonDto;
-import ca.mcgill.ecse321.parkinglotbackend.dto.ServiceAppointmentDto;
+import ca.mcgill.ecse321.parkinglotbackend.dto.*;
 import ca.mcgill.ecse321.parkinglotbackend.dto.ServiceAppointmentDto.AppointmentStatusDto;
-import ca.mcgill.ecse321.parkinglotbackend.model.Car;
-import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
-import ca.mcgill.ecse321.parkinglotbackend.model.OfferedService;
-import ca.mcgill.ecse321.parkinglotbackend.model.Person;
-import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment;
+import ca.mcgill.ecse321.parkinglotbackend.model.*;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment.AppointmentStatus;
 import ca.mcgill.ecse321.parkinglotbackend.service.CarService;
 import ca.mcgill.ecse321.parkinglotbackend.service.GarageService;
-import ca.mcgill.ecse321.parkinglotbackend.service.ServiceAppointmentService;
-import net.bytebuddy.implementation.bytecode.constant.NullConstant;
 import ca.mcgill.ecse321.parkinglotbackend.service.OfferedServiceService;
+import ca.mcgill.ecse321.parkinglotbackend.service.ServiceAppointmentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
