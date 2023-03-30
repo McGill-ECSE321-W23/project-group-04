@@ -21,8 +21,6 @@ The application will improve the overall experience for customers, employees and
 | Edwin You Zhou    |[edwin-zhou](https://github.com/edwin-zhou)      | Software Developer | Computer Engineering       | U3 |
 
 ## Sprint 1
-
-### Project Report:
 [Sprint 1: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Overview)
 
 ### Contributions
@@ -35,14 +33,15 @@ The application will improve the overall experience for customers, employees and
 | Qin Xuan Xu       |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test|   27   |
 | Edwin You Zhou    |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Create Repository, Spring Boot Project Set Up|   30   |
 
-Sprint 2
+## Sprint 2
+[Sprint 2: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Sprint-2#overview)
 
 ### Contributions
 | Team Member       | Contributions                                   | Hours  |
 | ----------------- | ----------------------------------------------- | ------ |
-| Faiza Chowdhury   ||        |
-| Annie Gouchee     | |       |
-| Lin Wei Li        | Iteration 1 Fixes|      |
-| Estefania Vazquez |Iteration 1 Fixes|      |
-| Qin Xuan Xu       | |      |
-| Edwin You Zhou    | |      |
+| Faiza Chowdhury   |RESTful HTTP Methods, Controller, DTO and Unit Testing for Ticket and Parking Spot|        |
+| Annie Gouchee     |RESTful HTTP Methods, Controller, DTO and Unit Testing for ServiceAppointment and Car|       |
+| Lin Wei Li        |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Persona and Account|      |
+| Estefania Vazquez |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Garage and OfferedService|      |
+| Qin Xuan Xu       |RESTful HTTP Methods, Controller, DTO and Unit Testing for System and TimeSlot|
+| Edwin You Zhou    |RESTful HTTP Methods, Controller, DTO and Unit Testing for StaffAccount, ManagerAccount and MonthlyReservation|      |

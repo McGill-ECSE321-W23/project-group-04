@@ -20,6 +20,7 @@ public class PersonService {
      * Find a person by id
      * @param id
      * @return Person
+     * @throws Exception
      * @author Lin Wei Li
      */
     @Transactional
@@ -74,6 +75,10 @@ public class PersonService {
      */
     @Transactional
     public Person createPerson(String name, String phoneNumber) throws Exception {
+        // Check for duplicate phone number
+        if (personRepository.existsPersonByPhoneNumber(phoneNumber)) {
+            throw new Exception("Phone number already exists!");
+        }
 
         // Check input
         if (name == null || name.trim().length() == 0) {
@@ -95,8 +100,11 @@ public class PersonService {
      * @author Lin Wei Li
      */
     @Transactional
-    public Person deletePerson(long personID) {
+    public Person deletePerson(long personID) throws Exception {
         Person person = personRepository.findPersonByPersonID(personID);
+        if (person == null) {
+            throw new Exception("No person with this id exists!");
+        }
         personRepository.delete(person);
         return person;
     }
@@ -104,18 +112,24 @@ public class PersonService {
     /**
      * Update a person
      * @param personID
-     * @param name
-     * @param phoneNumber
+     * @param name - new name
+     * @param phoneNumber - new phone number
      * @return Person
+     * @throws Exception
      * @author Lin Wei Li
      */
     @Transactional
     public Person updatePerson(long personID, String name, String phoneNumber) throws Exception {
+        // Check for duplicate phone number
+        if (personRepository.existsPersonByPhoneNumber(phoneNumber)) {
+            throw new Exception("Phone number already exists!");
+        }
+
         Person person = personRepository.findPersonByPersonID(personID);
 
         // Check input
         if (person == null) {
-            throw new Exception("Person does not exist!");
+            throw new Exception("No person with this id exists!");
         }
         if (name == null || name.trim().length() == 0) {
             throw new Exception("Name cannot be empty!");

@@ -86,6 +86,4 @@ public class ServiceAppointmentDto {
     public void setCar (CarDto newCar) {
         this.car = newCar;
     }
-
-
 }
