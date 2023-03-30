@@ -30,10 +30,10 @@ public class MonthlyReservationRepositoryTest {
     void testPersistAndLoadMonthlyReservation() {
         // Create a MonthlyReservation
         Person person = new PersonMockBuilder().build();
-        MonthlyReservation monthlyReservation = new MonthlyReservation(LocalDate.now(), LocalDate.now().plusDays(30), person);
+        Person savedPerson = personRepository.save(person);
+        MonthlyReservation monthlyReservation = new MonthlyReservation(LocalDate.now(), LocalDate.now().plusDays(30), savedPerson);
 
         // Save the MonthlyReservation
-        // Person savedPerson = personRepository.save(person);
         MonthlyReservation savedMonthlyReservation = monthlyReservationRepository.save(monthlyReservation);
 
         // Check that the MonthlyReservation was saved correctly
