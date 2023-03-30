@@ -140,6 +140,7 @@ public class TestServiceAppointmentService {
         A3.setGarage(G3);
     }
 
+    //Tests create successful appointment
     @Test
     public void testCreateAppointment_Success() {
         String eMSG = "";
@@ -163,6 +164,7 @@ public class TestServiceAppointmentService {
 
     }
 
+    //Tests create appointment with nul garage
     @Test
     public void testCreateAppointment_NullGarage() {
         String eMSG = "";
@@ -177,6 +179,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);
     }
 
+    //Tests create appointment with null service
     @Test
     public void testCreateAppointment_NullService() {
         String eMSG = "";
@@ -191,6 +194,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);
     }
 
+    //Tests create appointment with null car
     @Test
     public void testCreateAppointment_NullCar() {
         String eMSG = "";
@@ -205,6 +209,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);
     }
 
+    //Tests successfully find appointment by ID
     @Test
     public void testFindAppointmentByID_Success() {
         String eMSG = "";
@@ -222,6 +227,7 @@ public class TestServiceAppointmentService {
         assertEquals(A1.getServiceAppointmentID(), appointment.getServiceAppointmentID());    
     }
 
+    //Tests find appointment by ID with invalid ID
     @Test
     public void testFindAppointmentByID_InvalidID() {
         String eMSG = "";
@@ -237,6 +243,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);   
     }
 
+    //Tests find appointment by ID with null ID
     @Test
     public void testFindAppointmentByID_NullID() {
         String eMSG = "";
@@ -252,6 +259,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);   
     }
 
+    //Tests successfully find appointment vy car ID 
     @Test
     public void testGetAppointmentByCarID_Success() {
         String eMSG = "";
@@ -271,7 +279,7 @@ public class TestServiceAppointmentService {
         assertEquals(A1.getCar().getCarID(), appointments.get(0).getCar().getCarID());
     }
 
-
+    //Tests get appountment by car ID with invalid ID
     @Test
     public void testGetAppointmentByCarID_InvalidID() {
         String eMSG = "";
@@ -287,7 +295,7 @@ public class TestServiceAppointmentService {
         assertNull(appointments);
     }
 
-
+    // Tests get appointment by car ID with null ID
     @Test
     public void testGetAppointmentByCarID_NullID() {
         String eMSG = "";
@@ -303,7 +311,7 @@ public class TestServiceAppointmentService {
         assertNull(appointments);
     }
 
-
+    //Tests successfully get appointment by service ID 
     @Test
     public void testGetAppointmentByServiceID_Success() {
         String eMSG = "";
@@ -323,7 +331,7 @@ public class TestServiceAppointmentService {
         assertEquals(A1.getService().getServiceID(), appointments.get(0).getService().getServiceID());
     }
 
-
+    //Tests get appountment by service ID with invalid ID
     @Test
     public void testGetAppointmentByServiceID_InvalidID() {
         String eMSG = "";
@@ -339,7 +347,7 @@ public class TestServiceAppointmentService {
         assertNull(appointments);
     }
 
-
+    // Tests get appointment by service ID with null ID
     @Test
     public void testGetAppointmentByServiceID_NullID() {
         String eMSG = "";
@@ -355,6 +363,7 @@ public class TestServiceAppointmentService {
         assertNull(appointments);
     }
 
+    //tests get all appointments
     @Test
     public void testGetAllAppointments() {
         List<ServiceAppointment> appointments = service.getAllAppointments();
@@ -364,6 +373,7 @@ public class TestServiceAppointmentService {
         assertEquals(A3, appointments.get(2));
     }
 
+    //Tests successfully delete appointment 
     @Test
     public void testDeleteAppointment_Success() {
         String eMSG = "";
@@ -380,6 +390,7 @@ public class TestServiceAppointmentService {
         assertEquals(A1, appointment);
     }
 
+    // tests delete appointment with invalid ID
     @Test
     public void testDeleteAppointment_InvalidID() {
         String eMSG = "";
@@ -395,6 +406,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);
     }
 
+    //Tests delete appointment with null ID
     @Test
     public void testDeleteAppointment_NullID() {
         String eMSG = "";
@@ -410,6 +422,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);
     }
 
+    //Tests update appointment successfully
     @Test
     public void testUpdateAppointment_Success() {
         String eMSG = "";
@@ -431,6 +444,7 @@ public class TestServiceAppointmentService {
         assertEquals(APP_CAR.getCarID(), appointment.getCar().getCarID());
     }
 
+    //Tests update appointment with null ID
     @Test
     public void testUpdateAppointment_NullID() {
         String eMSG = "";
@@ -446,6 +460,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);
     }
 
+    // Tests update appointment with invalid ID
     @Test
     public void testUpdateAppointment_InvalidID() {
         String eMSG = "";
@@ -461,6 +476,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);
     }
 
+    //Tests update appointment with null start time
     @Test
     public void testUpdateAppointment_NullStartTime() {
         String eMSG = "";
@@ -476,6 +492,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);
     }
 
+    // Tests update appointment with null status
     @Test
     public void testUpdateAppointment_NullStatus() {
         String eMSG = "";
@@ -491,6 +508,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);
     }
 
+    //Tests update appointment with null garage
     @Test
     public void testUpdateAppointment_NullGarage() {
         String eMSG = "";
@@ -506,6 +524,7 @@ public class TestServiceAppointmentService {
         assertNull(appointment);
     }
 
+    //Tests update appointment with null service
     @Test
     public void testUpdateAppointment_NullService() {
         String eMSG = "";
@@ -521,6 +540,8 @@ public class TestServiceAppointmentService {
         assertNull(appointment);
     }
 
+
+    //Tests update appointment with null car
     @Test
     public void testUpdateAppointment_NullCar() {
         String eMSG = "";

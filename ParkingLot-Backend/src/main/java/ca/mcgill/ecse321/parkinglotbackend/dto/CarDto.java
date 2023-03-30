@@ -12,6 +12,16 @@ public class CarDto {
     public CarDto(){
     }
 
+    /**
+     * Constructor for Car DTO
+     * 
+     * @param carID
+     * @param licensePlate
+     * @param make
+     * @param model
+     * @param owner
+     * @author anniegouchee
+     */
     public CarDto(long carID, String licensePlate, String make, String model, PersonDto owner){
         this.carID = carID;
         this.licensePlate = licensePlate;
@@ -20,6 +30,8 @@ public class CarDto {
         this.owner = owner;
     }
 
+    //Getters and setters for Car DTO
+    
     public long getCarID() {
         return carID;
     }
