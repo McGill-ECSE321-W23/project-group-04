@@ -26,7 +26,6 @@ import ca.mcgill.ecse321.parkinglotbackend.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.model.StaffAccount;
 import ca.mcgill.ecse321.parkinglotbackend.model.TimeSlot;
-import ca.mcgill.ecse321.parkinglotbackend.service.TimeSlotService;
 
 /**
  * @author Qin Xuan Xu

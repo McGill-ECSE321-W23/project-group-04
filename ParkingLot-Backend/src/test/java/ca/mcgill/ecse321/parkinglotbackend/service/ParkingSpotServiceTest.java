@@ -139,7 +139,7 @@ public class ParkingSpotServiceTest {
      */
     @Test
     public void testDeleteParkingSpot() throws Exception {
-        String error = null;
+        // String error = null;
         long parkingSpotID = parkingSpot1.getParkingSpotID();
         ParkingSpot parkingSpot = null;
         try {
@@ -177,7 +177,7 @@ public class ParkingSpotServiceTest {
      */
     @Test
     public void testGetParkingSpotByID() throws Exception {
-        String error = null;
+        String error = "";
         ParkingSpot parkingSpot4 = null;
         try {
             parkingSpot4 = parkingSpotService.findParkingSpotByID(id1);
@@ -186,7 +186,7 @@ public class ParkingSpotServiceTest {
             error = e.getMessage();
         }
         assertNotNull(parkingSpot4);
-        // check error
+        assertEquals("", error);
         assertEquals(parkingSpot1, parkingSpot4);
     }
     /**
@@ -195,7 +195,7 @@ public class ParkingSpotServiceTest {
      */
     @Test
     public void testGetTicketByIDNull() throws Exception {
-        String error = null;
+        String error = "";
         ParkingSpot parkingSpot4 = null;
         try {
             parkingSpot4 = parkingSpotService.findParkingSpotByID(789);
@@ -205,7 +205,6 @@ public class ParkingSpotServiceTest {
         }
 
         assertNull(parkingSpot4);
-        // check error
         assertEquals("There is no Parking Spot in the system with this ID.", error);
     }
     /**
@@ -214,7 +213,7 @@ public class ParkingSpotServiceTest {
      */
     @Test
     public void testGetMonthlyReservation() throws Exception {
-        String error = null;
+        String error = "";
         MonthlyReservation monthlyReservation = new MonthlyReservation();
         MonthlyReservation monthlyReservation2 = null;
         parkingSpot1.setMonthlyReservation(monthlyReservation);
@@ -225,7 +224,7 @@ public class ParkingSpotServiceTest {
             error = e.getMessage();
         }
         assertNotNull(monthlyReservation2);
-        // check error
+        assertEquals("", error);
         assertEquals(monthlyReservation, monthlyReservation2);
     }
     /**
@@ -252,7 +251,7 @@ public class ParkingSpotServiceTest {
      */
     @Test
     public void testGetAllParkingSpots() throws Exception {
-        String error = null;
+        String error = "";
         List<ParkingSpot> parkingSpots2 = null;
         try {
             parkingSpots2 = parkingSpotService.findAllParkingSpots();
@@ -260,6 +259,7 @@ public class ParkingSpotServiceTest {
         catch (Exception e) {
             error = e.getMessage();
         }
+        assertEquals("", error);
         assertEquals(parkingSpots2.size(), 2);
         assertEquals(parkingSpots2.get(0), parkingSpot1);
         assertEquals(parkingSpots2.get(1), parkingSpot2);

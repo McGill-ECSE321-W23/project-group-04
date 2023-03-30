@@ -20,7 +20,6 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.parkinglotbackend.model.OfferedService;
-import ca.mcgill.ecse321.parkinglotbackend.service.OfferedServiceService;
 import ca.mcgill.ecse321.parkinglotbackend.dao.OfferedServiceRepository;
 
 import java.util.ArrayList;

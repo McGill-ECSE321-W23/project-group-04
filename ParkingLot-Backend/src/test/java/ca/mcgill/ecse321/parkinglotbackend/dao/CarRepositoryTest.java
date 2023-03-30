@@ -37,7 +37,7 @@ public class CarRepositoryTest {
         owner.setName(ownerName);
         owner.setPhoneNumber(phoneNumber);
         owner = personRepository.save(owner);
-        Long ownerId = owner.getPersonID();
+        // Long ownerId = owner.getPersonID();
 
         // create a Car object and save to database
 

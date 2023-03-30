@@ -33,7 +33,7 @@ public class MonthlyReservationRepositoryTest {
         MonthlyReservation monthlyReservation = new MonthlyReservation(LocalDate.now(), LocalDate.now().plusDays(30), person);
 
         // Save the MonthlyReservation
-        Person savedPerson = personRepository.save(person);
+        // Person savedPerson = personRepository.save(person);
         MonthlyReservation savedMonthlyReservation = monthlyReservationRepository.save(monthlyReservation);
 
         // Check that the MonthlyReservation was saved correctly

@@ -19,7 +19,6 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import ca.mcgill.ecse321.parkinglotbackend.service.GarageService;
 import ca.mcgill.ecse321.parkinglotbackend.dao.GarageRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
 

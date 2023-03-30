@@ -185,7 +185,7 @@ public class TicketServiceTest {
      */
     @Test
     public void testDeleteTicket() throws Exception {
-        String error = null;
+        // String error = null;
         long ticketID = ticket1.getTicketID();
         Ticket ticket = null;
         try {
@@ -228,7 +228,7 @@ public class TicketServiceTest {
      */
     @Test
     public void testGetTicketByID() throws Exception {
-        String error = null;
+        String error = "";
         Ticket ticket4 = null;
         long ticketID = ticket1.getTicketID();
         try {
@@ -238,7 +238,7 @@ public class TicketServiceTest {
             error = e.getMessage();
         }
         assertNotNull(ticket4);
-        // check error
+        assertEquals("", error);
         assertEquals(ticket1, ticket4);
     }
 
@@ -271,7 +271,7 @@ public class TicketServiceTest {
      */
     @Test
     public void testGetAllTickets() throws Exception {
-        String error = null;
+        String error = "";
         List<Ticket> tickets2 = null;
         try {
             tickets2 = ticketService.getAllTickets(parkingLotSoftwareSystem);
@@ -279,6 +279,7 @@ public class TicketServiceTest {
         catch (Exception e) {
             error = e.getMessage();
         }
+        assertEquals("", error);
         assertEquals(tickets2.size(), 3);
         assertEquals(tickets2.get(0), ticket1);
         assertEquals(tickets2.get(1), ticket2);
@@ -291,7 +292,7 @@ public class TicketServiceTest {
      */
     @Test
     public void testGetAllTicketsRegular() throws Exception {
-        String error = null;
+        String error = "";
         List<Ticket> tickets2 = null;
         try {
             tickets2 = ticketService.getAllTicketsRegular(parkingLotSoftwareSystem);
@@ -300,6 +301,7 @@ public class TicketServiceTest {
             error = e.getMessage();
         }
         assertEquals(tickets2.size(), 2);
+        assertEquals("", error);
     }
     /**
      * Testing get all Large tickets in the system
@@ -308,7 +310,7 @@ public class TicketServiceTest {
      */
     @Test
     public void testGetAllTicketsLarge() throws Exception {
-        String error = null;
+        String error = "";
         List<Ticket> tickets2 = null;
         try {
             tickets2 = ticketService.getAllTicketsLarge(parkingLotSoftwareSystem);
@@ -317,6 +319,7 @@ public class TicketServiceTest {
             error = e.getMessage();
         }
         assertEquals(tickets2.size(), 1);
+        assertEquals("", error);
     }
     /**
      * Testing get ticket count in the system
@@ -325,7 +328,7 @@ public class TicketServiceTest {
      */
     @Test
     public void testGetTicketCount() throws Exception {
-        String error = null;
+        String error = "";
         int count = 0;
         try {
            count = ticketService.numberOfTickets(parkingLotSoftwareSystem);
@@ -334,6 +337,7 @@ public class TicketServiceTest {
             error = e.getMessage();
         }
         assertEquals(count, 3);
+        assertEquals("", error);
     }
 
 

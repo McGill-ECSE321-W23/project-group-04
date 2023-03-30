@@ -1,6 +1,4 @@
 package ca.mcgill.ecse321.parkinglotbackend.service;
-
-import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingLotSoftwareSystemRepository;
 import ca.mcgill.ecse321.parkinglotbackend.dao.TicketRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.model.Ticket;
@@ -44,7 +42,7 @@ public class TicketService {
 		ticket.setSystem(parkingLotSoftwareSystem);
 		ticket.setCarType(carType);
 		ticket.setEntryTime(entryTime);
-		long ticketID = ticket.getTicketID();
+		// long ticketID = ticket.getTicketID();
 
 		ticketRepository.save(ticket);
 		return ticket;

@@ -19,7 +19,6 @@ import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingLotSoftwareSystemRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
-import ca.mcgill.ecse321.parkinglotbackend.service.ParkingLotSoftwareSystemService;
 
 /**
  * @author Qin Xuan Xu

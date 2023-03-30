@@ -54,7 +54,7 @@ public class ServiceAppointmentRepositoryTest {
         owner.setName(ownerName);
         owner.setPhoneNumber(phoneNumber);
         owner = personRepository.save(owner);
-        Long ownerId = owner.getPersonID();
+        // Long ownerId = owner.getPersonID();
 
         // create a Car object and save to database
 
@@ -85,7 +85,7 @@ public class ServiceAppointmentRepositoryTest {
         Garage garage = new Garage();
         garage.setGarageNumber(2);
         garageRepository.save(garage);
-        Long garageID = garage.getGarageID();
+        // Long garageID = garage.getGarageID();
 
         // create a Service Appointment object and save to database
         LocalDateTime startTime = LocalDateTime.of(2022, Month.MARCH,4,5, 6, 7 );

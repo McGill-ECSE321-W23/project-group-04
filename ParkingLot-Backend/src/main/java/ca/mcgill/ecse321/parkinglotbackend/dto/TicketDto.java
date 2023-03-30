@@ -1,5 +1,4 @@
 package ca.mcgill.ecse321.parkinglotbackend.dto;
-import ca.mcgill.ecse321.parkinglotbackend.dto.ParkingLotSoftwareSystemDto;
 import java.time.LocalDateTime;
 
 
