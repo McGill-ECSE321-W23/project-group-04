@@ -35,7 +35,7 @@ public class AuthenticationService {
 
         // Check input
         if (email == null || email.trim().length() == 0 || password == null || password.trim().length() == 0) {
-            throw new Exception("Please enter a email and password");
+            throw new Exception("Please enter an email and a password");
         }
 
         // Try to get account

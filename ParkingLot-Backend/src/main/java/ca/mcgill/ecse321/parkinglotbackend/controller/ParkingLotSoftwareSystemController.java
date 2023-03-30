@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
@@ -42,7 +42,7 @@ public class ParkingLotSoftwareSystemController {
 
     // Create system
     @PostMapping("/create")
-    public ResponseEntity<?> createParkingLotSoftwareSystem(HttpServletRequest request, @RequestBody float monthlyFee, @RequestBody float feePer15m, @RequestBody int maxStay, @RequestBody int numberOfRegularParkingSpots, @RequestBody int numberOfLargeParkingSpots, @RequestBody int numberOfMonthlyFloors, @RequestBody int numberOfMonthlySpotsPerFloor, @RequestBody int numberOfGarages) {
+    public ResponseEntity<?> createParkingLotSoftwareSystem(HttpServletRequest request, @RequestParam float monthlyFee, @RequestParam float feePer15m, @RequestParam int maxStay, @RequestParam int numberOfRegularParkingSpots, @RequestParam int numberOfLargeParkingSpots, @RequestParam int numberOfMonthlyFloors, @RequestParam int numberOfMonthlySpotsPerFloor, @RequestParam int numberOfGarages) {
         // check authorization
         try {
             if (AuthenticationUtility.isManager(request)) {
@@ -57,7 +57,7 @@ public class ParkingLotSoftwareSystemController {
 
     // Update system
     @PutMapping("/update/{parkingLotSoftwareSystemID}")
-    public ResponseEntity<?> updateParkingLotSoftwareSystem(HttpServletRequest request, @PathVariable(value = "parkingLotSoftwareSystemID") long parkingLotSoftwareSystemID, @RequestBody float monthlyFee, @RequestBody float feePer15m, @RequestBody int maxStay, @RequestBody int numberOfRegularParkingSpots, @RequestBody int numberOfLargeParkingSpots, @RequestBody int numberOfMonthlyFloors, @RequestBody int numberOfMonthlySpotsPerFloor, @RequestBody int numberOfGarages) {
+    public ResponseEntity<?> updateParkingLotSoftwareSystem(HttpServletRequest request, @PathVariable(value = "parkingLotSoftwareSystemID") long parkingLotSoftwareSystemID, @RequestParam float monthlyFee, @RequestParam float feePer15m, @RequestParam int maxStay, @RequestParam int numberOfRegularParkingSpots, @RequestParam int numberOfLargeParkingSpots, @RequestParam int numberOfMonthlyFloors, @RequestParam int numberOfMonthlySpotsPerFloor, @RequestParam int numberOfGarages) {
         // Check authorization
         try {
             if (AuthenticationUtility.isManager(request)) {
@@ -75,11 +75,7 @@ public class ParkingLotSoftwareSystemController {
     public ResponseEntity<?> deleteParkingLotSoftwareSystem(HttpServletRequest request, @PathVariable(value = "parkingLotSoftwareSystemID") long parkingLotSoftwareSystemID) {
         // Check authorization
         try {
-            if (AuthenticationUtility.isManager(request)) {
-                return ResponseEntity.ok(convertToDto(parkingLotSoftwareSystemService.deleteParkingLotSoftwareSystem(parkingLotSoftwareSystemID)));
-            } else {
-                return ResponseEntity.badRequest().body("Only manager can delete a system");
-            }
+            return ResponseEntity.badRequest().body("Deleting a system is not allowed");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

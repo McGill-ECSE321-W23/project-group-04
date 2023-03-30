@@ -1,5 +1,21 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.dto.TimeSlotDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
@@ -9,14 +25,11 @@ import ca.mcgill.ecse321.parkinglotbackend.service.ParkingLotSoftwareSystemServi
 import ca.mcgill.ecse321.parkinglotbackend.service.StaffAccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.TimeSlotService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.stream.Collectors;
-
+/**
+ * @author Qin Xuan Xu
+ * using template from tutorials
+ */
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/timeslot")
@@ -44,7 +57,7 @@ public class TimeSlotController {
     }
 
     // Get all timeslots
-    @GetMapping("/get")
+    @GetMapping("/getAll")
     public ResponseEntity<?> getAllTimeSlots(HttpServletRequest request) {
         // Check authorization
         try {
@@ -59,12 +72,12 @@ public class TimeSlotController {
     }
 
     // Get all timeslots of one employee
-    @GetMapping("/get/{accountID}")
+    @GetMapping("/getAll/{accountID}")
     public ResponseEntity<?> getAllTimeSlotsByAccountID(HttpServletRequest request, @PathVariable(value = "accountID") long accountID) {
         // Check authorization
         try {
             if (AuthenticationUtility.isManager(request)) {
-                return ResponseEntity.ok(timeSlotService.getTimeSlotsByAccountID(accountID).stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
+                return ResponseEntity.ok(timeSlotService.getTimeSlotsByStaffAccountID(accountID).stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
             } else {
                 return ResponseEntity.badRequest().body("Only manager can get all TimeSlots by accountID");
             }
@@ -74,12 +87,12 @@ public class TimeSlotController {
     }
 
     // Get all timeslots as opening hours
-    @GetMapping("/getopen")
-    public ResponseEntity<?> getAllTimeSlotsByStaffAccount(HttpServletRequest request, StaffAccount staffAccount) {
+    @GetMapping("/getOpen")
+    public ResponseEntity<?> getAllOpenHours(HttpServletRequest request) {
         // Check authorization
         try {
             if (AuthenticationUtility.isManager(request)) {
-                return ResponseEntity.ok(timeSlotService.getTimeSlotsByStaffAccount(staffAccount).stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
+                return ResponseEntity.ok(timeSlotService.getAllOpenHours().stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
             } else {
                 return ResponseEntity.badRequest().body("Only manager can get opening hours");
             }
@@ -90,7 +103,7 @@ public class TimeSlotController {
 
     // Create timeslot
     @PostMapping("/create")
-    public ResponseEntity<?> createTimeSlot(HttpServletRequest request, @RequestBody DayOfWeek dayOfTheWeek, @RequestBody LocalTime startTime, @RequestBody LocalTime endTime, @RequestBody long parkingLotSoftwareSystemID, @RequestBody long accountID) {
+    public ResponseEntity<?> createTimeSlot(HttpServletRequest request, @RequestParam DayOfWeek dayOfTheWeek, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime, @RequestParam long parkingLotSoftwareSystemID, @RequestParam long accountID) {
         try {
             ParkingLotSoftwareSystem system = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID);
             StaffAccount staffAccount = staffAccountService.getStaffAccount(accountID);
@@ -114,7 +127,7 @@ public class TimeSlotController {
 
     // Update timeslot
     @PutMapping("/update/{timeSlotID}")
-    public ResponseEntity<?> updateTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID, @RequestBody DayOfWeek dayOfTheWeek, @RequestBody LocalTime startTime, @RequestBody LocalTime endTime) {
+    public ResponseEntity<?> updateTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID, @RequestParam DayOfWeek dayOfTheWeek, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime) {
         // Check authorization
         try {
             if (AuthenticationUtility.isManager(request)) {
@@ -147,7 +160,7 @@ public class TimeSlotController {
             throw new IllegalArgumentException("TimeSlot does not exist");
         }
         TimeSlotDto timeSlotDto = new TimeSlotDto(t.getTimeSlotID(), t.getDayOfTheWeek(), t.getStartTime(),
-                t.getEndTime(), t.getSystem().getParkingLotSoftwareSystemID(), t.getStaffAccount().getAccountID());
+                t.getEndTime(), t.getSystem(), t.getStaffAccount());
         return timeSlotDto;
     }
 

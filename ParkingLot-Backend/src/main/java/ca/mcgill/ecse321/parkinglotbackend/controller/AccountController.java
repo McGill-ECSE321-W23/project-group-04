@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
@@ -33,14 +33,30 @@ public class AccountController {
     @Autowired
     private PersonService personService;
 
+    /**
+     * Register a new Account
+     * @param request
+     * @param email
+     * @param password
+     * @param name
+     * @param phoneNumber
+     * @return
+     * @author Lin Wei Li
+     */
     @PostMapping("/register")
-    public ResponseEntity<?> registerAccount(HttpServletRequest request, @RequestBody String email,
-    @RequestBody String password, @RequestBody String name, @RequestBody String phoneNumber) {
+    public ResponseEntity<?> registerAccount(HttpServletRequest request, @RequestParam String email,
+    @RequestParam String password, @RequestParam String name, @RequestParam String phoneNumber) {
         // Check if person exists
         Person person = personService.getPersonByName(name);
         if (person != null && person.getPhoneNumber().equals(phoneNumber)) {
             // Person exists
             try {
+                // Check if that person doesn't already have an Account
+                if (accountService.getAccountByPersonID(person.getPersonID()) != null) {
+                    // Already has an Account
+                    return ResponseEntity.badRequest().body("An account is already associated with this person");
+                }
+                // Person exists and doesn't have an Account
                 accountService.createAccount(email, password, person);
                 return ResponseEntity.ok().build();
             } catch (Exception e) {
@@ -58,9 +74,18 @@ public class AccountController {
         }
     }
 
+    /**
+     * Update an existing Account
+     * @param request
+     * @param id
+     * @param email
+     * @param password
+     * @return
+     * @author Lin Wei Li
+     */
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateAccount(HttpServletRequest request, @PathVariable(value = "id") long id,
-    @RequestBody String email, @RequestBody String password) {
+    @RequestParam String email, @RequestParam String password) {
         // Check authorization (own account or staff)
         try {
             long accountId = AuthenticationUtility.getAccountId(request);
@@ -80,6 +105,13 @@ public class AccountController {
         }
     }
 
+    /**
+     * Delete an existing Account
+     * @param request
+     * @param id
+     * @return
+     * @author Lin Wei Li
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAccount(HttpServletRequest request, @PathVariable(value = "id") long id) {
         // Check authorization (own account or staff)
@@ -101,6 +133,13 @@ public class AccountController {
         }
     }
 
+    /**
+     * Get an existing Account
+     * @param request
+     * @param id
+     * @return
+     * @author Lin Wei Li
+     */
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getAccount(HttpServletRequest request, @PathVariable(value = "id") long id) {
         // Check authorization (own account or staff)
@@ -122,6 +161,12 @@ public class AccountController {
         }
     }
 
+    /**
+     * Get all existing Accounts
+     * @param request
+     * @return
+     * @author Lin Wei Li
+     */
     @GetMapping("/get")
     public ResponseEntity<?> getAllAccounts(HttpServletRequest request) {
         // Check authorization (staff)

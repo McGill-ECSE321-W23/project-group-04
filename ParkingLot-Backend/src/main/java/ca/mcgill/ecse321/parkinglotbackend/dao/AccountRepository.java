@@ -11,4 +11,6 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     Account findAccountByEmail(String email);
     boolean existsAccountByEmailAndPassword(String email, String password);
     Account findAccountByEmailAndPassword(String email, String password);
+    boolean existsAccountByPerson_PersonID(Long personID);
+    Account findAccountByPerson_PersonID(Long personID);
 }
