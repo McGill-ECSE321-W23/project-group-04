@@ -1,7 +1,7 @@
 package ca.mcgill.ecse321.parkinglotbackend.dto;
 
 public class StaffAccountDto extends AccountDto {
-    private float salary;
+    private Float salary;
 
     public StaffAccountDto() {}
 
@@ -10,12 +10,21 @@ public class StaffAccountDto extends AccountDto {
         this.salary = salary;
     }
 
-    public float getSalary() {
+    public Float getSalary() {
         return this.salary;
     }
 
     public void setSalary(float salary) {
         this.salary = salary;
+    }
+
+    public static boolean isValid(StaffAccountDto staffAccountDto) {
+        return staffAccountDto != null &&
+                staffAccountDto.getSalary() != null &&
+                staffAccountDto.getAccountID() != null &&
+                staffAccountDto.getEmail() != null &&
+                staffAccountDto.getPassword() != null &&
+                PersonDto.isValid(staffAccountDto.getPerson());
     }
 
 }

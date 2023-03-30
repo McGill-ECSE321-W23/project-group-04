@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,14 +29,13 @@ public class MonthlyReservationService {
         return monthlyReservationRepository.save(monthlyReservation);
     }
 
-    public MonthlyReservation editReservation(Long reservationId, MonthlyReservation monthlyReservation) {
-        monthlyReservation.setMonthlyReservationID(reservationId);
-        return monthlyReservationRepository.save(monthlyReservation);
-    }
-
     public void deleteReservation(Long reservationId) {
         MonthlyReservation reservation = monthlyReservationRepository.getMonthlyReservationByMonthlyReservationID(reservationId);
         monthlyReservationRepository.delete(reservation);
+    }
+
+    public Optional<MonthlyReservation> getReservationById(Long reservationId) {
+        return monthlyReservationRepository.findById(reservationId);
     }
 
     public List<MonthlyReservation> getCustomerReservations(Long personId) {
@@ -57,10 +57,6 @@ public class MonthlyReservationService {
     private boolean isEnough(float amount) throws Exception {
         float monthlyPrice = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(1).getMonthlyFee();
         return amount >= monthlyPrice;
-    }
-
-    private boolean isTaken() {
-        return true;
     }
 
     // Convert Iterable to List

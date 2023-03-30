@@ -23,12 +23,22 @@ public class StaffAccountService {
         return staffAccountRepository.save(staffAccount);
     }
 
-    public StaffAccount createStaffAccount(String email, String password, Person person, Float salary) {
-        StaffAccount staffAccount = new StaffAccount(email, password, person, salary);
-        return staffAccountRepository.save(staffAccount);
+    public StaffAccount createStaffAccount(String name, String phone, String password, String email, Float salary) {
+        if (name != null && phone != null && password != null && email != null && salary != null) {
+            Person person = new Person();
+            person.setPhoneNumber(phone);
+            person.setName(name);
+            StaffAccount staffAccount = new StaffAccount(email, password, person, salary);
+            return staffAccountRepository.save(staffAccount);
+        }
+        throw new IllegalArgumentException("field is null");
     }
 
-    public Integer deleteStaffAccount(long accountId) {
-        return staffAccountRepository.deleteStaffAccountByAccountID(accountId);
+    public Integer deleteStaffAccount(Long accountId) {
+        if (accountId != null) {
+
+            return staffAccountRepository.deleteStaffAccountByAccountID(accountId);
+        }
+        throw new IllegalArgumentException("id is null");
     }
 }

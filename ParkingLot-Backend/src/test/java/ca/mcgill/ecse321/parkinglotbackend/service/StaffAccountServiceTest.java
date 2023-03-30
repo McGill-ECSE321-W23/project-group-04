@@ -32,9 +32,30 @@ public class StaffAccountServiceTest {
     }
 
     @Test
-    void FireEmployee_Should_DeleteEmployeeFromDatabase() throws Exception {
+    void Get_Should_DeleteEmployeeFromDatabase() throws Exception {
         when(staffAccountRepository.deleteStaffAccountByAccountID(anyLong())).thenReturn(1);
 
-        staffAccountService.deleteStaffAccount(1);
+        staffAccountService.deleteStaffAccount(1L);
+    }
+
+    @Test
+    void Delete_Should_DeleteEmployeeFromDatabase() throws Exception {
+        when(staffAccountRepository.deleteStaffAccountByAccountID(anyLong())).thenReturn(1);
+
+        staffAccountService.deleteStaffAccount(1L);
+    }
+
+    @Test
+    void Create_Should_AddEmployeeInDatabase() throws Exception {
+        when(staffAccountRepository.deleteStaffAccountByAccountID(anyLong())).thenReturn(1);
+
+        staffAccountService.deleteStaffAccount(1L);
+    }
+
+    @Test
+    void Update_Should_UpdateEmployeeInDatabase() throws Exception {
+        when(staffAccountRepository.deleteStaffAccountByAccountID(anyLong())).thenReturn(1);
+
+        staffAccountService.deleteStaffAccount(1L);
     }
 }

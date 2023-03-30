@@ -39,4 +39,11 @@ public class MonthlyReservationDto {
     public void setPersonDto(Long personDto) {
         this.personId = personDto;
     }
+
+    public static boolean isValid(MonthlyReservationDto monthlyReservationDto) {
+        return monthlyReservationDto != null &&
+                monthlyReservationDto.getPersonId() != null &&
+                monthlyReservationDto.getStartDate() != null &&
+                monthlyReservationDto.getEndDate() != null;
+    }
 }

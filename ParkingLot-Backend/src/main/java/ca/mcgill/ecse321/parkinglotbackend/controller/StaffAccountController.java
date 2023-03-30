@@ -32,6 +32,19 @@ public class StaffAccountController {
     @Autowired
     ParkingLotSoftwareSystemService parkingLotSoftwareSystemService;
 
+    @GetMapping("/{employeeId}")
+    ResponseEntity<?> getEmployee(HttpServletRequest request, @PathVariable Long employeeId) {
+        try {
+            if (AuthenticationUtility.isManager(request) && employeeId != null) {
+                staffAccountService.getStaffAccount(employeeId);
+            }
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().build();
+
+        }
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/schedule")
     ResponseEntity<?> getSchedule(HttpServletRequest request, @RequestParam Long staffAccountId) {
         try {
@@ -47,9 +60,9 @@ public class StaffAccountController {
     }
 
     @PutMapping("/modifySchedule")
-    ResponseEntity<?> modifySchedule(HttpServletRequest request, @RequestParam long employeeId, @RequestBody List<TimeSlotDto> schedule) {
+    ResponseEntity<?> modifySchedule(HttpServletRequest request, @RequestParam Long employeeId, @RequestBody List<TimeSlotDto> schedule) {
         try {
-            if (AuthenticationUtility.isManager(request)) {
+            if (AuthenticationUtility.isManager(request) && employeeId != null) {
                 List<TimeSlot> oldSchedule = timeSlotService.getTimeSlotsByStaffAccountID(employeeId);
 
                 for (TimeSlot timeSlot: oldSchedule) {
@@ -73,8 +86,7 @@ public class StaffAccountController {
         return ResponseEntity.ok().build();
     }
 
-
-    @PutMapping("/resign")
+    @PutMapping("/fire")
     ResponseEntity<?> fireEmployee(HttpServletRequest request, @RequestParam Long employeeId) throws Exception {
         try {
             if (AuthenticationUtility.isStaff(request)) {
@@ -89,14 +101,15 @@ public class StaffAccountController {
     }
 
     @PostMapping("/hire")
-    ResponseEntity<?> hireEmployee(HttpServletRequest request, @RequestBody StaffAccountDto staffAccountDto) {
+    ResponseEntity<?> hireEmployee(HttpServletRequest request, @RequestParam String name, @RequestParam String phone, @RequestParam String password, @RequestParam String email, @RequestParam float salary) {
         try {
             if (AuthenticationUtility.isManager(request)) {
                 staffAccountService.createStaffAccount(
-                        staffAccountDto.getPerson().getName(),
-                        staffAccountDto.getPassword(),
-                        DtoUtility.convertToEntity(staffAccountDto.getPerson()),
-                        staffAccountDto.getSalary()
+                        name,
+                        phone,
+                        password,
+                        email,
+                        salary
                 );
             } else {
                 return ResponseEntity.badRequest().build();
@@ -107,10 +120,10 @@ public class StaffAccountController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/manage")
-    ResponseEntity<?> manageEmployee(HttpServletRequest request, @RequestBody StaffAccountDto staffAccountDto) {
+    @PutMapping("/update")
+    ResponseEntity<?> updateEmployee(HttpServletRequest request, @RequestBody StaffAccountDto staffAccountDto) {
         try {
-            if (AuthenticationUtility.isManager(request)) {
+            if (AuthenticationUtility.isManager(request) && StaffAccountDto.isValid(staffAccountDto)) {
                 staffAccountService.updateStaffAccount(
                         staffAccountDto.getAccountID(),
                         staffAccountDto.getEmail(),
@@ -126,5 +139,4 @@ public class StaffAccountController {
         }
         return ResponseEntity.ok().build();
     }
-
 }
