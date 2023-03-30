@@ -54,7 +54,7 @@ public class CarRestController {
         return service.findCarByOwnerID(id).stream().map(c -> convertToDto(c)).collect(Collectors.toList());
     }
 
-    @PostMapping(value = {"/register/{licensePLate}", "/register/{licensePlate}/"})
+    @PostMapping(value = {"/register/{licensePlate}", "/register/{licensePlate}/"})
     public CarDto registerCar(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person) throws Exception{
        Person p = personService.getPersonByID(person.getPersonID());
        Car c = service.registerCar(p, licensePlate, make, model);
