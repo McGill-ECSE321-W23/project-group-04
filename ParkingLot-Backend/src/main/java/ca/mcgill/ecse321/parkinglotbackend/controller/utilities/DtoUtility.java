@@ -1,10 +1,17 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller.utilities;
 
 import ca.mcgill.ecse321.parkinglotbackend.dto.AccountDto;
+import ca.mcgill.ecse321.parkinglotbackend.dto.MonthlyReservationDto;
 import ca.mcgill.ecse321.parkinglotbackend.dto.PersonDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.Account;
+import ca.mcgill.ecse321.parkinglotbackend.model.MonthlyReservation;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 
+/**
+ * Helper methods for converting Person and Account
+ * between DTOs and Entities
+ * @author Lin Wei Li
+ */
 public class DtoUtility {
     
     // Person
@@ -41,4 +48,11 @@ public class DtoUtility {
         return account;
     }
 
+    public static MonthlyReservationDto convertToDto(MonthlyReservation monthlyReservation) {
+        return new MonthlyReservationDto(monthlyReservation.getStartDate(), monthlyReservation.getEndDate(), monthlyReservation.getPerson().getPersonID());
+    }
+
+    public static MonthlyReservation convertToEntity(MonthlyReservationDto monthlyReservation, Person person) {
+        return new MonthlyReservation(monthlyReservation.getStartDate(), monthlyReservation.getEndDate(), person);
+    }
 }

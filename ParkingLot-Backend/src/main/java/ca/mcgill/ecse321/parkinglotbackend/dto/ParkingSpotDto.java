@@ -1,95 +1,72 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
+
 package ca.mcgill.ecse321.parkinglotbackend.dto;
 
-import ca.mcgill.ecse321.parkinglotbackend.dto.MonthlyReservationDto;
-
-/**
- * Parking Spot Data Transfer Object
- * @author faizachowdhury
- */
-public class ParkingSpotDto {
-
-private long parkingSpotID;
-private int floor;
-private int number;
-
-// parking spot association
-private  MonthlyReservationDto monthlyReservationDto;
-
-
-// constructors
-public ParkingSpotDto(long aParkingSpotID, int aFloor, int aNumber)
+public class ParkingSpotDto
 {
-  parkingSpotID = aParkingSpotID;
-  floor = aFloor;
-  number = aNumber;
-}
-public ParkingSpotDto(int aFloor, int aNumber)
-{
-  floor = aFloor;
-  number = aNumber;
-}
-public ParkingSpotDto() {}
+  //ParkingSpot Attributes
+  private Long parkingSpotID;
+  private Integer floor;
+  private Integer number;
+  private MonthlyReservationDto monthlyReservationDto;
 
-  // setters
-public boolean setParkingSpotID(long aParkingSpotID)
-{
-  boolean wasSet = false;
-  parkingSpotID = aParkingSpotID;
-  wasSet = true;
-  return wasSet;
-}
+  public ParkingSpotDto(long aParkingSpotID, int aFloor, int aNumber)
+  {
+    parkingSpotID = aParkingSpotID;
+    floor = aFloor;
+    number = aNumber;
+  }
 
-public boolean setFloor(int aFloor)
-{
-  boolean wasSet = false;
-  floor = aFloor;
-  wasSet = true;
-  return wasSet;
-}
+  public void setParkingSpotID(long aParkingSpotID)
+  {
+    parkingSpotID = aParkingSpotID;
+  }
 
-public boolean setNumber(int aNumber)
-{
-  boolean wasSet = false;
-  number = aNumber;
-  wasSet = true;
-  return wasSet;
-}
+  public void setFloor(int aFloor)
+  {
+    floor = aFloor;
+  }
 
-// getters
-public long getParkingSpotID()
-{
-  return parkingSpotID;
-}
+  public void setNumber(int aNumber)
+  {
+    number = aNumber;
+  }
 
-public int getFloor()
-{
-  return floor;
-}
+  public Long getParkingSpotID()
+  {
+    return parkingSpotID;
+  }
 
-public int getNumber()
-{
-  return number;
-}
+  public Integer getFloor()
+  {
+    return floor;
+  }
 
+  public Integer getNumber()
+  {
+    return number;
+  }
 
-public MonthlyReservationDto getMonthlyReservation()
-{
-  return monthlyReservationDto;
-}
+  public MonthlyReservationDto getMonthlyReservationDto()
+  {
+    return monthlyReservationDto;
+  }
 
-public boolean hasMonthlyReservation()
-{
-  boolean has = monthlyReservationDto != null;
-  return has;
-}
+  public boolean hasMonthlyReservation()
+  {
+    return monthlyReservationDto != null;
+  }
+  public void setMonthlyReservation(MonthlyReservationDto aNewMonthlyReservation)
+  {
+    monthlyReservationDto = aNewMonthlyReservation;
+  }
 
-public boolean setMonthlyReservation(MonthlyReservationDto aNewMonthlyReservationDto)
-{
-  boolean wasSet = false;
-  monthlyReservationDto = aNewMonthlyReservationDto;
-  wasSet = true;
-  return wasSet;
-}
-
-
+  public static boolean isValid(ParkingSpotDto parkingSpotDto) {
+    return parkingSpotDto != null &&
+            parkingSpotDto.getParkingSpotID() != null &&
+            parkingSpotDto.getFloor() != null &&
+            parkingSpotDto.number != null &&
+            MonthlyReservationDto.isValid(parkingSpotDto.getMonthlyReservationDto());
+  }
 }

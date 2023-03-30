@@ -5,4 +5,6 @@ import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 
 public interface ParkingLotSoftwareSystemRepository extends CrudRepository<ParkingLotSoftwareSystem, Long>{
 	ParkingLotSoftwareSystem findParkingLotSoftwareSystemByParkingLotSoftwareSystemID(Long parkingLotSoftwareSystemID);
+
+	ParkingLotSoftwareSystem getParkingLotSoftwareSystemByParkingLotSoftwareSystemIDNotNull();
 }

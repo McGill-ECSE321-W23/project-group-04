@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.parkinglotbackend.dto;
 public class PersonDto {
     
     // Attributes
-    private long personID;
+    private Long personID;
     private String phoneNumber;
     private String name;
 
@@ -18,7 +18,7 @@ public class PersonDto {
     }
 
     // Getters and Setters
-    public long getPersonID() {
+    public Long getPersonID() {
         return personID;
     }
 
@@ -42,4 +42,10 @@ public class PersonDto {
         this.name = name;
     }
 
+    public static boolean isValid(PersonDto personDto) {
+        return personDto != null &&
+            personDto.getPersonID() != null &&
+            personDto.getName() != null &&
+            personDto.getPhoneNumber() != null;
+    }
 }
