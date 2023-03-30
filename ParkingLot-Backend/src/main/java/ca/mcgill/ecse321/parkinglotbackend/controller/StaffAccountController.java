@@ -35,28 +35,28 @@ public class StaffAccountController {
     @GetMapping("/{employeeId}")
     ResponseEntity<?> getEmployee(HttpServletRequest request, @PathVariable Long employeeId) {
         try {
-            if (AuthenticationUtility.isManager(request) && employeeId != null) {
-                staffAccountService.getStaffAccount(employeeId);
+            if ((AuthenticationUtility.isManager(request) || (AuthenticationUtility.isStaff(request) && AuthenticationUtility.getAccountId(request) == employeeId)) && employeeId != null) {
+                return ResponseEntity.ok().body(DtoUtility.convertToDto(staffAccountService.getStaffAccount(employeeId)));  //TODO
+            } else {
+                return ResponseEntity.badRequest().body("Unauthorized");
             }
         } catch (Exception ex) {
             return ResponseEntity.internalServerError().build();
-
         }
-        return ResponseEntity.ok().build();
+        
     }
 
     @GetMapping("/schedule")
     ResponseEntity<?> getSchedule(HttpServletRequest request, @RequestParam Long staffAccountId) {
         try {
-            if (AuthenticationUtility.isStaff(request) && AuthenticationUtility.getAccountId(request) == staffAccountId) {
-                timeSlotService.getTimeSlotsByStaffAccountID(staffAccountId);
+            if (AuthenticationUtility.isManager(request) || (AuthenticationUtility.isStaff(request) && AuthenticationUtility.getAccountId(request) == staffAccountId)) {
+                return ResponseEntity.ok().body(timeSlotService.getTimeSlotsByStaffAccountID(staffAccountId));  //TODO
             } else {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception ex) {
             return ResponseEntity.internalServerError().build();
         }
-        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/modifySchedule")
@@ -71,11 +71,11 @@ public class StaffAccountController {
 
                 for (TimeSlotDto timeSlotDto: schedule) {
                     timeSlotService.createTimeSlot(
-                            timeSlotDto.getDayOfTheWeek(),
-                            timeSlotDto.getStartTime(),
-                            timeSlotDto.getEndTime(),
-                            parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(1),
-                            staffAccountService.getStaffAccount(employeeId)
+                        timeSlotDto.getDayOfTheWeek(),
+                        timeSlotDto.getStartTime(),
+                        timeSlotDto.getEndTime(),
+                        null,
+                        staffAccountService.getStaffAccount(employeeId)
                     );
                 }
             }
@@ -89,7 +89,7 @@ public class StaffAccountController {
     @PutMapping("/fire")
     ResponseEntity<?> fireEmployee(HttpServletRequest request, @RequestParam Long employeeId) throws Exception {
         try {
-            if (AuthenticationUtility.isStaff(request)) {
+            if (AuthenticationUtility.isManager(request)) {
                 staffAccountService.deleteStaffAccount(employeeId);
             } else {
                 return ResponseEntity.badRequest().build();
