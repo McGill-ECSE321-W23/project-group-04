@@ -64,6 +64,21 @@ public class ParkingLotSoftwareSystemService {
     }
 
     /**
+     * Get first parking lot software system in database
+     *
+     * @return the parking lot software system
+     * @throws Exception if no system with this id exists
+     */
+    @Transactional
+    public ParkingLotSoftwareSystem getParkingLotSoftwareSystem() throws Exception {
+        ParkingLotSoftwareSystem system = parkingLotSoftwareSystemRepository.getParkingLotSoftwareSystemByParkingLotSoftwareSystemIDNotNull();
+        if (system == null) {
+            throw new Exception("No system with this id exists!");
+        }
+        return system;
+    }
+
+    /**
      * Update a parking lot software system
      * 
      * @param parkingLotSoftwareSystemID - id of the system
