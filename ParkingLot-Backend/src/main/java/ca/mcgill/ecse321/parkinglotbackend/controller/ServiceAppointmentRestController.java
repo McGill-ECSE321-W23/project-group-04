@@ -163,7 +163,4 @@ public class ServiceAppointmentRestController {
         }
         return null;
     }
-
-
-
 }

@@ -132,7 +132,7 @@ public class AccountService {
             throw new Exception("An account with this email already exists!");
         }
 
-        // Attemp to update account
+        // Attempt to update account
         Account account = accountRepository.findAccountByAccountID(id);
         if (account == null) {
             throw new Exception("No account with this id exists!");

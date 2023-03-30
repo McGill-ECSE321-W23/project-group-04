@@ -1,8 +1,5 @@
 package ca.mcgill.ecse321.parkinglotbackend.dto;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * This class implements the data transfer object class for OfferedService.
  *

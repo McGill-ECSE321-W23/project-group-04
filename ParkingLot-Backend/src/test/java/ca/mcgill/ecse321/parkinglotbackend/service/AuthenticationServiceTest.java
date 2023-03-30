@@ -45,8 +45,6 @@ public class AuthenticationServiceTest {
     private static final Person PERSON = new Person(1, "5141231234", "My Name");
 
     // Test data
-    // private static final String INVALID_MANAGER_EMAIL = "FAKEmanager@pls.com";
-    // private static final String INVALID_STAFF_EMAIL = "FAKEstaff01@pls.ca";
     private static final String INVALID_ACCOUNT_EMAIL = "FAKEjohn@gmail.com";
     private static final String INVALID_PASSWORD = "FAKEpassword";
 

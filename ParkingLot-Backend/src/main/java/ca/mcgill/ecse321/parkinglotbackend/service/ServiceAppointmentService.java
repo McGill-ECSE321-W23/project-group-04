@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.mcgill.ecse321.parkinglotbackend.dao.CarRepository;
-import ca.mcgill.ecse321.parkinglotbackend.dao.GarageRepository;
-import ca.mcgill.ecse321.parkinglotbackend.dao.OfferedServiceRepository;
 import ca.mcgill.ecse321.parkinglotbackend.dao.ServiceAppointmentRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
 import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
