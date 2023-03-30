@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.parkinglotbackend.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.hibernate.boot.model.relational.Sequence.Name;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.service.annotation.DeleteExchange;
 
 import ca.mcgill.ecse321.parkinglotbackend.dto.CarDto;
 import ca.mcgill.ecse321.parkinglotbackend.dto.PersonDto;

@@ -29,7 +29,6 @@ import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment.AppointmentS
 import ca.mcgill.ecse321.parkinglotbackend.service.CarService;
 import ca.mcgill.ecse321.parkinglotbackend.service.GarageService;
 import ca.mcgill.ecse321.parkinglotbackend.service.ServiceAppointmentService;
-import net.bytebuddy.implementation.bytecode.constant.NullConstant;
 import ca.mcgill.ecse321.parkinglotbackend.service.OfferedServiceService;
 
 @CrossOrigin(origins = "*")
@@ -80,7 +79,6 @@ public class ServiceAppointmentRestController {
     @PutMapping(value = {"/update/{id}", "/update/{id}/"})
     public ServiceAppointmentDto updateAppointment(@PathVariable("id") Long id, LocalDateTime startTime, AppointmentStatus status, GarageDto garage, OfferedServiceDto offeredService, CarDto car) throws Exception{
         ServiceAppointment appointment = service.updateAppointment(id, startTime, status, convertToDomainObject(garage), convertToDomainObject(offeredService),convertToDomainObject(car));
-        
         updateAppointment(id, startTime, status, garage, offeredService, car);
         return convertToDto(appointment);
     }
@@ -180,7 +178,4 @@ public class ServiceAppointmentRestController {
         }
         return null;
     }
-
-
-
 }
