@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.parkinglotbackend.dao.CarRepository;
+import ca.mcgill.ecse321.parkinglotbackend.dao.PersonRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 
