@@ -35,6 +35,11 @@ public class ParkingSpot
     floor = aFloor;
     number = aNumber;
   }
+  public ParkingSpot( int aFloor, int aNumber)
+  {
+    floor = aFloor;
+    number = aNumber;
+  }
 
   public ParkingSpot() {}
 

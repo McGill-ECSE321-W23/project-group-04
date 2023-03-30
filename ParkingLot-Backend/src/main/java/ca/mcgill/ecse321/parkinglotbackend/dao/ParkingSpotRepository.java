@@ -6,4 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ParkingSpotRepository extends CrudRepository<ParkingSpot, String> {
     ParkingSpot findParkingSpotByParkingSpotID(Long parkingSpotID);
+
+    ParkingSpot findParkingSpotByMonthlyReservation_MonthlyReservationID(Long monthlyReservationId);
 }

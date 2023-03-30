@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.parkinglotbackend.dto;
 public class AccountDto {
     
     // Attributes
-    private long accountID;
+    private Long accountID;
     private String email;
     private String password;
     private PersonDto person;
@@ -20,7 +20,7 @@ public class AccountDto {
     }
 
     // Getters and Setters
-    public long getAccountID() {
+    public Long getAccountID() {
         return accountID;
     }
 
