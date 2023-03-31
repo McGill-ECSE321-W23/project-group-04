@@ -38,7 +38,7 @@ public class GarageRestController {
         try {
             // If the user is the manager
             if (AuthenticationUtility.isManager(request)) {
-                return ResponseEntity.ok(convertToDto(garageService.deleteGarageService(garageNumber)));
+                return ResponseEntity.ok(convertToDto(garageService.createGarageService(garageNumber)));
             }
 
             // If the user is not the manager
