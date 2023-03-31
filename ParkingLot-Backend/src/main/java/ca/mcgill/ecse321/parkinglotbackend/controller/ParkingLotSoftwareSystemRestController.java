@@ -30,10 +30,10 @@ public class ParkingLotSoftwareSystemRestController {
     private ParkingLotSoftwareSystemService parkingLotSoftwareSystemService;
 
     /**
-     * Get a system by its id
-     * @param request
-     * @param parkingLotSoftwareSystemID
-     * @return
+     * @param request - Who is trying to access this method. There is no limitation on who is able to get the system
+     * @param parkingLotSoftwareSystemID ID of the system
+     * @return Error message or the parking lot system
+     * @author Qin Xuan Xu
      */
     @GetMapping("/get/{parkingLotSoftwareSystemID}")
     public ResponseEntity<?> getParkingLotSoftwareSystem(HttpServletRequest request, @PathVariable(value = "parkingLotSoftwareSystemID") long parkingLotSoftwareSystemID) {
@@ -47,16 +47,17 @@ public class ParkingLotSoftwareSystemRestController {
 
     /**
      * Create a new system
-     * @param request
-     * @param monthlyFee
-     * @param feePer15m
-     * @param maxStay
-     * @param numberOfRegularParkingSpots
-     * @param numberOfLargeParkingSpots
-     * @param numberOfMonthlyFloors
-     * @param numberOfMonthlySpotsPerFloor
-     * @param numberOfGarages
-     * @return
+     * @param request - Who is trying to access this method. Only the manager is allowed to do so.
+     * @param monthlyFee Monthly fee of a reservation
+     * @param feePer15m Fee for public parking for 15 min
+     * @param maxStay Maximum stay in a parking spot
+     * @param numberOfRegularParkingSpots Max number of regular parking spots
+     * @param numberOfLargeParkingSpots Max numbe ro flarge parking spots
+     * @param numberOfMonthlyFloors Max number of floors that hold monthly reservations
+     * @param numberOfMonthlySpotsPerFloor Number of parking spots reserved for monthly reservations per floor
+     * @param numberOfGarages Number of garages
+     * @return Error message or the Created system
+     * @author Qin Xuan Xu
      */
     @PostMapping("/create")
     public ResponseEntity<?> createParkingLotSoftwareSystem(HttpServletRequest request, @RequestParam float monthlyFee, @RequestParam float feePer15m, @RequestParam int maxStay, @RequestParam int numberOfRegularParkingSpots, @RequestParam int numberOfLargeParkingSpots, @RequestParam int numberOfMonthlyFloors, @RequestParam int numberOfMonthlySpotsPerFloor, @RequestParam int numberOfGarages) {
@@ -74,17 +75,18 @@ public class ParkingLotSoftwareSystemRestController {
 
     /**
      * Update a system
-     * @param request
-     * @param parkingLotSoftwareSystemID
-     * @param monthlyFee
-     * @param feePer15m
-     * @param maxStay
-     * @param numberOfRegularParkingSpots
-     * @param numberOfLargeParkingSpots
-     * @param numberOfMonthlyFloors
-     * @param numberOfMonthlySpotsPerFloor
-     * @param numberOfGarages
-     * @return
+     * @param request - Who is trying to access this method. Only the manager is allowed to do so.
+     * @param parkingLotSoftwareSystemID ID of system to be updates
+     * @param monthlyFee Updated onthly fee of a reservation
+     * @param feePer15m Updated Fee for public parking for 15 min
+     * @param maxStay Updated Maximum stay in a parking spot
+     * @param numberOfRegularParkingSpots Updated Max number of regular parking spots
+     * @param numberOfLargeParkingSpots Updated Max number of large parking spots
+     * @param numberOfMonthlyFloors Updated Max number of floors that hold monthly reservations
+     * @param numberOfMonthlySpotsPerFloor UpdatedNumber of parking spots reserved for monthly reservations per floor
+     * @param numberOfGarages Updated Number of g arages
+     * @return Error message or the updated system
+     * @author Qin Xuan Xu
      */
     @PutMapping("/update/{parkingLotSoftwareSystemID}")
     public ResponseEntity<?> updateParkingLotSoftwareSystem(HttpServletRequest request, @PathVariable(value = "parkingLotSoftwareSystemID") long parkingLotSoftwareSystemID, @RequestParam float monthlyFee, @RequestParam float feePer15m, @RequestParam int maxStay, @RequestParam int numberOfRegularParkingSpots, @RequestParam int numberOfLargeParkingSpots, @RequestParam int numberOfMonthlyFloors, @RequestParam int numberOfMonthlySpotsPerFloor, @RequestParam int numberOfGarages) {
@@ -102,9 +104,10 @@ public class ParkingLotSoftwareSystemRestController {
 
     /**
      * Delete system (DEPRECATED)
-     * @param request
-     * @param parkingLotSoftwareSystemID
-     * @return
+     * @param request - Who is trying to access this method. Nobody is allowed to do so.
+     * @param parkingLotSoftwareSystemID ID of the system you wish to be deleted
+     * @return Error message
+     * @author Qin Xuan Xu
      */
     @DeleteMapping("/delete/{parkingLotSoftwareSystemID}")
     public ResponseEntity<?> deleteParkingLotSoftwareSystem(HttpServletRequest request, @PathVariable(value = "parkingLotSoftwareSystemID") long parkingLotSoftwareSystemID) {
@@ -116,6 +119,12 @@ public class ParkingLotSoftwareSystemRestController {
         }
     }
 
+    /**
+     * Helper method to convert parking lot system into DTO
+     * @param s Parking lot system to be converted into DTO
+     * @return Parking lot system DTO
+     * @author Qin Xuan Xu
+     */
     private ParkingLotSoftwareSystemDto convertToDto(ParkingLotSoftwareSystem s) {
         if (s == null) {
             throw new IllegalArgumentException("System does not exist");

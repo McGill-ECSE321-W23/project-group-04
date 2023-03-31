@@ -25,6 +25,12 @@ import ca.mcgill.ecse321.parkinglotbackend.dao.PersonRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 
+/**
+ * Testing Car service class
+ * This class followed the template from the tutorials provided:
+ * https://mcgill-ecse321-w23.github.io/#_service_unit_testing_setup_with_mockito
+ * @author anniegouchee
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestCarService {
     

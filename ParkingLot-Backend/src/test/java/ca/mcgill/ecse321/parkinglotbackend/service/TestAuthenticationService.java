@@ -22,6 +22,12 @@ import ca.mcgill.ecse321.parkinglotbackend.model.ManagerAccount;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.StaffAccount;
 
+/**
+ * Testing Authentication service class
+ * This class followed the template from the tutorials provided:
+ * https://mcgill-ecse321-w23.github.io/#_service_unit_testing_setup_with_mockito
+ * @author Lin Wei Li
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestAuthenticationService {
 

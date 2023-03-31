@@ -32,6 +32,14 @@ public class StaffAccountRestController {
     @Autowired
     ParkingLotSoftwareSystemService parkingLotSoftwareSystemService;
 
+    /**
+     * RESTful API for getting the employee account
+     *
+     * @param request - Who is trying to access this method. Only the staff/manager is allowed to get one.
+     * @param employeeId - The unique ID of employee account
+     * @return - Either a message specifying the user is not authorized to perform this, or the employee account if the user is authorized to perform this
+     * @author Edwin
+     */
     @GetMapping("/{employeeId}")
     ResponseEntity<?> getEmployee(HttpServletRequest request, @PathVariable Long employeeId) {
         try {
@@ -46,6 +54,14 @@ public class StaffAccountRestController {
         
     }
 
+    /**
+     * RESTful API for getting the schedule of a staff member
+     *
+     * @param request - Who is trying to access this method. Only the manager/staff is allowed to get one.
+     * @param staffAccountId - The unique ID of staff account
+     * @return - Either a message specifying the user is not authorized to perform this, or the schedule if the user is authorized to perform this
+     * @author Edwin
+     */
     @GetMapping("/schedule")
     ResponseEntity<?> getSchedule(HttpServletRequest request, @RequestParam Long staffAccountId) {
         try {
@@ -59,6 +75,14 @@ public class StaffAccountRestController {
         }
     }
 
+    /**
+     * RESTful API for modifying the schedule of a staff member
+     *
+     * @param request - Who is trying to access this method. Only the manager is allowed to get one.
+     * @param employeeId - The unique ID of staff account whose schedule is being modified
+     * @return - Either a message specifying the user is not authorized to perform this, or the schedule if the user is authorized to perform this
+     * @author Edwin
+     */
     @PutMapping("/modifySchedule")
     ResponseEntity<?> modifySchedule(HttpServletRequest request, @RequestParam Long employeeId, @RequestBody List<TimeSlotDto> schedule) {
         try {
@@ -86,6 +110,14 @@ public class StaffAccountRestController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * RESTful API for firing a staff member
+     *
+     * @param request - Who is trying to access this method. Only the manager is allowed to do so.
+     * @param employeeId  - The unique ID of staff account to be fired
+     * @return - Either a message specifying the user is not authorized to perform this, or the staff account being fired if the user is authorized to perform this
+     * @author Edwin
+     */
     @PutMapping("/fire")
     ResponseEntity<?> fireEmployee(HttpServletRequest request, @RequestParam Long employeeId) throws Exception {
         try {
@@ -100,8 +132,21 @@ public class StaffAccountRestController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * RESTful API for hiring a new staff member
+     *
+     * @param request - Who is trying to access this method. Only the manager is allowed to do so.
+     * @param name - employee name
+     * @param email - employee email
+     * @param password - employee password
+     * @param phone  - employee phone number
+     * @param salary - employee salary
+     * @return - Either a message specifying the user is not authorized to perform this, or the schedule if the user is authorized to perform this
+     * @author Edwin
+     */
     @PostMapping("/hire")
-    ResponseEntity<?> hireEmployee(HttpServletRequest request, @RequestParam String name, @RequestParam String phone, @RequestParam String password, @RequestParam String email, @RequestParam float salary) {
+    ResponseEntity<?> hireEmployee(HttpServletRequest request, @RequestParam String name, @RequestParam String phone,
+                                   @RequestParam String password, @RequestParam String email, @RequestParam float salary) {
         try {
             if (AuthenticationUtility.isManager(request)) {
                 staffAccountService.createStaffAccount(
@@ -120,6 +165,13 @@ public class StaffAccountRestController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * update an employee information
+     * @param request - only the manager can access this method
+     * @param staffAccountDto - the TO of the staff account object
+     * @return  a message specifying the user is not authorized to perform this, otherwise success message
+     * @author Edwin
+     */
     @PutMapping("/update")
     ResponseEntity<?> updateEmployee(HttpServletRequest request, @RequestBody StaffAccountDto staffAccountDto) {
         try {

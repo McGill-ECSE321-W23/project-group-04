@@ -56,8 +56,6 @@ public class PersonService {
 
     /**
      * Get all persons
-     * @param name
-     * @param phoneNumber
      * @return List<Person>
      * @author Lin Wei Li
      */
@@ -68,8 +66,8 @@ public class PersonService {
 
     /**
      * Create a person
-     * @param name
-     * @param phoneNumber
+     * @param name - name of person
+     * @param phoneNumber - phone number of person
      * @return Person
      * @author Lin Wei Li
      */
@@ -95,8 +93,8 @@ public class PersonService {
 
     /**
      * Delete a person
-     * @param personID
-     * @return Person
+     * @param personID - id of person
+     * @return Deleted Person
      * @author Lin Wei Li
      */
     @Transactional
@@ -111,7 +109,7 @@ public class PersonService {
 
     /**
      * Update a person
-     * @param personID
+     * @param personID - person id
      * @param name - new name
      * @param phoneNumber - new phone number
      * @return Person

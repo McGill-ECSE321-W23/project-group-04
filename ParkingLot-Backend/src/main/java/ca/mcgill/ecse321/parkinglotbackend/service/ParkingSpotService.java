@@ -108,8 +108,8 @@ public class ParkingSpotService {
 
     /**
      * removes monthly reservation from spot
-     * @param spotId
-     * @return
+     * @param spotId - parking spot id
+     * @return Monthly Reservation
      * @throws Exception
      */
     public MonthlyReservation unbind(Long spotId) throws Exception {
@@ -122,9 +122,9 @@ public class ParkingSpotService {
 
     /**
      * add monthly reservation to spot
-     * @param spotId
+     * @param spotId - parking spot id
      * @param monthlyReservation
-     * @return
+     * @return Parking Spot
      * @throws Exception
      */
     public ParkingSpot attachReservation(Long spotId, MonthlyReservation monthlyReservation) throws Exception {
@@ -138,6 +138,11 @@ public class ParkingSpotService {
         return parkingSpotRepository.save(parkingSpot);
     }
 
+    /**
+     * get a parking spot by reservation id
+     * @param reservationId - unique reservation id
+     * @return found parking spot
+     */
     public ParkingSpot getParkingSpotByReservationId(Long reservationId) {
         if (reservationId != null) {
             return parkingSpotRepository.findParkingSpotByMonthlyReservation_MonthlyReservationID(reservationId);

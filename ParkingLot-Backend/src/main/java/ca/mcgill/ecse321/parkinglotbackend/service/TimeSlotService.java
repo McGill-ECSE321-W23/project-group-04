@@ -33,6 +33,7 @@ public class TimeSlotService {
      * @param staffAccount - staff account
      * @return the created time slot
      * @throws Exception if any of the values are invalid
+     * @author Qin Xuan Xu
      */
     @Transactional
     public TimeSlot createTimeSlot(DayOfWeek dayOfTheWeek, LocalTime startTime, LocalTime endTime, ParkingLotSoftwareSystem parkingLotSoftwareSystem, StaffAccount staffAccount) throws Exception {
@@ -71,6 +72,7 @@ public class TimeSlotService {
      * @param timeSlotID - id of the time slot
      * @return the time slot
      * @throws Exception if no time slot with this id exists
+     * @author Qin Xuan Xu
      */
     @Transactional
     public TimeSlot getTimeSlot(long timeSlotID) throws Exception {
@@ -85,6 +87,7 @@ public class TimeSlotService {
      * Get all time slots
      * 
      * @return list of all time slots
+     * @author Qin Xuan Xu
      */
     @Transactional
     public List<TimeSlot> getAllTimeSlots() {
@@ -97,6 +100,7 @@ public class TimeSlotService {
      * @param accountID - id of the staff account
      * @return list of all time slots with the associated staff id
      * @throws Exception if no time slot with this id exists
+     * @author Qin Xuan Xu
      */
     @Transactional
     public List<TimeSlot> getTimeSlotsByStaffAccountID(long accountID) throws Exception {
@@ -111,6 +115,7 @@ public class TimeSlotService {
      * Get all open hours
      * 
      * @return list of all time slots with null staff account
+     * @author Qin Xuan Xu
      */
     @Transactional
     public List<TimeSlot> getAllOpenHours() {
@@ -126,6 +131,7 @@ public class TimeSlotService {
      * @param endTime - end time
      * @return the updated time slot
      * @throws Exception if any of the values are invalid
+     * @author Qin Xuan Xu
      */
     @Transactional
     public TimeSlot updateTimeSlot(long timeSlotID, DayOfWeek dayOfTheWeek, LocalTime startTime, LocalTime endTime) throws Exception {
@@ -162,6 +168,7 @@ public class TimeSlotService {
      * @param timeSlotID - id of the time slot
      * @return the deleted time slot
      * @throws Exception if no time slot with this id exists
+     * @author Qin Xuan Xu
      */
     @Transactional
     public TimeSlot deleteTimeSlot(long timeSlotID) throws Exception {
@@ -173,7 +180,12 @@ public class TimeSlotService {
         return timeSlot;
     }
 
-    // Convert Iterable to List
+    /**
+     * helper method to convert to list of objects
+     * @param iterable
+     * @param <T>
+     * @return list of objects
+     */
     private <T> List<T> toList(Iterable<T> iterable) {
         List<T> resultList = new ArrayList<T>();
         for (T t : iterable) {

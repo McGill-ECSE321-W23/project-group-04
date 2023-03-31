@@ -29,6 +29,14 @@ public class ManagerAccountRestController {
     @Autowired
     TimeSlotService timeSlotService;
 
+    /**
+     * RESTful API for getting the manager account
+     *
+     * @param request - Who is trying to access this method. Only the manager is allowed to get one.
+     * @param StaffAccountId - The unique ID of manager account
+     * @return - Either a message specifying the user is not authorized to perform this, or the manager account if the user is authorized to perform this
+     * @author Edwin
+     */
     @GetMapping("/manager")
     ResponseEntity<?> getManager(HttpServletRequest request, @RequestParam Long StaffAccountId) {
         try {

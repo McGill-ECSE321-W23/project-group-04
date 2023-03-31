@@ -54,15 +54,14 @@ public class ServiceAppointmentRestController {
 
     /**
      * RESTful API that gets the list of appointments for a given car
-     * @param licensePlate License plate of the car
+     * @param id ID of the car
      * @return List of service appointments associated to the given car
      * @throws Exception No car associated with the license plate
      * @author anniegouchee
      */
-    @GetMapping(value = {"/get/{licensePlate}", "/appointment/{licensePlate}/"})
-    public List<ServiceAppointmentDto> getAppointmentByCarID(@PathVariable("licensePlate") String licensePlate) throws Exception{
-        Car car = carService.getCarByLicensePlate(licensePlate);
-        return service.getAppointmentsByCarID(car.getCarID()).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
+    @GetMapping(value = {"/get/{id}", "/appointment/{id}/"})
+    public List<ServiceAppointmentDto> getAppointmentByCarID(@PathVariable("id") Long id) throws Exception{
+        return service.getAppointmentsByCarID(id).stream().map(c -> convertToDto(c)).collect(Collectors.toList());
     }
 
     /**
@@ -74,8 +73,7 @@ public class ServiceAppointmentRestController {
      */
     @GetMapping(value = {"/get/byServiceID/{serviceID}", "/get/byServiceID/{serviceID}/"})
     public List<ServiceAppointmentDto> getAppointmentByServiceID(@PathVariable("serviceID") Long serviceID) throws Exception{
-        OfferedService offeredService = offeredServiceService.getOfferedServiceService(serviceID);
-        return service.getAppointmentsByServiceID(offeredService.getServiceID()).stream().map(a -> convertToDto(a)).collect(Collectors.toList());
+        return service.getAppointmentsByServiceID(serviceID).stream().map(c -> convertToDto(c)).collect(Collectors.toList());
     }
 
     /**

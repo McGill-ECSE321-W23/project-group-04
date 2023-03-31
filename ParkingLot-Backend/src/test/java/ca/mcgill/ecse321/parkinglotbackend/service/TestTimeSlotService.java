@@ -28,6 +28,7 @@ import ca.mcgill.ecse321.parkinglotbackend.model.StaffAccount;
 import ca.mcgill.ecse321.parkinglotbackend.model.TimeSlot;
 
 /**
+ * testing time slot service class
  * @author Qin Xuan Xu
  * using template from tutorials
  */

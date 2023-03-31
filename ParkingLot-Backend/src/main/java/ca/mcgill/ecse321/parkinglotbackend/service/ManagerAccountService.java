@@ -13,9 +13,9 @@ public class ManagerAccountService {
     ManagerAccountRepository managerAccountRepository;
 
     /**
-     * Edwin You Zhou
      * there is only 1 manager per system, so return the only manager found
      * @return ManagerAccount
+     * @author Edwin You Zhou
      */
     public ManagerAccount getManagerAccount() {
         return managerAccountRepository.getManagerAccountByAccountIDIsNotNull();

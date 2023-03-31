@@ -35,10 +35,10 @@ public class PersonRestController {
     
     /**
      * Create a new Person
-     * @param request
-     * @param name
-     * @param phoneNumber
-     * @return
+     * @param request - anyone can access this method
+     * @param name - person name
+     * @param phoneNumber - phone number of the person
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @PostMapping("/create")
@@ -54,11 +54,11 @@ public class PersonRestController {
 
     /**
      * Update an existing Person
-     * @param request
-     * @param id
+     * @param request - only staff of customer accessing their own info can call this method
+     * @param id - person id
      * @param name - new name
      * @param phoneNumber - new phone number
-     * @return
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @PutMapping("/update/{id}")
@@ -120,9 +120,9 @@ public class PersonRestController {
 
     /**
      * Get a Person by their id
-     * @param request
-     * @param id
-     * @return
+     * @param request - only staff of customer accessing their own info can call this method
+     * @param id - person id
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @GetMapping("/get/{id}")
@@ -152,8 +152,8 @@ public class PersonRestController {
 
     /**
      * Get all Persons
-     * @param request
-     * @return
+     * @param request - only staff can access this method
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @GetMapping("/get")
