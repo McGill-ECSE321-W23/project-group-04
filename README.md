@@ -20,6 +20,26 @@ The application will improve the overall experience for customers, employees and
 | Qin Xuan Xu       |[qinxuanx](https://github.com/qinxuanx)          | Software Developer | Computer Engineering       | U2 |
 | Edwin You Zhou    |[edwin-zhou](https://github.com/edwin-zhou)      | Software Developer | Computer Engineering       | U3 |
 
+## Application Installation
+### Prerequisites
+* PostgreSQL version 15.2
+  - username: postgres
+  - password: 123
+* Java 17
+
+### Setup Database
+1. Open command line
+2. Access postgres: `psql -U postgres` and enter password `123`
+3. Create database: `create database parkinglotdb;`
+4. Quit: `\q`
+
+### Build and Start Application on Local Machine
+1. Build grade: `./gradlew build`
+2. Run application:
+  - via Gradle: `./gradlew bootRun`
+  - via an IDE: run the application from `/ParkingLot-Backend/src/main/java/ca/mcgill/ecse321/parkinglotbackend/ParkingLotBackendApplication.java`
+ 3. Application should be started on `localhost:8080`
+
 ## Sprint 1
 [Sprint 1: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Overview)
 
