@@ -34,9 +34,10 @@ public class TimeSlotRestController {
 
     /**
      * Get timeSlot by its id
-     * @param request
-     * @param timeSlotID
-     * @return
+     * @param request - only staff can access this method
+     * @param timeSlotID - unique ID of time slot object
+     * @return error message if encountered
+     * @author Qin Xuan Xu
      */
     @GetMapping("/get/{timeSlotID}")
     public ResponseEntity<?> getTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID) {
@@ -54,8 +55,9 @@ public class TimeSlotRestController {
 
     /**
      * Get all timeSlots
-     * @param request
-     * @return
+     * @param request - only manager can access this method
+     * @return error message if encountered
+     * @author Qin Xuan Xu
      */
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllTimeSlots(HttpServletRequest request) {
@@ -73,9 +75,10 @@ public class TimeSlotRestController {
 
     /**
      * Get all timeSlots of a staff account by accountID
-     * @param request
-     * @param accountID
-     * @return
+     * @param request - only manager can access this method
+     * @param accountID - unique account id
+     * @return error message if encountered
+     * @author Qin Xuan Xu
      */
     @GetMapping("/getAll/{accountID}")
     public ResponseEntity<?> getAllTimeSlotsByAccountID(HttpServletRequest request, @PathVariable(value = "accountID") long accountID) {
@@ -93,8 +96,9 @@ public class TimeSlotRestController {
 
     /**
      * Get all open hours
-     * @param request
-     * @return
+     * @param request - only manager can access this method
+     * @return  error message if encountered
+     * @author Qin Xuan Xu
      */
     @GetMapping("/getOpen")
     public ResponseEntity<?> getAllOpenHours(HttpServletRequest request) {
@@ -112,13 +116,14 @@ public class TimeSlotRestController {
 
     /**
      * Create a timeslot
-     * @param request
-     * @param dayOfTheWeek
-     * @param startTime
-     * @param endTime
-     * @param parkingLotSoftwareSystemID
-     * @param accountID
-     * @return
+     * @param request - only manager can access this method
+     * @param dayOfTheWeek - the day of the week of the timeslot
+     * @param startTime - start of timeslot
+     * @param endTime - end of timeslot
+     * @param parkingLotSoftwareSystemID - system ID
+     * @param accountID - account ID
+     * @return error message if encountered
+     * @author Qin Xuan Xu
      */
     @PostMapping("/create")
     public ResponseEntity<?> createTimeSlot(HttpServletRequest request, @RequestParam DayOfWeek dayOfTheWeek, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime, @RequestParam long parkingLotSoftwareSystemID, @RequestParam long accountID) {
@@ -145,12 +150,13 @@ public class TimeSlotRestController {
 
     /**
      * Update a timeslot
-     * @param request
-     * @param timeSlotID
-     * @param dayOfTheWeek
-     * @param startTime
-     * @param endTime
-     * @return
+     * @param request - only manager can access this method
+     * @param timeSlotID - ID of the timeslot
+     * @param dayOfTheWeek - the day of the week of the timeslot
+     * @param startTime - start of timeslot
+     * @param endTime - end of timeslot
+     * @return error message if encountered
+     * @author Qin Xuan Xu
      */
     @PutMapping("/update/{timeSlotID}")
     public ResponseEntity<?> updateTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID, @RequestParam DayOfWeek dayOfTheWeek, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime) {
@@ -168,9 +174,10 @@ public class TimeSlotRestController {
 
     /**
      * Delete a timeslot
-     * @param request
-     * @param timeSlotID
-     * @return
+     * @param request - only manager can access this method
+     * @param timeSlotID - timeslot ID
+     * @return error message if encountered
+     * @author Qin Xuan Xu
      */
     @DeleteMapping("/delete/{timeSlotID}")
     public ResponseEntity<?> deleteTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID) {
@@ -186,6 +193,12 @@ public class TimeSlotRestController {
         }
     }
 
+    /**
+     * method to convert timeslot object to timeslot TO
+     * @param t time slot obj
+     * @return time slot TO
+     * @author Qin Xuan Xu
+     */
     private TimeSlotDto convertToDto(TimeSlot t) {
         if (t == null) {
             throw new IllegalArgumentException("TimeSlot does not exist");

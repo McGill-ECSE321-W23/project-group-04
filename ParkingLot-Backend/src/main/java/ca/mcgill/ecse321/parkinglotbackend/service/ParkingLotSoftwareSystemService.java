@@ -28,6 +28,7 @@ public class ParkingLotSoftwareSystemService {
      * @param aNumberOfGarages - number of garages
      * @return the created parking lot software system
      * @throws Exception if any of the values are negative
+     * @author Qin Xuan Xu
      */
     @Transactional
     public ParkingLotSoftwareSystem createParkingLotSoftwareSystem(float aMonthlyFee, float aFeePer15m, int aMaxStay, int aNumberOfRegularParkingSpots, int aNumberOfLargeParkingSpots, int aNumberOfMonthlyFloors, int aNumberOfMonthlySpotsPerFloor, int aNumberOfGarages) throws Exception {
@@ -53,6 +54,7 @@ public class ParkingLotSoftwareSystemService {
      * @param parkingLotSoftwareSystemID - id of the system
      * @return the parking lot software system
      * @throws Exception if no system with this id exists
+     * @author Qin Xuan Xu
      */
     @Transactional
     public ParkingLotSoftwareSystem getParkingLotSoftwareSystem(long parkingLotSoftwareSystemID) throws Exception {
@@ -68,6 +70,7 @@ public class ParkingLotSoftwareSystemService {
      *
      * @return the parking lot software system
      * @throws Exception if no system with this id exists
+     * @author Qin Xuan Xu
      */
     @Transactional
     public ParkingLotSoftwareSystem getParkingLotSoftwareSystem() throws Exception {
@@ -92,6 +95,7 @@ public class ParkingLotSoftwareSystemService {
      * @param aNumberOfGarages - number of garages
      * @return the updated parking lot software system
      * @throws Exception if any of the values are negative
+     * @author Qin Xuan Xu
      */
     @Transactional
     public ParkingLotSoftwareSystem updateParkingLotSoftwareSystem(long parkingLotSoftwareSystemID, float aMonthlyFee, float aFeePer15m, int aMaxStay, int aNumberOfRegularParkingSpots, int aNumberOfLargeParkingSpots, int aNumberOfMonthlyFloors, int aNumberOfMonthlySpotsPerFloor, int aNumberOfGarages) throws Exception {
@@ -120,6 +124,7 @@ public class ParkingLotSoftwareSystemService {
      * @param parkingLotSoftwareSystemID - id of the system
      * @return the deleted parking lot software system
      * @throws Exception if no system with this id exists
+     * @author Qin Xuan Xu
      */
     @Transactional
     public ParkingLotSoftwareSystem deleteParkingLotSoftwareSystem(long parkingLotSoftwareSystemID) throws Exception {

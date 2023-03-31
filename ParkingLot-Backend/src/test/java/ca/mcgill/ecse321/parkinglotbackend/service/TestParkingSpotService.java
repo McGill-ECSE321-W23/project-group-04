@@ -25,6 +25,7 @@ import org.mockito.stubbing.Answer;
 
 /**
  * A class to test the Parking Spot Service class
+ * using template from tutorials
  * @author faizachowdhury
  */
 @ExtendWith(MockitoExtension.class)
@@ -120,7 +121,7 @@ public class TestParkingSpotService {
      * @author faizachowdhury
      */
     @Test
-    public void testUpdateParkingSpotNullID() throws Exception {
+    public void testUpdateParkingSpotInvalidID() throws Exception {
         String error = null;
         ParkingSpot parkingSpot = null;
         try {
@@ -228,6 +229,24 @@ public class TestParkingSpotService {
         assertEquals(monthlyReservation, monthlyReservation2);
     }
     /**
+     * Testing getting the monthly reservation of a parking spot
+     * @author faizachowdhury
+     */
+    @Test
+    public void testGetMonthlyReservationIDNull() throws Exception {
+        String error = "";
+        MonthlyReservation monthlyReservation = new MonthlyReservation();
+        MonthlyReservation monthlyReservation2 = null;
+        try {
+            monthlyReservation2 = parkingSpotService.findMonthlyReservation(789);
+        }
+        catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertNull(monthlyReservation2);
+        assertEquals("There is no Parking Spot in the system with this ID.", error);
+    }
+    /**
      * Testing getting the monthly reservation of a parking spot when it is null
      * @author faizachowdhury
      */
@@ -264,6 +283,42 @@ public class TestParkingSpotService {
         assertEquals(parkingSpots2.get(0), parkingSpot1);
         assertEquals(parkingSpots2.get(1), parkingSpot2);
     }
+    @Test
+    public void testAttachReservation() throws Exception {
+        String error = "";
+        MonthlyReservation monthlyReservation = new MonthlyReservation();
+        ParkingSpot parkingSpot = null;
+        MonthlyReservation monthlyReservation1 = null;
+        try {
+            parkingSpot = parkingSpotService.attachReservation(id1,monthlyReservation);
+            monthlyReservation1 = parkingSpotService.findMonthlyReservation(id1);
+        }
+        catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertEquals("", error);
+        assertEquals(monthlyReservation, monthlyReservation1);
+    }
+    @Test
+    public void testAttachReservationAlreadyExists() throws Exception {
+        String error = "";
+        MonthlyReservation monthlyReservation = new MonthlyReservation();
+        MonthlyReservation monthlyReservation2 = new MonthlyReservation();
+        ParkingSpot parkingSpot = null;
+        ParkingSpot parkingSpot2 = null;
+        long invalidID = 789;
+        try {
+            parkingSpot = parkingSpotService.attachReservation(id1,monthlyReservation);
+            parkingSpot2 = parkingSpotService.attachReservation(id1,monthlyReservation2);
+
+        }
+        catch (Exception e) {
+            error = e.getMessage();
+        }
+        assertEquals("Reservation already exists on spot", error);
+        assertNull(parkingSpot2);
+    }
+    
 
 
 }

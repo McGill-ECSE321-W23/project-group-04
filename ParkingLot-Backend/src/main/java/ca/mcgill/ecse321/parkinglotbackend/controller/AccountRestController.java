@@ -35,12 +35,12 @@ public class AccountRestController {
 
     /**
      * Register a new Account
-     * @param request
-     * @param email
-     * @param password
-     * @param name
-     * @param phoneNumber
-     * @return
+     * @param request -anyone can access this method
+     * @param email - email address of the account
+     * @param password - the account password
+     * @param name - the name of the person
+     * @param phoneNumber - the phone number of the person
+     * @return error message is encountered
      * @author Lin Wei Li
      */
     @PostMapping("/register")
@@ -83,11 +83,11 @@ public class AccountRestController {
 
     /**
      * Update an existing Account
-     * @param request
-     * @param id
-     * @param email
-     * @param password
-     * @return
+     * @param request -only staff or customer accessing own account can access this method
+     * @param id - accound id
+     * @param email - account email address
+     * @param password - account password
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @PutMapping("/update/{id}")
@@ -114,9 +114,9 @@ public class AccountRestController {
 
     /**
      * Delete an existing Account
-     * @param request
-     * @param id
-     * @return
+     * @param request -only staff or customer accessing own account can access this method
+     * @param id - account id
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @DeleteMapping("/delete/{id}")
@@ -142,9 +142,9 @@ public class AccountRestController {
 
     /**
      * Get an existing Account
-     * @param request
-     * @param id
-     * @return
+     * @param request - only staff or customer accessing own account can access this method
+     * @param id - account id
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @GetMapping("/get/{id}")
@@ -170,8 +170,8 @@ public class AccountRestController {
 
     /**
      * Get all existing Accounts
-     * @param request
-     * @return
+     * @param request -only staff or customer accessing own account can access this method
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @GetMapping("/get")

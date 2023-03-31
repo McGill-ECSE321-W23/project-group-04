@@ -95,7 +95,7 @@ public class CarRestController {
      * @throws Exception Invalis inputs resulting in the car not being able to be registered successfully
      * @author anniegouchee
      */
-    @PostMapping(value = {"/register/{licensePLate}", "/register/{licensePlate}/"})
+    @PostMapping(value = {"/register", "/register/"})
     public CarDto registerCar(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person) throws Exception{
 
         //Gets the owener of the car

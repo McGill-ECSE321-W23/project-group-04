@@ -25,8 +25,8 @@ public class AuthenticationService {
     
     /**
      * Authenticate an account with email and password
-     * @param email
-     * @param password
+     * @param email - account email
+     * @param password - account password
      * @return Account
      * @author Lin Wei Li
      */

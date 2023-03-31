@@ -20,6 +20,26 @@ The application will improve the overall experience for customers, employees and
 | Qin Xuan Xu       |[qinxuanx](https://github.com/qinxuanx)          | Software Developer | Computer Engineering       | U2 |
 | Edwin You Zhou    |[edwin-zhou](https://github.com/edwin-zhou)      | Software Developer | Computer Engineering       | U3 |
 
+## Application Installation
+### Prerequisites
+* PostgreSQL version 15.2
+  - username: postgres
+  - password: 123
+* Java 17
+
+### Setup Database
+1. Open command line
+2. Access postgres: `psql -U postgres` and enter password `123`
+3. Create database: `create database parkinglotdb;`
+4. Quit: `\q`
+
+### Build and Start Application on Local Machine
+1. Build grade: `./gradlew build`
+2. Run application:
+  - via Gradle: `./gradlew bootRun`
+  - via an IDE: run the application from `/ParkingLot-Backend/src/main/java/ca/mcgill/ecse321/parkinglotbackend/ParkingLotBackendApplication.java`
+ 3. Application should be started on `localhost:8080`
+
 ## Sprint 1
 [Sprint 1: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Overview)
 
@@ -37,11 +57,12 @@ The application will improve the overall experience for customers, employees and
 [Sprint 2: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Sprint-2#overview)
 
 ### Contributions
+## Effort Table
 | Team Member       | Contributions                                   | Hours  |
 | ----------------- | ----------------------------------------------- | ------ |
-| Faiza Chowdhury   |RESTful HTTP Methods, Controller, DTO and Unit Testing for Ticket and Parking Spot|        |
-| Annie Gouchee     |RESTful HTTP Methods, Controller, DTO and Unit Testing for ServiceAppointment and Car|       |
-| Lin Wei Li        |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Persona and Account|      |
-| Estefania Vazquez |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Garage and OfferedService|      |
-| Qin Xuan Xu       |RESTful HTTP Methods, Controller, DTO and Unit Testing for System and TimeSlot|
-| Edwin You Zhou    |RESTful HTTP Methods, Controller, DTO and Unit Testing for StaffAccount, ManagerAccount and MonthlyReservation|      |
+| Faiza Chowdhury   |RESTful HTTP Methods, Controller, DTO and Unit Testing for Ticket and Parking Spot, Wiki, Quality Assurance Plan |      27  |
+| Annie Gouchee     |RESTful HTTP Methods, Controller, DTO and Unit Testing for ServiceAppointment and Car, Wiki, READ.ME, Quality Assurance Plan  |    28   |
+| Lin Wei Li        |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Persona and Account, Wiki, Backlog, Quality Assurance Plan |   32   |
+| Estefania Vazquez |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Garage and OfferedService, Wiki, Backlog, Quality Assurance Plan, Meeting minutes  |   29   |
+| Qin Xuan Xu       |RESTful HTTP Methods, Controller, DTO and Unit Testing for System and TimeSlot, Quality Assurance Plan | 22 |
+| Edwin You Zhou    |RESTful HTTP Methods, Controller, DTO and Unit Testing for StaffAccount, ManagerAccount and MonthlyReservation, Wiki, Test coverage, Quality Assurance Plan  |   24   |

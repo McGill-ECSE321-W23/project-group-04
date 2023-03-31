@@ -3,9 +3,11 @@ package ca.mcgill.ecse321.parkinglotbackend.controller.utilities;
 import ca.mcgill.ecse321.parkinglotbackend.dto.AccountDto;
 import ca.mcgill.ecse321.parkinglotbackend.dto.MonthlyReservationDto;
 import ca.mcgill.ecse321.parkinglotbackend.dto.PersonDto;
+import ca.mcgill.ecse321.parkinglotbackend.dto.StaffAccountDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.Account;
 import ca.mcgill.ecse321.parkinglotbackend.model.MonthlyReservation;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
+import ca.mcgill.ecse321.parkinglotbackend.model.StaffAccount;
 
 /**
  * Helper methods for converting Person and Account
@@ -46,6 +48,16 @@ public class DtoUtility {
         }
         Account account = new Account(accountDto.getAccountID(), accountDto.getEmail(), accountDto.getPassword(), convertToEntity(accountDto.getPerson()));
         return account;
+    }
+
+    public static StaffAccountDto convertToDto(StaffAccount staffAccount) {
+        return new StaffAccountDto(
+                staffAccount.getAccountID(),
+                staffAccount.getEmail(),
+                staffAccount.getPassword(),
+                DtoUtility.convertToDto(staffAccount.getPerson()),
+                staffAccount.getSalary()
+        );
     }
 
     public static MonthlyReservationDto convertToDto(MonthlyReservation monthlyReservation) {

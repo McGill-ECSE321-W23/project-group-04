@@ -23,6 +23,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ca.mcgill.ecse321.parkinglotbackend.dao.PersonRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 
+/**
+ * Testing Person service class
+ * This class followed the template from the tutorials provided:
+ * https://mcgill-ecse321-w23.github.io/#_service_unit_testing_setup_with_mockito
+ * @author Lin Wei Li
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestPersonService {
     

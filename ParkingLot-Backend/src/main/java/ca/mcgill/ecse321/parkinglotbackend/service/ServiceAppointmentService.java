@@ -201,6 +201,7 @@ public class ServiceAppointmentService {
      * @param <T>
      * @param iterable
      * @return List
+     * @author anniegouchee
      */
     private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
