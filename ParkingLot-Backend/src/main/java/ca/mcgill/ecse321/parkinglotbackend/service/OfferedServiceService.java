@@ -114,8 +114,9 @@ public class OfferedServiceService {
         }
 
         // If description already exists
+        String oldDescription = offeredService.getDescription();
         for (OfferedService os : getAllOfferedServiceService()) {
-            if (os.getDescription().equals(description)) {
+            if (!oldDescription.toLowerCase().equals(description.toLowerCase()) && os.getDescription().toLowerCase().equals(description.toLowerCase())) {
                 throw new Exception("Description already exists.");
             }
         }

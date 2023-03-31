@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/monthlyReservation")
-public class MonthlyReservationController {
+public class MonthlyReservationRestController {
 
     @Autowired
     PersonService personService;
@@ -28,6 +28,14 @@ public class MonthlyReservationController {
     @Autowired
     ParkingSpotService parkingSpotService;
 
+    /**
+     * RESTful API for the creation of a reservation
+     *
+     * @param request - Who is trying to access this method. Must be logged in to account to make a reservation
+     * @param monthlyReservationDto - The parameters required for a monthly reservation (start and end date)
+     * @return - Either am error message r the monthly reservation
+     * @author Edwin
+     */
     @PostMapping("/create")
     ResponseEntity<?> createReservation(HttpServletRequest request, @RequestBody MonthlyReservationDto monthlyReservationDto) {
         try {
@@ -45,6 +53,13 @@ public class MonthlyReservationController {
         }
     }
 
+    /**
+     * RESTful API for getting the reservations of a person
+     * @param request  Who is trying to access this method. Must be a staff member to access this information
+     * @param accountId ID of the account we are retrievng the reservations
+     * @return Error message or list of monthly reservations for person
+     * @author Edwin
+     */
     @GetMapping("/{accountId}")
     ResponseEntity<?> getReservationsForPerson(HttpServletRequest request, @PathVariable Long accountId) {
         try {
@@ -59,6 +74,12 @@ public class MonthlyReservationController {
         }
     }
 
+    /**
+     * RESTful API for getting the all reservations
+     * @param request  Who is trying to access this method. Must be a staff member to access this information
+     * @return Error message or list of all monthly reservations
+     * @author Edwin
+     */
     @GetMapping("/allReservations")
     ResponseEntity<?> getAllReservations(HttpServletRequest request) {
         try {
@@ -71,7 +92,12 @@ public class MonthlyReservationController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
+    /**
+     * RESTful API for cancelling a reservations
+     * @param request  Who is trying to access this method. Must be a staff member to perform this task
+     * @return Error message or the cancelled reservation
+     * @author Edwin
+     */
     @PutMapping("/cancel")
     ResponseEntity<?> cancelReservations(HttpServletRequest request, @RequestParam Long reservationId) {
         try {
@@ -86,6 +112,14 @@ public class MonthlyReservationController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * RESTful API for paying for a monthly reservation
+     * @param request  Who is trying to access this method. Must be logged into your account
+     * @param reservationId ID of the reservation to be paid for
+     * @param amount Amount paid
+     * @return Error message or monthly reservation that is paid for
+     * @author Edwin
+     */
     @PutMapping("/pay")
     ResponseEntity<?> pay(HttpServletRequest request, @RequestParam long reservationId, @RequestParam float amount) {
         try {
@@ -99,6 +133,13 @@ public class MonthlyReservationController {
         }
     }
 
+    /**
+     * RESTful API to update the location of a parking spot
+     * @param request Who is trying to access this method. Must be staff account
+     * @param reservationIdToUpdate The ID of the monthly reservation linked to a parking spot that we are trying to update
+     * @param parkingSpotDto Parameters of the new updated parking spot
+     * @return An error messahe or the monthly reservation DTO
+     */
     @PutMapping("/updateLocation")
     ResponseEntity<?> updateParkingLocation(HttpServletRequest request, @RequestParam Long reservationIdToUpdate , @RequestBody ParkingSpotDto parkingSpotDto) {
         try {

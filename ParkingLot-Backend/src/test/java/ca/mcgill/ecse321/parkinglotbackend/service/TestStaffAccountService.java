@@ -16,9 +16,15 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
+/**
+ * Testing Staff Account service class
+ * This class followed the template from the tutorials provided:
+ * https://mcgill-ecse321-w23.github.io/#_service_unit_testing_setup_with_mockito
+ * @author Ed Win
+ */
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class StaffAccountServiceTest {
+public class TestStaffAccountService {
     @InjectMocks
     StaffAccountService staffAccountService;
 

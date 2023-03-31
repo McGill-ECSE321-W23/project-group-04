@@ -23,16 +23,16 @@ import jakarta.servlet.http.HttpSession;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
-public class AuthenticationController {
+public class AuthenticationRestController {
 
     @Autowired
     private AuthenticationService authenticationService;
 
     /**
      * Login to the system
-     * @param request
-     * @param email
-     * @param password
+     * @param request anyone can access this method if not logged in
+     * @param email - account email address
+     * @param password - account password
      * @return Http response
      * @author Lin Wei Li
      */
@@ -78,7 +78,7 @@ public class AuthenticationController {
 
     /**
      * Logout of the system
-     * @param request
+     * @param request - anyone can access this method if logged in
      * @return Http response
      * @author Lin Wei Li
      */
@@ -100,7 +100,7 @@ public class AuthenticationController {
 
     /**
      * Log in as manager for smoke testing
-     * @param request
+     * @param request - anyone can access this method
      * @return Http response
      * @author Lin Wei Li
      */
@@ -119,7 +119,7 @@ public class AuthenticationController {
 
     /**
      * Helper method for smoke testing
-     * @param request
+     * @param request - anyone can access this method if logged in
      * @return
      */
     @GetMapping("/getRole")
@@ -145,8 +145,8 @@ public class AuthenticationController {
 
     /**
      * Add test data for smoke testing
-     * @param request
-     * @return
+     * @param request - anyone can access this method
+     * @return  Http response
      * @author Lin Wei Li
      */
     @GetMapping("/addTestData")

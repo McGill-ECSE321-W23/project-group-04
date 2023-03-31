@@ -26,10 +26,11 @@ import ca.mcgill.ecse321.parkinglotbackend.dao.TicketRepository;
 
 /**
  * A class to test the Ticket Service class
+ * using template from tutorials
  * @author faizachowdhury
  */
 @ExtendWith(MockitoExtension.class)
-public class TicketServiceTest {
+public class TestTicketService {
     @Mock
     private TicketRepository ticketDao;
 

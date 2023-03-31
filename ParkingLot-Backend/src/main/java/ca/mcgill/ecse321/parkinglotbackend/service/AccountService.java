@@ -18,7 +18,7 @@ public class AccountService {
 
     /**
      * Find an account by id
-     * @param id
+     * @param id -account id
      * @return Account
      * @author Lin Wei Li
      */
@@ -32,7 +32,7 @@ public class AccountService {
 
     /**
      * Find an account by person id
-     * @param personID
+     * @param personID -person id
      * @return Account
      * @throws Exception
      * @author Lin Wei Li
@@ -47,7 +47,7 @@ public class AccountService {
 
     /**
      * Find an account by email
-     * @param email
+     * @param email - account email
      * @return Account
      * @author Lin Wei Li
      */
@@ -61,7 +61,7 @@ public class AccountService {
 
     /**
      * Get all accounts
-     * @return List<Account>
+     * @return List<Account> - list of all accounts
      * @author Lin Wei Li
      */
     public List<Account> getAllAccounts() {
@@ -70,9 +70,9 @@ public class AccountService {
 
     /**
      * Create an account
-     * @param email
-     * @param password
-     * @param person
+     * @param email - account email
+     * @param password - account password
+     * @param person -person object
      * @return Account
      * @author Lin Wei Li
      */
@@ -105,7 +105,7 @@ public class AccountService {
 
     /**
      * Delete an account
-     * @param id
+     * @param id - account id
      * @return Account
      * @author Lin Wei Li
      */
@@ -120,15 +120,16 @@ public class AccountService {
 
     /**
      * Update an account
-     * @param id
-     * @param email
-     * @param password
+     * @param id - account id
+     * @param email - account email
+     * @param password - account password
      * @return Account
      * @author Lin Wei Li
      */
     public Account updateAccount(long id, String email, String password) throws Exception {
         // Check for duplicate emails
-        if (accountRepository.existsAccountByEmail(email)) {
+        Account dupeEmailAccount = accountRepository.findAccountByEmail(email);
+        if (dupeEmailAccount != null && dupeEmailAccount.getAccountID() != id) {
             throw new Exception("An account with this email already exists!");
         }
 

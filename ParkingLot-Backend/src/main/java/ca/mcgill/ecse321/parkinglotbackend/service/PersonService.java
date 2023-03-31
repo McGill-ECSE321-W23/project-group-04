@@ -56,8 +56,6 @@ public class PersonService {
 
     /**
      * Get all persons
-     * @param name
-     * @param phoneNumber
      * @return List<Person>
      * @author Lin Wei Li
      */
@@ -68,8 +66,8 @@ public class PersonService {
 
     /**
      * Create a person
-     * @param name
-     * @param phoneNumber
+     * @param name - name of person
+     * @param phoneNumber - phone number of person
      * @return Person
      * @author Lin Wei Li
      */
@@ -95,8 +93,8 @@ public class PersonService {
 
     /**
      * Delete a person
-     * @param personID
-     * @return Person
+     * @param personID - id of person
+     * @return Deleted Person
      * @author Lin Wei Li
      */
     @Transactional
@@ -111,7 +109,7 @@ public class PersonService {
 
     /**
      * Update a person
-     * @param personID
+     * @param personID - person id
      * @param name - new name
      * @param phoneNumber - new phone number
      * @return Person
@@ -121,7 +119,8 @@ public class PersonService {
     @Transactional
     public Person updatePerson(long personID, String name, String phoneNumber) throws Exception {
         // Check for duplicate phone number
-        if (personRepository.existsPersonByPhoneNumber(phoneNumber)) {
+        Person dupePhoneNumberPerson = personRepository.findPersonByPhoneNumber(phoneNumber);
+        if (dupePhoneNumberPerson != null && dupePhoneNumberPerson.getPersonID() != personID) {
             throw new Exception("Phone number already exists!");
         }
 

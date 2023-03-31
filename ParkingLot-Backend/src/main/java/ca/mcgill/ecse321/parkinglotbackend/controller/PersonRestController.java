@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpSession;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/person")
-public class PersonController {
+public class PersonRestController {
 
     @Autowired
     private PersonService personService;
@@ -35,10 +35,10 @@ public class PersonController {
     
     /**
      * Create a new Person
-     * @param request
-     * @param name
-     * @param phoneNumber
-     * @return
+     * @param request - anyone can access this method
+     * @param name - person name
+     * @param phoneNumber - phone number of the person
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @PostMapping("/create")
@@ -54,11 +54,11 @@ public class PersonController {
 
     /**
      * Update an existing Person
-     * @param request
-     * @param id
+     * @param request - only staff of customer accessing their own info can call this method
+     * @param id - person id
      * @param name - new name
      * @param phoneNumber - new phone number
-     * @return
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @PutMapping("/update/{id}")
@@ -66,8 +66,9 @@ public class PersonController {
     @RequestParam String name, @RequestParam String phoneNumber) {
         // Check authorization (own person or staff)
         try {
-            long personID = accountService.getAccountByID(id).getPerson().getPersonID();
-            if (personID != id && !AuthenticationUtility.isStaff(request)) {
+            // long accountID = accountService.getAccountByPersonID(id).getAccountID();    // id if the acc of the person to update
+            if (!AuthenticationUtility.isStaff(request) &&
+                accountService.getAccountByPersonID(id).getAccountID() != AuthenticationUtility.getAccountId(request)) {
                 // Not authorized
                 return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).body("Not authorized");
             }
@@ -120,9 +121,9 @@ public class PersonController {
 
     /**
      * Get a Person by their id
-     * @param request
-     * @param id
-     * @return
+     * @param request - only staff of customer accessing their own info can call this method
+     * @param id - person id
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @GetMapping("/get/{id}")
@@ -152,8 +153,8 @@ public class PersonController {
 
     /**
      * Get all Persons
-     * @param request
-     * @return
+     * @param request - only staff can access this method
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @GetMapping("/get")

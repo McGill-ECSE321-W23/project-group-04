@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/account")
-public class AccountController {
+public class AccountRestController {
 
     @Autowired
     private AccountService accountService;
@@ -35,20 +35,20 @@ public class AccountController {
 
     /**
      * Register a new Account
-     * @param request
-     * @param email
-     * @param password
-     * @param name
-     * @param phoneNumber
-     * @return
+     * @param request -anyone can access this method
+     * @param email - email address of the account
+     * @param password - the account password
+     * @param name - the name of the person
+     * @param phoneNumber - the phone number of the person
+     * @return error message is encountered
      * @author Lin Wei Li
      */
     @PostMapping("/register")
     public ResponseEntity<?> registerAccount(HttpServletRequest request, @RequestParam String email,
     @RequestParam String password, @RequestParam String name, @RequestParam String phoneNumber) {
         // Check if person exists
-        Person person = personService.getPersonByName(name);
-        if (person != null && person.getPhoneNumber().equals(phoneNumber)) {
+        Person person = personService.getPersonByPhoneNumber(phoneNumber);
+        if (person != null && person.getName().equals(name)) {
             // Person exists
             try {
                 // Check if that person doesn't already have an Account
@@ -56,12 +56,19 @@ public class AccountController {
                     // Already has an Account
                     return ResponseEntity.badRequest().body("An account is already associated with this person");
                 }
+                
+            } catch (Exception e) {
                 // Person exists and doesn't have an Account
+            }
+
+            // Person exists and doesn't have an Account
+            try {
                 accountService.createAccount(email, password, person);
                 return ResponseEntity.ok().build();
             } catch (Exception e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
+            
         }
 
         // Person does not exist
@@ -76,11 +83,11 @@ public class AccountController {
 
     /**
      * Update an existing Account
-     * @param request
-     * @param id
-     * @param email
-     * @param password
-     * @return
+     * @param request -only staff or customer accessing own account can access this method
+     * @param id - accound id
+     * @param email - account email address
+     * @param password - account password
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @PutMapping("/update/{id}")
@@ -88,8 +95,8 @@ public class AccountController {
     @RequestParam String email, @RequestParam String password) {
         // Check authorization (own account or staff)
         try {
-            long accountId = AuthenticationUtility.getAccountId(request);
-            if (accountId != id && !AuthenticationUtility.isStaff(request)) {
+            if (!AuthenticationUtility.isStaff(request) &&
+                AuthenticationUtility.getAccountId(request) != id) {
                 return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
             }
         } catch (Exception e) {
@@ -107,9 +114,9 @@ public class AccountController {
 
     /**
      * Delete an existing Account
-     * @param request
-     * @param id
-     * @return
+     * @param request -only staff or customer accessing own account can access this method
+     * @param id - account id
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @DeleteMapping("/delete/{id}")
@@ -135,9 +142,9 @@ public class AccountController {
 
     /**
      * Get an existing Account
-     * @param request
-     * @param id
-     * @return
+     * @param request - only staff or customer accessing own account can access this method
+     * @param id - account id
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @GetMapping("/get/{id}")
@@ -163,8 +170,8 @@ public class AccountController {
 
     /**
      * Get all existing Accounts
-     * @param request
-     * @return
+     * @param request -only staff or customer accessing own account can access this method
+     * @return error message if encountered
      * @author Lin Wei Li
      */
     @GetMapping("/get")

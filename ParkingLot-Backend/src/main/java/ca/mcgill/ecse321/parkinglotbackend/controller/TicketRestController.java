@@ -99,7 +99,7 @@ public class TicketRestController {
     /**
      * Get a ticket from the system
      * @param request - staff can call this method
-     * @param ticketID - ticket ID
+     * @param id - ticket ID
      * @return success/error message
      * @author faizchowdhury
      */

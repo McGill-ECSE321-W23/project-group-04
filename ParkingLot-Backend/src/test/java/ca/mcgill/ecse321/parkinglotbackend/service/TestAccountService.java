@@ -25,8 +25,14 @@ import ca.mcgill.ecse321.parkinglotbackend.dao.AccountRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Account;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 
+/**
+ * Testing Account service class
+ * This class followed the template from the tutorials provided:
+ * https://mcgill-ecse321-w23.github.io/#_service_unit_testing_setup_with_mockito
+ * @author Lin Wei Li
+ */
 @ExtendWith(MockitoExtension.class)
-public class AccountServiceTest {
+public class TestAccountService {
     
     @Mock
     private AccountRepository accountRepository;

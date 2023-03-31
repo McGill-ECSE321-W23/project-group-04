@@ -25,10 +25,11 @@ import org.mockito.stubbing.Answer;
 
 /**
  * A class to test the Parking Spot Service class
+ * using template from tutorials
  * @author faizachowdhury
  */
 @ExtendWith(MockitoExtension.class)
-public class ParkingSpotServiceTest {
+public class TestParkingSpotService {
     @Mock
     private ParkingSpotRepository parkingSpotDao;
 
