@@ -304,7 +304,7 @@ public class TestOfferedServiceService {
         String error = null;
         OfferedService offeredService = null;
         try {
-            offeredService = offeredServiceService.modifyOfferedServiceService(offeredServiceIDExistent2, offeredServiceDescriptionExistent2, offeredServiceCostModification, offeredServiceDurationModification);
+            offeredService = offeredServiceService.modifyOfferedServiceService(offeredServiceIDExistent2, offeredServiceDescriptionExistent3, offeredServiceCostModification, offeredServiceDurationModification);
         } catch (Exception e) {
             error = e.getMessage();
         }
