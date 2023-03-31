@@ -121,7 +121,8 @@ public class PersonService {
     @Transactional
     public Person updatePerson(long personID, String name, String phoneNumber) throws Exception {
         // Check for duplicate phone number
-        if (personRepository.existsPersonByPhoneNumber(phoneNumber)) {
+        Person dupePhoneNumberPerson = personRepository.findPersonByPhoneNumber(phoneNumber);
+        if (dupePhoneNumberPerson != null && dupePhoneNumberPerson.getPersonID() != personID) {
             throw new Exception("Phone number already exists!");
         }
 

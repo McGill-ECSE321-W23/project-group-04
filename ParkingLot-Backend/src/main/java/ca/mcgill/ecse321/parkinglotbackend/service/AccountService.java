@@ -128,7 +128,8 @@ public class AccountService {
      */
     public Account updateAccount(long id, String email, String password) throws Exception {
         // Check for duplicate emails
-        if (accountRepository.existsAccountByEmail(email)) {
+        Account dupeEmailAccount = accountRepository.findAccountByEmail(email);
+        if (dupeEmailAccount != null && dupeEmailAccount.getAccountID() != id) {
             throw new Exception("An account with this email already exists!");
         }
 

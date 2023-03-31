@@ -47,8 +47,8 @@ public class AccountRestController {
     public ResponseEntity<?> registerAccount(HttpServletRequest request, @RequestParam String email,
     @RequestParam String password, @RequestParam String name, @RequestParam String phoneNumber) {
         // Check if person exists
-        Person person = personService.getPersonByName(name);
-        if (person != null && person.getPhoneNumber().equals(phoneNumber)) {
+        Person person = personService.getPersonByPhoneNumber(phoneNumber);
+        if (person != null && person.getName().equals(name)) {
             // Person exists
             try {
                 // Check if that person doesn't already have an Account
@@ -56,12 +56,19 @@ public class AccountRestController {
                     // Already has an Account
                     return ResponseEntity.badRequest().body("An account is already associated with this person");
                 }
+                
+            } catch (Exception e) {
                 // Person exists and doesn't have an Account
+            }
+
+            // Person exists and doesn't have an Account
+            try {
                 accountService.createAccount(email, password, person);
                 return ResponseEntity.ok().build();
             } catch (Exception e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
+            
         }
 
         // Person does not exist
@@ -88,8 +95,8 @@ public class AccountRestController {
     @RequestParam String email, @RequestParam String password) {
         // Check authorization (own account or staff)
         try {
-            long accountId = AuthenticationUtility.getAccountId(request);
-            if (accountId != id && !AuthenticationUtility.isStaff(request)) {
+            if (!AuthenticationUtility.isStaff(request) &&
+                AuthenticationUtility.getAccountId(request) != id) {
                 return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
             }
         } catch (Exception e) {

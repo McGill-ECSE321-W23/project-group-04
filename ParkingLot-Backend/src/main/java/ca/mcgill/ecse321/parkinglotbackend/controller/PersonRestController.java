@@ -66,8 +66,9 @@ public class PersonRestController {
     @RequestParam String name, @RequestParam String phoneNumber) {
         // Check authorization (own person or staff)
         try {
-            long personID = accountService.getAccountByID(id).getPerson().getPersonID();
-            if (personID != id && !AuthenticationUtility.isStaff(request)) {
+            // long accountID = accountService.getAccountByPersonID(id).getAccountID();    // id if the acc of the person to update
+            if (!AuthenticationUtility.isStaff(request) &&
+                accountService.getAccountByPersonID(id).getAccountID() != AuthenticationUtility.getAccountId(request)) {
                 // Not authorized
                 return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).body("Not authorized");
             }
