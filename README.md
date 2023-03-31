@@ -37,11 +37,12 @@ The application will improve the overall experience for customers, employees and
 [Sprint 2: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Sprint-2#overview)
 
 ### Contributions
+## Effort Table
 | Team Member       | Contributions                                   | Hours  |
 | ----------------- | ----------------------------------------------- | ------ |
-| Faiza Chowdhury   |RESTful HTTP Methods, Controller, DTO and Unit Testing for Ticket and Parking Spot|        |
-| Annie Gouchee     |RESTful HTTP Methods, Controller, DTO and Unit Testing for ServiceAppointment and Car|       |
-| Lin Wei Li        |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Persona and Account|      |
-| Estefania Vazquez |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Garage and OfferedService|      |
-| Qin Xuan Xu       |RESTful HTTP Methods, Controller, DTO and Unit Testing for System and TimeSlot|
-| Edwin You Zhou    |RESTful HTTP Methods, Controller, DTO and Unit Testing for StaffAccount, ManagerAccount and MonthlyReservation|      |
+| Faiza Chowdhury   |RESTful HTTP Methods, Controller, DTO and Unit Testing for Ticket and Parking Spot, Wiki, Quality Assurance Plan |      27  |
+| Annie Gouchee     |RESTful HTTP Methods, Controller, DTO and Unit Testing for ServiceAppointment and Car, Wiki, READ.ME, Quality Assurance Plan  |    28   |
+| Lin Wei Li        |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Persona and Account, Wiki, Backlog, Quality Assurance Plan |   32   |
+| Estefania Vazquez |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Garage and OfferedService, Wiki, Backlog, Quality Assurance Plan, Meeting minutes  |   29   |
+| Qin Xuan Xu       |RESTful HTTP Methods, Controller, DTO and Unit Testing for System and TimeSlot, Quality Assurance Plan | 22 |
+| Edwin You Zhou    |RESTful HTTP Methods, Controller, DTO and Unit Testing for StaffAccount, ManagerAccount and MonthlyReservation, Wiki, Test coverage, Quality Assurance Plan  |   24   |
