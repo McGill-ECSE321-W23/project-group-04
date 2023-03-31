@@ -36,7 +36,7 @@ public class StaffAccountRestController {
     ResponseEntity<?> getEmployee(HttpServletRequest request, @PathVariable Long employeeId) {
         try {
             if ((AuthenticationUtility.isManager(request) || (AuthenticationUtility.isStaff(request) && AuthenticationUtility.getAccountId(request) == employeeId)) && employeeId != null) {
-                return ResponseEntity.ok().body(DtoUtility.convertToDto(staffAccountService.getStaffAccount(employeeId)));  //TODO
+                return ResponseEntity.ok().body(DtoUtility.convertToDto(staffAccountService.getStaffAccount(employeeId)));
             } else {
                 return ResponseEntity.badRequest().body("Unauthorized");
             }
@@ -50,7 +50,7 @@ public class StaffAccountRestController {
     ResponseEntity<?> getSchedule(HttpServletRequest request, @RequestParam Long staffAccountId) {
         try {
             if (AuthenticationUtility.isManager(request) || (AuthenticationUtility.isStaff(request) && AuthenticationUtility.getAccountId(request) == staffAccountId)) {
-                return ResponseEntity.ok().body(timeSlotService.getTimeSlotsByStaffAccountID(staffAccountId));  //TODO
+                return ResponseEntity.ok().body(timeSlotService.getTimeSlotsByStaffAccountID(staffAccountId));
             } else {
                 return ResponseEntity.badRequest().build();
             }
