@@ -26,7 +26,7 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Account;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 
 @ExtendWith(MockitoExtension.class)
-public class AccountServiceTest {
+public class TestAccountService {
     
     @Mock
     private AccountRepository accountRepository;

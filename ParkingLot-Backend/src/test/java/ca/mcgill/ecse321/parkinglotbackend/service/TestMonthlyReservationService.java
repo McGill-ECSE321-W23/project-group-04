@@ -22,7 +22,7 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class MonthlyReservationServiceTest {
+public class TestMonthlyReservationService {
 
     @InjectMocks
     MonthlyReservationService monthlyReservationService;

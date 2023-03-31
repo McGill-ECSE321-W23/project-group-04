@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpSession;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
-public class AuthenticationController {
+public class AuthenticationRestController {
 
     @Autowired
     private AuthenticationService authenticationService;

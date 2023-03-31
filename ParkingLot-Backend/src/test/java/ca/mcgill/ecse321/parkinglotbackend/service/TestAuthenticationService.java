@@ -23,7 +23,7 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.StaffAccount;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthenticationServiceTest {
+public class TestAuthenticationService {
 
     @Mock
     private AccountRepository accountRepository;

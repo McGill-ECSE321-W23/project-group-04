@@ -1,10 +1,10 @@
-package ca.mcgill.ecse321.parkinglotbackend;
+package ca.mcgill.ecse321.parkinglotbackend.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ParkingLotBackendApplicationTests {
+class TestParkingLotBackendApplication {
 
 	@Test
 	void contextLoads() {

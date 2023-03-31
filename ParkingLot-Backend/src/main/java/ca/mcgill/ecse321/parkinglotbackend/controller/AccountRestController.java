@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/account")
-public class AccountController {
+public class AccountRestController {
 
     @Autowired
     private AccountService accountService;

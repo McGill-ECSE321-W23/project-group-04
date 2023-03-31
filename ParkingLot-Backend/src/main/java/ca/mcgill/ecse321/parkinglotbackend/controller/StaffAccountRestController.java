@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/staff")
-public class StaffAccountController {
+public class StaffAccountRestController {
 
     @Autowired
     StaffAccountService staffAccountService;

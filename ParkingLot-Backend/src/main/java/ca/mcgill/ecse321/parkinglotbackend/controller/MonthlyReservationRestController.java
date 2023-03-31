@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/monthlyReservation")
-public class MonthlyReservationController {
+public class MonthlyReservationRestController {
 
     @Autowired
     PersonService personService;

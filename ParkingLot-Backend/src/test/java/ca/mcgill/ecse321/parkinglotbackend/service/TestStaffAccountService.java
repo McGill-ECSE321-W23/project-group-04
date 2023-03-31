@@ -18,7 +18,7 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class StaffAccountServiceTest {
+public class TestStaffAccountService {
     @InjectMocks
     StaffAccountService staffAccountService;
 

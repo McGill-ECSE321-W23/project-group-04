@@ -24,7 +24,7 @@ import ca.mcgill.ecse321.parkinglotbackend.dao.PersonRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 
 @ExtendWith(MockitoExtension.class)
-public class PersonServiceTest {
+public class TestPersonService {
     
     @Mock
     private PersonRepository personRepository;
