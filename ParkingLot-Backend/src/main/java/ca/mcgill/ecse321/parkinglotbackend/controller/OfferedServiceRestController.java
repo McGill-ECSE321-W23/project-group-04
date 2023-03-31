@@ -111,7 +111,7 @@ public class OfferedServiceRestController {
      * RESTful API to get an offered service.
      *
      * @param request - Who is trying to access this method. Only staff are allowed to get one.
-     * @param offeredServiceID
+     * @param offeredServiceID - The unique ID of an offered service
      * @return - Either a message specifying the user is not authorized to perform this, or the offered service requested if the user is authorized to perform this
      * @author Estefania Vazquez
      */
