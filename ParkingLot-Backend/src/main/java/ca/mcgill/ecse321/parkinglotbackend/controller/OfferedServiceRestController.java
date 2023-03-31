@@ -62,7 +62,7 @@ public class OfferedServiceRestController {
      * @author Estefania Vazquez
      */
     @PostMapping("/delete/{offeredServiceID}")
-    ResponseEntity<?> deleteOfferedService(HttpServletRequest request, @PathVariable(value = "serviceID") long serviceID) {
+    ResponseEntity<?> deleteOfferedService(HttpServletRequest request, @PathVariable(value = "offeredServiceID") long serviceID) {
         try {
             // If the user is the manager
             if (AuthenticationUtility.isManager(request)) {
