@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpSession;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/person")
-public class PersonController {
+public class PersonRestController {
 
     @Autowired
     private PersonService personService;

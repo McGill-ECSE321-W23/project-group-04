@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/manager")
-public class ManagerAccountController {
+public class ManagerAccountRestController {
 
     @Autowired
     ManagerAccountService managerAccountService;
