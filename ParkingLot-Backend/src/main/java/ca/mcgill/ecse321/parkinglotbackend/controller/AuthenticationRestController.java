@@ -30,9 +30,9 @@ public class AuthenticationRestController {
 
     /**
      * Login to the system
-     * @param request
-     * @param email
-     * @param password
+     * @param request anyone can access this method if not logged in
+     * @param email - account email address
+     * @param password - account password
      * @return Http response
      * @author Lin Wei Li
      */
@@ -78,7 +78,7 @@ public class AuthenticationRestController {
 
     /**
      * Logout of the system
-     * @param request
+     * @param request - anyone can access this method if logged in
      * @return Http response
      * @author Lin Wei Li
      */
@@ -100,7 +100,7 @@ public class AuthenticationRestController {
 
     /**
      * Log in as manager for smoke testing
-     * @param request
+     * @param request - anyone can access this method
      * @return Http response
      * @author Lin Wei Li
      */
@@ -119,7 +119,7 @@ public class AuthenticationRestController {
 
     /**
      * Helper method for smoke testing
-     * @param request
+     * @param request - anyone can access this method if logged in
      * @return
      */
     @GetMapping("/getRole")
@@ -145,8 +145,8 @@ public class AuthenticationRestController {
 
     /**
      * Add test data for smoke testing
-     * @param request
-     * @return
+     * @param request - anyone can access this method
+     * @return  Http response
      * @author Lin Wei Li
      */
     @GetMapping("/addTestData")

@@ -21,6 +21,7 @@ import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingLotSoftwareSystemRepositor
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 
 /**
+ *  Testing the system service class
  * @author Qin Xuan Xu
  * using template from tutorials
  */

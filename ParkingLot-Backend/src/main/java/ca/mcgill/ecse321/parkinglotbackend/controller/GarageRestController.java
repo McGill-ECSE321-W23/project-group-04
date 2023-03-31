@@ -26,7 +26,7 @@ public class GarageRestController {
     private GarageService garageService;
 
     /**
-     * RESTful API for the creation of a garage.
+     * RESTful API for the creation of a garage
      *
      * @param request - Who is trying to access this method. Only the manager is allowed to create one.
      * @param garageNumber - The number (like a name) assigned to the garage

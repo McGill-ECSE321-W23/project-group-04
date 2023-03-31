@@ -28,6 +28,12 @@ import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment;
 import ca.mcgill.ecse321.parkinglotbackend.model.ServiceAppointment.AppointmentStatus;
 
+/**
+ * Testing Service Appointment service class
+ * This class followed the template from the tutorials provided:
+ * https://mcgill-ecse321-w23.github.io/#_service_unit_testing_setup_with_mockito
+ * @author anniegouchee
+ */
 @ExtendWith(MockitoExtension.class)
 public class TestServiceAppointmentService {
         

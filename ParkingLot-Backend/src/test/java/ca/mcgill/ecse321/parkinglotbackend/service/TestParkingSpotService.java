@@ -25,6 +25,7 @@ import org.mockito.stubbing.Answer;
 
 /**
  * A class to test the Parking Spot Service class
+ * using template from tutorials
  * @author faizachowdhury
  */
 @ExtendWith(MockitoExtension.class)

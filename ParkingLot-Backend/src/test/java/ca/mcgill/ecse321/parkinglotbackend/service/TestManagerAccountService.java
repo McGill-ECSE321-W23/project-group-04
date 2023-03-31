@@ -13,6 +13,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
+/**
+ * Testing Manager Account service class
+ * This class followed the template from the tutorials provided:
+ * https://mcgill-ecse321-w23.github.io/#_service_unit_testing_setup_with_mockito
+ * @author Edwin
+ */
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 public class TestManagerAccountService {
