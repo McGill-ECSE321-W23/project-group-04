@@ -149,20 +149,18 @@ public class StaffAccountRestController {
                                    @RequestParam String password, @RequestParam String email, @RequestParam float salary) {
         try {
             if (AuthenticationUtility.isManager(request)) {
-                staffAccountService.createStaffAccount(
+                return ResponseEntity.ok().body(DtoUtility.convertToDto(staffAccountService.createStaffAccount(
                         name,
                         phone,
                         password,
                         email,
-                        salary
-                );
+                        salary)));
             } else {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception ex) {
             return ResponseEntity.internalServerError().build();
         }
-        return ResponseEntity.ok().build();
     }
 
     /**

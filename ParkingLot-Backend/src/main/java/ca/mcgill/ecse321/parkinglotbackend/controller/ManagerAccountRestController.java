@@ -41,13 +41,12 @@ public class ManagerAccountRestController {
     ResponseEntity<?> getManager(HttpServletRequest request, @RequestParam Long StaffAccountId) {
         try {
             if (AuthenticationUtility.isManager(request)) {
-                managerAccountService.getManagerAccount();
+                return ResponseEntity.ok().body(managerAccountService.getManagerAccount());
             } else {
                 return ResponseEntity.badRequest().build();
             }
         } catch (Exception ex) {
             return ResponseEntity.internalServerError().build();
         }
-        return ResponseEntity.ok().build();
     }
 }
