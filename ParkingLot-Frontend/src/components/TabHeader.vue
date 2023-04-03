@@ -1,6 +1,6 @@
 <template>
     <div class="tabHeader">
-        {{ text }}
+        {{ title }}
     </div>
 </template>
 
@@ -8,13 +8,22 @@
 export default {
     name: "TabHeader",
     props: {
-        text: String
+        title: String
     }
 }
 </script>
 
 <style scoped>
 .tabHeader {
-    margin: 0px 20px;
+    padding: 20px 20px
+}
+
+.tabHeader:hover {
+    cursor: pointer;
+    background-color: rgb(53, 53, 58);
+}
+
+.tabHeader[active] {
+    background-color: rgb(53, 53, 58);
 }
 </style>

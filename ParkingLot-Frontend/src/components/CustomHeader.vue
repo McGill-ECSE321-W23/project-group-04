@@ -1,10 +1,10 @@
 <template>
     <header style="display: flex; align-items: center;">
         <img src="../assets/PLS_logo.png" alt="Logo" height="40px" width="auto">
-        <TabHeader text="Home" />
-        <TabHeader text="Services" />
-        <TabHeader text="My Account" />
-        <Button text="Login" color="grey" />
+        <div v-for="tab in tabs">
+            <TabHeader v-bind:id="'tabHeader_' + tab.id" :title="tab.title" />
+        </div>
+        <div id="connection">Login</div>
     </header>
 </template>
 
@@ -17,6 +17,9 @@ export default {
     components: {
         Button,
         TabHeader
+    },
+    props: {
+        tabs: Array
     }
 }
 </script>
@@ -24,20 +27,19 @@ export default {
 <style scoped>
 header {
     display: block;
-    width: auto;
-    padding: 20px 40px;
+    width: 100%;
     background-color: rgb(41, 41, 46);
-    font-size: 32px;
+    font-size: 24px;
     color: rgb(233, 231, 227);
 }
 
-#btn_Connection {
-    float: right;
-    position: relative;
-    top: 50%;
+#connection {
+    margin-left: auto;
+    padding: 20px 20px;
 }
 
-Button {
-    margin-left: auto;
+#connection:hover {
+    cursor: pointer;
+    background-color: rgb(53, 53, 58);
 }
 </style>
