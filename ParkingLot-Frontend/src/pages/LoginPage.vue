@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <el-card class="page">
         <div class="container" id="login">
             <h1>Login</h1>
             <label for="login_email">Email</label>
@@ -41,19 +41,13 @@
                 <a href="#" id="recovery_login">Login</a>
             </div>
         </div>
-    </div>
+    </el-card>
 </template>
 
 <script src="./LoginPageScript.js">
 </script>
 
 <style scoped>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 .page {
     display: flex;
     height: 100vh;
