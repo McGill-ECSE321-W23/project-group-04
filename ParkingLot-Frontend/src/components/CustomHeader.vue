@@ -1,6 +1,6 @@
 <template>
     <header style="display: flex; align-items: center;">
-        <img src="../assets/PLS_logo.png" alt="Logo" height="40px" width="auto">
+        <!--img src="../assets/PLS_logo.png" alt="Logo" height="40px" width="auto"-->
         <div v-for="tab in tabs">
             <TabHeader v-bind:id="'tabHeader_' + tab.id" :title="tab.title" />
         </div>

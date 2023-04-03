@@ -53,5 +53,3 @@ export default {
         $("#tabHeader_home").attr("active", "");
     }
 }
-
-
