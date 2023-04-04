@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 export default {
-    name: "BookReservation",
+    name: "AdminUsers",
     components: {
     },
     mounted() {

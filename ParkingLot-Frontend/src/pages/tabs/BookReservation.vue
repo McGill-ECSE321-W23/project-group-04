@@ -1,7 +1,7 @@
 <template>
    
 <div id="heading" style="width:100%; text-align: center; margin-top: 20px;"><h1 > Client Bookings </h1></div>
-    <div id="input">
+  <div id="input">
     <div class="container" id="person_info">
         <label for="person_name">Name </label>
             <input type="text" name="person_name" id="person_name" style="align-self: flex-end; width: 60%;">
@@ -244,7 +244,6 @@ display: flex;
 flex-direction: row;
 width:100%;
 }
-
 
 #calendar .el-calendar {
   transform: scale(0.6) translate(-40%, -40%);

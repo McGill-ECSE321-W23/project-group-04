@@ -4,6 +4,7 @@ import LoginPage from '@/pages/LoginPage.vue'
 
 import AdminPage from '@/pages/AdminPage.vue'
 import BookReservation from  '@/pages/tabs/BookReservation.vue'
+import AdminUsers from  '@/pages/tabs/AdminUsers.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,9 +25,14 @@ const router = createRouter({
       component: AdminPage
     },
     {
-      path: '/book',
+      path: '/reservation',
       name: "BookReservation",
       component: BookReservation
+    },
+    {
+      path: '/users',
+      name: "AdminUsers",
+      component: AdminUsers
     }
   ]
 })
