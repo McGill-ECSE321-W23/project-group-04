@@ -1,8 +1,29 @@
+import { reactive, ref } from 'vue'
 import $ from 'jquery'
 
 export default {
     name: "LoginPage",
     components: {
+    },
+    setup() {
+        const loginForm = reactive({
+            email: '',
+        })
+
+        return {
+            loginForm
+        }
+    },
+    methods: {
+        onLogin() {
+            console.log("log in");
+        },
+        onRegister() {
+            console.log("register");
+        },
+        onRecover() {
+            console.log("recover");
+        }
     },
     mounted() {
         // Only show login form on page load
