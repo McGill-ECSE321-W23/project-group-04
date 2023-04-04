@@ -1,50 +1,63 @@
 <template>
-      <el-menu
-          :default-active="activeIndex"
-          mode="horizontal"
-          :ellipsis="false"
-          @select="handleSelect"
-          :router="true"
-      >
-        <el-menu-item>
-          <el-image class="image" fit="scale-down" :src="logo"></el-image>
-        </el-menu-item>
-        <el-menu-item v-for="tab in tabs" :index="tab.id">
-          {{ tab.title }}
-        </el-menu-item>
+  <el-menu
+      mode="horizontal"
+      :ellipsis="false"
+      @select="handleSelect"
+  >
+    <el-image class="image" fit="scale-down" :src="logo"></el-image>
 
-        <div class="flex-grow" />
+    <el-menu-item v-for="tab in tabs" :index="tab.index">
+      {{ tab.title }}
+    </el-menu-item>
 
-        <el-menu-item :index="'login'">
-          LOGIN
-        </el-menu-item>
-      </el-menu>
+    <div class="flex-grow" />
+
+    <el-menu-item id="connection" index="connection">
+      LOGIN
+    </el-menu-item>
+  </el-menu>
 </template>
 
 <script setup>
+import logo from '../assets/PLS_logo.png'
 import {ref} from 'vue'
-import logo from '@/assets/PLS_logo.png'
+import $ from 'jquery'
 
-const tabs = [
-  { title: 'Home', id: "/" },
-  { title: 'Services', id: "services" },
-  { title: 'My Account', id: "/admin" }
-]
-const activeIndex = ref('home')
+function handleSelect(index) {
+  // Login
+  if (index === 'connection') {
+    window.location.href = '/login'
+    return
+  }
 
-function handleSelect(key, value) {
-  console.log(key, value)
+  // Set all tab bodies to inactive
+  $('.tabBody').removeAttr('active');
+
+  // Set the selected tab body to active
+  $('#page_' + index).attr('active', 'true');
 }
+</script>
 
+<script>
+export default {
+  name: 'Header',
+  props: {
+    tabs: {
+      type: Array,
+      default: () => []
+    }
+  }
+}
 </script>
 
 <style scoped>
-  .image {
-    width: 56px;
-    height: 56px
-  }
+.image {
+  width: 58px;
+  height: 58px;
+  margin: 0 20px;
+}
 
-  .flex-grow {
-    flex-grow: 1;
-  }
+.flex-grow {
+  flex-grow: 1;
+}
 </style>
