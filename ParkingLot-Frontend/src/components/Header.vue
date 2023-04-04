@@ -1,6 +1,5 @@
 <template>
   <el-menu
-      :default-active="activeIndex"
       mode="horizontal"
       :ellipsis="false"
       @select="handleSelect"
@@ -13,7 +12,7 @@
 
     <div class="flex-grow" />
 
-    <el-menu-item :index="'login'">
+    <el-menu-item id="connection" index="connection">
       LOGIN
     </el-menu-item>
   </el-menu>
@@ -22,11 +21,15 @@
 <script setup>
 import logo from '../assets/PLS_logo.png'
 import {ref} from 'vue'
-
-const activeIndex = ref('0');
-var tabCount = 0;
+import $ from 'jquery'
 
 function handleSelect(index) {
+  // Login
+  if (index === 'connection') {
+    window.location.href = '/login'
+    return
+  }
+
   // Set all tab bodies to inactive
   $('.tabBody').removeAttr('active');
 
@@ -36,14 +39,12 @@ function handleSelect(index) {
 </script>
 
 <script>
-import $ from 'jquery'
-
 export default {
   name: 'Header',
   props: {
     tabs: {
       type: Array,
-      required: true
+      default: () => []
     }
   }
 }
@@ -51,8 +52,8 @@ export default {
 
 <style scoped>
 .image {
-  width: 56px;
-  height: 56px;
+  width: 58px;
+  height: 58px;
   margin: 0 20px;
 }
 

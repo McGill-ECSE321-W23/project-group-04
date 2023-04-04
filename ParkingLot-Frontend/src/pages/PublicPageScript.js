@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Header from '../components/Header.vue';
 
 export default {
@@ -13,22 +12,19 @@ export default {
     },
     created() {
         this.tabs.push({
-            title: 'Home',
+            title: 'HOME',
             index: 'home',
             bodyID: 'page_home'
         });
         this.tabs.push({
-            title: 'Services',
+            title: 'SERVICES',
             index: 'services',
             bodyID: 'page_services'
         });
         this.tabs.push({
-            title: 'Profile',
+            title: 'MY PROFILE',
             index: 'profile',
             bodyID: 'page_profile'
         });
-    },
-    mounted() {
-        
     }
 };
