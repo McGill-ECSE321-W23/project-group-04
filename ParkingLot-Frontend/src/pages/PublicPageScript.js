@@ -1,13 +1,15 @@
 import Header from '../components/Header.vue';
 import HomePage from './tabs/HomePage.vue';
-import Reservations from "@/pages/tabs/Reservations.vue";
+import Reservations from "./tabs/Reservations.vue";
+import ServiceAppointmentTab from "./tabs/ServiceAppointmentTab.vue";
 
 export default {
     name: 'PublicPage',
     components: {
         Header,
         HomePage,
-        Reservations
+        Reservations,
+        ServiceAppointmentTab
     },
     data() {
         return {

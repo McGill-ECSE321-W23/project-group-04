@@ -49,7 +49,7 @@
     </DataTable>
     <div class="card flex justify-content-center">
       <Button type="submit" label="Choose" @click="onChoose" />
-      <Toast v-if="selectedServiceAppointment" />
+      <!--Toast v-if="selectedServiceAppointment" /-->
     </div>
   </div>
 
@@ -58,7 +58,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { ServiceAppointment } from '@/pages/tabs/ServiceAppointment';
-import { useToast } from 'primevue/usetoast';
+// import { useToast } from 'primevue/usetoast';
 import { useField, useForm } from 'vee-validate';
 
 // For the offered services
@@ -72,7 +72,7 @@ const selectedServiceAppointment = ref();
 const offeredServiceInfo = ref({});
 const availableServicesAppointments = ref();
 const showContent = ref(false);
-const toast = useToast();
+// const toast = useToast();
 
 // Show the offered services on the dropdown box
 onMounted(() => {
@@ -130,7 +130,7 @@ const onSubmit = handleSubmit((value) => {
 // Choose a service appointment
 const onChoose = () => {
   if (selectedServiceAppointment.value) {
-    toast.add({ severity: 'info', summary: 'Appointment booked', detail: selectedOfferedService.value.description + ' on ' + selectedServiceAppointment.value.date + ' at ' + selectedServiceAppointment.value.time, life: 3000 });
+    // toast.add({ severity: 'info', summary: 'Appointment booked', detail: selectedOfferedService.value.description + ' on ' + selectedServiceAppointment.value.date + ' at ' + selectedServiceAppointment.value.time, life: 3000 });
     resetForm();
   }
 };

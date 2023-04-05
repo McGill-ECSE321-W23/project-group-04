@@ -1,4 +1,5 @@
 <template>
+  <div>test</div>
   <div id="heading" style="width:100%; text-align: center; margin-top: 20px;"><h1 > Client Bookings </h1></div>
     <div id="input">
       <div class="container" id="person_info" style="width:40%; " >
