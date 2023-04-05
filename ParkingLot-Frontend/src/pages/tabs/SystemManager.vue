@@ -169,7 +169,7 @@
             </table>
         </el-card>
     </div>
-    <div class="container" style="padding-top: 20px;">
+    <div class="container" style="padding-top: 20px; padding-bottom: 50px;">
         <el-card shadow="hover">
             <label>Create new system</label>
             <table style="padding-top: 10px;">
@@ -239,7 +239,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td>
+                    <td style="padding-top: 10px;">
                         <el-button>Create</el-button>
                         <el-button>Cancel</el-button>
                     </td>
