@@ -36,11 +36,20 @@
     </el-form>
   <el-divider />
 
-  <el-table>
+  <el-table :data="tableData">
     <el-table-column prop="name" label="Name" width="180" />
     <el-table-column prop="date" label="Date" width="180" />
     <el-table-column prop="address" label="Location" />
-    <el-table-column prop="address" label="Actions" />
+    <el-table-column prop="address" label="Actions">
+      <template #default>
+        <el-button link type="primary" size="small" @click="handleClick"
+        >Reassign</el-button
+        >
+        <el-button link type="primary" size="small">Edit</el-button>
+        <el-button link type="primary" size="small">Delete</el-button>
+      </template>
+    </el-table-column>
+
   </el-table>
 </template>
 
@@ -62,22 +71,12 @@ const tableData = [
   {
     date: '2016-05-03',
     name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
+    address: 'F1-35',
   },
   {
     date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
+    name: 'Jerry',
+    address: 'F2-43',
   }
 ]
 
