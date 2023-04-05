@@ -1,7 +1,6 @@
 import $ from 'jquery'
 import { ref } from 'vue'
 
-
       function ReservationDto (id, phoneNumber, personName, personEmail, licensePlate1, licensePlate2, 
          floor, spotNumber) {
         this.id = id
@@ -102,8 +101,6 @@ export default {
             r.floor = newFloor
             r.spotNumber = newSpot
             this.reservations.push(r)
-
-
           },
       }
     

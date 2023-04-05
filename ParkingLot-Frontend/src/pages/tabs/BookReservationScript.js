@@ -1,8 +1,6 @@
 import $ from 'jquery'
 import { start } from 'repl'
 import { ref } from 'vue'
-
-
       function ReservationDto (phoneNumber, personName, licensePlate, carMake, carModel, 
          floor, spotNumber, startDate, endDate) {
         this.phoneNumber = phoneNumber
@@ -150,13 +148,10 @@ export default {
 
       },
     mounted() {
-
         const num = ref(1)
         const handleChange = (value: number) => {
           console.log(value)
         }
-        
-        
 
     },
     methods: {

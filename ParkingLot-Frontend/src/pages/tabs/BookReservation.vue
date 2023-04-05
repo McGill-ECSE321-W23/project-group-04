@@ -135,7 +135,7 @@
 
   </template>
 
-<script src="./BookReservationScript.js">
+<script src="./BookReservationScript.js"  >
 </script>
 
   <style scoped>

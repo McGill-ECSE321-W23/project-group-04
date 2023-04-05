@@ -63,7 +63,7 @@
     </div>
 </template>
 
-<script src="./AdminUsersScript.js" ></script>
+<script src="./AdminUsersScript.js" lang="js"></script>
 
 <style scoped>
 #list {
