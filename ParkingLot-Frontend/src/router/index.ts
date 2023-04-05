@@ -5,6 +5,7 @@ import AdminPage from '@/pages/AdminPage.vue'
 import StaffSchedule from '@/pages/tabs/StaffSchedule.vue'
 import BookReservation from  '@/pages/tabs/BookReservation.vue'
 import AdminUsers from  '@/pages/tabs/AdminUsers.vue'
+import SystemManager from '@/pages/tabs/SystemManager.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/users',
       name: "AdminUsers",
       component: AdminUsers
+    },
+    {
+      path: '/system',
+      name: "SystemManager",
+      component: SystemManager
     }
   ]
 })
