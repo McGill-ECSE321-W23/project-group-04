@@ -12,7 +12,7 @@
         <AdminUsers />
       </div>
       <div id="page_schedules" class="tabBody">
-        <StaffSchedule />
+        schedules page
       </div>
       <div id="page_bookReservation" class="tabBody">
         <BookReservation />

@@ -1,7 +1,6 @@
 import Header from '../components/Header.vue';
 import AdminUsers from './tabs/AdminUsers.vue';
 import BookReservation from './tabs/BookReservation.vue';
-import StaffSchedule from './tabs/StaffSchedule.vue';
 
 export default {
     name: 'AdminPage',
@@ -9,7 +8,6 @@ export default {
         Header,
         AdminUsers,
         BookReservation,
-        StaffSchedule
     },
     data() {
         return {
