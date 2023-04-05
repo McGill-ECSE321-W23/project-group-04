@@ -144,10 +144,13 @@
     width: 60%;
     background-color: #ffffff;
     border-collapse: collapse;
+    box-shadow: 0px 0px 10px 0px #ffffff;
+    transition: box-shadow 0.3s ease-in-out;
 }
 
 .schedule_table:hover {
-    box-shadow: 0px 0px 10px 0px #4f4f4f;
+    box-shadow: 0px 0px 10px 0px #ccc;
+    transition: box-shadow 0.3s ease-in-out;
 }
 
 .schedule_table th {
