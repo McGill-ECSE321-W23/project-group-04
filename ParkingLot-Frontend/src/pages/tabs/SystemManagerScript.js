@@ -84,6 +84,15 @@ export default {
             spec_input: "",
             start_time: "",
             end_time: "",
+
+            create_monthlyfee: "",
+            create_feeper15mins: "",
+            create_maxstay: "",
+            create_numregular: "",
+            create_numlarge: "",
+            create_nummonthlyfloors: "",
+            create_nummonthlyspots: "",
+            create_numgarages: "",
         };
     },
 };

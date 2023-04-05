@@ -3,20 +3,20 @@
         <h1>System</h1>
     </div>
     <br />
-    <!-- <div class="container">
+    <div class="container">
         <label for="staffSelect" style="padding-right: 10px">Select a system:</label>
         <el-select v-model="system_value" placeholder="Select" style="width: 300px">
             <el-option v-for="item in system_options" :key="item.system_value" :label="item.label"
                 :value="item.system_value">
             </el-option>
         </el-select>
-    </div> -->
+    </div>
     <br />
     <div class="container">
         <table>
             <tr>
                 <td style="padding-right: 10px">
-                    <el-card style="min-width: 400px;">
+                    <el-card style="min-width: 400px;" shadow="hover">
                         <label>Current parking lot specifications</label>
                         <table style="padding-top: 5px;">
                             <tr>
@@ -57,7 +57,7 @@
                     </el-card>
                 </td>
                 <td>
-                    <el-card style="min-width: 300px;">
+                    <el-card style="min-width: 300px;" shadow="hover">
                         <label>Current open hours</label>
                         <table style="padding-top: 5px;">
                             <tr>
@@ -109,7 +109,7 @@
         </table>
     </div>
     <div class="container" style="padding-top: 20px">
-        <el-card>
+        <el-card shadow="hover">
             <label>Edit</label>
             <table style="padding-top: 10px;">
                 <tr>
@@ -163,6 +163,84 @@
                     <td>
                         <el-button>Update</el-button>
                         <el-button>Delete</el-button>
+                        <el-button>Cancel</el-button>
+                    </td>
+                </tr>
+            </table>
+        </el-card>
+    </div>
+    <div class="container" style="padding-top: 20px;">
+        <el-card shadow="hover">
+            <label>Create new system</label>
+            <table style="padding-top: 10px;">
+                <tr>
+                    <td>
+                        <label style="padding-right: 15px;">Monthly fee:</label>
+                    </td>
+                    <td>
+                        <el-input placeholder="Enter value" v-model="create_monthlyfee" style="width: 280px;" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="padding-right: 15px;">Fee per 15 mins:</label>
+                    </td>
+                    <td>
+                        <el-input placeholder="Enter value" v-model="create_feeper15mins" style="width: 280px;" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="padding-right: 15px;">Maximum stay duration:</label>
+                    </td>
+                    <td>
+                        <el-input placeholder="Enter value" v-model="create_maxstay" style="width: 280px;" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="padding-right: 15px;">Number of regular parking spots</label>
+                    </td>
+                    <td>
+                        <el-input placeholder="Enter value" v-model="create_numregular" style="width: 280px;" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="padding-right: 15px;">Number of large parking spots</label>
+                    </td>
+                    <td>
+                        <el-input placeholder="Enter value" v-model="create_numlarge" style="width: 280px;" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="padding-right: 15px;">Number of floors for monthly users</label>
+                    </td>
+                    <td>
+                        <el-input placeholder="Enter value" v-model="create_nummonthlyfloors" style="width: 280px;" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="padding-right: 15px;">Number of parking spots for monthly users</label>
+                    </td>
+                    <td>
+                        <el-input placeholder="Enter value" v-model="create_nummonthlyspots" style="width: 280px;" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="padding-right: 15px;">Number of garages</label>
+                    </td>
+                    <td>
+                        <el-input placeholder="Enter value" v-model="create_numgarages" style="width: 280px;" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <el-button>Create</el-button>
                         <el-button>Cancel</el-button>
                     </td>
                 </tr>
