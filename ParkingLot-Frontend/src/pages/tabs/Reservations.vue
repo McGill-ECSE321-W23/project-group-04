@@ -1,5 +1,8 @@
 <template>
-    <el-form :model="form" label-width="120px">
+    <el-form
+        :model="form"
+        label-width="120px"
+    >
       <el-form-item label="Customer name">
         <el-input v-model="form.name" />
       </el-form-item>
@@ -36,17 +39,18 @@
     </el-form>
   <el-divider />
 
-  <el-table :data="tableData">
+  <el-table :data="tableData"
+            @selection-change="handleSelectionChange"
+            ref="multipleTableRef"
+  >
+    <el-table-column type="selection" width="55" />
     <el-table-column prop="name" label="Name" width="180" />
     <el-table-column prop="date" label="Date" width="180" />
     <el-table-column prop="address" label="Location" />
     <el-table-column prop="address" label="Actions">
       <template #default>
-        <el-button link type="primary" size="small" @click="handleClick"
-        >Reassign</el-button
-        >
-        <el-button link type="primary" size="small">Edit</el-button>
-        <el-button link type="primary" size="small">Delete</el-button>
+        <el-button type="primary" :icon="Edit" circle @click="handleClick"/>
+        <el-button type="danger" :icon="Delete" circle />
       </template>
     </el-table-column>
 
@@ -55,6 +59,14 @@
 
 <script setup>
 import { reactive } from 'vue'
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from '@element-plus/icons-vue'
 
 const form = reactive({
   name: '',
@@ -83,6 +95,9 @@ const tableData = [
 const onSubmit = () => {
   console.log('submit!')
 }
+
+const handleSelectionChange = () => {}
+
 </script>
 
 <style scoped>
