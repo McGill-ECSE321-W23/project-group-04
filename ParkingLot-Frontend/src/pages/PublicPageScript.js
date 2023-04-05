@@ -1,9 +1,11 @@
 import Header from '../components/Header.vue';
+import HomePage from './tabs/HomePage.vue';
 
 export default {
     name: 'PublicPage',
     components: {
-        Header
+        Header,
+        HomePage,
     },
     data() {
         return {
