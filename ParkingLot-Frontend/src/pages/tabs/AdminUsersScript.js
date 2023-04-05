@@ -79,8 +79,6 @@ export default {
 
       },
     mounted() {
-            const value = ref('')
-            const value2 = ref('')
     },
     methods: {
         createReservation: function (id, phoneNumber, personName, personEmail, licensePlate1, licensePlate2,floor, spotNumber) {
