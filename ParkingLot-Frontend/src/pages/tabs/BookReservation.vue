@@ -23,13 +23,13 @@
           </div>
       </div>
       <div class="container" id="tabs">
-          <el-card class="box-card">
+          <el-card class="box-card" style="height: 600px;">
    
       <el-tabs :tab-position="tabPosition" style="height: 400px" class="demo-tabs">
-      <el-tab-pane label="Reservations" >
+      <el-tab-pane label="Reservations" style="margin-left: 50px; " >
           <h1 style="font-weight:bold; font-size: 25px;">Book a Reservation</h1>
           
-      <div id="reservation-info">
+      <div id="reservation-info" style="font-size: 15px;margin-top: 20px;">
           <div id="parkingspot-info" style="margin-top:40px; ">
               <div id="floor" >
           <label for="floor" >Floor:</label>
@@ -58,7 +58,7 @@
       <div id="reservation-dates" style ="margin-top: 40px; width:70%;">
           <label >Select Dates:</label>
   
-            <div class="demo-date-picker">
+            <div class="demo-date-picker" >
       <div class="block">
         
         <el-date-picker
@@ -68,6 +68,7 @@
           start-placeholder="Start date"
           end-placeholder="End date"
           :size="size"
+          style="width:100%;"
         />
       </div>
   
@@ -80,10 +81,11 @@
           selectedFloor, selectedSpot, value1, value1)" plain style="margin-top:20px; width: 50%; display: block;margin: 0 auto; margin-top: 20px;">Book</el-button>
   </div>
       </el-tab-pane>
-      
-      <el-tab-pane label="Services" > <h1 style="font-weight:bold; font-size: 25px;">Book a Service</h1>
+     
+      <el-tab-pane label="Services"  style="margin-left: 50px; ">
+        <h1 style="font-weight:bold; font-size: 25px;">Book a Service</h1>
           
-          <div id="service-info" >
+          <div id="service-info" style="font-size: 15px;margin-top: 20px;" >
               <div id="make-selections" style="margin-top:20px;width:50%;">
                   <div id="service"  style ="margin-top: 20px;" >
               <label for="service" style="width:40%;" >Select a Service:</label>
