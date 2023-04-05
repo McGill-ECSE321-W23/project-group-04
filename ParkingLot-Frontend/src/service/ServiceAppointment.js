@@ -1,5 +1,30 @@
+import axios from "axios";
+
 export const ServiceAppointment = {
-  getServicesData() {
+  offeredServices() {
+    return [
+      {
+        id: 1,
+        description: 'Change Tires',
+        duration: 60,
+        cost: 99.99,
+      },
+      {
+        id: 2,
+        description: 'Clean Car',
+        duration: 120,
+        cost: 50.00,
+      },
+      {
+        id: 3,
+        description: 'Change Wipers',
+        duration: 15,
+        cost: 10.00,
+      },
+    ];
+  },
+
+  availableServiceAppointments() {
     return [
       {
         id: 1,
@@ -22,7 +47,15 @@ export const ServiceAppointment = {
     ];
   },
 
-  getServices() {
-    return Promise.resolve(this.getServicesData());
+  getOfferedServices() {
+    return Promise.resolve(this.offeredServices());
+  },
+
+  getOfferedServicesInfo(offeredServiceID) {
+    return axios.get(`/api/offeredServices/${offeredServiceID}`).then((res) => res.data);
+  },
+
+  getAvailableServiceAppointments() {
+    return Promise.resolve(this.availableServiceAppointments());
   },
 };
