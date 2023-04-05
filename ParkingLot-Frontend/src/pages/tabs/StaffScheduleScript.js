@@ -12,6 +12,7 @@ export default {
                 },
             ],
             staff_value: "",
+
             day_options: [
                 {
                     day_value: "Sunday",
@@ -42,9 +43,25 @@ export default {
                     label: "Saturday",
                 }
             ],
-            day_value: "",
-            start_time: "",
-            end_time: "",
+
+            day_value1: "",
+            day_value2: "",
+            start_time1: "",
+            end_time1: "",
+            start_time2: "",
+            end_time2: "",
+
+            timeslot_options: [
+                {
+                    timeslot_value: "MON 8:00 AM - 12:00 PM",
+                    label: "MON 8:00 AM - 12:00 PM",
+                },
+                {
+                    timeslot_value: "TUE 8:00 AM - 12:00 PM",
+                    label: "TUE 8:00 AM - 12:00 PM",
+                }
+            ],
+            timeslot_selected: "",
         };
     },
 };

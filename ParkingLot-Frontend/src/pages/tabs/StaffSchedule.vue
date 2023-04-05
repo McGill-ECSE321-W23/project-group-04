@@ -35,46 +35,93 @@
     <div class="container">
         <table>
             <tr>
-                <td>
-                    <el-card>
-                        <label style="font-size: 20px;">Create time slot</label>
-                        <br /><br>
-                        <table>
-                            <tr>
-                                <td>Set day:</td>
-                                <td>
-                                    <el-select v-model="day_value" placeholder="Select day">
-                                        <el-option v-for="item in day_options" :key="item.day_value" :label="item.label"
-                                            :value="item.day_value">
-                                        </el-option>
-                                    </el-select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Set start time:</td>
-                                <td>
-                                    <el-time-picker v-model="start_time" :picker-options="{
-                                        selectableRange: '00:00 - 23:59'
-                                    }" placeholder="Select time" format="h:mm A"></el-time-picker>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Set end time:</td>
-                                <td>
-                                    <el-time-picker v-model="end_time" :picker-options="{
-                                        selectableRange: '00:00 - 23:59'
-                                    }" placeholder="Select time" format="h:mm A"></el-time-picker>
-                                </td>
-                            </tr>
-                        </table>
-                        <br />
-                        <el-button type="primary" @click="createTimeSlot">Create</el-button>
-                        <el-button type="primary" @click="createTimeSlot">Create</el-button>
+                <td id="card_column">
+                    <el-card class="card" shadow="hover">
+                        <div class="card_div">
+                            <label style="font-size: 20px;">Create time slot</label>
+                            <br><br>
+                            <table class="table_in_card">
+                                <tr>
+                                    <td style="padding-right: 50px;">Set day:</td>
+                                    <td>
+                                        <el-select v-model="day_value1" placeholder="Select day" style="width: 240px">
+                                            <el-option v-for="item in day_options" :key="item.day_value" :label="item.label"
+                                                :value="item.day_value">
+                                            </el-option>
+                                        </el-select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Set start time:</td>
+                                    <td>
+                                        <el-time-picker v-model="start_time1" :picker-options="{
+                                            selectableRange: '00:00 - 23:59'
+                                        }" placeholder="Select time" format="h:mm A" style="width: 240px"></el-time-picker>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Set end time:</td>
+                                    <td>
+                                        <el-time-picker v-model="end_time1" :picker-options="{
+                                            selectableRange: '00:00 - 23:59'
+                                        }" placeholder="Select time" format="h:mm A" style="width: 240px"></el-time-picker>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br>
+                            <el-button>Create</el-button>
+                            <el-button>Cancel</el-button>
+                        </div>
                     </el-card>
                 </td>
                 <td>
-                    <el-card>
-                        <label style="text-align: center">Edit time slot</label>
+                    <el-card class="card" shadow="hover">
+                        <div class="card_div">
+                            <label style="font-size: 20px;">Edit time slot</label>
+                            <br><br>
+                            <table class="table_in_card">
+                                <tr>
+                                    <td>Time slot:</td>
+                                    <td>
+                                        <el-select v-model="timeslot_selected" placeholder="Select time slot"
+                                            style="width: 240px">
+                                            <el-option v-for="item in timeslot_options" :key="item.timeslot_value"
+                                                :label="item.label" :value="item.timeslot_value">
+                                            </el-option>
+                                        </el-select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right: 50px;">Set day:</td>
+                                    <td>
+                                        <el-select v-model="day_value2" placeholder="Select day" style="width: 240px">
+                                            <el-option v-for="item in day_options" :key="item.day_value" :label="item.label"
+                                                :value="item.day_value">
+                                            </el-option>
+                                        </el-select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Set start time:</td>
+                                    <td>
+                                        <el-time-picker v-model="start_time2" :picker-options="{
+                                            selectableRange: '00:00 - 23:59'
+                                        }" placeholder="Select time" format="h:mm A" style="width: 240px"></el-time-picker>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Set end time:</td>
+                                    <td>
+                                        <el-time-picker v-model="end_time2" :picker-options="{
+                                            selectableRange: '00:00 - 23:59'
+                                        }" placeholder="Select time" format="h:mm A" style="width: 240px"></el-time-picker>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br>
+                            <el-button>Update</el-button>
+                            <el-button>Cancel</el-button>
+                        </div>
                     </el-card>
                 </td>
             </tr>
@@ -120,5 +167,22 @@
     width: 14.28%;
     min-width: 90px;
     padding: 10px 0px 10px 0px;
+}
+
+.table_in_card td {
+    padding: 0px 0px 8px 0px;
+}
+
+#card_column {
+    padding-right: 25px;
+}
+
+.card {
+    width: 100%;
+    height: auto;
+}
+
+.card_div {
+    margin: 0 6px 6px 6px;
 }
 </style>
