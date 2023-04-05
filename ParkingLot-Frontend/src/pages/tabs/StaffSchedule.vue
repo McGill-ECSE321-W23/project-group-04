@@ -120,6 +120,7 @@
                             </table>
                             <br>
                             <el-button>Update</el-button>
+                            <el-button>Delete</el-button>
                             <el-button>Cancel</el-button>
                         </div>
                     </el-card>
@@ -146,7 +147,7 @@
 }
 
 .schedule_table:hover {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 10px 0px #4f4f4f;
 }
 
 .schedule_table th {

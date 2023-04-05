@@ -3,7 +3,6 @@ import PublicPage from '@/pages/PublicPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import AdminPage from '@/pages/AdminPage.vue'
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
