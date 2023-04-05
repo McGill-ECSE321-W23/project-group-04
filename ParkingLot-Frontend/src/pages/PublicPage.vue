@@ -8,6 +8,9 @@
       <div id="page_services" class="tabBody">
         services page
       </div>
+      <div id="page_reservations" class="tabBody">
+        <reservations></reservations>
+      </div>
       <div id="page_profile" class="tabBody">
         profile page
       </div>
