@@ -58,12 +58,53 @@ export default {
 
         // Login
         $("#login_button").click(function() {
-            console.log("clicked");
+            $.ajax({
+                url: "http://127.0.0.1:8080/api/auth/login",
+                type: "POST",
+                data: {
+                    email: $("#login_email").val(),
+                    password: $("#login_password").val()
+                },
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
+        
+        // Register
+        $("#register_button").click(function() {
+            $.ajax({
+                url: "http://127.0.0.1:8080/api/account/register",
+                type: "POST",
+                data: {
+                    email: $("#register_email").val(),
+                    password: $("#register_password").val(),
+                    name: $("#register_name").val(),
+                    phoneNumber: $("#register_phoneNumber").val()
+                },
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
+
+        // Recover (smoke test)
+        $("#recovery_button").click(function() {
             $.ajax({
                 url: "http://127.0.0.1:8080/api/auth/smokeTest",
-                type: "GET"
-            }).done(function(data) {
-                console.log(data);
+                type: "GET",
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
             });
         });
     }
