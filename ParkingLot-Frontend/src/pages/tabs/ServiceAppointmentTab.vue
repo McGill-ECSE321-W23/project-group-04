@@ -53,17 +53,11 @@
     </div>
   </div>
 
-  <!-- The button to choose the appointment
-  <div class="card flex justify-content-center">
-    <Button type="submit" label="Choose" />
-    <form @submit="onChoose" class="flex flex-column gap-2" />
-  </div> -->
-
 </template>
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-import { ServiceAppointment } from '@/service/ServiceAppointment';
+import { ServiceAppointment } from '@/pages/tabs/ServiceAppointment';
 import { useToast } from 'primevue/usetoast';
 import { useField, useForm } from 'vee-validate';
 
