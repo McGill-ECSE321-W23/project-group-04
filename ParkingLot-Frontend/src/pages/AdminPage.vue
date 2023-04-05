@@ -3,7 +3,7 @@
     <Header :tabs="tabs"></Header>
     <div class="pageBody">
       <div id="page_system" class="tabBody" active="true">
-        system page
+        <SystemManager />
       </div>
       <div id="page_servicesAndGarages" class="tabBody">
         services and garages page
