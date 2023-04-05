@@ -2,8 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import PublicPage from '@/pages/PublicPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import AdminPage from '@/pages/AdminPage.vue'
-import HomePage from  '@/pages/tabs/HomePage.vue'
-
+import StaffSchedule from '@/pages/tabs/StaffSchedule.vue'
 
 import BookReservation from  '@/pages/tabs/BookReservation.vue'
 import AdminUsers from  '@/pages/tabs/AdminUsers.vue'
@@ -26,6 +25,21 @@ const router = createRouter({
       name: "AdminPage",
       component: AdminPage
     },
+    {
+      path: '/schedule',
+      name: "StaffSchedule",
+      component: StaffSchedule
+    },
+    {
+      path: '/reservation',
+      name: "BookReservation",
+      component: BookReservation
+    },
+    {
+      path: '/users',
+      name: "AdminUsers",
+      component: AdminUsers
+    }
   ]
 })
 
