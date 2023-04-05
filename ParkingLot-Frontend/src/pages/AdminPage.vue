@@ -3,19 +3,19 @@
     <Header :tabs="tabs"></Header>
     <div class="pageBody">
       <div id="page_system" class="tabBody" active="true">
-        system page
+        <SystemManager />
       </div>
       <div id="page_servicesAndGarages" class="tabBody">
         services and garages page
       </div>
       <div id="page_users" class="tabBody">
-        users page
+        <AdminUsers />
       </div>
       <div id="page_schedules" class="tabBody">
-        schedules page
+        <StaffSchedule />
       </div>
       <div id="page_bookReservation" class="tabBody">
-        book reservation page
+        <BookReservation />
       </div>
     </div>
   </div>

@@ -3,10 +3,13 @@
     <Header :tabs="tabs"></Header>
     <div class="pageBody">
       <div id="page_home" class="tabBody" active="true">
-        home page
+        <HomePage />
       </div>
       <div id="page_services" class="tabBody">
-        services page
+        <ServiceAppointmentTab />
+      </div>
+      <div id="page_reservations" class="tabBody">
+        <reservations></reservations>
       </div>
       <div id="page_profile" class="tabBody">
         profile page
