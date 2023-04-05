@@ -179,7 +179,7 @@
   .box-card {
   align-self: center;
   width:80%;
-  
+  box-shadow: 0px 0px 5px black;
   
   }
   #tabs {

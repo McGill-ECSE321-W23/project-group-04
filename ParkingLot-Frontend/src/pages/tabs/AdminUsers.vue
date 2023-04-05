@@ -98,6 +98,7 @@
     .box-card {
       width: 80%;
       max-width: 1000px; /* add this line to limit the maximum width of the card */
+      box-shadow: 0px 0px 5px black;
     }
     .person_info {
         display: flex;
