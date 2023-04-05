@@ -5,6 +5,9 @@ import AdminPage from '@/pages/AdminPage.vue'
 import HomePage from  '@/pages/tabs/HomePage.vue'
 
 
+import BookReservation from  '@/pages/tabs/BookReservation.vue'
+import AdminUsers from  '@/pages/tabs/AdminUsers.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
