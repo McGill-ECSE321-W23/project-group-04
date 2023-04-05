@@ -144,13 +144,13 @@ public class TimeSlotService {
         }
         if (timeSlot.getStaffAccount() == null) { // creating open hours
             for (TimeSlot t : getAllOpenHours()) {
-                if (timeSlot.getSystem().getParkingLotSoftwareSystemID() == t.getSystem().getParkingLotSoftwareSystemID() && dayOfTheWeek == t.getDayOfTheWeek() && ((startTime.isAfter(t.getStartTime()) && startTime.isBefore(t.getEndTime())) || (endTime.isAfter(t.getStartTime()) && endTime.isBefore(t.getEndTime())) || (startTime.isBefore(t.getStartTime()) && endTime.isAfter(t.getEndTime())))) {
+                if (timeSlot.getSystem().getParkingLotSoftwareSystemID() == t.getSystem().getParkingLotSoftwareSystemID() && dayOfTheWeek == t.getDayOfTheWeek() && timeSlotID != t.getTimeSlotID() && ((startTime.isAfter(t.getStartTime()) && startTime.isBefore(t.getEndTime())) || (endTime.isAfter(t.getStartTime()) && endTime.isBefore(t.getEndTime())) || (startTime.isBefore(t.getStartTime()) && endTime.isAfter(t.getEndTime())))) {
                     throw new Exception("TimeSlot overlaps with existing TimeSlot for open hours!");
                 }
             }
         } else { // creating staff hours
             for (TimeSlot t : getTimeSlotsByStaffAccountID(timeSlot.getStaffAccount().getAccountID())) {
-                if (dayOfTheWeek == t.getDayOfTheWeek() && ((startTime.isAfter(t.getStartTime()) && startTime.isBefore(t.getEndTime())) || (endTime.isAfter(t.getStartTime()) && endTime.isBefore(t.getEndTime())) || (startTime.isBefore(t.getStartTime()) && endTime.isAfter(t.getEndTime())))) {
+                if (dayOfTheWeek == t.getDayOfTheWeek() && timeSlotID != t.getTimeSlotID() && ((startTime.isAfter(t.getStartTime()) && startTime.isBefore(t.getEndTime())) || (endTime.isAfter(t.getStartTime()) && endTime.isBefore(t.getEndTime())) || (startTime.isBefore(t.getStartTime()) && endTime.isAfter(t.getEndTime())))) {
                     throw new Exception("TimeSlot overlaps with existing TimeSlot for this staff!");
                 }
             }
