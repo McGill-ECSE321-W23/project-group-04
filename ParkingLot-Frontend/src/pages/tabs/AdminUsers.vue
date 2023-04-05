@@ -4,50 +4,55 @@
         <el-card class="box-card">
             <el-scrollbar height="70vh">
                 <div id="list-item" style="width:100%;text-align: left; padding:0%;">
-                <p v-for="item in 20" :key="item" class="scrollbar-demo-item" style="height:200px;"> 
-                <div id="res_id" style="font-weight:bold;text-align: left; height: 70%; margin-left: 1%; ">Reservation ID {{ item }}
+                <p v-for="res in reservations" :key="res.id" class="scrollbar-demo-item" style="height:200px;"> 
+                <div id="res_id" style="font-size: large; text-align: left; height: 85%; margin-left: 1%; width:20%; ">
+                    <div id="label_id" style="font-weight:bold; font-size: large; text-align: left; margin-left: 1%; width:20%; ">Reservation ID# </div>
+                    <div id=id_no style="font-size:30px; height: 100%" >{{res.id}}</div>
                 </div>
                 <div id="person_info" style="height: 30%; width:20%">
-                    <div id="name" style="text-align: left;">Name {{ item }}
+                    <div id="customer" style="text-align: left;font-weight:bold;">Customer: 
                     </div>
-                    <div id="number" style="text-align: left;">Phone {{ item }}
+                    <div id="name" style="text-align: left;">{{ res.personName }}
                     </div>
-                    <div id="email" style="text-align: left;">Email {{ item }}
+                    <div id="number" style="text-align: left;"> {{ res.phoneNumber }}
+                    </div>
+                    <div id="email" style="text-align: left;">Email: {{ res.personEmail }}
                     </div>
                 </div>
                 <div id="car_info" style="height: 30%; width:20%;">
-                    <div id="car1" style="text-align: left; ">Car 1
+                    <div id="car-label" style="text-align: left; font-weight:bold;">Cars: 
                     </div>
-                    <div id="car2" style="text-align: left;  ">Car 2
+                    <div id="car1" style="text-align: left; ">{{res.licensePlate1}}
                     </div>
-                    <div id="car3" style="text-align: left;">Car 3
+                    <div id="car2" style="text-align: left;  ">{{res.licensePlate2}}
                     </div>
+                    
                 </div>
                     <div id="res_floor" style="text-align: left; height: 30%; width:15%;">
                         <label>Floor </label>
-                        <el-select v-model="value" class="m-1" placeholder="Select" size="large">
-                        <el-option
-                            v-for="item1 in options"
-                            :key="item1.value"
-                            :label="item1.label"
-                            :value="item1.value"
-                           />
+                        <el-select v-model="res.floor" class="m-1" placeholder="Select" size="large">
+                            <el-option
+                            v-for="f in floors"
+                            :key="f.value"
+                            :label="f.label"
+                            :value="f.value"
+                            />
                         </el-select>
                     </div>
                     <div id="res_spot_no" style="text-align: left; margin-left: 10px; height: 30%; width:15%;"><label>Number </label>
-                        <el-select v-model="value2" class="m-2" placeholder="Select" size="large">
-                        <el-option
-                            v-for="item2 in options2"
-                            :key="item2.value2"
-                            :label="item2.label"
-                            :value="item2.value2"
-                         />
+                        <el-select v-model="res.spotNumber" class="m-2" placeholder="Select" size="large">
+                            <el-option
+                            v-for="p in spots"
+                            :key="p.value"
+                            :label="p.label"
+                            :value="p.value"
+                            />
                         </el-select>
                         
                     </div>
                     
                     <div id="update-button" style="margin-bottom:100px; margin-left: 10px; margin-right: 10px; ">
-                    <el-button type="info">Update Info</el-button>
+                    <el-button type="info" @click="updateReservation(res.id, res.floor, res.spotNumber)">Update Info</el-button>
                     </div>
                     
 
@@ -58,41 +63,7 @@
     </div>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue'
-
-const value = ref('')
-const value2 = ref('')
-const options = [
-  {
-    value: 'Option1',
-    label: 'Option1',
-  },
-  {
-    value: 'Option2',
-    label: 'Option2',
-  },
-  {
-    value: 'Option3',
-    label: 'Option3',
-  },
-
-]
-const options2 = [
-  {
-    value2: 'Option1',
-    label: 'Option1',
-  },
-  {
-    value2: 'Option2',
-    label: 'Option2',
-  },
-  {
-    value2: 'Option3',
-    label: 'Option3',
-  },
-]
-</script>
+<script src="./AdminUsersScript.js" ></script>
 
 <style scoped>
 #list {
