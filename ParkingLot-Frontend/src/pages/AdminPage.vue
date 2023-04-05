@@ -1,9 +1,44 @@
 <template>
-
+  <div>
+    <Header :tabs="tabs"></Header>
+    <div class="pageBody">
+      <div id="page_system" class="tabBody" active="true">
+        system page
+      </div>
+      <div id="page_servicesAndGarages" class="tabBody">
+        services and garages page
+      </div>
+      <div id="page_users" class="tabBody">
+        users page
+      </div>
+      <div id="page_schedules" class="tabBody">
+        schedules page
+      </div>
+      <div id="page_bookReservation" class="tabBody">
+        book reservation page
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
+<script src="./AdminPageScript.js">
 </script>
 
 <style scoped>
+div.pageBody {
+  display: block;
+  min-height: calc(100vh - 59px);
+  max-width: 100vw;
+  padding: 60px 80px;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+div.tabBody {
+  display: none;
+}
+
+div.tabBody[active="true"] {
+  display: block;
+}
 </style>
