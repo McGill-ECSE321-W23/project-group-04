@@ -6,7 +6,7 @@
         <HomePage />
       </div>
       <div id="page_services" class="tabBody">
-        services page
+        <ServiceAppointmentTab />
       </div>
       <div id="page_reservations" class="tabBody">
         <reservations></reservations>
