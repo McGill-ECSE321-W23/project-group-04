@@ -1,5 +1,5 @@
 <template>
-  <!--el-card class="page">
+  <el-card class="page">
     <div class="container" id="login">
       <h1>Login</h1>
       <label for="login_email">Email</label>
@@ -41,8 +41,8 @@
         <a href="#" id="recovery_login">Login</a>
       </div>
     </div>
-  </el-card-->
-  <div class="page">
+  </el-card>
+  <!--div class="page">
     <el-card id="login">
       <template #header>
         <div class="card-header">LOGIN</div>
@@ -71,8 +71,7 @@
         </div>
       </el-form>
     </el-card>
-
-  </div>
+  </div-->
 </template>
 
 <script src="./LoginPageScript.js">
