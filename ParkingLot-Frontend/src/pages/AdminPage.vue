@@ -9,13 +9,13 @@
         services and garages page
       </div>
       <div id="page_users" class="tabBody">
-        users page
+        <AdminUsers />
       </div>
       <div id="page_schedules" class="tabBody">
         schedules page
       </div>
       <div id="page_bookReservation" class="tabBody">
-        book reservation page
+        <BookReservation />
       </div>
     </div>
   </div>
