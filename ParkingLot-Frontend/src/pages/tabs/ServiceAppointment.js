@@ -1,61 +1,92 @@
-import axios from "axios";
+// import axios from "axios";
 
-export const ServiceAppointment = {
-  offeredServices() {
-    return [
-      {
-        id: 1,
-        description: 'Change Tires',
-        duration: 60,
-        cost: 99.99,
-      },
-      {
-        id: 2,
-        description: 'Clean Car',
-        duration: 120,
-        cost: 50.00,
-      },
-      {
-        id: 3,
-        description: 'Change Wipers',
-        duration: 15,
-        cost: 10.00,
-      },
-    ];
+export default {
+  data() {
+    return {
+      offeredServicesAvailable: [
+        {
+          id: 1,
+          label: 'Change Tires',
+          description: 'Change Tires',
+          duration: 60,
+          cost: 99.99,
+        },
+        {
+          id: 2,
+          label: 'Clean Car',
+          description: 'Clean Car',
+          duration: 120,
+          cost: 50.00,
+        },
+        {
+          id: 3,
+          label: 'Change Wipers',
+          description: 'Change Wipers',
+          duration: 15,
+          cost: 10.00,
+        },
+      ],
+      description: "",
+
+      availableServiceAppointments: [
+        {
+          id: 1,
+          date: '12-04-2023',
+          time: '11:30 am',
+          garage: '5',
+        },
+        {
+          id: 2,
+          date: '12-04-2023',
+          time: '2:00 pm',
+          garage: '5',
+        },
+        {
+          id: 3,
+          date: '12-04-2023',
+          time: '5:00 pm',
+          garage: '5',
+        },
+      ],
+      selectedRow: null,
+      showMessage: false,
+      showAppointments: false,
+    };
   },
 
-  availableServiceAppointments() {
-    return [
-      {
-        id: 1,
-        date: '12-04-2023',
-        time: '1:30 pm',
-        garage: '5',
-      },
-      {
-        id: 2,
-        date: '06-04-2023',
-        time: '2:00 pm',
-        garage: '5',
-      },
-      {
-        id: 3,
-        date: '12-04-2023',
-        time: '11:00 am',
-        garage: '5',
-      },
-    ];
+  computed: {
+    selectedAppointment() {
+      return this.$refs.appointmentTable.selection[0];
+    },
+    offeredServicesAvailable() {
+      return ServiceAppointment.offeredServices().offeredServicesAvailable;
+    }
   },
 
-  getOfferedServices() {
-    return Promise.resolve(this.offeredServices());
-  },
+  methods: {
+    handleSelectionChange(selection) {
+      this.selectedRow = selection[0];
+    },
+    handleRowClick(row) {
+      this.selectedRow = row;
+    },
+    saveRow() {
+      if (this.selectedRow) {
+        this.showMessage = true;
+      }
+    },
+    resetTable() {
+      this.selectedRow = null;
+      this.showMessage = false;
+    },
+    showTable() {
+      this.showAppointments = true;
+      this.selectedService = null; 
+      const selectedService = this.offeredServicesAvailable.find((service) => {
+        return service.description === this.description;
+      });
 
-  getOfferedServicesInfo(offeredServiceID) {
-    return axios.get(`/api/offeredServices/${offeredServiceID}`).then((res) => res.data);
-  },
-
-  getAvailableServiceAppointments() {
-    return Promise.resolve(this.availableServiceAppointments());
-  },
-};
+      this.selectedService = selectedService;
+    }
+  }
+}
