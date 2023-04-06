@@ -6,14 +6,10 @@
       <HomePage />
       </div>
       <div id="page_services" style= "padding: 60px 80px" class="tabBody">
-
         <ServiceAppointmentTab />
       </div>
-      <div id="page_reservations" style= "padding: 60px 80px" class="tabBody">
-        <reservations></reservations>
-      </div>
       <div id="page_profile" style= "padding: 60px 80px" class="tabBody">
-        profile page
+        <user-profile></user-profile>
       </div>
     </div>
   </div>
