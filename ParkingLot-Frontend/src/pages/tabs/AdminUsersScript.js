@@ -107,6 +107,9 @@ export default {
     methods: {
         createPerson: function (id, phoneNumber, personName, personEmail) {
             // Create a new person and add it to the list of people
+            if (personEmail == "") {
+              personEmail = 'N/A'
+            }
             var p = new PersonDto(id, phoneNumber, personName, personEmail)
             this.persons.push(p)
             // Reset the name field for new people

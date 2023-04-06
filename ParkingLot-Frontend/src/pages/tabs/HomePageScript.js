@@ -50,26 +50,36 @@ export default {
             var t= new newTicketDtop(id, date, time, 'Regular', this.pls)
             this.tickets.push(t)
             this.newTicket = ''
-            this.regLeft = this.regLeft -1
+            // let regLeftInt = parseInt(this.regleft)
+            // regLeftInt = regLeftInt -1
+            // this.regLeft = regLeftInt.toString
           },
 
         createLargeTicket: function (id,  date, time) {
             var t= new newTicketDtop(id, date, time, 'Large', this.pls)
             this.tickets.push(t)
             this.newTicket = ''
-            this.largeLeft = this.largeLeft -1
+            
+            this.largeLeft = this.largeLeft - 1
           },
         
           payTicket: function (id) {
             
             for (let i = 0; i < tickets.length; i++) {
                 if (tickets[i].id == id) {
-                 var t = tickets[i]
+                 var t = tickets[i];
                 }
               }
 
             this.tickets.pop(t)
           },
+          decRegTicket: function(){
+            let regLeftInt = parseInt(this.regleft)
+            regLeftInt = regLeftInt -1
+            regLeft = regLeftInt
+          }
+
+          
       }
     
 }

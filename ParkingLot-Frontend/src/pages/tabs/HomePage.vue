@@ -3,14 +3,14 @@
   <el-card class = "page" id = "banner" body-style="padding: 0px; margin: 0px;">
     <div class= "container" id = "headline">
       <img src = "../../assets/parking.png" alt = "Parking Lot" id = "parkingImg">
-      <div class ="container" id = "welcomeMsg">
+      <div class ="container" id = "welcomeMsg" style="margin-right:30%; ">
         <div id = "welcomeTo" style= "width: auto; min-width: 200px; left: 6%">
         <p style= "font-size: 120%; "> WELCOME TO THE</p>
         </div>
-        <div id = "logoImg">
+        <div id = "logoImg" style="width: 700px;">
         <img src = "../../assets/McGill_logo.png" alt = "McGill logo" id = "mcgillLogoImg">
         </div>
-        <div id = "parkingLotBold" style = "left:-35%; bottom: -80px">
+        <div id = "parkingLotBold" style = "left:-35%; bottom: -80px; min-width:500px;">
         <span class = "bolded" > PARKING LOT </span>
         </div>
       </div>
@@ -25,7 +25,7 @@
       >
         
         <el-tab-pane label="Get a Ticket" name="first"> 
-            <span style="margin: 0%; padding: 0px; align: left; font-size: 60%;"> Select a Ticket </span>
+            <span style="margin: 0%; padding: 0px; align: left; font-size: 60%;margin-left: 3%;"> Select a Ticket </span>
             <div class="container" id="tickets">  
                 <div class="container" id="regularTicket" style="margin-top: 1%;"> 
                     <el-row>
@@ -38,12 +38,12 @@
                         <div style="text-align: center;padding: 14px">
                             <span style="font-weight:bold; font-size:55%"> REGULAR CAR</span>
                             <div class="bottom" id = "bottomReg">
-                                <el-text class="mx-1"> v-model= Left </el-text>
+                                <el-text class="mx-1"> Tickets left: {{regLeft}} </el-text>
             
             	                 <!-- ADD NUMBR TO DO--> 
             
                                 <div class = "container" id = "regularButton">
-                                    <el-button type = "info" round>Reserve</el-button>
+                                    <el-button type = "info" round @click= "createRegTicket('1311','2023-04-06','9:20')" > Reserve </el-button>
                                 </div>
                             </div>
                         </div>
@@ -65,12 +65,12 @@
                         <div style="text-align: center;padding: 14px">
                             <span style="font-weight:bold; font-size:55%"> LARGE CAR</span>
                             <div class="bottom" id = "bottomLarge">
-                                <el-text class="mx-1"> # Left </el-text>
+                                <el-text class="mx-1"> Tickets left: {{largeLeft}} </el-text>
             
             	                <!-- ADD NUMBR TO DO--> 
             
                                 <div class = "container" id = "largeButton">
-                                    <el-button type = "info" round> Reserve </el-button>
+                                    <el-button type = "info" round @click= "createLargeTicket('1411','2023-04-06','9:20')"> Reserve </el-button>
                                 </div>
                             </div>
                         </div>
@@ -82,9 +82,11 @@
          </el-tab-pane>
 
         <el-tab-pane label="Pay" name = "second">
-            <span id style="margin: 0%; padding: 0px; align: left; font-size: 60%;"> Pay for an Existing Ticket </span>
+          <div id="payment-info" style="display:flex; flex-direction: column;">
+            <span id style="margin: 0%; padding: 0px; align: left; font-size: 60%; margin-left:5%;"> Pay for an Existing Ticket </span>
+            
             <div class="container" id="payments">
-                <div class = "container" style = "position:relative; top:-300px;" id="ticketIDInputs">
+                <div class = "container" style = " margin-left:5%;top:-200px;" id="ticketIDInputs">
                     <label style="margin-right: 1%; font-size: 55%; color: #000000" for = "ticketID" >Ticket ID:</label>
                     <el-input v-model="ticketInput" id = "ticketID" name = "ticketID" style="width: 100%;" placeholder="Input Ticket ID" clearable />
                     <el-button type="info" round style="width: 100%; margin-top: 10%"> Pay Now </el-button>
@@ -94,17 +96,17 @@
                         <img src="../../assets/Ticket.png" class="image" style="width: 50%; margin-left: 25%"/>
                     </div>
                     <div class = "container" id= "ticketParameters">
-                        <p style = "font-size: 40%"> DATE </p>
-                        <p style = "font-size: 40%"> from: START TIME </p>
-                        <p style = "font-size: 40%"> to: END TIME </p>
-                        <p style = "font-size: 40%"> $/hr: COST </p>
-                        <p style = "font-size: 50%; font-weight: bold"> AMOUNT DUE: money </p>
-            
-                        <!-- INPUT DATA -->
+                      <p style = "font-size: 50%; margin-left:28px;">DATE: 2023-04-06 <br>
+                        from: 9:04  <br>
+                         to: 9:34  <br>
+                         $/15m: $3.00 <br>
+                         <b>AMOUNT DUE: $6.00</b></p>
+
             
                     </div>
                 </div>
             </div>
+          </div>
         </el-tab-pane>
         </el-tabs>
     </div>
