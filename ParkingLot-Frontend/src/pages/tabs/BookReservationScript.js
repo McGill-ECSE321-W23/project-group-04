@@ -32,7 +32,7 @@ export default {
     },
     data () {
         return {
-          tabPosition: ref('left'),
+          tabPosition: ref('top'),
 
           reservations: [],
           newReservation: '',
