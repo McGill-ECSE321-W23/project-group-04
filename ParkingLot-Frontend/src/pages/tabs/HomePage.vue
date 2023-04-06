@@ -16,7 +16,7 @@
         v-model="activeName"
         type="card"
         class="demo-tabs"
-        @tab-click="handleClick">
+      >
         
         <el-tab-pane label="Get a Ticket" name="first"> 
             <span style="margin: 0%; padding: 0px; align: left; font-size: 60%;"> Select a Ticket </span>
@@ -105,15 +105,7 @@
 
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue'
-import type { TabsPaneContext } from 'element-plus'
-  
-const ticketInput = ref('')
-const activeName = ref('first')
-const handleClick = (tab: TabsPaneContext, event: Event) => {
-  console.log(tab, event) 
-}
+<script src="./HomePageScript.js">
 </script>
 
 <style>
@@ -151,7 +143,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 #welcomeMsg{
   position: absolute;
   bottom: 10%;
-  left: 5%;
+  left: 0%;
   font-family: monaco;
 }
 

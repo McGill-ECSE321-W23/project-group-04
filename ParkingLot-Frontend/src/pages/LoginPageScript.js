@@ -14,18 +14,12 @@ export default {
             loginForm
         }
     },
-    methods: {
-        onLogin() {
-            console.log("log in");
-        },
-        onRegister() {
-            console.log("register");
-        },
-        onRecover() {
-            console.log("recover");
-        }
-    },
     mounted() {
+        // Logo
+        $("#img_logo").click(function () {
+            window.location.href = '/';
+        });
+
         // Only show login form on page load
         $("#register").hide();
         $("#recovery").hide();
