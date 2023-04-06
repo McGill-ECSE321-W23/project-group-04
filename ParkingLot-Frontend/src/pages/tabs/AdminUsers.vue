@@ -45,7 +45,7 @@
                         <div id="find-button" style="margin-top:40px; margin-left: 10px; margin-right: 10px; ">
                         <el-button type="info" @click="findPersonByID(person_id)" style="width:100px;">Find By ID</el-button>
                         </div>
-                        <el-card v-show="found" class="box-card" style="height:200px; margin-top:20px; width:100%; 
+                        <el-card v-show="found" class="box-card" style="height:250px; margin-top:20px; width:100%; 
                         justify-content: center;">
                         <div id ="update_info" style="display:flex; flex-direction: row;">
                         <p  style="text-align: center; width:50%">
@@ -60,8 +60,8 @@
                         </div>
                         </div>
                         </p>   
-                        <p  style="text-align: center; width:50%">
-                        <div id="person_info" style="width:100%; " >
+                        <p  style="text-align: center; width:50%; ">
+                        <div id="person_info" style="width:100%;  " >
                         <label for="new_name">Update Name: </label>
                         <el-input clearable type="text" v-model="new_name" style="align-self: flex-end; width: 60%;"/>
                         <br><br>
@@ -72,7 +72,7 @@
                          <label for="new_email">Update Email: </label>
                         <el-input clearable type="text" v-model="new_email" style="align-self: flex-end; width: 60%;"/>
                          </div>
-                         <div id="update-button" style="margin-top:40px; margin-left: 10px; margin-right: 10px; ">
+                         <div id="update-button" style=" margin-top:10px; margin-left: 10px; margin-right: 10px; ">
                         <el-button type="info" style="width:100px;" @click="updatePerson(found_user.id, new_name, new_phone, new_email)">
                             Update </el-button>
                         </div>
