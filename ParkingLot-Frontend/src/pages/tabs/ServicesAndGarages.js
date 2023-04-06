@@ -48,4 +48,18 @@ export const garages = [
         label: '5',
         garageNumber: '',
     },
+    // showCard = true, 
 ]
+
+
+// export default {
+//     data() {
+//         methods: {
+//             deleteOfferedService() {
+//                 this.showCard = false;
+//             }
+//         }
+//     }
+// }
+
+// Switch to add form
