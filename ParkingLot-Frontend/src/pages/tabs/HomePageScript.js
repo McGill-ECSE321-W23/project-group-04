@@ -8,11 +8,12 @@ import { ref } from 'vue'
         this.numLargeSpots = numLargeSpots
       }
 
-      function TicketDto(id, date, time, pls){
+      function TicketDto(id, date, time, type, pls){
         this.id = id
         this.date = date
         this.time = time
         this.pls = pls
+        this.type = type
       }
   
 export default {
@@ -28,23 +29,35 @@ export default {
           errorTicker: '',
           response: [],
           selectedTicket: "",
+          regLeft:'',
+          largeLeft:'',
         }
       },
       created: function () {
         // Test data
         const pls = new PLSSystemDto('1', '3', '100', '20')
-        const t1 = new TicketDto('1111','123-456-7890','John Doe', 'abc@gmail.com','CRA-123','ABC-123', '1', '12')
-        const t2 = new TicketDto('1211','000-000-0000','Jane Doe','N/A', 'ABT-345', 'ABC-123', 'B1','10')
+        const t1 = new TicketDto('1111','2023-04-06','8:15', 'Regular',pls)
+        const t2 = new TicketDto('1211','2023-04-06','9:35','Large', pls)
         this.tickets = [t1, t2]
+        this.regLeft = '99'
+        this.largeLeft = '19'
 
       },
     mounted() {
     },
     methods: {
-        createReservation: function (id,  date, time) {
-            var t= new newTicketDtop(id, date, time, pls)
+        createRegTicket: function (id,  date, time) {
+            var t= new newTicketDtop(id, date, time, 'Regular', this.pls)
             this.tickets.push(t)
             this.newTicket = ''
+            this.regLeft = this.regLeft -1
+          },
+
+        createLargeTicket: function (id,  date, time) {
+            var t= new newTicketDtop(id, date, time, 'Large', this.pls)
+            this.tickets.push(t)
+            this.newTicket = ''
+            this.largeLeft = this.largeLeft -1
           },
         
           payTicket: function (id) {
