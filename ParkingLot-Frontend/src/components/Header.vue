@@ -52,7 +52,6 @@ export default {
 
 <style scoped>
 .image {
-  width: 58px;
   height: 58px;
   margin: 0 20px;
 }

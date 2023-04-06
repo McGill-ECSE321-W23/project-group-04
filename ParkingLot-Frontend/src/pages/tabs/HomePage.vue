@@ -84,7 +84,7 @@
         <el-tab-pane label="Pay" name = "second">
             <span id style="margin: 0%; padding: 0px; align: left; font-size: 60%;"> Pay for an Existing Ticket </span>
             <div class="container" id="payments">
-                <div class = "container" style = "position:relative; top:-150px;" id="ticketIDInputs">
+                <div class = "container" style = "position:relative; top:-300px;" id="ticketIDInputs">
                     <label style="margin-right: 1%; font-size: 55%; color: #000000" for = "ticketID" >Ticket ID:</label>
                     <el-input v-model="ticketInput" id = "ticketID" name = "ticketID" style="width: 100%;" placeholder="Input Ticket ID" clearable />
                     <el-button type="info" round style="width: 100%; margin-top: 10%"> Pay Now </el-button>
@@ -94,12 +94,12 @@
                         <img src="../../assets/Ticket.png" class="image" style="width: 50%; margin-left: 25%"/>
                     </div>
                     <div class = "container" id= "ticketParameters">
-                        <p style = "font-size: 40%"> DATE  <br>
-                        from: START TIME  <br>
-                        to: END TIME <br>
-                        $/hr: COST  <br> 
-                        AMOUNT DUE: money
-                        </p>            
+                        <p style = "font-size: 40%"> DATE </p>
+                        <p style = "font-size: 40%"> from: START TIME </p>
+                        <p style = "font-size: 40%"> to: END TIME </p>
+                        <p style = "font-size: 40%"> $/hr: COST </p>
+                        <p style = "font-size: 50%; font-weight: bold"> AMOUNT DUE: money </p>
+            
                         <!-- INPUT DATA -->
             
                     </div>
@@ -143,6 +143,7 @@
 
 #banner{
   position: relative;
+  text-align: left;
   color: white;
 }
 
@@ -152,8 +153,7 @@
 }
 
 .demo-tabs > .el-tabs__content {
-  padding: 5%;
-  top: -50px;
+  padding: 2%;
   color: #6b778c;
   font-size: 32px;
   font-weight: 600;
@@ -220,7 +220,7 @@
 #ticketParameters{
   position: absolute;
   top: 50%;
-  left: 40%;
+  left: 37%;
   text-align: center;
   color: black;
 }
