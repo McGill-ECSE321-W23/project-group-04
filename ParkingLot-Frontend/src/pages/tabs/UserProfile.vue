@@ -10,18 +10,20 @@
       <el-input v-model="form.name" />
     </el-form-item>
     <el-form-item label="email">
-      <el-input v-model="form.name" />
+      <el-input v-model="form.email" readonly/>
     </el-form-item>
     <el-form-item label="password">
-      <el-input v-model="form.name" />
+      <el-input v-model="form.password" show-password/>
     </el-form-item>
     <el-form-item label="phone number">
-      <el-input v-model="form.name" />
+      <el-input v-model="form.phone" />
     </el-form-item>
+    <br>
+    <el-button type="primary" round>Update</el-button>
   </el-form>
 
   <el-divider />
-  <h2>Tickets</h2>
+  <h2>Tickets & Monthly Reservations</h2>
   <br>
   <el-container>
     <template v-for="(ticket, i) in tickets">
@@ -29,6 +31,7 @@
         <template #header>
           <span >Ticket {{i+1}}</span>
         </template>
+        <div>Start Time: {{ticket.start}}</div>
         <span>Time Remaining: {{ticket.remainingTime}} min</span>
         <br>
         <br>
@@ -39,7 +42,7 @@
               end="12:00"
               placeholder="Select time"
           />
-        <el-button>
+        <el-button type="success">
           Add Time
         </el-button>
       </el-card>
@@ -61,12 +64,32 @@
           <el-menu-item v-for="(car, i) in cars" :index="i.toString()">
             <span>{{car.make}} {{car.model}}</span>
           </el-menu-item>
+          <el-menu-item>
+            <el-button :icon="Edit"></el-button>
+          </el-menu-item>
         </el-menu>
       </el-aside>
 
       <el-container>
         <el-card>
-          {{cars[currentIndex].license}}
+          <template #header>
+            License Number: {{cars[currentIndex].license}}
+          </template>
+          <el-table :data="tableData"
+                    @selection-change="handleSelectionChange"
+                    ref="multipleTableRef"
+          >
+            <el-table-column type="selection" width="55" />
+            <el-table-column prop="name" label="Service Name" width="150" />
+            <el-table-column prop="location" label="Garage" width="100" />
+            <el-table-column prop="date" label="Date" width="180" />
+            <el-table-column prop="status" label="Status">
+              <template #default>
+                <el-button type="primary" :icon="Check" circle @click="handleClick"/>
+              </template>
+            </el-table-column>
+
+          </el-table>
         </el-card>
       </el-container>
   </el-container>
@@ -75,16 +98,20 @@
 
 <script setup>
 import {reactive, ref} from "vue";
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from '@element-plus/icons-vue'
 
 const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
+  name: 'jon',
+  email: 'jon@mcgill',
+  password: '123',
+  phone: '514',
 })
 const times = ref([])
 
@@ -95,7 +122,7 @@ const cars = ref([
     model: "civic"
   },
   {
-    license: "dasdaa",
+    license: "yayayaya",
     make: "toyota",
     model: "rav4"
   }
@@ -104,13 +131,30 @@ const cars = ref([
 const tickets = ref([
   {
     carLicense: "141",
+    start: "15h45",
     remainingTime: 54
   },
   {
     carLicense: "141",
+    start: "5h45",
     remainingTime: 42
   }
 ])
+
+const tableData = [
+  {
+    name: 'Tire Change',
+    location: "5",
+    date: '2016-05-03',
+    status: 'Check',
+  },
+  {
+    name: 'Wash',
+    location: "3",
+    date: '2016-05-02',
+    status: 'Star',
+  }
+]
 
 const currentIndex = ref(0)
 
@@ -124,6 +168,9 @@ const handleOpen = (key, keyPath) => {
 const handleClose = (key, keyPath) => {
   console.log(key, keyPath)
 }
+
+const handleSelectionChange = () => {}
+
 </script>
 
 <style scoped>
