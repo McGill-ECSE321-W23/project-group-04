@@ -51,6 +51,7 @@ export default {
       selectedRow: null,
       showMessage: false,
       showAppointments: false,
+      selectedService: null,
     };
   },
 
@@ -64,25 +65,22 @@ export default {
   },
 
   methods: {
-    handleSelectionChange(selection) {
-      this.selectedRow = selection[0];
-    },
     handleRowClick(row) {
       this.selectedRow = row;
     },
-    saveRow() {
+    saveSelectedAppointment() {
       if (this.selectedRow) {
         this.showMessage = true;
       }
     },
     resetTable() {
       this.selectedRow = null;
+      this.showAppointments = false;
       this.showMessage = false;
     },
     showTable() {
       this.showAppointments = true;
-      this.selectedService = null; 
-      const selectedService = this.offeredServicesAvailable.find((service) => {
+      this.selectedService = this.offeredServicesAvailable.find((service) => {
         return service.description === this.description;
       });
 

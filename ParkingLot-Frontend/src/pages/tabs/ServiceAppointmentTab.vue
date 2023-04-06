@@ -7,7 +7,7 @@
   <!-- Dropdown box to select the desired service -->
   <div class="container">
       <label for="offeredServiceSelect" style="padding-right: 10px">Select a service:</label>
-      <el-select v-model="description" placeholder="Select a service" style="width: 300px">
+      <el-select v-model="description" placeholder="Select a service" style="width: 300px" id="selectOfferedService">
           <el-option v-for="item in offeredServicesAvailable" :key="item.description" :label="item.label"
               :value="item.description">
           </el-option>
@@ -33,15 +33,14 @@
     </el-table>
     
     <!-- Choose the appointment -->
-    <el-button type="primary" @click="saveRow">Book appointment</el-button>
+    <el-button type="primary" @click="saveSelectedAppointment">Book appointment</el-button>
     <div v-if="showMessage" class="message-container">
       <el-alert
         title="Appointment booked successfully"
         type="success"
-        :closable="false"
-        @closed="resetTable"
+        :closable="true"
+        @close="resetTable"
         :show-icon="true"
-        :duration="3000"
       >
       </el-alert>
     </div>
