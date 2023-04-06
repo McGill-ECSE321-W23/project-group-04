@@ -3,6 +3,7 @@ import AdminUsers from './tabs/AdminUsers.vue';
 import BookReservation from './tabs/BookReservation.vue';
 import StaffSchedule from './tabs/StaffSchedule.vue';
 import SystemManager from './tabs/SystemManager.vue';
+import ServicesAndGaragesTab from './tabs/ServicesAndGaragesTab.vue';
 
 export default {
     name: 'AdminPage',
@@ -11,7 +12,8 @@ export default {
         AdminUsers,
         BookReservation,
         StaffSchedule,
-        SystemManager
+        SystemManager,
+        ServicesAndGaragesTab
     },
     data() {
         return {
