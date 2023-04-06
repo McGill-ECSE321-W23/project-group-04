@@ -4,9 +4,15 @@
     <div class= "container" id = "headline">
       <img src = "../../assets/parking.png" alt = "Parking Lot" id = "parkingImg">
       <div class ="container" id = "welcomeMsg">
-        <p style= "font-size: 20px"> WELCOME TO THE</p>
-        <img src = "../../assets/McGill_logo.png" alt = "McGill logo" id = "mcGillLogoImg">
-        <span class = "bolded" style = "bottom: 14px; left: -20px"> PARKING LOT </span>
+        <div id = "welcomeTo" style= "width: auto; min-width: 200px; left: 6%">
+        <p style= "font-size: 120%; "> WELCOME TO THE</p>
+        </div>
+        <div id = "logoImg">
+        <img src = "../../assets/McGill_logo.png" alt = "McGill logo" id = "mcgillLogoImg">
+        </div>
+        <div id = "parkingLotBold" style = "left:-35%; bottom: -80px">
+        <span class = "bolded" > PARKING LOT </span>
+        </div>
       </div>
     </div>
   </el-card>
@@ -32,7 +38,7 @@
                         <div style="text-align: center;padding: 14px">
                             <span style="font-weight:bold; font-size:55%"> REGULAR CAR</span>
                             <div class="bottom" id = "bottomReg">
-                                <el-text class="mx-1"> # Left </el-text>
+                                <el-text class="mx-1"> v-model= Left </el-text>
             
             	                 <!-- ADD NUMBR TO DO--> 
             
@@ -116,8 +122,9 @@
     
 }
 
-#mcGillLogoImg{
-    width: 20%;
+#mcgillLogoImg{
+  width: 50%;
+  margin: -20%;
 }
 
 #parkingImg {
@@ -142,8 +149,6 @@
 
 #welcomeMsg{
   position: absolute;
-  bottom: 10%;
-  left: 0%;
   font-family: monaco;
 }
 
