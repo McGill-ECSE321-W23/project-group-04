@@ -1,5 +1,7 @@
 // import axios from "axios";
 
+import { get } from "jquery";
+
 export default {
   data() {
     return {
@@ -77,14 +79,19 @@ export default {
       this.selectedRow = null;
       this.showAppointments = false;
       this.showMessage = false;
+      // this.selectedService = null;
+      // this.description = "";
+      document.getElementById("selectOfferedService").value = "";
     },
     showTable() {
-      this.showAppointments = true;
-      this.selectedService = this.offeredServicesAvailable.find((service) => {
-        return service.description === this.description;
-      });
+      if(document.getElementById("selectOfferedService").value) {
+        this.showAppointments = true;
+        this.selectedService = this.offeredServicesAvailable.find((service) => {
+          return service.description === this.description;
+        });
 
-      this.selectedService = selectedService;
+        this.selectedService = selectedService;
+      }
     }
   }
 }
