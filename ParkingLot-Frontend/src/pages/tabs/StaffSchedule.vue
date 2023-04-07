@@ -5,8 +5,8 @@
     <br />
     <div class="container">
         <label for="staffSelect" style="padding-right: 10px">Select a staff:</label>
-        <el-select v-model="staff_value" placeholder="Select" style="width: 300px">
-            <el-option v-for="item in staff_options" :key="item.staff_value" :label="item.label" :value="item.staff_value">
+        <el-select v-model="staff_selected" placeholder="Select" style="width: 300px" @change="refresh">
+            <el-option v-for="item in staff_list" :key="item.staff_value" :label="item.label" :value="item.staff_value">
             </el-option>
         </el-select>
     </div>
@@ -22,13 +22,13 @@
                 <th>Saturday</th>
             </tr>
             <tr>
-                <td id="sun_schedule">5:00 AM - 9:00 AM</td>
-                <td id="mon_schedule">5:00 AM - 9:00 AM</td>
-                <td id="tue_schedule">5:00 AM - 9:00 AM</td>
-                <td id="wed_schedule">5:00 AM - 9:00 AM</td>
-                <td id="thu_schedule">5:00 AM - 9:00 AM</td>
-                <td id="fri_schedule">5:00 AM - 9:00 AM</td>
-                <td id="sat_schedule">5:00 AM - 9:00 AM</td>
+                <td id="sun_schedule">-</td>
+                <td id="mon_schedule">-</td>
+                <td id="tue_schedule">-</td>
+                <td id="wed_schedule">-</td>
+                <td id="thu_schedule">-</td>
+                <td id="fri_schedule">-</td>
+                <td id="sat_schedule">-</td>
             </tr>
         </table>
     </div>
@@ -42,7 +42,7 @@
                             <br><br>
                             <table class="table_in_card">
                                 <tr>
-                                    <td style="padding-right: 50px;">Set day:</td>
+                                    <td>Set day:</td>
                                     <td>
                                         <el-select v-model="day_value1" placeholder="Select day" style="width: 240px">
                                             <el-option v-for="item in day_options" :key="item.day_value" :label="item.label"
@@ -52,7 +52,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Set start time:</td>
+                                    <td style="padding-right: 20px;">Set start time:</td>
                                     <td>
                                         <el-time-picker v-model="start_time1" :picker-options="{
                                             selectableRange: '00:00 - 23:59'
@@ -69,8 +69,8 @@
                                 </tr>
                             </table>
                             <br>
-                            <el-button>Create</el-button>
-                            <el-button>Cancel</el-button>
+                            <el-button @click="createTimeSlot(day_value1, start_time1, end_time1, staff_selected)">Create</el-button>
+                            <el-button @click="cancelCreateTimeSlot()">Cancel</el-button>
                         </div>
                     </el-card>
                 </td>
@@ -85,24 +85,14 @@
                                     <td>
                                         <el-select v-model="timeslot_selected" placeholder="Select time slot"
                                             style="width: 240px">
-                                            <el-option v-for="item in timeslot_options" :key="item.timeslot_value"
+                                            <el-option v-for="item in timeslot_list" :key="item.timeslot_value"
                                                 :label="item.label" :value="item.timeslot_value">
                                             </el-option>
                                         </el-select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="padding-right: 50px;">Set day:</td>
-                                    <td>
-                                        <el-select v-model="day_value2" placeholder="Select day" style="width: 240px">
-                                            <el-option v-for="item in day_options" :key="item.day_value" :label="item.label"
-                                                :value="item.day_value">
-                                            </el-option>
-                                        </el-select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Set start time:</td>
+                                    <td style="padding-right: 20px;">Set start time:</td>
                                     <td>
                                         <el-time-picker v-model="start_time2" :picker-options="{
                                             selectableRange: '00:00 - 23:59'
@@ -119,9 +109,9 @@
                                 </tr>
                             </table>
                             <br>
-                            <el-button>Update</el-button>
-                            <el-button>Delete</el-button>
-                            <el-button>Cancel</el-button>
+                            <el-button @click="updateTimeslot(timeslot_selected,start_time2,end_time2,staff_selected)">Update</el-button>
+                            <el-button @click="deleteTimeslot(timeslot_selected,staff_selected)">Delete</el-button>
+                            <el-button @click="cancelUpdateTimeSlot()">Cancel</el-button>
                         </div>
                     </el-card>
                 </td>
