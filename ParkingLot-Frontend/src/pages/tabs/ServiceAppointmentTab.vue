@@ -1,22 +1,35 @@
 <template>
   <div class="container">
-    <h1>Services</h1>
+    <h1>Book a Service Appointment</h1>
   </div>
   <br />
 
-  <!-- Dropdown box to select the desired service -->
-  <div class="container">
-    <label for="offeredServiceSelect" style="padding-right: 10px">Select a service:</label>
-    <el-select v-model="description" placeholder="Select a service" style="width: 300px" id="selectOfferedService">
-      <el-option v-for="item in offeredServicesAvailable" :key="item.description" :label="item.label"
-        :value="item.description">
-      </el-option>
-    </el-select>
+  <!-- Select Offered service -->
+  <el-card class="container" style="display:block;" id="ViewOfferedServices">
+      <!-- Header -->
+      <div class="card-header">
+          <h2>Offered Services:</h2> 
+      </div>
+      <br />
 
-    <!-- Choose the offered service -->
-    <el-button type="primary" @click="showTable">Show available appointments</el-button>
-  </div>
-  <br />
+      <!-- Container for the individual offered services -->
+      <div>
+          <el-space wrap class="button" style="text-align: center;">
+              <el-card v-for="item in offeredServicesAvailable" :key="item.id" class="box-card" style="width: 250px" id="offeredService_{{item.id}}">
+                  <!-- Show the offered service -->
+                  <div class="text item">
+                      {{ 'Description: ' + item.description }} <br />
+                      {{ 'Duration: ' + item.duration + ' minutes'}} <br />
+                      {{ 'Cost: ' + item.cost + '$' }} <br />
+                  </div>
+                  <br />
+
+                  <!-- Select the offered service button -->
+                  <el-button type="primary" id="select_offered_service_button_{{item.id}}">Select Offered Service</el-button>
+              </el-card>
+          </el-space>
+      </div>
+      <br />
 
   <!-- Show all the service appointments available -->
   <div v-if="showAppointments">
@@ -41,6 +54,11 @@
       </el-alert>
     </div>
   </div>
+
+  </el-card>
+  <br />
+
+
 </template>
 
 <script src="./ServiceAppointment.js">
