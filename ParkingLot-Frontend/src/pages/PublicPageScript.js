@@ -2,10 +2,12 @@ import Header from '../components/Header.vue';
 import HomePage from './tabs/HomePage.vue';
 import Reservations from "./tabs/Reservations.vue";
 import ServiceAppointmentTab from "./tabs/ServiceAppointmentTab.vue";
+import UserProfile from "@/pages/tabs/UserProfile.vue";
 
 export default {
     name: 'PublicPage',
     components: {
+        UserProfile,
         Header,
         HomePage,
         Reservations,
@@ -26,11 +28,6 @@ export default {
             title: 'SERVICES',
             index: 'services',
             bodyID: 'page_services'
-        });
-        this.tabs.push({
-            title: 'RESERVATIONS',
-            index: 'reservations',
-            bodyID: 'page_reservations'
         });
         this.tabs.push({
             title: 'MY PROFILE',
