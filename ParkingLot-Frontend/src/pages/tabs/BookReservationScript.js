@@ -13,8 +13,9 @@ function ReservationDto (phoneNumber, personName, licensePlate, carMake, carMode
  this.startDate = startDate
  this.endDate = endDate
 }
-function OfferedServiceDto (phoneNumber, personName, licensePlate, carMake, carModel, 
-  service, garage, timeSlot, startDate) {
+function ServiceAppointmentDto (id, phoneNumber, personName, licensePlate, carMake, carModel, 
+  service, garage, timeSlot, startDate, appointmentStatus) {
+    this.id = id;
  this.phoneNumber = phoneNumber
  this.personName = personName
  this.licensePlate = licensePlate
@@ -24,6 +25,7 @@ function OfferedServiceDto (phoneNumber, personName, licensePlate, carMake, carM
  this.garage = garage
  this.timeSlot = timeSlot
  this.startDate = startDate
+ this.appointmentStatus = appointmentStatus
 }
   
 export default {
@@ -33,12 +35,12 @@ export default {
     data () {
         return {
           tabPosition: ref('top'),
-
+          service_id: ref(''),
           reservations: [],
           newReservation: '',
           errorReservation: '',
 
-          offeredServices: [],
+          appointments: [],
           newService: '',
           errorService: '',
 
@@ -132,7 +134,7 @@ export default {
             },
             {
               value: '5',
-              label: 'Wheel Slignment',
+              label: 'Wheel Alignment',
             },
             {
               value: '6',
@@ -143,12 +145,15 @@ export default {
       },
       created: function () {
         // Test data
-        // const r1 = new ReservationDto('1111','123-456-7890','John Doe', 'abc@gmail.com','CRA-123','ABC-123', '1', '12')
+         const s1 = new ServiceAppointmentDto('111','111-111-1111', 'Jane Doe', 'ABT-345', 'Toyota', 'Prius', 
+          'B1', '10', '08/10/2022', '09/10/2022', 'Ready')
+          const s2 = new ServiceAppointmentDto('112','111-111-1111', 'Jane Doe', 'ABT-345', 'Toyota', 'Prius', 
+          'B1', '10', '08/10/2022', '09/10/2022', 'Ready')
         // const r2 = new ReservationDto('1211','000-000-0000','Jane Doe','N/A', 'ABT-345', 'ABC-123', 'B1','10')
         // const r3 = new ReservationDto('1311','100-000-0000','Mary Doe','N/A', 'ASR-565','ABC-123', '2','14')
         // const r4 = new ReservationDto('1411','200-000-0000','Tom Doe','N/A', 'LSL-335','ABC-123', '3','16')
         // const r5 = new ReservationDto('1511','300-000-0000','Paul Doe','N/A', 'MOV-348','ABC-123', 'B1','10')
-        // this.reservations = [r1, r2, r3, r4, r5]
+         this.appointments = [s1, s2]
 
       },
    
@@ -163,15 +168,23 @@ export default {
             this.newReservation = ''
           },
         
-          createOfferedService: function (phoneNumber, personName, licensePlate, carMake, carModel, 
+          createServiceAppointment: function (phoneNumber, personName, licensePlate, carMake, carModel, 
             service, garage, timeSlot, startDate) {
-            
-              var s = new OfferedServiceDto(phoneNumber, personName, licensePlate, carMake, carModel, 
-                floor, spotNumber, startDate, endDate)
+              var s = new ServiceAppointmentDto(phoneNumber, personName, licensePlate, carMake, carModel, 
+                floor, spotNumber, startDate, endDate, 'Ready')
               this.offeredServices.push(s)
               // Reset the name field for new people
               this.newService = ''
           },
+          updateAppointment: function(id, newAppointmentStatus) {
+            for (let i = 0; i < this.appointments.length; i++) {
+              if (this.appointments[i].id == id) {
+               this.appointments[i].appointmentStatus = newAppointmentStatus
+               break
+              }
+            }
+          }
+
       }
     
 }

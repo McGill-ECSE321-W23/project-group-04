@@ -121,7 +121,7 @@
     />
       </div>
       <div id="book-button" style ="width:100%;margin-top: 0px; margin-left: 10%;">
-      <el-button type="info" @click="createOfferedService(person_number, person_name, license_plate, car_make, car_model, 
+      <el-button type="info" @click="createServiceAppointment(person_number, person_name, license_plate, car_make, car_model, 
             selectedService, selectedGarage, value4, value3)" plain style=" width: 70%; display: block; margin-top: 100px;">Book</el-button>
       </div>
   
@@ -134,6 +134,50 @@
       
       </el-tab-pane>
   
+      <el-tab-pane label="Update Services"  style="margin-left: 50px; ">
+        <h1 style="font-weight:bold; font-size: 25px;">Update an Existing Service</h1>
+          
+          <div id="service-info" style="font-size: 15px;margin-top: 20px;" >
+              <div id="make-selections" style="margin-top:20px;width:50%;">
+                  <div id="service-id"  style ="margin-top: 20px;" >
+              <label for="service-id" style="width:40%;" >Service ID:</label>
+          <el-input  type="text" v-model="service_id" name="service_id" style="width: 40%;" clearable />
+      </div>
+
+      <div id="book-button" style ="width:100%;margin-top: 0px; margin-left: 10%;">
+      <el-button type="info" @click="updateServiceAppointment(service-id, )" plain style=" width: 70%; display: block; margin-top: 100px;">Find</el-button>
+      </div>
+      
+        <el-card class="box-card" style="height:700px; margin-left:5%;">
+      <el-scrollbar height="70vh">
+         <div id="list-item" style="width:100%;text-align: center;font-size:15px; ">
+        <p v-for="apt in appointments" :key="apt.id" class="scrollbar-demo-item" style="height:50px; display:flex; flex-direction: row;"> 
+                   
+                   <div id="apt_id" style="height: 40%; width:40%; font-size: 20px;">
+                   <div id="apt_id" style="text-align: left;">{{ apt.id}}
+                   </div> </div>
+               
+               <div id="person_name" style="height: 40%; width:40%; font-size: 20px;">
+                   <div id="person_name" style="text-align: left;">{{ apt.personName }}
+                   </div> </div>
+
+                   <div id="car_licensePlate" style="height: 40%; width:40%; font-size: 20px;">
+                   <div id="car_licensePlate" style="text-align: left;">{{ apt.licensePlate }}
+                   </div> </div>
+
+                </p>
+                </div>
+     </el-scrollbar>
+        </el-card>
+  
+  
+      </div>
+      <div id="calendar"  style="width:50%;">
+          <el-calendar v-model="value3" />
+      </div>    
+      </div>
+      
+      </el-tab-pane>
     </el-tabs>
   </el-card>
   </div>
