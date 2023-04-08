@@ -11,7 +11,7 @@
         <!-- Container for the individual offered services -->
         <div>
             <el-space wrap class="button" style="text-align: center;">
-                <el-card v-for="item in offeredServicesAvailable" :key="item.id" class="box-card" style="width: 250px">
+                <el-card v-for="item in offeredServicesAvailable" :key="item.id" class="box-card" style="width: 250px" id="offeredService_{{item.id}}">
                     <!-- Show the offered service -->
                     <div class="text item">
                         {{ 'Description: ' + item.description }} <br />
@@ -21,17 +21,17 @@
                     <br />
 
                     <!-- Edit the offered service button -->
-                    <el-button type="primary" id="edit_OfferedService_button">Edit Offered Service</el-button>
+                    <el-button type="primary" id="edit_offered_service_button_{{item.id}}">Edit Offered Service</el-button>
                     
                     <!-- Delete the offered service button -->
-                    <el-button type="danger" :icon="Delete" circle id="delete_OfferedService_button" />
+                    <el-button type="danger" :icon="Delete" circle id="delete_offered_service_button_{{item.id}}" />
                 </el-card>
             </el-space>
         </div>
         <br />
 
         <!-- Add an offered service -->
-        <el-button type="success" id="add_OfferedService_button">Add Offered Service</el-button>
+        <el-button type="success" @click="addAnOfferedService" id="add_offered_service_button">Add Offered Service</el-button>
     </el-card>
     <br />
 
@@ -46,7 +46,7 @@
         <!-- Container for the individual garages -->
         <div>
             <el-space wrap class="button" style="text-align: center;">
-                <el-card v-for="item in garages" :key="item.id" class="box-card" style="width: 250px">
+                <el-card v-for="item in garages" :key="item.id" class="box-card" style="width: 250px" id="garage_{{item.id}}">
                     <!-- Show the garage -->
                     <div class="text item">
                         {{ 'Garage number: ' + item.garageNumber }} <br />
@@ -54,17 +54,17 @@
                     <br />
                     
                     <!-- Edit a garage button -->
-                    <el-button type="primary" id="edit_garage_button">Edit Garage</el-button>
+                    <el-button type="primary" id="save_edit_garage_button_{{item.id}}">Edit Garage</el-button>
 
                     <!-- Delete a garage button -->
-                    <el-button type="danger" :icon="Delete" circle @click="deleteGarage" />
+                    <el-button type="danger" :icon="Delete" circle @click="deleteGarage" id="delete_garage_button_{{item.id}}" />
                 </el-card>
             </el-space>
         </div>
         <br />
 
         <!-- Add a garage -->
-        <el-button type="success">Add Garage</el-button>
+        <el-button type="success" id="add_garage_button">Add Garage</el-button>
     </el-card>
 
     <!-- Create Offered services -->
@@ -96,8 +96,11 @@
         </div>
         <br />
         
+        <!-- Go back button -->
+        <el-button type="warning" :icon="ArrowLeft" plain id="go_back_button_1"> Go back</el-button>
+
         <!-- Add the offered service button -->
-        <el-button type="success" id="create_offered_service_button">Add Offered Service</el-button>
+        <el-button type="success" id="save_add_offered_service_button">Add Offered Service</el-button>
     </el-card>
     <br />
 
@@ -115,9 +118,12 @@
             <el-input v-model="garageNumberInput" placeholder="Enter garage number"></el-input> 
         </div>
         <br />
-                
+        
+        <!-- Go back button -->
+        <el-button type="warning" :icon="ArrowLeft" plain id="go_back_button_2"> Go back</el-button>
+        
         <!-- Add the garage button -->
-        <el-button type="success" id="create_garage_button">Add Garage</el-button>
+        <el-button type="success" id="save_add_garage_button">Add Garage</el-button>
     </el-card>
     <br />
 
@@ -150,8 +156,11 @@
         </div>
         <br />
         
+        <!-- Go back button -->
+        <el-button type="warning" :icon="ArrowLeft" plain id="go_back_button_3"> Go back</el-button>
+
         <!-- Save the edited offered service -->
-        <el-button type="warning" id="edit_offered_service_button">Save Offered Service</el-button>
+        <el-button type="success" id="save_edit_offered_service_button">Save Offered Service</el-button>
     </el-card>
     <br />
 
@@ -170,8 +179,11 @@
         </div>
         <br />
                 
+        <!-- Go back button -->
+        <el-button type="warning" :icon="ArrowLeft" plain id="go_back_button_4"> Go back</el-button>
+
         <!-- Add an offered service -->
-        <el-button type="warning" id="edit_garage_button">Save Garage</el-button>
+        <el-button type="success" id="save_edit_garage_button">Save Garage</el-button>
     </el-card>
     <br />
 
@@ -181,10 +193,9 @@
 
 import { offeredServicesAvailable, garages } from './ServicesAndGarages.js'
 import { reactive, ref } from 'vue'
-import { Delete } from '@element-plus/icons-vue'
+import { Delete, ArrowLeft } from '@element-plus/icons-vue'
 import $ from 'jquery'
 
-// Initialize the constants for the inputs
 const descriptionInput = ref('')
 const durationInput = ref('')
 const costInput = ref('')
@@ -202,6 +213,86 @@ $(document).ready(function() {
     $('#GarageAdd').hide();
     $('#OfferedServiceEdit').hide();
     $('#GarageEdit').hide();
+
+    // Only show the add offered service section
+    $('#add_offered_service_button').click(function() {
+        $('#OfferedServicesEdit').hide();
+        $('#GaragesEdit').hide();
+        $('#OfferedServiceAdd').show();
+        $('#GarageAdd').hide();
+        $('#OfferedServiceEdit').hide();
+        $('#GarageEdit').hide();
+    });
+
+    // Only show the add garage section
+    $('#add_garage_button').click(function() {
+        $('#OfferedServicesEdit').hide();
+        $('#GaragesEdit').hide();
+        $('#OfferedServiceAdd').hide();
+        $('#GarageAdd').show();
+        $('#OfferedServiceEdit').hide();
+        $('#GarageEdit').hide();
+    });
+
+    // // Only show the edit offered service section
+    // $('#edit_offered_service_button_' + item.id).click(function() {
+    //     $('#OfferedServicesEdit').hide();
+    //     $('#GaragesEdit').hide();
+    //     $('#OfferedServiceAdd').hide();
+    //     $('#GarageAdd').hide();
+    //     $('#OfferedServiceEdit').show();
+    //     $('#GarageEdit').hide();
+    // });
+
+    // // Only show the edit offered service section
+    // $('#edit_garage_button_' + item.id).click(function() {
+    //     $('#OfferedServicesEdit').hide();
+    //     $('#GaragesEdit').hide();
+    //     $('#OfferedServiceAdd').hide();
+    //     $('#GarageAdd').hide();
+    //     $('#OfferedServiceEdit').hide();
+    //     $('#GarageEdit').show();
+    // });
+
+    // Bo back to the edit section
+    $('#go_back_button_1').click(function() {
+        $('#OfferedServicesEdit').show();
+        $('#GaragesEdit').show();
+        $('#OfferedServiceAdd').hide();
+        $('#GarageAdd').hide();
+        $('#OfferedServiceEdit').hide();
+        $('#GarageEdit').hide();
+    });
+
+    // Bo back to the edit section
+    $('#go_back_button_2').click(function() {
+        $('#OfferedServicesEdit').show();
+        $('#GaragesEdit').show();
+        $('#OfferedServiceAdd').hide();
+        $('#GarageAdd').hide();
+        $('#OfferedServiceEdit').hide();
+        $('#GarageEdit').hide();
+    });
+
+    // Bo back to the edit section
+    $('#go_back_button_3').click(function() {
+        $('#OfferedServicesEdit').show();
+        $('#GaragesEdit').show();
+        $('#OfferedServiceAdd').hide();
+        $('#GarageAdd').hide();
+        $('#OfferedServiceEdit').hide();
+        $('#GarageEdit').hide();
+    });
+
+    // Bo back to the edit section
+    $('#go_back_button_4').click(function() {
+        $('#OfferedServicesEdit').show();
+        $('#GaragesEdit').show();
+        $('#OfferedServiceAdd').hide();
+        $('#GarageAdd').hide();
+        $('#OfferedServiceEdit').hide();
+        $('#GarageEdit').hide();
+    });
 });
 
 
