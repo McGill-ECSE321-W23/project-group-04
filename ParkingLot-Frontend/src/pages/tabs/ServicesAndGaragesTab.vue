@@ -9,11 +9,10 @@
         <br />
         
         <!-- Table for the offered services -->
-        <el-table :data="offeredServicesAvailable" height="500" style="width: 100%" @row-click="handleOfferedServiceRowClick"
-        :highlight-current-row="true">
-            <el-table-column prop="description" label="Description" style="width: 75%" />
-            <el-table-column prop="duration" label="Duration (minutes)" style="width: 50%" />
-            <el-table-column prop="cost" label="Cost ($)" style="width: 50%" />
+        <el-table :data="offeredServicesAvailable" height="500" style="width: 100%" @row-click="handleOfferedServiceRowClick" :highlight-current-row="true">
+            <el-table-column prop="description" label="Description" style="width: 100%" />
+            <el-table-column prop="duration" label="Duration (minutes)" style="width: 100%" />
+            <el-table-column prop="cost" label="Cost ($)" style="width: 100%" />
         </el-table>
         <br/>
 
