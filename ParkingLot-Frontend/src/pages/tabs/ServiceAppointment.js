@@ -54,9 +54,6 @@ export default {
   },
 
   computed: {
-    selectedAppointment() {
-      return this.$refs.appointmentTable.selection[0];
-    },
     offeredServicesAvailable() {
       return ServiceAppointment.offeredServices().offeredServicesAvailable;
     }
