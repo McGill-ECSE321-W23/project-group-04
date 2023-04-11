@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.dao.AccountRepository;
 import ca.mcgill.ecse321.parkinglotbackend.dao.PersonRepository;
+import ca.mcgill.ecse321.parkinglotbackend.dto.AccountDto;
+import ca.mcgill.ecse321.parkinglotbackend.dto.PersonDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.Account;
 import ca.mcgill.ecse321.parkinglotbackend.model.ManagerAccount;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.StaffAccount;
+import ca.mcgill.ecse321.parkinglotbackend.service.AccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +30,9 @@ public class AuthenticationRestController {
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private AccountService accountService;
 
     /**
      * Login to the system
@@ -121,6 +127,7 @@ public class AuthenticationRestController {
      * Helper method for smoke testing
      * @param request - anyone can access this method if logged in
      * @return
+     * @author Lin Wei Li
      */
     @GetMapping("/getRole")
     public ResponseEntity<?> getRole(HttpServletRequest request) {
@@ -138,10 +145,84 @@ public class AuthenticationRestController {
 
     }
 
+    /**
+     * Check if logged in
+     * @return boolean
+     * @author Lin Wei Li
+     */
+    @GetMapping("/isLoggedIn")
+    public ResponseEntity<?> isLoggedIn(HttpServletRequest request) {
+        return ResponseEntity.ok().body(AuthenticationUtility.isLoggedIn(request));
+    }
+
+    /**
+     * Check if logged in as manager
+     * @return boolean
+     * @author Lin Wei Li
+     */
+    @GetMapping("/isStaff")
+    public ResponseEntity<?> isStaff(HttpServletRequest request) {
+        try {
+            return ResponseEntity.ok().body(AuthenticationUtility.isStaff(request));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /**
+     * Check if logged in as manager
+     * @return boolean
+     * @author Lin Wei Li
+     */
+    @GetMapping("/isManager")
+    public ResponseEntity<?> isManager(HttpServletRequest request) {
+        try {
+            return ResponseEntity.ok().body(AuthenticationUtility.isManager(request));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @Autowired
     private PersonRepository personRepository;
     @Autowired
     private AccountRepository accountRepository;
+
+    /**
+     * Get account
+     * @return accountDto
+     * @author Lin Wei Li
+     */
+    @GetMapping("/getAccount")
+    public ResponseEntity<?> getAccount(HttpServletRequest request) {
+
+        // Get account ID
+        long accountId;
+        try {
+            accountId = AuthenticationUtility.getAccountId(request);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        // Get account
+        Account account;
+        try {
+            account = accountService.getAccountByID(accountId);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        // Return account
+        long personId = account.getPerson().getPersonID();
+        String name = account.getPerson().getName();
+        String phoneNumber = account.getPerson().getPhoneNumber();
+        String email = account.getEmail();
+        String password = account.getPassword();
+        PersonDto personDto = new PersonDto(personId, name, phoneNumber);
+        AccountDto accountDto = new AccountDto(accountId, email, password, personDto);
+
+        return ResponseEntity.ok().body(accountDto);
+    }
 
     /**
      * Add test data for smoke testing
