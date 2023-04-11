@@ -61,6 +61,7 @@ export default {
                 },
                 success: function(data) {
                     console.log(data);
+                    window.location.href = '/';
                 },
                 error: function(data) {
                     console.log(data);
@@ -81,6 +82,10 @@ export default {
                 },
                 success: function(data) {
                     console.log(data);
+                    // switch to login form
+                    $("#register").hide();
+                    $("#recovery").hide();
+                    $("#login").show();
                 },
                 error: function(data) {
                     console.log(data);
@@ -95,6 +100,7 @@ export default {
                 type: "GET",
                 success: function(data) {
                     console.log(data);
+                    window.location.href = '/';
                 },
                 error: function(data) {
                     console.log(data);

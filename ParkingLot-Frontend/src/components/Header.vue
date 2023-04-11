@@ -12,9 +12,22 @@
 
     <div class="flex-grow" />
 
-    <el-menu-item id="connection" index="connection">
+    <el-menu-item id="item_login" index="login">
       LOGIN
     </el-menu-item>
+
+    <div id="loggedInOptions" style="display: flex; flex-direction: row;">
+      <div id="greeting"></div>
+
+      <el-menu-item id="item_adminPage" index="adminPage">
+        ADMIN
+      </el-menu-item>
+
+      <el-menu-item id="item_logout" index="logout">
+        LOGOUT
+      </el-menu-item>
+    </div>
+
   </el-menu>
 </template>
 
@@ -25,9 +38,9 @@ import $ from 'jquery'
 
 function handleSelect(index) {
   // Login
-  if (index === 'connection') {
-    window.location.href = '/login'
-    return
+  if (index === 'login') {
+    window.location.href = '/login';
+    return;
   }
 
   // Set all tab bodies to inactive
@@ -46,6 +59,38 @@ export default {
       type: Array,
       default: () => []
     }
+  },
+  mounted() {
+    // Method for displaying not logged in
+    function displayNotLoggedIn() {
+      $("#item_login").show();
+      $("#loggedInOptions").hide();
+    }
+
+    // Method for displaying logged in
+    function displayLoggedIn() {
+      $("#item_login").hide();
+      $("#loggedInOptions").show();
+    }
+
+    // Check if the user is logged in
+    $.ajax({
+      url: 'http://127.0.0.1:8080/api/auth/isLoggedIn',
+      type: 'GET',
+      success: function(data) {
+        console.log(data);
+        var loggedIn = data === 'true';
+        console.log(loggedIn);
+        if (loggedIn) {
+          displayLoggedIn();
+        } else {
+          displayNotLoggedIn();
+        }
+      },
+      error: function(data) {
+        console.log(data);
+      }
+    });
   }
 }
 </script>
