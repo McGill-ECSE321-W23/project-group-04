@@ -13,6 +13,14 @@ import { ref } from 'vue'
         this.spotNumber = spotNumber
 
       }
+      function PersonDto (id, phoneNumber, personName, personEmail) {
+       this.id = id
+       this.phoneNumber = phoneNumber
+       this.personName = personName
+       this.personEmail = personEmail
+
+     }
+
   
 export default {
     name: "AdminUsers",
@@ -20,6 +28,17 @@ export default {
     },
     data () {
         return {
+          person_name: ref(''),
+          person_number: ref(''),
+          person_email: ref(''),
+          person_id: ref(''),
+          new_name: ref(''),
+          new_phone: ref(''),
+          new_email: ref(''),
+          found: false,
+          found_user: new PersonDto(),
+          persons: [],
+          tabPosition: ref('top'),
           reservations: [],
           newReservation: '',
           errorReservation: '',
@@ -77,29 +96,72 @@ export default {
         const r5 = new ReservationDto('1511','300-000-0000','Paul Doe','N/A', 'MOV-348','ABC-123', 'B1','10')
         this.reservations = [r1, r2, r3, r4, r5]
 
+        const p1 = new PersonDto('101','123-456-7890','John Doe', 'abc@gmail.com')
+        const p2 = new PersonDto('102','000-000-0000','Jane Doe', 'N/A')
+        const p3 = new PersonDto('103','100-000-0000','Mary Doe', 'def@gmail.com')
+        const p4 = new PersonDto('104','200-000-0000','Jim Doe', 'N/A')
+        this.persons = [p1, p2, p3, p4]
       },
     mounted() {
     },
     methods: {
-        createReservation: function (id, phoneNumber, personName, personEmail, licensePlate1, licensePlate2,floor, spotNumber) {
+        createPerson: function (id, phoneNumber, personName, personEmail) {
             // Create a new person and add it to the list of people
-            var r = new ReservationDto(id, phoneNumber, personName, personEmail, licensePlate1, licensePlate2, floor, spotNumber)
-            this.reservations.push(r)
+            if (personEmail == "") {
+              personEmail = 'N/A'
+            }
+            var p = new PersonDto(id, phoneNumber, personName, personEmail)
+            this.persons.push(p)
             // Reset the name field for new people
-            this.newReservation = ''
+            this.newPerson = ''
           },
-        
+          findPersonByPhone: function (phoneNumber) {
+            for (let i = 0; i < this.persons.length; i++) {
+              if (this.persons[i].phoneNumber == phoneNumber) {
+               this.found_user = this.persons[i]
+               this.found = true
+              }
+            }
+          },
+          findPersonByID: function (id) {
+            for (let i = 0; i < this.persons.length; i++) {
+              if (this.persons[i].id == id) {
+               this.found_user = this.persons[i]
+               this.found = true
+              }
+            }
+          },
+          updatePerson: function(id, newName, newPhone, newEmail) {
+            for (let i = 0; i < this.persons.length; i++) {
+              if (this.persons[i].id == id) {
+               if (!(newName == "")) {
+                this.persons[i].personName = newName
+                }
+              if (!(newPhone == "")) {
+                  this.persons[i].phoneNumber = newPhone
+                }
+                if (!(newEmail == "")) {
+                  this.persons[i].personEmail = newEmail
+                }
+                break
+              }
+            }
+            this.new_name=""
+            this.new_email=""
+            this.new_phone=""
+          },
           updateReservation: function (id, newFloor, newSpot) {
             
-            for (let i = 0; i < reservations.length; i++) {
-                if (reservations[i].id == id) {
-                 var r = reservations[i]
+            for (let i = 0; i < this.reservations.length; i++) {
+                if (this.reservations[i].id == id) {
+                 this.reservations[i].floor = newFloor
+                 this.reservations[i].spotNumber = newSpot
+                 break
                 }
               }
-            r.floor = newFloor
-            r.spotNumber = newSpot
-            this.reservations.push(r)
-          },
+            
+          }
+          
       }
     
 }
