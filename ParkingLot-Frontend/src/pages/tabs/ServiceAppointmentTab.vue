@@ -82,7 +82,7 @@ import { ref } from 'vue'
 import $ from 'jquery'
 import { ArrowLeft } from '@element-plus/icons-vue'
 
-const showMessage = ref(false)
+var showMessage = ref(false)
 const date = ref('')
 const time = ref('')
 
