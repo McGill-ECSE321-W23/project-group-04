@@ -40,29 +40,21 @@ The application will improve the overall experience for customers, employees and
   - via an IDE: run the application from `/ParkingLot-Backend/src/main/java/ca/mcgill/ecse321/parkinglotbackend/ParkingLotBackendApplication.java`
  3. Application should be started on `localhost:8080`
 
-## Sprint 1
+## Sprint Summary
+
+### Contributions
+| Team Member       | Sprint 1  | Sprint 2  | Sprint 3 |
+| ----------------- | ----------- | ------ | -- |
+| Faiza Chowdhury   |   26     | 27 | |
+| Annie Gouchee     |   26   | 28 | |
+| Lin Wei Li        |    32   | 32 | |
+| Estefania Vazquez | 28     | 29 | |
+| Qin Xuan Xu       |  27   | 22 | |
+| Edwin You Zhou    | 30   | 24 | |
+
+### Sprint 1
 [Sprint 1: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Overview)
 
-### Contributions
-| Team Member       | Contributions                                   | Hours  |
-| ----------------- | ----------------------------------------------- | ------ |
-| Faiza Chowdhury   |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test|   26     |
-| Annie Gouchee     |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, README.md, Wiki |    26   |
-| Lin Wei Li        |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Create Repository, Spring Boot Project Set Up|   32   |
-| Estefania Vazquez |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Meeting Minutes, Wiki| 28     |
-| Qin Xuan Xu       |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test|   27   |
-| Edwin You Zhou    |Domain Model, Requirements, Use-Case Diagram, Add JPA Annotation, CRUD Repository, Persistence Layer Test, Create Repository, Spring Boot Project Set Up|   30   |
-
-## Sprint 2
+### Sprint 2
 [Sprint 2: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Sprint-2#overview)
 
-### Contributions
-## Effort Table
-| Team Member       | Contributions                                   | Hours  |
-| ----------------- | ----------------------------------------------- | ------ |
-| Faiza Chowdhury   |RESTful HTTP Methods, Controller, DTO and Unit Testing for Ticket and Parking Spot, Wiki, Quality Assurance Plan |      27  |
-| Annie Gouchee     |RESTful HTTP Methods, Controller, DTO and Unit Testing for ServiceAppointment and Car, Wiki, READ.ME, Quality Assurance Plan  |    28   |
-| Lin Wei Li        |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Persona and Account, Wiki, Backlog, Quality Assurance Plan |   32   |
-| Estefania Vazquez |Iteration 1 Fixes, RESTful HTTP Methods, Controller, DTO and Unit Testing for Garage and OfferedService, Wiki, Backlog, Quality Assurance Plan, Meeting minutes  |   29   |
-| Qin Xuan Xu       |RESTful HTTP Methods, Controller, DTO and Unit Testing for System and TimeSlot, Quality Assurance Plan | 22 |
-| Edwin You Zhou    |RESTful HTTP Methods, Controller, DTO and Unit Testing for StaffAccount, ManagerAccount and MonthlyReservation, Wiki, Test coverage, Quality Assurance Plan  |   24   |
