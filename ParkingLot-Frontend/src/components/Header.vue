@@ -82,6 +82,7 @@ export default {
       }
     })
     .then(res => {
+      console.log(document.cookie)
       console.log(res);
       var loggedIn = res.data === true;
       console.log(loggedIn);

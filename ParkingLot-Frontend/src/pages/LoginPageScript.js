@@ -60,11 +60,14 @@ export default {
                     "Access-Control-Allow-Origin": 'localhost:8080',
                 },
                 params: {
-                    email: 'ed',
+                    email: 'testemail',
                     password: '123'
                 }
             })
             .then((res) => {
+                // console.log(document.cookie)
+                // document.cookie = res.headers['Set-Cookie']
+                // console.log(document.cookie)
                 console.log(res)
                 router.push("/")
 
