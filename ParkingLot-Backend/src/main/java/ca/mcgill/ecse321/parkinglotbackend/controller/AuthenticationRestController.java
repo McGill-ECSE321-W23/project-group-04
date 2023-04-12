@@ -1,14 +1,5 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.dao.AccountRepository;
 import ca.mcgill.ecse321.parkinglotbackend.dao.PersonRepository;
@@ -22,8 +13,10 @@ import ca.mcgill.ecse321.parkinglotbackend.service.AccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationRestController {
@@ -44,6 +37,7 @@ public class AuthenticationRestController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(HttpServletRequest request, @RequestParam String email, @RequestParam String password) {
+        HttpSession session = request.getSession(true);
 
         // Check if already logged in
         if (AuthenticationUtility.isLoggedIn(request)) {
@@ -55,7 +49,6 @@ public class AuthenticationRestController {
             Account account = authenticationService.authenticate(email, password);
 
             // Respond with success
-            HttpSession session = request.getSession(true);
 
             if (account.getClass().equals(ManagerAccount.class)) {
                 session.setAttribute("accountID", account.getAccountID());

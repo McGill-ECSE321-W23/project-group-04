@@ -1,5 +1,7 @@
-import { reactive, ref } from 'vue'
+import {reactive} from 'vue'
 import $ from 'jquery'
+import router from '@/router'
+import axios from 'axios';
 
 export default {
     name: "LoginPage",
@@ -52,21 +54,52 @@ export default {
 
         // Login
         $("#login_button").click(function() {
-            $.ajax({
-                url: "http://127.0.0.1:8080/api/auth/login",
-                type: "POST",
-                data: {
-                    email: $("#login_email").val(),
-                    password: $("#login_password").val()
+            axios.post('http://localhost:8080/api/auth/login', {}, {
+                withCredentials: true,
+                headers: {
+                    "Access-Control-Allow-Origin": 'localhost:8080',
                 },
-                success: function(data) {
-                    console.log(data);
-                    window.location.href = '/';
-                },
-                error: function(data) {
-                    console.log(data);
+                params: {
+                    email: 'ed',
+                    password: '123'
                 }
-            });
+            })
+            .then((res) => {
+                console.log(res)
+                router.push("/")
+
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            // $.ajax({
+            //     url: "http://127.0.0.1:8080/api/auth/login",
+            //     type: "POST",
+            //     data: {
+            //         email: $("#login_email").val(),
+            //         password: $("#login_password").val()
+            //     },
+            //     success: function(data, status, xhr) {
+            //         alert(xhr.getResponseHeader('Set-Cookie'));
+            //         // router.push("/")
+            //         // window.location.href = '/';
+            //
+            //         // Check if the user is logged in
+            //         // $.ajax({
+            //         //     url: 'http://127.0.0.1:8080/api/auth/isLoggedIn',
+            //         //     type: 'GET',
+            //         //     success: function(data) {
+            //         //         console.log(data);
+            //         //     },
+            //         //     error: function(data) {
+            //         //         console.log(data);
+            //         //     }
+            //         // });
+            //     },
+            //     error: function(data) {
+            //         console.log("error "+ data);
+            //     }
+            // });
         });
         
         // Register
@@ -107,5 +140,5 @@ export default {
                 }
             });
         });
-    }
+    },
 }

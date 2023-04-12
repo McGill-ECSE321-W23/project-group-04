@@ -33,7 +33,6 @@
 
 <script setup>
 import logo from '../assets/PLS_logo.png'
-import {ref} from 'vue'
 import $ from 'jquery'
 
 function handleSelect(index) {
@@ -52,6 +51,8 @@ function handleSelect(index) {
 </script>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'Header',
   props: {
@@ -74,23 +75,42 @@ export default {
     }
 
     // Check if the user is logged in
-    $.ajax({
-      url: 'http://127.0.0.1:8080/api/auth/isLoggedIn',
-      type: 'GET',
-      success: function(data) {
-        console.log(data);
-        var loggedIn = data === 'true';
-        console.log(loggedIn);
-        if (loggedIn) {
-          displayLoggedIn();
-        } else {
-          displayNotLoggedIn();
-        }
-      },
-      error: function(data) {
-        console.log(data);
+    axios.get('http://127.0.0.1:8080/api/auth/isLoggedIn', {
+      withCredentials: true,
+      headers: {
+        "Access-Control-Allow-Origin": 'localhost:8080'
       }
-    });
+    })
+    .then(res => {
+      console.log(res);
+      var loggedIn = res.data === true;
+      console.log(loggedIn);
+      if (loggedIn) {
+        displayLoggedIn();
+      } else {
+        displayNotLoggedIn();
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    // $.ajax({
+    //   url: 'http://127.0.0.1:8080/api/auth/isLoggedIn',
+    //   type: 'GET',
+    //   success: function(data) {
+    //     console.log(data);
+    //     var loggedIn = data === 'true';
+    //     console.log(loggedIn);
+    //     if (loggedIn) {
+    //       displayLoggedIn();
+    //     } else {
+    //       displayNotLoggedIn();
+    //     }
+    //   },
+    //   error: function(data) {
+    //     console.log(data);
+    //   }
+    // });
   }
 }
 </script>
