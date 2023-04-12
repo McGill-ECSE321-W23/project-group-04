@@ -54,14 +54,26 @@ export default {
         $("#login_button").click(function() {
             $.ajax({
                 url: "http://127.0.0.1:8080/api/auth/login",
+                xhrFields: {
+                    withCredentials: true
+                },
                 type: "POST",
                 data: {
                     email: $("#login_email").val(),
                     password: $("#login_password").val()
                 },
-                success: function(data) {
+                success: function(data, textStatus, jqXHR) {
+                    console.log(jqXHR.getAllResponseHeaders());
+                    console.log(jqXHR.getResponseHeader('Set-Cookie'));
+                    // Set cookie
+                    document.cookie = "session_id=" + data.session_id + "; path=/";
+                    console.log(document.cookie);
+                    // $.cookie('session_id', data.session_id, { expires: 7, path: '/' });
+                    // console.log($.cookie('session_id'));
+
+                    // Redirect to home page
                     console.log(data);
-                    window.location.href = '/';
+                    // window.location.href = '/';
                 },
                 error: function(data) {
                     console.log(data);
