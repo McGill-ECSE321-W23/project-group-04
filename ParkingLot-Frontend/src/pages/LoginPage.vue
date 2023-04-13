@@ -154,7 +154,7 @@ img {
   border-bottom: 2px solid black;
   outline: none;
   background-color: transparent;
-  color: #fff;
+  color: black;
 }
 
 .container button {
