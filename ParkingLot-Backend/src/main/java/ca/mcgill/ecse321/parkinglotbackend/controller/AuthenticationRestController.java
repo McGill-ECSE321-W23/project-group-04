@@ -53,17 +53,17 @@ public class AuthenticationRestController {
             if (account.getClass().equals(ManagerAccount.class)) {
                 session.setAttribute("accountID", account.getAccountID());
                 session.setAttribute("role", AuthenticationUtility.Role.MANAGER);
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().header("Set-Cookie", "session_id=" + session.getId() + "; Path=/").build();
             }
             else if (account.getClass().equals(StaffAccount.class)) {
                 session.setAttribute("accountID", account.getAccountID());
                 session.setAttribute("role", AuthenticationUtility.Role.STAFF);
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().header("Set-Cookie", "session_id=" + session.getId() + "; Path=/").build();
             }
             else if (account.getClass().equals(Account.class)) {
                 session.setAttribute("accountID", account.getAccountID());
                 session.setAttribute("role", AuthenticationUtility.Role.CUSTOMER);
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().header("Set-Cookie", "session_id=" + session.getId() + "; Path=/; Secure; SameSite=None").body(session.getId());
             }
             else {
                 return ResponseEntity.badRequest().body("Unknown account type");
@@ -93,7 +93,7 @@ public class AuthenticationRestController {
         HttpSession session = request.getSession();
         session.invalidate();
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().header("Set-Cookie", "session_id=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT").build();
 
     }
 
