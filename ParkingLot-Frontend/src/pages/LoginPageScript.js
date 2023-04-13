@@ -1,5 +1,7 @@
-import { reactive, ref } from 'vue'
+import {reactive} from 'vue'
 import $ from 'jquery'
+import router from '@/router'
+import axios from 'axios';
 
 export default {
     name: "LoginPage",
@@ -17,7 +19,7 @@ export default {
     mounted() {
         // Logo
         $("#img_logo").click(function () {
-            window.location.href = '/';
+            router.push("/");
         });
 
         // Only show login form on page load
@@ -52,39 +54,58 @@ export default {
 
         // Login
         $("#login_button").click(function() {
-            $.ajax({
-                url: "http://127.0.0.1:8080/api/auth/login",
-                xhrFields: {
-                    withCredentials: true
+            axios.post('http://localhost:8080/api/auth/login', {}, {
+                withCredentials: true,
+                headers: {
+                    "Access-Control-Allow-Origin": 'localhost:8080',
                 },
-                type: "POST",
-                data: {
-                    email: $("#login_email").val(),
-                    password: $("#login_password").val()
-                },
-                success: function(data, textStatus, jqXHR) {
-                    console.log(jqXHR.getAllResponseHeaders());
-                    console.log(jqXHR.getResponseHeader('Set-Cookie'));
-                    // Set cookie
-                    document.cookie = "session_id=" + data.session_id + "; path=/";
-                    console.log(document.cookie);
-                    // $.cookie('session_id', data.session_id, { expires: 7, path: '/' });
-                    // console.log($.cookie('session_id'));
-
-                    // Redirect to home page
-                    console.log(data);
-                    // window.location.href = '/';
-                },
-                error: function(data) {
-                    console.log(data);
+                params: {
+                    email: 'testemail',
+                    password: '123'
                 }
-            });
+            })
+            .then((res) => {
+                console.log(res)
+                router.push("/")
+
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            // $.ajax({
+            //     url: "http://127.0.0.1:8080/api/auth/login",
+            //     type: "POST",
+            //     data: {
+            //         email: $("#login_email").val(),
+            //         password: $("#login_password").val()
+            //     },
+            //     success: function(data, status, xhr) {
+            //         alert(xhr.getResponseHeader('Set-Cookie'));
+            //         // router.push("/")
+            //         // window.location.href = '/';
+            //
+            //         // Check if the user is logged in
+            //         // $.ajax({
+            //         //     url: 'http://127.0.0.1:8080/api/auth/isLoggedIn',
+            //         //     type: 'GET',
+            //         //     success: function(data) {
+            //         //         console.log(data);
+            //         //     },
+            //         //     error: function(data) {
+            //         //         console.log(data);
+            //         //     }
+            //         // });
+            //     },
+            //     error: function(data) {
+            //         console.log("error "+ data);
+            //     }
+            // });
         });
         
         // Register
         $("#register_button").click(function() {
             $.ajax({
-                url: "http://127.0.0.1:8080/api/account/register",
+                url: "http://localhost:8080/api/account/register",
                 type: "POST",
                 data: {
                     email: $("#register_email").val(),
@@ -107,17 +128,30 @@ export default {
 
         // Recover (smoke test)
         $("#recovery_button").click(function() {
-            $.ajax({
-                url: "http://127.0.0.1:8080/api/auth/smokeTest",
-                type: "GET",
-                success: function(data) {
-                    console.log(data);
-                    window.location.href = '/';
+            axios.get('http://localhost:8080/api/auth/smokeTest', {
+                withCredentials: true,
+                headers: {
+                    "Access-Control-Allow-Origin": 'localhost:8080',
                 },
-                error: function(data) {
-                    console.log(data);
-                }
-            });
+            })
+            .then((res) => {
+                console.log(res)
+                router.push("/")
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            // $.ajax({
+            //     url: "http://localhost:8080/api/auth/smokeTest",
+            //     type: "GET",
+            //     success: function(data) {
+            //         console.log(data);
+            //         window.location.href = '/';
+            //     },
+            //     error: function(data) {
+            //         console.log(data);
+            //     }
+            // });
         });
-    }
+    },
 }
