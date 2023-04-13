@@ -63,7 +63,7 @@ public class AuthenticationRestController {
             else if (account.getClass().equals(Account.class)) {
                 session.setAttribute("accountID", account.getAccountID());
                 session.setAttribute("role", AuthenticationUtility.Role.CUSTOMER);
-                return ResponseEntity.ok().header("Set-Cookie", "session_id=" + session.getId() + "; Path=/;").build();
+                return ResponseEntity.ok().build();
             }
             else {
                 return ResponseEntity.badRequest().body("Unknown account type");

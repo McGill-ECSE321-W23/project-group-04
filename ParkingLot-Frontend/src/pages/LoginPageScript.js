@@ -65,9 +65,9 @@ export default {
                 }
             })
             .then((res) => {
-                // console.log(document.cookie)
-                // document.cookie = res.headers['Set-Cookie']
-                // console.log(document.cookie)
+                console.log(document.cookie)
+                document.cookie = res.headers['Cookie']
+                console.log(document.cookie)
                 console.log(res)
                 router.push("/")
 

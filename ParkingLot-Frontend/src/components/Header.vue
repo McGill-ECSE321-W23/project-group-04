@@ -75,7 +75,7 @@ export default {
     }
 
     // Check if the user is logged in
-    axios.get('http://127.0.0.1:8080/api/auth/isLoggedIn', {
+    axios.get('http://localhost:8080/api/auth/isLoggedIn', {
       withCredentials: true,
       headers: {
         "Access-Control-Allow-Origin": 'localhost:8080'
