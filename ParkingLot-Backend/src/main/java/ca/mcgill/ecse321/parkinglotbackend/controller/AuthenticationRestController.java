@@ -53,17 +53,17 @@ public class AuthenticationRestController {
             if (account.getClass().equals(ManagerAccount.class)) {
                 session.setAttribute("accountID", account.getAccountID());
                 session.setAttribute("role", AuthenticationUtility.Role.MANAGER);
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().header("Set-Cookie", "accountId="+ account.getAccountID() + "; Path=/;").build();
             }
             else if (account.getClass().equals(StaffAccount.class)) {
                 session.setAttribute("accountID", account.getAccountID());
                 session.setAttribute("role", AuthenticationUtility.Role.STAFF);
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().header("Set-Cookie", "accountId="+ account.getAccountID() + "; Path=/;").build();
             }
             else if (account.getClass().equals(Account.class)) {
                 session.setAttribute("accountID", account.getAccountID());
                 session.setAttribute("role", AuthenticationUtility.Role.CUSTOMER);
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().header("Set-Cookie", "accountId="+ account.getAccountID() + "; Path=/;").build();
             }
             else {
                 return ResponseEntity.badRequest().body("Unknown account type");

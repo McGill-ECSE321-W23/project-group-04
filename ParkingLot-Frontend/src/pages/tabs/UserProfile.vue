@@ -97,22 +97,29 @@
 </template>
 
 <script setup>
-import {reactive, ref} from "vue";
-import {
-  Check,
-  Delete,
-  Edit,
-  Message,
-  Search,
-  Star,
-} from '@element-plus/icons-vue'
+import {ref} from "vue";
+import {Check, Edit,} from '@element-plus/icons-vue'
 
-const form = reactive({
+const form = ref({
   name: 'jon',
   email: 'jon@mcgill',
   password: '123',
   phone: '514',
 })
+
+// const fetchUser = (accId) => {
+//   if (UserService.checkIsLoggedIn()) {
+//     UserService.getAccount(accId)
+//         .then(data => {
+//           this.form.name = data.name
+//           this.form.email = data.email
+//           this.form.password = data.password
+//           this.form.phone = data.phoneNumber
+//         })
+//         .catch()
+//   }
+// }
+
 const times = ref([])
 
 const cars = ref([

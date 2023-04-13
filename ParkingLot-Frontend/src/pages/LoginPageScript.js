@@ -2,6 +2,7 @@ import {reactive} from 'vue'
 import $ from 'jquery'
 import router from '@/router'
 import axios from 'axios';
+import {UserService} from "@/services/UserService";
 
 export default {
     name: "LoginPage",
@@ -60,14 +61,20 @@ export default {
                     "Access-Control-Allow-Origin": 'localhost:8080',
                 },
                 params: {
-                    email: 'testemail',
+                    email: 'dd',
                     password: '123'
                 }
             })
             .then((res) => {
                 console.log(res)
-                router.push("/")
-
+                UserService.getAccount()
+                    .then(response => {
+                    })
+                    .catch(error => {
+                    })
+                    .finally(() => {
+                        router.push("/")
+                    })
             })
             .catch(err => {
                 console.log(err)
