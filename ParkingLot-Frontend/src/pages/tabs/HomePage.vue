@@ -3,7 +3,7 @@
   <el-card class = "page" id = "banner" body-style="padding: 0px; margin: 0px;">
     <div class= "container" id = "headline">
       <img src = "../../assets/parking.png" alt = "Parking Lot" id = "parkingImg">
-      <div class ="container" id = "welcomeMsg" style="margin-right:30%; ">
+      <div class ="container" id = "welcomeMsg" style="margin-right:0%; ">
         <div id = "welcomeTo" style= "width: auto; min-width: 200px; left: 6%">
         <p style= "font-size: 120%; "> WELCOME TO THE</p>
         </div>
@@ -38,12 +38,9 @@
                         <div style="text-align: center;padding: 14px">
                             <span style="font-weight:bold; font-size:55%"> REGULAR CAR</span>
                             <div class="bottom" id = "bottomReg">
-                                <el-text class="mx-1"> Tickets left: {{regLeft}} </el-text>
-            
-            	                 <!-- ADD NUMBR TO DO--> 
-            
+                                <el-text class="mx-1"> Tickets left: 18 </el-text>            
                                 <div class = "container" id = "regularButton">
-                                    <el-button type = "info" round @click= "createRegTicket('1311','2023-04-06','9:20')" > Reserve </el-button>
+                                    <el-button id = "regularTicketButton" type = "info" round  > Reserve </el-button>
                                 </div>
                             </div>
                         </div>
@@ -65,12 +62,9 @@
                         <div style="text-align: center;padding: 14px">
                             <span style="font-weight:bold; font-size:55%"> LARGE CAR</span>
                             <div class="bottom" id = "bottomLarge">
-                                <el-text class="mx-1"> Tickets left: {{largeLeft}} </el-text>
-            
-            	                <!-- ADD NUMBR TO DO--> 
-            
+                                <el-text class="mx-1"> Tickets left: 18 </el-text>            
                                 <div class = "container" id = "largeButton">
-                                    <el-button type = "info" round @click= "createLargeTicket('1411','2023-04-06','9:20')"> Reserve </el-button>
+                                    <el-button id = "largeTicketButton" type = "info" round> Reserve </el-button>
                                 </div>
                             </div>
                         </div>
@@ -88,21 +82,18 @@
             <div class="container" id="payments">
                 <div class = "container" style = " margin-left:5%;top:-200px;" id="ticketIDInputs">
                     <label style="margin-right: 1%; font-size: 55%; color: #000000" for = "ticketID" >Ticket ID:</label>
-                    <el-input v-model="ticketInput" id = "ticketID" name = "ticketID" style="width: 100%;" placeholder="Input Ticket ID" clearable />
-                    <el-button type="info" round style="width: 100%; margin-top: 10%"> Pay Now </el-button>
+                    <el-input v-model="ticketID" id = "ticketID" name = "ticketID" style="width: 100%;" placeholder="Input Ticket ID" clearable />
+                    <el-button id = "payTicketButton" type="info" round style="width: 100%; margin-top: 10%"> Pay Now </el-button>
                 </div>
                 <div class = "container" style=" margin-top: 1%;" id="fakeTicketDisplay">
                     <div class = "container" id = "ticketOutline">
                         <img src="../../assets/Ticket.png" class="image" style="width: 50%; margin-left: 25%"/>
                     </div>
                     <div class = "container" id= "ticketParameters">
-                      <p style = "font-size: 50%; margin-left:28px;">DATE: 2023-04-06 <br>
-                        from: 9:04  <br>
-                         to: 9:34  <br>
-                         $/15m: $3.00 <br>
-                         <b>AMOUNT DUE: $6.00</b></p>
-
-            
+                      <p style = "font-size: 50%; margin-left:28px;"> From: {{entry}} <br>
+                         To: 15  <br>
+                         $/15m: $15 <br>
+                         <b>AMOUNT DUE: $15</b></p>
                     </div>
                 </div>
             </div>
