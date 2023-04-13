@@ -93,13 +93,33 @@ export default {
     // Method for displaying not logged in
     function displayNotLoggedIn() {
       $("#item_login").show();
-      $("#loggedInOptions").hide();
+      $("#greeting").hide();
+      $("#item_adminPage").hide();
+      $("#item_logout").hide();
     }
 
     // Method for displaying logged in
     function displayLoggedIn() {
       $("#item_login").hide();
-      $("#loggedInOptions").show();
+      $("#greeting").show();
+      $("#item_logout").show();
+      axios.get('http://localhost:8080/api/auth/isStaff', {
+        withCredentials: true,
+        headers: {
+          "Access-Control-Allow-Origin": 'localhost:8080'
+        }
+      })
+      .then(res => {
+        console.log(res);
+        if (res.data === true) {
+          $("#item_adminPage").show();
+        } else {
+          $("#item_adminPage").hide();
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
     }
 
     // Check if the user is logged in
