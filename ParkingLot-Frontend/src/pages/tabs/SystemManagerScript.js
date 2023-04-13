@@ -361,8 +361,11 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.all_openhours[index].timeSlot.startTime = startTime;
-                    this.all_openhours[index].timeSlot.endTime = endTime;
+                    var slot = response.data
+                    var timeSlotDto = new TimeSlotDto(slot.timeSlotID, slot.dayOfTheWeek, slot.startTime, slot.endTime, slot.systemId, slot.staffAccountId)
+                    this.all_openhours[index].timeSlot = timeSlotDto;
+                    this.all_openhours[index].timeSlotID = timeSlotDto.timeSlotID;
+                    this.all_openhours[index].label = "Time Slot " + timeSlotDto.timeSlotID;
                 })
                 .catch(error => {
                     var e = error.response.data.message

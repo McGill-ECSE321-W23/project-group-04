@@ -1,14 +1,17 @@
 import axios from 'axios';
 
-function Staff(email) {
+function StaffAccountDto(accountID, email) {
+    this.accountID = accountID;
     this.email = email;
 }
 
-function staffTimeslot(day, startTime, endTime, staff) {
+function TimeSlotDto(timeSlotID, day, startTime, endTime, systemID, staffID) {
+    this.timeSlotID = timeSlotID;
     this.day = day;
     this.startTime = startTime;
     this.endTime = endTime;
-    this.staff = staff;
+    this.systemID = systemID;
+    this.staffID = staffID;
 }
 
 export default {
@@ -25,88 +28,174 @@ export default {
                 {day_value: "Friday", label: "Friday",},
                 {day_value: "Saturday", label: "Saturday",}
             ],
-            day_value1: "", // create
-            start_time1: "",
-            end_time1: "",
 
             day_value2: "", // update
             start_time2: "",
             end_time2: "",
 
             // data
-            staff_list: [], // list of staffs
-            all_timeslots: [], // list of all timeslots
+            staff_list: [],
+            all_timeslots: [],
             
         };
     },
     created: function() {
-        
+        axios.get('http://localhost:8080/api/staff/getAll') // need to add controller !!!
+        .then(response => {
+            for (var i = 0; i < response.data.length; i++) {
+                var staff = response.data[i];
+                var staffDto = new StaffAccountDto(staff.accountID, staff.email);
+                this.staff_list.push({
+                    staff: staffDto,
+                    staffID: staffDto.accountID,
+                    label: staffDto.email,
+                });
+            }
+        })
+        .catch(error => {
+            var e = error.response.data.message
+            console.log(e)
+            alert(e)
+        })
+
+        axios.get('http://localhost:8080/api/timeslot/getAll')
+        .then(response => {
+            for (var i = 0; i < response.data.length; i++) {
+                var slot = response.data[i];
+                if (slot.systemId == null) {
+                    var slotDto = new TimeSlotDto(slot.timeSlotID, slot.dayOfTheWeek, slot.startTime, slot.endTime, slot.systemId, slot.staffAccountId);
+                    this.all_timeslots.push({
+                        timeslot: slotDto,
+                        timeslotID: slotDto.timeSlotID,
+                        label: slotDto.day + " " + slotDto.startTime + " - " + slotDto.endTime,
+                    });
+                }
+            }
+        })
+        .catch(error => {
+            var e = error.response.data.message
+            console.log(e)
+            alert(e)
+        })
     },
     methods: {
-        createTimeSlot: function (day, startTime, endTime, staff) { // create a new timeslot
-            if (day == "" || startTime == "" || endTime == "" || staff == "") {
-                alert("Please fill in the required fields");
-                return;
-            }
-            const startHour = startTime.getHours().toString().padStart(2, '0');
-            const startMin = startTime.getMinutes().toString().padStart(2, '0');
-            const startAMPM = startTime.getHours() >= 12 ? 'PM' : 'AM';
-            const startString = startHour + ":" + startMin + " " + startAMPM; // format time
-            const endHour = endTime.getHours().toString().padStart(2, '0');
-            const endMin = endTime.getMinutes().toString().padStart(2, '0');
-            const endAMPM = endTime.getHours() >= 12 ? 'PM' : 'AM';
-            const endString = endHour + ":" + endMin + " " + endAMPM;
-
-            var slot = new staffTimeslot(day, startString, endString, staff);
-            this.all_timeslots.push(slot);
-            this.cancelCreateTimeSlot();
-            this.refresh();
-        },
-        cancelCreateTimeSlot: function () { // clear values
-            this.day_value1 = "";
-            this.start_time1 = "";
-            this.end_time1 = "";
-        },
-        updateTimeslot: function (timeSlot, startTime, endTime, staff) { // update a timeslot
-            if (timeSlot == "" || startTime == "" || endTime == "" || staff == "") {
+        updateTimeslot: function (day, startTime, endTime, staffId) {
+            if (day == "" || startTime == "" || endTime == "" || staffId == "") {
                 alert("Please fill in the required fields");
                 return;
             }
             
+            var timeSlotObj = null;
+            var index = -1;
+            for (var i = 0; i < this.all_timeslots.length; i++) {
+                if (this.all_timeslots[i].timeslot.staffID == staffId && this.all_timeslots[i].timeslot.day == day) {
+                    timeSlotObj = this.all_timeslots[i].timeslot;
+                    index = i;
+                    break;
+                }
+            }
 
+            if (timeSlotObj == null) { // create new timeslot
+                axios.post('http://localhost:8080/api/timeslot/create', {}, {
+                    params: {
+                        dayOfTheWeek: day,
+                        startTime: startTime,
+                        endTime: endTime,
+                        parkingLotSoftwareSystemID: null,
+                        accountID: staffId,
+                    }
+                })
+                .then(response => {
+                    var slot = response.data;
+                    var slotDto = new TimeSlotDto(slot.timeSlotID, slot.dayOfTheWeek, slot.startTime, slot.endTime, slot.systemId, slot.staffAccountId);
+                    this.all_timeslots.push({
+                        timeslot: slotDto,
+                        timeslotID: slotDto.timeSlotID,
+                        label: slotDto.day + " " + slotDto.startTime + " - " + slotDto.endTime,
+                    })
+                })
+                .catch(error => {
+                    var e = error.response.data.message
+                    console.log(e)
+                    alert(e)
+                })
+            } else { // update existing timeslot
+                axios.put('http://localhost:8080/api/timeslot/update/'.concat(timeSlotObj.timeSlotID), {}, {
+                    params: {
+                        timeSlotID: timeSlotObj.timeSlotID,
+                        dayOfTheWeek: day,
+                        startTime: startTime,
+                        endTime: endTime,
+                    }
+                })
+                .then(response => {
+                    var slot = response.data;
+                    var slotDto = new TimeSlotDto(slot.timeSlotID, slot.dayOfTheWeek, slot.startTime, slot.endTime, slot.systemId, slot.staffAccountId);
+                    this.all_timeslots[index].timeslot = slotDto;
+                    this.all_timeslots[index].timeslotID = slotDto.timeSlotID;
+                    this.all_timeslots[index].label = slotDto.day + " " + slotDto.startTime + " - " + slotDto.endTime;
+                })
+                .catch(error => {
+                    var e = error.response.data.message
+                    console.log(e)
+                    alert(e)
+                })
+            }
 
             this.cancelUpdateTimeSlot();
-            this.refresh();
+            this.refreshTable();
         },
-        deleteTimeslot: function (timeSlot, staff) { // delete a timeslot
-            if (timeSlot == "" || staff == "") {
+
+        deleteTimeslot: function (day, staffId) {
+            if (day == "" || staffId == "") {
                 alert("Please fill in the required fields");
                 return;
             }
 
+            var timeSlotObj = null;
+            for (var i = 0; i < this.all_timeslots.length; i++) {
+                if (this.all_timeslots[i].timeslot.staffID == staffId && this.all_timeslots[i].timeslot.day == day) {
+                    timeSlotObj = this.all_timeslots[i].timeslot;
+
+                    axios.delete('http://localhost:8080/api/timeslot/delete/'.concat(timeSlotObj.timeSlotID))
+                    .then(response => {
+                        this.all_timeslots.splice(i, 1);
+                    })
+                    .catch(error => {
+                        var e = error.response.data.message
+                        console.log(e)
+                        alert(e)
+                    })
+
+                    break;
+                }
+            }
+
+            if (timeSlotObj == null) {
+                alert("Time slot not found");
+                console.log("Time slot not found");
+                return;
+            }
+
             this.cancelUpdateTimeSlot();
-            this.refresh();
+            this.refreshTable();
         },
-        cancelUpdateTimeSlot: function () { // clear values
+
+        cancelUpdateTimeSlot: function () {
             this.day_value2 = "";
             this.start_time2 = "";
             this.end_time2 = "";
         },
 
-        refreshTable: function() {
+        refreshTable: function () {
             if (this.staff_selected != "") {
-                this.timeslot_list = [];
+                var staffschedule = []
                 for (var i = 0; i < this.all_timeslots.length; i++) {
-                    if (this.all_timeslots[i].staff == this.staff_selected) {
-                        const slot = this.all_timeslots[i];
-                        this.timeslot_list.push({
-                            timeslot_obj: slot,
-                            timeslot_value: slot.day + " " + slot.startTime + " - " + slot.endTime,
-                            label: slot.day + " " + slot.startTime + " - " + slot.endTime,
-                        });
+                    if (this.all_timeslots[i].timeslot.staffID == this.staff_selected) {
+                        staffschedule.push(this.all_timeslots[i].timeslot);
                     }
                 }
-                // prepare update table
+                
                 const sun = document.getElementById("sun_schedule");
                 const mon = document.getElementById("mon_schedule");
                 const tue = document.getElementById("tue_schedule");
@@ -122,30 +211,24 @@ export default {
                 fri.textContent = "-";
                 sat.textContent = "-";
 
-                // format timeslot list
-                for (var i = 0; i < this.timeslot_list.length; i++) {
-                    const slot = this.timeslot_list[i].timeslot_obj;
-                    const schedule = slot.startTime + " - " + slot.endTime;
-
+                for (var i = 0; i < staffschedule.length; i++) {
+                    var slot = staffschedule[i];
                     if (slot.day == "Sunday") {
-                        sun.textContent = schedule;
+                        sun.textContent = slot.startTime + " - " + slot.endTime;
                     } else if (slot.day == "Monday") {
-                        mon.textContent = schedule;
+                        mon.textContent = slot.startTime + " - " + slot.endTime;
                     } else if (slot.day == "Tuesday") {
-                        tue.textContent = schedule;
+                        tue.textContent = slot.startTime + " - " + slot.endTime;
                     } else if (slot.day == "Wednesday") {
-                        wed.textContent = schedule;
+                        wed.textContent = slot.startTime + " - " + slot.endTime;
                     } else if (slot.day == "Thursday") {
-                        thu.textContent = schedule;
+                        thu.textContent = slot.startTime + " - " + slot.endTime;
                     } else if (slot.day == "Friday") {
-                        fri.textContent = schedule;
-                    } else if (slot.day == "Saturday") {
-                        sat.textContent = schedule;
+                        fri.textContent = slot.startTime + " - " + slot.endTime;
                     } else {
-                        alert("Error: an invalid day has been found in refresh()");
+                        sat.textContent = slot.startTime + " - " + slot.endTime;
                     }
                 }
-                this.timeslot_selected = "";
             }
         }
         

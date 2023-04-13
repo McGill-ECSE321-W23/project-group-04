@@ -203,14 +203,23 @@ public class TimeSlotRestController {
         if (t == null) {
             throw new IllegalArgumentException("TimeSlot does not exist");
         }
-        TimeSlotDto timeSlotDto = new TimeSlotDto(
-                t.getTimeSlotID(),
-                t.getDayOfTheWeek(),
-                t.getStartTime(),
-                t.getEndTime(),
-                t.getSystem().getParkingLotSoftwareSystemID(),
-                t.getStaffAccount().getAccountID());
-        return timeSlotDto;
+        if (t.getSystem() == null) {
+            TimeSlotDto timeSlotDto = new TimeSlotDto();
+            timeSlotDto.setTimeSlotID(t.getTimeSlotID());
+            timeSlotDto.setDayOfTheWeek(t.getDayOfTheWeek());
+            timeSlotDto.setStartTime(t.getStartTime());
+            timeSlotDto.setEndTime(t.getEndTime());
+            timeSlotDto.setStaffAccount(t.getStaffAccount().getAccountID());
+            return timeSlotDto;
+        } else {
+            TimeSlotDto timeSlotDto = new TimeSlotDto();
+            timeSlotDto.setTimeSlotID(t.getTimeSlotID());
+            timeSlotDto.setDayOfTheWeek(t.getDayOfTheWeek());
+            timeSlotDto.setStartTime(t.getStartTime());
+            timeSlotDto.setEndTime(t.getEndTime());
+            timeSlotDto.setSystemId(t.getSystem().getParkingLotSoftwareSystemID());
+            return timeSlotDto;
+        }
     }
 
 }
