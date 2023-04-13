@@ -4,7 +4,6 @@ import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUt
 import ca.mcgill.ecse321.parkinglotbackend.dto.OfferedServiceDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.OfferedService;
 import ca.mcgill.ecse321.parkinglotbackend.service.OfferedServiceService;
-
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import java.util.stream.Collectors;
  * This class followed the template from the tutorials provided:
  * https://mcgill-ecse321-w23.github.io/#_exposing_service_functionality_via_a_restful_api
  */
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/offeredServices")
 public class OfferedServiceRestController {

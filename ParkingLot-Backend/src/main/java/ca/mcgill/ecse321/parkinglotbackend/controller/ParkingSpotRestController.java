@@ -2,18 +2,17 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
+import ca.mcgill.ecse321.parkinglotbackend.dto.ParkingSpotDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotbackend.service.ParkingSpotService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ca.mcgill.ecse321.parkinglotbackend.dto.ParkingSpotDto;
-import org.springframework.web.bind.annotation.DeleteMapping;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RequestMapping("/api/parkingSpot")
 @RestController
 public class ParkingSpotRestController {

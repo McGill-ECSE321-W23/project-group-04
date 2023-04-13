@@ -109,7 +109,7 @@ export default {
         // this.persons = [p1, p2, p3, p4]
 
       // Initializing persons from backend
-      this.AXIOS.get('/api/persons/get')
+      this.AXIOS.get('/api/person/get')
           .then(response => {
             // JSON responses are automatically parsed.
             this.persons = response.data

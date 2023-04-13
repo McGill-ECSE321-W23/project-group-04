@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.parkinglotbackend.controller;
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.dto.GarageDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.Garage;
-
 import ca.mcgill.ecse321.parkinglotbackend.service.GarageService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import java.util.stream.Collectors;
  * This class followed the template from the tutorials provided:
  * https://mcgill-ecse321-w23.github.io/#_exposing_service_functionality_via_a_restful_api
  */
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/garages")
 public class GarageRestController {

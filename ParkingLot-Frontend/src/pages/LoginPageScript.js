@@ -60,8 +60,8 @@ export default {
                     "Access-Control-Allow-Origin": 'localhost:8080',
                 },
                 params: {
-                    email: 'testemail',
-                    password: '123'
+                    email: 'manager@pls.ca',
+                    password: 'manager'
                 }
             })
             .then((res) => {
