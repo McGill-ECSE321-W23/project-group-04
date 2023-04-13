@@ -112,6 +112,11 @@ export default {
       $("#item_login").hide();
       $("#greeting").show();
       $("#item_logout").show();
+      //only try to show admin page if not already on admin page
+      if (router.currentRoute['value'].path === '/admin') {
+        $("#item_adminPage").hide();
+        return;
+      }
       axios.get('http://localhost:8080/api/auth/isStaff', {
         withCredentials: true,
         headers: {
