@@ -5,7 +5,7 @@
     <br />
     <div class="container">
         <label for="staffSelect" style="padding-right: 10px">Select a staff:</label>
-        <el-select v-model="staff_selected" placeholder="Select" style="width: 300px" @change="refresh">
+        <el-select v-model="staff_selected" placeholder="Select" style="width: 300px" @change="refreshTable()">
             <el-option v-for="item in staff_list" :key="item.staff_value" :label="item.label" :value="item.staff_value">
             </el-option>
         </el-select>
@@ -83,10 +83,10 @@
                                 <tr>
                                     <td>Time slot:</td>
                                     <td>
-                                        <el-select v-model="timeslot_selected" placeholder="Select time slot"
+                                        <el-select v-model="day_value2" placeholder="Select day"
                                             style="width: 240px">
-                                            <el-option v-for="item in timeslot_list" :key="item.timeslot_value"
-                                                :label="item.label" :value="item.timeslot_value">
+                                            <el-option v-for="item in day_options" :key="item.day_value"
+                                                :label="item.label" :value="item.day_value">
                                             </el-option>
                                         </el-select>
                                     </td>
@@ -109,8 +109,8 @@
                                 </tr>
                             </table>
                             <br>
-                            <el-button @click="updateTimeslot(timeslot_selected,start_time2,end_time2,staff_selected)">Update</el-button>
-                            <el-button @click="deleteTimeslot(timeslot_selected,staff_selected)">Delete</el-button>
+                            <el-button @click="updateTimeslot(day_value2,start_time2,end_time2,staff_selected)">Update</el-button>
+                            <el-button @click="deleteTimeslot(day_value2,staff_selected)">Delete</el-button>
                             <el-button @click="cancelUpdateTimeSlot()">Cancel</el-button>
                         </div>
                     </el-card>

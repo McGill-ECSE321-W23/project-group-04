@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 function Staff(email) {
     this.email = email;
 }
@@ -12,70 +14,33 @@ function staffTimeslot(day, startTime, endTime, staff) {
 export default {
     data() {
         return {
-            staff_list: [], // list of staffs
-            staff_selected: "", // current selected staff
+            staff_selected: "",
 
-            all_timeslots: [], // list of all timeslots
-            timeslot_list: [], // list of timeslots in edit panel
-
-            timeslot_selected: "", // current selected timeslot in edit panel
-
-            // create timeslot values
-            day_value1: "",
+            day_options: [
+                {day_value: "Sunday", label: "Sunday",},
+                {day_value: "Monday", label: "Monday",},
+                {day_value: "Tuesday", label: "Tuesday",},
+                {day_value: "Wednesday", label: "Wednesday",},
+                {day_value: "Thursday", label: "Thursday",},
+                {day_value: "Friday", label: "Friday",},
+                {day_value: "Saturday", label: "Saturday",}
+            ],
+            day_value1: "", // create
             start_time1: "",
             end_time1: "",
 
-            day_options: [
-                {
-                    day_value: "Sunday",
-                    label: "Sunday",
-                },
-                {
-                    day_value: "Monday",
-                    label: "Monday",
-                },
-                {
-                    day_value: "Tuesday",
-                    label: "Tuesday",
-                },
-                {
-                    day_value: "Wednesday",
-                    label: "Wednesday",
-                },
-                {
-                    day_value: "Thursday",
-                    label: "Thursday",
-                },
-                {
-                    day_value: "Friday",
-                    label: "Friday",
-                },
-                {
-                    day_value: "Saturday",
-                    label: "Saturday",
-                }
-            ],
-
-            
+            day_value2: "", // update
             start_time2: "",
             end_time2: "",
+
+            // data
+            staff_list: [], // list of staffs
+            all_timeslots: [], // list of all timeslots
             
         };
     },
     created: function() {
-        const staff1 = new Staff("day@email.com")
-        const staff2 = new Staff("night@email.com")
-        this.staff_list = [
-            {
-                staff_value: staff1.email,
-                label: staff1.email,
-            }, 
-            {
-                staff_value: staff2.email,
-                label: staff2.email,
-            }
-        ]
-
+        
     },
     methods: {
         createTimeSlot: function (day, startTime, endTime, staff) { // create a new timeslot
@@ -123,12 +88,12 @@ export default {
             this.refresh();
         },
         cancelUpdateTimeSlot: function () { // clear values
-            this.timeslot_selected = "";
+            this.day_value2 = "";
             this.start_time2 = "";
             this.end_time2 = "";
         },
 
-        refresh: function() { // update display based on current selected staff
+        refreshTable: function() {
             if (this.staff_selected != "") {
                 this.timeslot_list = [];
                 for (var i = 0; i < this.all_timeslots.length; i++) {
