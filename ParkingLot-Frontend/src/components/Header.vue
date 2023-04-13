@@ -34,11 +34,39 @@
 <script setup>
 import logo from '../assets/PLS_logo.png'
 import $ from 'jquery'
+import router from '@/router'
 
 function handleSelect(index) {
   // Login
   if (index === 'login') {
-    window.location.href = '/login';
+    router.push('/login');
+    return;
+  }
+
+  // Logout
+  else if (index === 'logout') {
+    axios.post('http://localhost:8080/api/auth/logout', {}, {
+      withCredentials: true,
+      headers: {
+        "Access-Control-Allow-Origin": 'localhost:8080'
+      }
+    })
+    .then(res => {
+      console.log(res);
+      // Clear session storage
+      sessionStorage.clear();
+      // Refresh the page
+      router.go(0);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    return;
+  }
+
+  // Admin Page
+  else if (index === 'adminPage') {
+    router.push('/admin');
     return;
   }
 
@@ -94,24 +122,7 @@ export default {
     })
     .catch(err => {
       console.log(err);
-    })
-    // $.ajax({
-    //   url: 'http://127.0.0.1:8080/api/auth/isLoggedIn',
-    //   type: 'GET',
-    //   success: function(data) {
-    //     console.log(data);
-    //     var loggedIn = data === 'true';
-    //     console.log(loggedIn);
-    //     if (loggedIn) {
-    //       displayLoggedIn();
-    //     } else {
-    //       displayNotLoggedIn();
-    //     }
-    //   },
-    //   error: function(data) {
-    //     console.log(data);
-    //   }
-    // });
+    });
   }
 }
 </script>
