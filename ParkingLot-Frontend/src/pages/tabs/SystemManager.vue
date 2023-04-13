@@ -5,9 +5,9 @@
     <br />
     <div class="container">
         <label style="padding-right: 10px">Select a system:</label>
-        <el-select v-model="system_selected" placeholder="Select" style="width: 300px" @change="refresh()">
-            <el-option v-for="item in system_list" :key="item.system_value" :label="item.label"
-                :value="item.system_value">
+        <el-select v-model="system_selected" placeholder="Select" style="width: 300px" @change="refreshTable()">
+            <el-option v-for="item in system_list" :key="item.systemID" :label="item.label"
+                :value="item.systemID">
             </el-option>
         </el-select>
     </div>
