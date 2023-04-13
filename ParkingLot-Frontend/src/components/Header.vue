@@ -90,6 +90,11 @@ export default {
     }
   },
   mounted() {
+    // Logo to home page
+    $('.image').click(() => {
+      router.push('/');
+    });
+
     // Method for displaying not logged in
     function displayNotLoggedIn() {
       $("#item_login").show();
@@ -151,6 +156,7 @@ export default {
 .image {
   height: 58px;
   margin: 0 20px;
+  cursor: pointer;
 }
 
 .flex-grow {
