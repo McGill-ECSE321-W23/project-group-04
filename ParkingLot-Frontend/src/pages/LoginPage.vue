@@ -1,5 +1,10 @@
 <template>
-  <el-card class="page">
+  <!--Header-->
+  <div class="header">
+    <img id="img_logo" src="../assets/PLS_logo.png" alt="PLS Logo">
+  </div>
+
+  <div class="page">
     <div class="container" id="login">
       <h1>Login</h1>
       <label for="login_email">Email</label>
@@ -41,7 +46,7 @@
         <a href="#" id="recovery_login">Login</a>
       </div>
     </div>
-  </el-card>
+  </div>
   <!--div class="page">
     <el-card id="login">
       <template #header>
@@ -78,6 +83,19 @@
 </script>
 
 <style scoped>
+img {
+  height: 58px;
+  margin: 0 20px;
+  cursor: pointer;
+}
+
+.header {
+  display: block;
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid rgb(214, 214, 214);
+}
+
 .page {
   display: flex;
   height: 100vh;
@@ -103,7 +121,8 @@
 }
 
 .container {
-  background-image: linear-gradient(45deg, #a0248f, #d34826);
+  /* background-image: linear-gradient(45deg, #a0248f, #d34826); */
+  background-color: white;  /* new */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -114,42 +133,44 @@
 }
 
 .container h1 {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding-bottom: 40px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 40px;
 }
 
 .container label {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
+  display: block;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .container input {
-    min-width: 300px;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: none;
-    border-bottom: 2px solid black;
-    outline: none;
-    background-color: transparent;
-    color: #fff;
+  min-width: 300px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-bottom: 2px solid black;
+  outline: none;
+  background-color: transparent;
+  color: black;
 }
 
 .container button {
-    padding: 10px 20px;
-    margin: 30px 0;
-    border: none;
-    border-radius: 5px;
-    outline: none;
-    background-color: #8f0030;
-    color: #fff;
-    cursor: pointer;
+  padding: 10px 20px;
+  margin: 30px 0;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  /* background-color: #8f0030; */
+  background-color: #409EFF;  /* new */
+  color: #fff;
+  cursor: pointer;
 }
 
 .container a {
-    color: #161b27;
+  /* color: #161b27; */
+  color: #409EFF;  /* new */
 }
 </style>

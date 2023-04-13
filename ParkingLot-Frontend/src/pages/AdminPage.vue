@@ -6,7 +6,7 @@
         <SystemManager />
       </div>
       <div id="page_servicesAndGarages" class="tabBody">
-        services and garages page
+        <ServicesAndGaragesTab />
       </div>
       <div id="page_users" class="tabBody">
         <AdminUsers />

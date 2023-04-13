@@ -1,49 +1,85 @@
 import $ from 'jquery'
+import { ref } from 'vue'
 
+      function PLSSystemDto (id, costper15m, numRegSpots, numLargeSpots) {
+        this.id = id
+        this.costper15m= costper15m
+        this.numRegSpots = numRegSpots
+        this.numLargeSpots = numLargeSpots
+      }
+
+      function TicketDto(id, date, time, type, pls){
+        this.id = id
+        this.date = date
+        this.time = time
+        this.pls = pls
+        this.type = type
+      }
+  
 export default {
     name: "HomePage",
     components: {
     },
+    data () {
+        return {
+          ticketInput: ref(''),
+          activeName: ref('first'),
+          tickets: [],
+          newTicket: '',
+          errorTicker: '',
+          response: [],
+          selectedTicket: "",
+          regLeft:'',
+          largeLeft:'',
+        }
+      },
+      created: function () {
+        // Test data
+        const pls = new PLSSystemDto('1', '3', '100', '20')
+        const t1 = new TicketDto('1111','2023-04-06','8:15', 'Regular',pls)
+        const t2 = new TicketDto('1211','2023-04-06','9:35','Large', pls)
+        this.tickets = [t1, t2]
+        this.regLeft = '99'
+        this.largeLeft = '19'
+
+      },
     mounted() {
-        // // Only show login form on page load
-        // $("#register").hide();
-        // $("#recovery").hide();
+    },
+    methods: {
+        createRegTicket: function (id,  date, time) {
+            var t= new newTicketDtop(id, date, time, 'Regular', this.pls)
+            this.tickets.push(t)
+            this.newTicket = ''
+            // let regLeftInt = parseInt(this.regleft)
+            // regLeftInt = regLeftInt -1
+            // this.regLeft = regLeftInt.toString
+          },
 
-        // // Switch to recovery form
-        // $("#login_forgotPassword").click(function () {
-        //     $("#login").hide();
-        //     $("#register").hide();
-        //     $("#recovery").show();
-        // });
+        createLargeTicket: function (id,  date, time) {
+            var t= new newTicketDtop(id, date, time, 'Large', this.pls)
+            this.tickets.push(t)
+            this.newTicket = ''
+            
+            this.largeLeft = this.largeLeft - 1
+          },
+        
+          payTicket: function (id) {
+            
+            for (let i = 0; i < tickets.length; i++) {
+                if (tickets[i].id == id) {
+                 var t = tickets[i];
+                }
+              }
 
-        // // Switch to register form
-        // $("#login_register").click(function () {
-        //     $("#login").hide();
-        //     $("#recovery").hide();
-        //     $("#register").show();
-        // });
+            this.tickets.pop(t)
+          },
+          decRegTicket: function(){
+            let regLeftInt = parseInt(this.regleft)
+            regLeftInt = regLeftInt -1
+            regLeft = regLeftInt
+          }
 
-        // // Switch to login form
-        // $("#register_login").click(function () {
-        //     $("#register").hide();
-        //     $("#recovery").hide();
-        //     $("#login").show();
-        // });
-        // $("#recovery_login").click(function () {
-        //     $("#register").hide();
-        //     $("#recovery").hide();
-        //     $("#login").show();
-        // });
-
-        // // Login
-        // $("#login_button").click(function() {
-        //     console.log("clicked");
-        //     $.ajax({
-        //         url: "http://127.0.0.1:8080/api/auth/smokeTest",
-        //         type: "GET"
-        //     }).done(function(data) {
-        //         console.log(data);
-        //     });
-        // });
-    }
+          
+      }
+    
 }

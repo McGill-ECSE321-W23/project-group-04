@@ -23,7 +23,7 @@
              style="font-size:15px;width: 40%; margin-left: 50px; margin-top:5px;" clearable />
               </div>
               <div id="create-button" style="margin-top:100px; margin-left: 10px; margin-right: 10px; ">
-                        <el-button type="info" style="width:100px;" @click="createPerson(106)">Create</el-button>
+                        <el-button type="info" style="width:100px;" @click="createPerson(106,  person_number, person_name, person_email)">Create</el-button>
                         </div>
                         </div>
                     </el-tab-pane>
