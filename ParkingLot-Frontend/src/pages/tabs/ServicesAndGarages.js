@@ -1,3 +1,69 @@
+function GarageDto (garageNumber) {
+    this.garageNumber = garageNumber;
+}
+
+function OfferedServiceDto (description, duration, cost) {
+    this.description = description;
+    this.duration = duration;
+    this.cost = cost;
+}
+
+export default {
+    name: 'servicesAndGaragesManagement',
+
+    data() {
+        return {
+            // Offered services
+            offeredServices: [],
+            newOfferedService: '',
+            editOfferedService: '',
+            deleteOfferedService: '',
+            errorOfferedService: '',
+
+            // Garage
+            garages: [],
+            newGarage: '',
+            editGarage: '',
+            deleteGarage: '',
+            errorGarage: '',
+
+            response: []
+        }
+    },
+
+    created: function() {
+        // Test data
+
+        const os1 = new OfferedServiceDto('Change Tires', 60, 99.99)
+        const os2 = new OfferedServiceDto('Clean Car', 120, 50.00)
+        const os3 = new OfferedServiceDto('Change Wipers', 15, 10.00)
+        const g1 = new GarageDto(1);
+        const g2 = new GarageDto(2);
+
+        // Sample initial content
+        this.offeredServices = [os1, os2, os3]
+        this.garages = [g1, g2]
+    }, 
+
+    methods: {
+        createOfferedService: function (description, duration, cost) {
+            // Create a new offered service and add it to the list of offered services
+            var os = new OfferedServiceDto(description, duration, cost)
+            this.offeredServices.push(os)
+            this.newOfferedService = ''
+        },
+
+        createGarage: function (garageNumber) {
+            // Create a new garage and add it to the list of garages
+            var g = new GarageDto(garageNumber)
+            this.garages.push(g)
+            this.newGarage = ''
+        }, 
+
+        // Add the edit and delete
+    }
+}
+
 export const offeredServicesAvailable = [
     {
         id: 1,
