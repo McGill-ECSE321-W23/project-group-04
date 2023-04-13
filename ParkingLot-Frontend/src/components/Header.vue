@@ -55,8 +55,12 @@ function handleSelect(index) {
       console.log(res);
       // Clear session storage
       sessionStorage.clear();
-      // Refresh the page
-      router.go(0);
+      // Go to home page or refresh if already on home page
+      if (router.currentRoute['value'].path !== '/') {
+        router.push('/');
+      } else {
+        router.go(0);
+      }
     })
     .catch(err => {
       console.log(err);
@@ -135,7 +139,6 @@ export default {
       }
     })
     .then(res => {
-      console.log(document.cookie)
       console.log(res);
       var loggedIn = res.data === true;
       console.log(loggedIn);
