@@ -58,3 +58,6 @@ The application will improve the overall experience for customers, employees and
 ### Sprint 2
 [Sprint 2: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Sprint-2#overview)
 
+### Sprint 3
+[Sprint 3: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Sprint-3#overview)
+
