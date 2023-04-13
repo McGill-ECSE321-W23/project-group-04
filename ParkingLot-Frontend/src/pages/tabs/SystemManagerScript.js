@@ -69,6 +69,7 @@ export default {
     created() {
         axios.get("http://localhost:8080/api/parkinglotsoftwaresystem/getall")
         .then(response => {
+            this.system_list = [];
             for (var i = 0; i < response.data.length; i++) {
                 var system = response.data[i];
                 var systemDto = new ParkingSystemDto(system.parkingLotSoftwareSystemID, system.monthlyFee, system.feePer15m, system.maxStay, system.numberOfRegularParkingSpots, system.numberOfLargeParkingSpots, system.numberOfMonthlyFloors, system.numberOfMonthlySpotsPerFloor, system.numberOfGarages);
@@ -87,6 +88,7 @@ export default {
 
         axios.get("http://localhost:8080/api/timeslot/getOpen")
         .then(response => {
+            this.all_openhours = [];
             for (var i = 0; i < response.data.length; i++) {
                 var timeSlot = response.data[i];
                 var timeSlotDto = new TimeSlotDto(timeSlot.timeSlotID, timeSlot.dayOfTheWeek, timeSlot.startTime, timeSlot.endTime, timeSlot.systemId, timeSlot.staffAccountId);
@@ -317,6 +319,11 @@ export default {
                 return;
             }
 
+            const date1 = new Date(startTime);
+            const starttime = date1.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const date2 = new Date(endTime);
+            const endtime = date2.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
             var timeSlotObj = null;
             var index = -1;
             for (var i = 0; i < this.all_openhours.length; i++) {
@@ -328,13 +335,12 @@ export default {
             }
 
             if (timeSlotObj == null) { // no existing timeslot for this day
-                axios.post("http://localhost:8080/api/timeslot/create", {}, {
+                axios.post("http://localhost:8080/api/timeslot/createOpen", {}, {
                     params: {
                         dayOfTheWeek: day,
-                        startTime: startTime,
-                        endTime: endTime,
+                        startTime: starttime,
+                        endTime: endtime,
                         parkingLotSoftwareSystemID: system,
-                        accountID: null,
                     }
                 })
                 .then(response => {
@@ -356,8 +362,8 @@ export default {
                     params: {
                         timeSlotID: timeSlotObj.timeSlotID,
                         dayOfTheWeek: day,
-                        startTime: startTime,
-                        endTime: endTime,
+                        startTime: starttime,
+                        endTime: endtime,
                     }
                 })
                 .then(response => {

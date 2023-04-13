@@ -42,6 +42,7 @@ export default {
     created: function() {
         axios.get('http://localhost:8080/api/staff/getAll') // need to add controller !!!
         .then(response => {
+            this.staff_list = [];
             for (var i = 0; i < response.data.length; i++) {
                 var staff = response.data[i];
                 var staffDto = new StaffAccountDto(staff.accountID, staff.email);
@@ -60,6 +61,7 @@ export default {
 
         axios.get('http://localhost:8080/api/timeslot/getAll')
         .then(response => {
+            this.all_timeslots = [];
             for (var i = 0; i < response.data.length; i++) {
                 var slot = response.data[i];
                 if (slot.systemId == null) {
@@ -84,6 +86,11 @@ export default {
                 alert("Please fill in the required fields");
                 return;
             }
+
+            const date1 = new Date(startTime);
+            const starttime = date1.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const date2 = new Date(endTime);
+            const endtime = date2.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             
             var timeSlotObj = null;
             var index = -1;
@@ -99,9 +106,8 @@ export default {
                 axios.post('http://localhost:8080/api/timeslot/create', {}, {
                     params: {
                         dayOfTheWeek: day,
-                        startTime: startTime,
-                        endTime: endTime,
-                        parkingLotSoftwareSystemID: null,
+                        startTime: starttime,
+                        endTime: endtime,
                         accountID: staffId,
                     }
                 })
@@ -124,8 +130,8 @@ export default {
                     params: {
                         timeSlotID: timeSlotObj.timeSlotID,
                         dayOfTheWeek: day,
-                        startTime: startTime,
-                        endTime: endTime,
+                        startTime: starttime,
+                        endTime: endtime,
                     }
                 })
                 .then(response => {
