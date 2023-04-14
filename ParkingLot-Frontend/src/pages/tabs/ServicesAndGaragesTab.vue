@@ -18,7 +18,7 @@
             <br/>
 
             <!-- Alert to choose an offered service -->
-            <el-alert v-if="showErrorEditOfferedService || showErrorDeleteOfferedService" title="Please choose an offered service" type="error" show-icon />
+            <el-alert v-if="showErrorEditOfferedService || showErrorDeleteOfferedService" title="Please choose an offered service" type="error" :closable="false" show-icon />
             <br/>
 
             <div class="button-container">
@@ -50,7 +50,7 @@
             <br/>
 
             <!-- Alert to choose a garage -->
-            <el-alert v-if="showErrorEditGarage || showErrorDeleteGarage" title="Please choose a garage" type="error" show-icon />
+            <el-alert v-if="showErrorEditGarage || showErrorDeleteGarage" title="Please choose a garage" type="error" :closable="false" show-icon />
             
             <br/>
     
@@ -96,8 +96,8 @@
             </div>
             <br />
 
-            <!-- Alert to for the offered service edit -->
-            <el-alert v-if="showErrorSaveEditOfferedService" title="Error: {{errorOfferedService}}" type="error" show-icon />
+            <!-- Alert for the offered service edit -->
+            <el-alert v-if="showErrorSaveEditOfferedService" title="Error: {{errorOfferedService}}" type="error" :closable="false" show-icon />
             <br/>
             
             <div>
@@ -125,13 +125,13 @@
             </div>
             <br />
 
-            <!-- Alert to for the offered service edit -->
-            <el-alert v-if="showErrorSaveEditGarage" title="Error: {{errorGarage}}" type="error" show-icon />
+            <!-- Alert for the offered service edit -->
+            <el-alert v-if="showErrorSaveEditGarage" title="Error: {{errorGarage}}" type="error" :closable="false" show-icon />
             <br/>
             
             <div>
                 <!-- Go back button -->
-                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack"> Go back</el-button>
+                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
 
                 <!-- Save the edited garage -->
                 <el-button type="success" @click="saveEditGarage">Save Garage</el-button>
@@ -168,8 +168,8 @@
             </div>
             <br />
 
-            <!-- Alert to for the offered service edit -->
-            <el-alert v-if="showErrorSaveAddOfferedService" title="Error: {{errorOfferedService}}" type="error" show-icon />
+            <!-- Alert for the offered service edit -->
+            <el-alert v-if="showErrorSaveAddOfferedService" title="Error: {{errorOfferedService}}" type="error" :closable="false" show-icon />
             <br/>
             
             <div>
@@ -177,7 +177,7 @@
                 <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
 
                 <!-- Add the offered service button -->
-                <el-button type="success" v-bind:disabled="(!newOfferedServiceDescription && !newOfferedServiceDuration && !newOfferedServiceCost)" @click="saveAddOfferedService(description, duration, cost)">Add Offered Service</el-button>
+                <el-button type="success" @click="saveAddOfferedService(description, duration, cost)">Add Offered Service</el-button>
             </div>
         </div>
         <br />
@@ -197,16 +197,16 @@
             </div>
             <br />
 
-            <!-- Alert to for the offered service edit -->
-            <el-alert v-if="showErrorSaveAddGarage" title="Error: {{errorGarage}}" type="error" show-icon />
+            <!-- Alert for the offered service edit -->
+            <el-alert v-if="showErrorSaveAddGarage" title="Error: {{errorGarage}}" type="error" :closable="false" show-icon />
             <br/>
             
             <div>
                 <!-- Go back button -->
-                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack"> Go back</el-button>
+                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
             
                 <!-- Add the garage button -->
-                <el-button type="success" v-bind:disabled="!newGarageGarageNumber" @click="saveAddGarage(garageNumber)">Add Garage</el-button>
+                <el-button type="success" @click="saveAddGarage(garageNumber)">Add Garage</el-button>
             </div>
         </div>
     </div>

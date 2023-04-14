@@ -1,16 +1,25 @@
 import { Delete, ArrowLeft } from '@element-plus/icons-vue'
 
+import axios from 'axios'
+// var config = require('../../config')
 
+// var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+// var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
 
-function GarageDto (garageNumber) {
-    this.garageNumber = garageNumber;
-}
+// var AXIOS = axios.create({
+//   baseURL: backendUrl,
+//   headers: { 'Access-Control-Allow-Origin': frontendUrl }
+// })
 
-function OfferedServiceDto (description, duration, cost) {
-    this.description = description;
-    this.duration = duration;
-    this.cost = cost;
-}
+// function GarageDto (garageNumber) {
+//     this.garageNumber = garageNumber;
+// }
+
+// function OfferedServiceDto (description, duration, cost) {
+//     this.description = description;
+//     this.duration = duration;
+//     this.cost = cost;
+// }
 
 export default {
     name: 'servicesAndGaragesManagement',
@@ -83,18 +92,38 @@ export default {
     },
 
     created() {
-        // Test data
+        // // Test data
     
-        // Offered services
-        const os1 = new OfferedServiceDto('Change Tires', 60, 99.99)
-        const os2 = new OfferedServiceDto('Clean Car', 120, 50.00)
-        const os3 = new OfferedServiceDto('Change Wipers', 15, 10.00)
-        this.offeredServices = [os1, os2, os3]
+        // // Offered services
+        // const os1 = new OfferedServiceDto('Change Tires', 60, 99.99)
+        // const os2 = new OfferedServiceDto('Clean Car', 120, 50.00)
+        // const os3 = new OfferedServiceDto('Change Wipers', 15, 10.00)
+        // this.offeredServices = [os1, os2, os3]
     
-        // Garages
-        const g1 = new GarageDto(1);
-        const g2 = new GarageDto(2);
-        this.garages = [g1, g2]
+        // // Garages
+        // const g1 = new GarageDto(1);
+        // const g2 = new GarageDto(2);
+        // this.garages = [g1, g2]
+
+        // Initializing offered services from backend
+        AXIOS.get('/api/offeredServices')
+        .then(response => {
+            // JSON responses are automatically parsed.
+            this.offeredServices = response.data
+        })
+        .catch(e => {
+            this.errorOfferedService = e
+        })
+
+        // Initializing garages from backend
+        AXIOS.get('/api/garages')
+            .then(response => {
+            this.garages = response.data
+        })
+        .catch(e => {
+            this.errorGarage = e
+            // this.errors.push(e)
+        })
     }, 
 
     methods: {
@@ -180,7 +209,7 @@ export default {
         },
 
         saveEditOfferedService() {
-            if (this.selectedOfferedServiceRow) {
+            if (this.editOfferedServiceDescription !== '' && this.editOfferedServiceDuration !== '' && this.editOfferedServiceCost !== '') {
                 this.showOfferedServiceEdit = false;
                 this.showOfferedServicesEdit = true;
                 this.showGaragesEdit = true;
@@ -209,7 +238,7 @@ export default {
         },
 
         saveEditGarage() {
-            if (this.selectedGarageRow) {
+            if (this.editGarageGarageNumber !== '') {
                 this.showGarageEdit = false;
                 this.showOfferedServicesEdit = true;
                 this.showGaragesEdit = true;
@@ -233,16 +262,29 @@ export default {
 
         saveAddOfferedService: function (description, duration, cost) {
             // Create a new offered service and add it to the list of offered services
-            var os = new OfferedServiceDto(description, duration, cost)
-            this.offeredServices.push(os)
+            AXIOS.post('/api/offeredServices/get'.concat(description), {}, {
+                params: {
+                    duration: duration,
+                    cost: cost,
+                }
+            })
+            .then(response => {
+              // JSON responses are automatically parsed.
+              this.offeredServices.push(response.data)
+              this.errorOfferedService = ''
+              this.newOfferedServiceDescription = '';
+              this.newOfferedServiceDuration = '';
+              this.newOfferedServiceCost = '';    
 
-            this.showOfferedServiceAdd = false;
-            this.showOfferedServicesEdit = true;
-            this.showGaragesEdit = true;
-
-            this.newOfferedServiceDescription = '';
-            this.newOfferedServiceDuration = '';
-            this.newOfferedServiceCost = '';        
+              this.showOfferedServiceAdd = false;
+              this.showOfferedServicesEdit = true;
+              this.showGaragesEdit = true;    
+            })
+            .catch(e => {
+              var errorMsg = e.response.data.message
+              console.log(errorMsg)
+              this.errorOfferedService = errorMsg
+            })
         },
 
         // Add a garage
@@ -259,14 +301,32 @@ export default {
 
         saveAddGarage: function (garageNumber) {
             // Create a new garage and add it to the list of garages
-            var g = new GarageDto(garageNumber);
-            this.garages.push(g);
+            // var g = new GarageDto(garageNumber);
+            // this.garages.push(g);
 
-            this.showGarageAdd = false;
-            this.showOfferedServicesEdit = true;
-            this.showGaragesEdit = true;
+            // this.showGarageAdd = false;
+            // this.showOfferedServicesEdit = true;
+            // this.showGaragesEdit = true;
 
-            this.newGarageGarageNumber = '';
+            // this.newGarageGarageNumber = '';
+
+            // Create a new garage and add it to the list of garages
+            AXIOS.post('/api/garages'.concat(garageNumber), {}, {})
+            .then(response => {
+            // JSON responses are automatically parsed.
+              this.garages.push(response.data)
+              this.errorGarage = ''
+              this.newGarageGarageNumber = ''
+
+              this.showGarageAdd = false;
+              this.showOfferedServicesEdit = true;
+              this.showGaragesEdit = true;
+            })
+            .catch(e => {
+              var errorMsg = e.response.data.message
+              console.log(errorMsg)
+              this.errorGarage = errorMsg
+            })
         }, 
     }
 }

@@ -1,46 +1,124 @@
-export const offeredServicesAvailable = [
-  {
-    id: 1,
-    label: 'Change Tires',
-    description: 'Change Tires',
-    duration: 60,
-    cost: 99.99,
-  },
-  {
-    id: 2,
-    label: 'Clean Car',
-    description: 'Clean Car',
-    duration: 120,
-    cost: 50.00,
-  },
-  {
-    id: 3,
-    label: 'Change Wipers',
-    description: 'Change Wipers',
-    duration: 15,
-    cost: 10.00,
-  },
-]
+import { ArrowLeft } from '@element-plus/icons-vue'
+import { ref } from 'vue'
 
-export const garagesAvailable = [
-  {
-    id: 1,
-    garageNumber: 1,
+function GarageDto (garageNumber) {
+  this.garageNumber = garageNumber;
+}
+
+function OfferedServiceDto (description, duration, cost) {
+  this.description = description;
+  this.duration = duration;
+  this.cost = cost;
+}
+
+export default {
+  name: 'serviceAppointmentManagement',
+
+  data() {
+    return {
+
+      // Main page
+          
+      // Offered services
+      showOfferedServices: true,
+      offeredServices: [],
+      selectedOfferedServiceRow: '',
+      showErrorOfferedService: false,
+
+      // Book
+      showBookAppointment: false,
+      description: '',
+      duration: '',
+      cost: '',
+      date: ref(''),
+      time: ref(''),
+      garage: ref(''),
+      garages: [],
+      showErrorEditGarage: false,
+      errorGarage: '',
+      showConfirmation: false,
+
+      response: [],
+
+      // Icons
+      icons: {
+          arrowLeftIcon: ArrowLeft,
+      },
+    }
   },
-  {
-    id: 2,
-    garageNumber: 2,
+
+  created() {
+    // Test data
+
+    // Offered services
+    const os1 = new OfferedServiceDto('Change Tires', 60, 99.99)
+    const os2 = new OfferedServiceDto('Clean Car', 120, 50.00)
+    const os3 = new OfferedServiceDto('Change Wipers', 15, 10.00)
+    this.offeredServices = [os1, os2, os3]
+
+    // Garages
+    const g1 = new GarageDto(1);
+    const g2 = new GarageDto(2);
+    this.garages = [g1, g2]
   },
-  {
-    id: 3,
-    garageNumber: 3,
-  },
-  {
-    id: 4,
-    garageNumber: 4,
-  },
-  {
-    id: 5,
-    garageNumber: 5,
-  },
-]
+
+  methods: {
+    handleOfferedServiceRowClick(row) {
+      this.selectedOfferedServiceRow = row;
+      this.description = row.description;
+      this.duration = row.duration;
+      this.cost = row.cost;
+
+      this.showErrorOfferedService = false;
+    },
+
+    // Go back to the selection of offered service section when clicking the back button
+    goBack() {
+      this.showOfferedServices = true;
+      this.showBookAppointment = false;
+
+      this.selectedOfferedServiceRow = null;
+      this.description = '';
+      this.duration = '';
+      this.cost = '';
+
+      this.date = ref('');
+      this.time = ref('');
+      this.garage = ref('');
+    },
+  
+    // Reset confirmation:
+    closeConfirmation() {
+      this.showConfirmation = false;
+    },
+  
+    // Start booking an appointment
+    selectOfferedService() {
+      if (this.selectedOfferedServiceRow) {
+        this.showOfferedServices = false;
+        this.showBookAppointment = true;
+      }
+
+      else {
+        this.showErrorOfferedService = true;
+      }
+    },
+
+    saveAddAppointment() {
+      if (this.date !== '' && this.time !== '' && this.garage !== '') {
+        
+        this.showOfferedServices = true;
+        this.showBookAppointment = false;
+
+        this.date = '';
+        this.time = '';
+        this.garage = '';
+        this.selectedRow = null;
+        this.description = '';
+        this.duration = '';
+        this.cost = '';
+        this.showConfirmation = true;
+      }
+    },
+  }
+}
