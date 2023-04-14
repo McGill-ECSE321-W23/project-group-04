@@ -1,3 +1,5 @@
+import { Delete, ArrowLeft } from '@element-plus/icons-vue'
+
 function GarageDto (garageNumber) {
     this.garageNumber = garageNumber;
 }
@@ -20,12 +22,14 @@ export default {
             showOfferedServicesEdit: true,
             offeredServices: [],
             selectedOfferedServiceRow: '',
+            showErrorOfferedService: false,
             errorOfferedService: '',
 
             // Garages
             showGaragesEdit: true,
             garages: [],
             selectedGarageRow: '',
+            showErrorGarage: false,
             errorGarage: '',
             
             // Edit
@@ -60,7 +64,13 @@ export default {
             // Garages
             deleteGarage: '',
 
-            response: []
+            response: [],
+
+            // Icons
+            icons: {
+                deleteIcon: Delete,
+                arrowLeftIcon: ArrowLeft,
+            },
         };
     },
 
@@ -82,14 +92,14 @@ export default {
     methods: {
         handleOfferedServiceRowClick(row) {
             this.selectedOfferedServiceRow = row;
-            this.editOfferedServiceDescription.value = row.description;
-            this.editOfferedServiceDuration.value = row.duration;
-            this.editOfferedServiceCost.value = row.cost;
+            this.editOfferedServiceDescription = row.description;
+            this.editOfferedServiceDuration = row.duration;
+            this.editOfferedServiceCost = row.cost;
         },
     
         handleGarageRowClick(row) {
             this.selectedGarageRow = row;
-            this.editGarageGarageNumber.value = row.garageNumber;
+            this.editGarageGarageNumber = row.garageNumber;
         },
 
         goBack() {
@@ -118,10 +128,14 @@ export default {
 
         deleteOfferedService() {
 
+            this.selectedOfferedServiceRow = null;
+            this.selectedGarageRow = null;
         },
 
         deleteGarage() {
 
+            this.selectedOfferedServiceRow = null;
+            this.selectedGarageRow = null;
         },
 
         // Edit an offered service

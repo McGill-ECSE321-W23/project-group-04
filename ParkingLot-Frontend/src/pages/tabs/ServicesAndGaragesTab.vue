@@ -22,7 +22,7 @@
                 <el-button type="primary" @click="editOfferedService">Edit Offered Service</el-button>
                         
                 <!-- Delete the offered service button -->
-                <el-button type="danger" :icon="Delete" circle @click="deleteOfferedService"></el-button>
+                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteOfferedService"></el-button>
             </div>
             <br />
 
@@ -50,7 +50,7 @@
                 <el-button type="primary" @click="editGarage">Edit Garage</el-button>
     
                 <!-- Delete a garage button -->
-                <el-button type="danger" :icon="Delete" circle @click="deleteGarage"></el-button>
+                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteGarage"></el-button>
             </div>
             <br />
     
@@ -89,7 +89,7 @@
             
             <div>
                 <!-- Go back button -->
-                <el-button type="warning" :icon="ArrowLeft" plain @click="goBack">Go back</el-button>
+                <el-button type="warning" :icon="icons.arrowLeftIcon" plain @click="goBack">Go back</el-button>
 
                 <!-- Save the edited offered service -->
                 <el-button type="success" @click="saveEditOfferedService">Save Offered Service</el-button>
@@ -114,7 +114,7 @@
             
             <div>
                 <!-- Go back button -->
-                <el-button type="warning" :icon="ArrowLeft" plain @click="goBack"> Go back</el-button>
+                <el-button type="warning" :icon="icons.arrowLeftIcon" plain @click="goBack"> Go back</el-button>
 
                 <!-- Save the edited garage -->
                 <el-button type="success" @click="saveEditGarage">Save Garage</el-button>
@@ -154,7 +154,7 @@
             
             <div>
                 <!-- Go back button -->
-                <el-button type="warning" :icon="ArrowLeft" plain @click="goBack">Go back</el-button>
+                <el-button type="warning" :icon="icons.arrowLeftIcon" plain @click="goBack">Go back</el-button>
 
                 <!-- Add the offered service button -->
                 <el-button type="success" v-bind:disabled="(!newOfferedServiceDescription && !newOfferedServiceDuration && !newOfferedServiceCost)" @click="saveAddOfferedService(description, duration, cost)">Add Offered Service</el-button>
@@ -179,7 +179,7 @@
             
             <div>
                 <!-- Go back button -->
-                <el-button type="warning" :icon="ArrowLeft" plain @click="goBack"> Go back</el-button>
+                <el-button type="warning" :icon="icons.arrowLeftIcon" plain @click="goBack"> Go back</el-button>
             
                 <!-- Add the garage button -->
                 <el-button type="success" v-bind:disabled="!newGarageGarageNumber" @click="saveAddGarage(garageNumber)">Add Garage</el-button>
@@ -189,12 +189,7 @@
 
 </template>
 
-<script src="./ServicesAndGarages.js">
-    import { reactive, ref } from 'vue'
-    import { Delete, ArrowLeft } from '@element-plus/icons-vue'
-    import $ from 'jquery'
-
-</script>
+<script src="./ServicesAndGarages.js"></script>
 
 <style scoped>
     #OfferedServicesEdit {
