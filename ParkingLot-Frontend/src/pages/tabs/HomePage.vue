@@ -92,7 +92,7 @@
                     <div class = "container" id= "ticketParameters">
                       <p style = "font-size: 50%; margin-left:28px;"> From: {{entry}} <br>
                          To: 15  <br>
-                         $/15m: $15 <br>
+                         $/15 min: {{cost15Min}} <br>
                          <b>AMOUNT DUE: $15</b></p>
                     </div>
                 </div>

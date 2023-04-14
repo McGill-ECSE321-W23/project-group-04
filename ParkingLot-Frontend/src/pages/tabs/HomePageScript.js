@@ -23,6 +23,7 @@ export default {
           endTime:'',
           costPMin:'',
           totalCost: '',
+          errorPLS: '',
 
           AXIOS: axios.create({
             baseURL: 'http://localhost:8080',
@@ -56,18 +57,21 @@ export default {
     },
 
     created () {
-
         // Initializing system from backend
-        //AXIOS.get('/api/parkinglotsoftwaresystem/get/1')
-        //.then(response => {
-          //this.pls = response.data
+        this.AXIOS.get('http://localhost:8080/api/parkinglotsoftwaresystem/get/1', {
+          withCredentials: true, headers:{"Access-Control-Allow-Origin": 'localhost:8080'}})
+        .then(response => {
+          this.pls = response.data
+          console.log(response.data)
           //this.maxReg = response.data.numberOfRegularParkingSpots
           //this.regLeft = response.data.numberOfRegularParkingSpots
           //this.maxLarge = response.data.numberOfLargeParkingSpots
           //this.largeLeft = response.data.numberOfLargeParkingSpots
-          //this.cost15Min = response.data.feePer15m
-       // })
-        //.catch(e => {
+          this.cost15Min = response.data.feePer15m
+        })
+        .catch(e => {
+          this.errorPLS = e
+        })
           //if (e.response) {
             //console.log(e.response.data)
             //console.log(e.response.status)
