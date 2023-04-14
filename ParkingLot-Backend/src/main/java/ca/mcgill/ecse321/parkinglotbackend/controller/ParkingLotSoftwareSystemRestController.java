@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
  * @author Qin Xuan Xu
  * using template from tutorials
  */
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/parkinglotsoftwaresystem")
 public class ParkingLotSoftwareSystemRestController {
