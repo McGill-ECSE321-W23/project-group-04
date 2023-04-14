@@ -12,14 +12,14 @@
 
     <div class="flex-grow" />
 
-    <el-menu-item id="item_login" index="login">
+    <el-menu-item v-if="!isLoggedIn" id="item_login" index="login">
       LOGIN
     </el-menu-item>
 
-    <div id="loggedInOptions" style="display: flex; flex-direction: row;">
+    <div v-if="isLoggedIn" id="loggedInOptions" style="display: flex; flex-direction: row;">
       <div id="greeting"></div>
 
-      <el-menu-item id="item_adminPage" index="adminPage">
+      <el-menu-item v-if="isStaff" id="item_adminPage" index="adminPage">
         ADMIN
       </el-menu-item>
 
@@ -35,6 +35,9 @@
 import logo from '../assets/PLS_logo.png'
 import $ from 'jquery'
 import router from '@/router'
+import {inject} from "vue";
+
+let axios = inject('axios')
 
 function handleSelect(index) {
   // Login
@@ -45,16 +48,18 @@ function handleSelect(index) {
 
   // Logout
   else if (index === 'logout') {
-    axios.post('http://localhost:8080/api/auth/logout', {}, {
-      withCredentials: true,
-      headers: {
-        "Access-Control-Allow-Origin": 'localhost:8080'
-      }
-    })
+    axios.post('api/auth/logout')
     .then(res => {
       console.log(res);
       // Clear session storage
       sessionStorage.clear();
+      let allCookies = document.cookie.split(';');
+      // The "expire" attribute of every cookie is
+      // Set to "Thu, 01 Jan 1970 00:00:00 GMT"
+      for (let i = 0; i < allCookies.length; i++)
+        document.cookie = allCookies[i] + "=;expires="
+            + new Date(0).toUTCString();
+
       // Go to home page or refresh if already on home page
       if (router.currentRoute['value'].path !== '/') {
         router.push('/');
@@ -83,6 +88,7 @@ function handleSelect(index) {
 </script>
 
 <script>
+import {inject} from "vue";
 import axios from "axios";
 
 export default {
@@ -91,65 +97,20 @@ export default {
     tabs: {
       type: Array,
       default: () => []
+    },
+    isLoggedIn: {
+      type: Boolean,
+      default: () => false
+    },
+    isStaff: {
+      type: Boolean,
+      default: () => false
     }
   },
   mounted() {
     // Logo to home page
     $('.image').click(() => {
       router.push('/');
-    });
-
-    // Method for displaying not logged in
-    function displayNotLoggedIn() {
-      $("#item_login").show();
-      $("#greeting").hide();
-      $("#item_adminPage").hide();
-      $("#item_logout").hide();
-    }
-
-    // Method for displaying logged in
-    function displayLoggedIn() {
-      $("#item_login").hide();
-      $("#greeting").show();
-      $("#item_logout").show();
-      axios.get('http://localhost:8080/api/auth/isStaff', {
-        withCredentials: true,
-        headers: {
-          "Access-Control-Allow-Origin": 'localhost:8080'
-        }
-      })
-      .then(res => {
-        console.log(res);
-        if (res.data === true) {
-          $("#item_adminPage").show();
-        } else {
-          $("#item_adminPage").hide();
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    }
-
-    // Check if the user is logged in
-    axios.get('http://localhost:8080/api/auth/isLoggedIn', {
-      withCredentials: true,
-      headers: {
-        "Access-Control-Allow-Origin": 'localhost:8080'
-      }
-    })
-    .then(res => {
-      console.log(res);
-      var loggedIn = res.data === true;
-      console.log(loggedIn);
-      if (loggedIn) {
-        displayLoggedIn();
-      } else {
-        displayNotLoggedIn();
-      }
-    })
-    .catch(err => {
-      console.log(err);
     });
   }
 }

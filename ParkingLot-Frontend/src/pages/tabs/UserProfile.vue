@@ -97,28 +97,34 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {inject, ref} from "vue";
 import {Check, Edit,} from '@element-plus/icons-vue'
+// import UserService from "@/services/UserService";
+//
+// const axios = inject('axios')
+// const userService = new UserService(axios)
 
-const form = ref({
-  name: 'jon',
-  email: 'jon@mcgill',
-  password: '123',
-  phone: '514',
-})
+// const form = ref({
+//   name: 'jon',
+//   email: 'jon@mcgill',
+//   password: '123',
+//   phone: '514'
+// })
 
-// const fetchUser = (accId) => {
-//   if (UserService.checkIsLoggedIn()) {
-//     UserService.getAccount(accId)
-//         .then(data => {
-//           this.form.name = data.name
-//           this.form.email = data.email
-//           this.form.password = data.password
-//           this.form.phone = data.phoneNumber
-//         })
-//         .catch()
-//   }
-// }
+// axios.get('api/account/get/' + userService.getCookie("accountId"))
+//     .then((data) => {
+//       data = data.data
+//       console.log(data.person.name)
+//       const form = ref({
+//         name: data.person.name,
+//         email: data.email,
+//         password: data.password,
+//         phone: data.person.phoneNumber
+//       })
+//     })
+//     .catch(err => {
+//       console.log(err)
+//     })
 
 const times = ref([])
 
@@ -177,6 +183,48 @@ const handleClose = (key, keyPath) => {
 }
 
 const handleSelectionChange = () => {}
+</script>
+
+<script>
+  import {inject, onMounted} from "vue";
+  import UserService from "@/services/UserService";
+
+  export default {
+    name: "UserProfile",
+    props: {
+      // isLoggedIn: {
+      //   type: Boolean,
+      //   default: false
+      // }
+    },
+    data() {
+      return {
+        form: {
+          name: 'jon',
+          email: 'jon@mcgill',
+          password: '123',
+          phone: '514'
+        }
+      }
+    },
+    mounted() {
+      const axios = inject('axios')
+      const userService = new UserService(axios)
+
+      axios.get('api/account/get/' + userService.getCookie("accountId"))
+          .then((data) => {
+            data = data.data
+            this.form.name = data.person.name
+            this.form.email = data.email
+            this.form.password = data.password
+            this.form.phone = data.person.phoneNumber
+            console.log(this.form)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+    }
+  }
 
 </script>
 

@@ -13,8 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOriginPatterns("http://localhost:5173/")
                 .allowedMethods("PUT", "DELETE", "GET", "POST")
-                .allowedHeaders("Set-Cookie")
-                .exposedHeaders("Set-Cookie")
+                .allowedHeaders("*")
                 .allowCredentials(true)
                 .maxAge(3600);
     }

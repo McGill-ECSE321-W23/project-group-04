@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :tabs="tabs"></Header>
+    <Header :tabs="tabs" :is-logged-in="loggedIn" :is-staff="isStaff"></Header>
     <div class="pageBody">
       <div id="page_home" class="tabBody" active="true">
       <HomePage />
