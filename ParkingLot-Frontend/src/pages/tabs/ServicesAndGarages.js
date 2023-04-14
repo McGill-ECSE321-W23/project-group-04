@@ -13,105 +13,197 @@ export default {
 
     data() {
         return {
+
+            // Main page
+
             // Offered services
+            showOfferedServicesEdit: true,
             offeredServices: [],
-            newOfferedService: '',
-            editOfferedService: '',
-            deleteOfferedService: '',
+            selectedOfferedServiceRow: '',
             errorOfferedService: '',
 
-            // Garage
+            // Garages
+            showGaragesEdit: true,
             garages: [],
-            newGarage: '',
-            editGarage: '',
-            deleteGarage: '',
+            selectedGarageRow: '',
             errorGarage: '',
+            
+            // Edit
+
+            // Offered services
+            showOfferedServiceEdit: false,
+            editOfferedServiceDescription: '',
+            editOfferedServiceDuration: '',
+            editOfferedServiceCost: '',
+
+            // Garages
+            showGarageEdit: false,
+            editGarageGarageNumber: '',
+
+            // Add 
+
+            // Offered services
+            showOfferedServiceAdd: false,
+            newOfferedServiceDescription: '',
+            newOfferedServiceDuration: '',
+            newOfferedServiceCost: '',
+
+            // Garages
+            showGarageAdd: false,
+            newGarageGarageNumber: '',
+
+            // Delete
+
+            // Offered services
+            deleteOfferedService: '',
+
+            // Garages
+            deleteGarage: '',
 
             response: []
-        }
+        };
     },
 
-    created: function() {
+    created() {
         // Test data
-
+    
+        // Offered services
         const os1 = new OfferedServiceDto('Change Tires', 60, 99.99)
         const os2 = new OfferedServiceDto('Clean Car', 120, 50.00)
         const os3 = new OfferedServiceDto('Change Wipers', 15, 10.00)
+        this.offeredServices = [os1, os2, os3]
+    
+        // Garages
         const g1 = new GarageDto(1);
         const g2 = new GarageDto(2);
-
-        // Sample initial content
-        this.offeredServices = [os1, os2, os3]
         this.garages = [g1, g2]
     }, 
 
     methods: {
-        createOfferedService: function (description, duration, cost) {
+        handleOfferedServiceRowClick(row) {
+            this.selectedOfferedServiceRow = row;
+            this.editOfferedServiceDescription.value = row.description;
+            this.editOfferedServiceDuration.value = row.duration;
+            this.editOfferedServiceCost.value = row.cost;
+        },
+    
+        handleGarageRowClick(row) {
+            this.selectedGarageRow = row;
+            this.editGarageGarageNumber.value = row.garageNumber;
+        },
+
+        goBack() {
+            this.showOfferedServicesEdit = true;
+            this.showGaragesEdit = true;
+            this.showOfferedServiceEdit = false;
+            this.showGarageEdit = false;
+            this.showOfferedServiceAdd = false;
+            this.showGarageAdd = false;
+
+            this.selectedOfferedServiceRow = null;
+            this.selectedGarageRow = null;
+
+            this.editOfferedServiceDescription = ''
+            this.editOfferedServiceDuration = ''
+            this.editOfferedServiceCost = ''  
+
+            this.editGarageGarageNumber = '' 
+
+            this.newOfferedServiceDescription = ''
+            this.newOfferedServiceDuration = ''
+            this.newOfferedServiceCost = ''  
+
+            this.newGarageGarageNumber = ''
+        },
+
+        deleteOfferedService() {
+
+        },
+
+        deleteGarage() {
+
+        },
+
+        // Edit an offered service
+        editOfferedService() {
+            if (this.selectedOfferedServiceRow) {
+                this.showOfferedServiceEdit = true;
+                this.showOfferedServicesEdit = false;
+                this.showGaragesEdit = false;
+            }
+        },
+
+        saveEditOfferedService() {
+            if (this.selectedOfferedServiceRow) {
+                this.showOfferedServiceEdit = false;
+                this.showOfferedServicesEdit = true;
+                this.showGaragesEdit = true;
+
+                this.selectedOfferedServiceRow = null;
+                this.editOfferedServiceDescription = ''
+                this.editOfferedServiceDuration = ''
+                this.editOfferedServiceCost = ''   
+            }
+        },
+
+        // Edit a garage
+        editGarage() {
+            if (this.selectedGarageRow) {
+                this.showGarageEdit = true;
+                this.showOfferedServicesEdit = false;
+                this.showGaragesEdit = false;
+            }
+        },
+
+        saveEditGarage() {
+            if (this.selectedOfferedServiceRow) {
+                this.showGarageEdit = false;
+                this.showOfferedServicesEdit = true;
+                this.showGaragesEdit = true;
+
+                this.selectedGarageRow = null;
+                this.editGarageGarageNumber = '' 
+            }
+        },
+
+        // Add an offered service
+        addOfferedService() {
+            this.showOfferedServiceAdd = true;
+            this.showOfferedServicesEdit = false;
+            this.showGaragesEdit = false;
+        },
+
+        saveAddOfferedService: function (description, duration, cost) {
             // Create a new offered service and add it to the list of offered services
             var os = new OfferedServiceDto(description, duration, cost)
             this.offeredServices.push(os)
-            this.newOfferedService = ''
+
+            this.showOfferedServiceAdd = false;
+            this.showOfferedServicesEdit = true;
+            this.showGaragesEdit = true;
+
+            this.newOfferedServiceDescription = ''
+            this.newOfferedServiceDuration = ''
+            this.newOfferedServiceCost = ''        
         },
 
-        createGarage: function (garageNumber) {
+        // Add a garage
+        addGarage() {
+            this.showGarageAdd = true;
+            this.showOfferedServicesEdit = false;
+            this.showGaragesEdit = false;
+        },
+
+        saveAddGarage: function (garageNumber) {
             // Create a new garage and add it to the list of garages
             var g = new GarageDto(garageNumber)
             this.garages.push(g)
-            this.newGarage = ''
-        }, 
 
-        // Add the edit and delete
+            this.showGarageAdd = false;
+            this.showOfferedServicesEdit = true;
+            this.showGaragesEdit = true;
+
+            this.newGarageGarageNumber = ''
+        }, 
     }
 }
-
-export const offeredServicesAvailable = [
-    {
-        id: 1,
-        label: 'Change Tires',
-        description: 'Change Tires',
-        duration: 60,
-        cost: 99.99,
-    },
-    {
-        id: 2,
-        label: 'Clean Car',
-        description: 'Clean Car',
-        duration: 120,
-        cost: 50.00,
-    },
-    {
-        id: 3,
-        label: 'Change Wipers',
-        description: 'Change Wipers',
-        duration: 15,
-        cost: 10.00,
-    },
-]
-
-export const garages = [
-    {
-        id: 1,
-        label: '1',
-        garageNumber: '1',
-    },
-    {
-        id: 2,
-        label: '2',
-        garageNumber: '2',
-    },
-    {
-        id: 3,
-        label: '3',
-        garageNumber: '3',
-    },
-    {
-        id: 4,
-        label: '4',
-        garageNumber: '4',
-    },
-    {
-        id: 5,
-        label: '5',
-        garageNumber: '',
-    },
-]
