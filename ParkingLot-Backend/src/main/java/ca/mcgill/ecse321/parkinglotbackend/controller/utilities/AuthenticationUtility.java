@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller.utilities;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 public class AuthenticationUtility {
 
@@ -20,7 +21,8 @@ public class AuthenticationUtility {
      * @author Lin Wei Li
      */
     public static boolean isLoggedIn(HttpServletRequest request) {
-        return request.getSession().getAttribute("accountID") != null;
+        HttpSession session = request.getSession(false);
+        return session != null && session.getAttribute("accountID") != null;
     }
 
     /**
@@ -34,7 +36,7 @@ public class AuthenticationUtility {
         if (!isLoggedIn(request)) {
             throw new Exception("Not logged in");
         }
-        return (long) Integer.parseInt(request.getSession().getAttribute("accountID").toString());
+        return (long) Integer.parseInt(request.getSession(false).getAttribute("accountID").toString());
     }
 
     /**
@@ -48,7 +50,7 @@ public class AuthenticationUtility {
         if (!isLoggedIn(request)) {
             throw new Exception("Not logged in");
         }
-        return request.getSession().getAttribute("role") == Role.STAFF || request.getSession().getAttribute("role") == Role.MANAGER;
+        return request.getSession(false).getAttribute("role") == Role.STAFF || request.getSession(false).getAttribute("role") == Role.MANAGER;
     }
 
     /**
@@ -62,7 +64,7 @@ public class AuthenticationUtility {
         if (!isLoggedIn(request)) {
             throw new Exception("Not logged in");
         }
-        return request.getSession().getAttribute("role") == Role.MANAGER;
+        return request.getSession(false).getAttribute("role") == Role.MANAGER;
     }
 
 }
