@@ -22,14 +22,14 @@ export default {
             showOfferedServicesEdit: true,
             offeredServices: [],
             selectedOfferedServiceRow: '',
-            showErrorOfferedService: false,
+            showErrorEditOfferedService: false,
             errorOfferedService: '',
 
             // Garages
             showGaragesEdit: true,
             garages: [],
             selectedGarageRow: '',
-            showErrorGarage: false,
+            showErrorEditGarage: false,
             errorGarage: '',
             
             // Edit
@@ -39,10 +39,12 @@ export default {
             editOfferedServiceDescription: '',
             editOfferedServiceDuration: '',
             editOfferedServiceCost: '',
+            showErrorSaveEditOfferedService: false,
 
             // Garages
             showGarageEdit: false,
             editGarageGarageNumber: '',
+            showErrorSaveEditGarage: false,
 
             // Add 
 
@@ -51,18 +53,22 @@ export default {
             newOfferedServiceDescription: '',
             newOfferedServiceDuration: '',
             newOfferedServiceCost: '',
+            showErrorSaveAddOfferedService: false,
 
             // Garages
             showGarageAdd: false,
             newGarageGarageNumber: '',
+            showErrorSaveAddGarage: false,
 
             // Delete
 
             // Offered services
             deleteOfferedService: '',
+            showErrorDeleteOfferedService: false,
 
             // Garages
             deleteGarage: '',
+            showErrorDeleteGarage: false,
 
             response: [],
 
@@ -95,11 +101,17 @@ export default {
             this.editOfferedServiceDescription = row.description;
             this.editOfferedServiceDuration = row.duration;
             this.editOfferedServiceCost = row.cost;
+
+            this.showErrorEditOfferedService = false;
+            this.showErrorDeleteOfferedService = false;
         },
     
         handleGarageRowClick(row) {
             this.selectedGarageRow = row;
             this.editGarageGarageNumber = row.garageNumber;
+
+            this.showErrorEditGarage = false;
+            this.showErrorDeleteGarage = false;
         },
 
         goBack() {
@@ -113,29 +125,40 @@ export default {
             this.selectedOfferedServiceRow = null;
             this.selectedGarageRow = null;
 
-            this.editOfferedServiceDescription = ''
-            this.editOfferedServiceDuration = ''
-            this.editOfferedServiceCost = ''  
+            this.editOfferedServiceDescription = '';
+            this.editOfferedServiceDuration = '';
+            this.editOfferedServiceCost = '';
 
-            this.editGarageGarageNumber = '' 
+            this.editGarageGarageNumber = '';
 
-            this.newOfferedServiceDescription = ''
-            this.newOfferedServiceDuration = ''
-            this.newOfferedServiceCost = ''  
+            this.newOfferedServiceDescription = '';
+            this.newOfferedServiceDuration = '';
+            this.newOfferedServiceCost = '';
 
-            this.newGarageGarageNumber = ''
+            this.newGarageGarageNumber = '';
         },
 
-        deleteOfferedService() {
+        deleteOfferedServiceSelected() {
+            if (this.selectedOfferedServiceRow) {
 
-            this.selectedOfferedServiceRow = null;
-            this.selectedGarageRow = null;
+                this.selectedOfferedServiceRow = null;
+                this.selectedGarageRow = null;
+            }
+
+            else {
+                this.showErrorDeleteOfferedService = true;
+            }
         },
 
-        deleteGarage() {
+        deleteGarageSelected() {
+            if (this.selectedGarageRow) {
+                this.selectedOfferedServiceRow = null;
+                this.selectedGarageRow = null;
+            }
 
-            this.selectedOfferedServiceRow = null;
-            this.selectedGarageRow = null;
+            else {
+                this.showErrorDeleteGarage = true;
+            }
         },
 
         // Edit an offered service
@@ -144,6 +167,13 @@ export default {
                 this.showOfferedServiceEdit = true;
                 this.showOfferedServicesEdit = false;
                 this.showGaragesEdit = false;
+
+                this.showErrorEditGarage = false;
+                this.showErrorDeleteGarage = false;
+            }
+
+            else {
+                this.showErrorEditOfferedService = true;
             }
         },
 
@@ -154,9 +184,9 @@ export default {
                 this.showGaragesEdit = true;
 
                 this.selectedOfferedServiceRow = null;
-                this.editOfferedServiceDescription = ''
-                this.editOfferedServiceDuration = ''
-                this.editOfferedServiceCost = ''   
+                this.editOfferedServiceDescription = '';
+                this.editOfferedServiceDuration = '';
+                this.editOfferedServiceCost = '';
             }
         },
 
@@ -166,17 +196,24 @@ export default {
                 this.showGarageEdit = true;
                 this.showOfferedServicesEdit = false;
                 this.showGaragesEdit = false;
+
+                this.showErrorEditOfferedService = false;
+                this.showErrorDeleteOfferedService = false;
+            }
+
+            else {
+                this.showErrorEditGarage = true;
             }
         },
 
         saveEditGarage() {
-            if (this.selectedOfferedServiceRow) {
+            if (this.selectedGarageRow) {
                 this.showGarageEdit = false;
                 this.showOfferedServicesEdit = true;
                 this.showGaragesEdit = true;
 
                 this.selectedGarageRow = null;
-                this.editGarageGarageNumber = '' 
+                this.editGarageGarageNumber = '';
             }
         },
 
@@ -185,6 +222,11 @@ export default {
             this.showOfferedServiceAdd = true;
             this.showOfferedServicesEdit = false;
             this.showGaragesEdit = false;
+
+            this.showErrorEditOfferedService = false;
+            this.showErrorEditGarage = false;
+            this.showErrorDeleteOfferedService = false;
+            this.showErrorDeleteGarage = false;    
         },
 
         saveAddOfferedService: function (description, duration, cost) {
@@ -196,9 +238,9 @@ export default {
             this.showOfferedServicesEdit = true;
             this.showGaragesEdit = true;
 
-            this.newOfferedServiceDescription = ''
-            this.newOfferedServiceDuration = ''
-            this.newOfferedServiceCost = ''        
+            this.newOfferedServiceDescription = '';
+            this.newOfferedServiceDuration = '';
+            this.newOfferedServiceCost = '';        
         },
 
         // Add a garage
@@ -206,18 +248,23 @@ export default {
             this.showGarageAdd = true;
             this.showOfferedServicesEdit = false;
             this.showGaragesEdit = false;
+
+            this.showErrorEditOfferedService = false;
+            this.showErrorEditGarage = false;
+            this.showErrorDeleteOfferedService = false;
+            this.showErrorDeleteGarage = false;    
         },
 
         saveAddGarage: function (garageNumber) {
             // Create a new garage and add it to the list of garages
-            var g = new GarageDto(garageNumber)
-            this.garages.push(g)
+            var g = new GarageDto(garageNumber);
+            this.garages.push(g);
 
             this.showGarageAdd = false;
             this.showOfferedServicesEdit = true;
             this.showGaragesEdit = true;
 
-            this.newGarageGarageNumber = ''
+            this.newGarageGarageNumber = '';
         }, 
     }
 }

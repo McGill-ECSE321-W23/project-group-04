@@ -17,12 +17,16 @@
             </el-table>
             <br/>
 
+            <!-- Alert to choose an offered service -->
+            <el-alert v-if="showErrorEditOfferedService || showErrorDeleteOfferedService" title="Please choose an offered service" type="error" show-icon />
+            <br/>
+
             <div class="button-container">
                 <!-- Edit the offered service button -->
                 <el-button type="primary" @click="editOfferedService">Edit Offered Service</el-button>
-                        
+            
                 <!-- Delete the offered service button -->
-                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteOfferedService"></el-button>
+                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteOfferedServiceSelected"></el-button>
             </div>
             <br />
 
@@ -44,13 +48,18 @@
                 <el-table-column prop="garageNumber" label="Garage number" style="width: 100%" />
             </el-table>
             <br/>
+
+            <!-- Alert to choose a garage -->
+            <el-alert v-if="showErrorEditGarage || showErrorDeleteGarage" title="Please choose a garage" type="error" show-icon />
+            
+            <br/>
     
             <div class="button-container">
                 <!-- Edit a garage button -->
                 <el-button type="primary" @click="editGarage">Edit Garage</el-button>
     
                 <!-- Delete a garage button -->
-                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteGarage"></el-button>
+                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteGarageSelected"></el-button>
             </div>
             <br />
     
@@ -86,10 +95,14 @@
                 <el-input v-model="editOfferedServiceCost" placeholder="Enter cost"></el-input>
             </div>
             <br />
+
+            <!-- Alert to for the offered service edit -->
+            <el-alert v-if="showErrorSaveEditOfferedService" title="Error: {{errorOfferedService}}" type="error" show-icon />
+            <br/>
             
             <div>
                 <!-- Go back button -->
-                <el-button type="warning" :icon="icons.arrowLeftIcon" plain @click="goBack">Go back</el-button>
+                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
 
                 <!-- Save the edited offered service -->
                 <el-button type="success" @click="saveEditOfferedService">Save Offered Service</el-button>
@@ -111,17 +124,20 @@
                 <el-input v-model="editGarageGarageNumber" placeholder="Enter garage number"></el-input> 
             </div>
             <br />
+
+            <!-- Alert to for the offered service edit -->
+            <el-alert v-if="showErrorSaveEditGarage" title="Error: {{errorGarage}}" type="error" show-icon />
+            <br/>
             
             <div>
                 <!-- Go back button -->
-                <el-button type="warning" :icon="icons.arrowLeftIcon" plain @click="goBack"> Go back</el-button>
+                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack"> Go back</el-button>
 
                 <!-- Save the edited garage -->
                 <el-button type="success" @click="saveEditGarage">Save Garage</el-button>
             </div>
         </div>
         <br />    
-
 
         <!-- Add Offered services -->
         <div class="container" v-if="showOfferedServiceAdd" id="OfferedServiceAdd">
@@ -151,10 +167,14 @@
                 <el-input v-model="newOfferedServiceCost" placeholder="Enter cost"></el-input>
             </div>
             <br />
+
+            <!-- Alert to for the offered service edit -->
+            <el-alert v-if="showErrorSaveAddOfferedService" title="Error: {{errorOfferedService}}" type="error" show-icon />
+            <br/>
             
             <div>
                 <!-- Go back button -->
-                <el-button type="warning" :icon="icons.arrowLeftIcon" plain @click="goBack">Go back</el-button>
+                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
 
                 <!-- Add the offered service button -->
                 <el-button type="success" v-bind:disabled="(!newOfferedServiceDescription && !newOfferedServiceDuration && !newOfferedServiceCost)" @click="saveAddOfferedService(description, duration, cost)">Add Offered Service</el-button>
@@ -176,10 +196,14 @@
                 <el-input v-model="newGarageGarageNumber" placeholder="Enter garage number"></el-input> 
             </div>
             <br />
+
+            <!-- Alert to for the offered service edit -->
+            <el-alert v-if="showErrorSaveAddGarage" title="Error: {{errorGarage}}" type="error" show-icon />
+            <br/>
             
             <div>
                 <!-- Go back button -->
-                <el-button type="warning" :icon="icons.arrowLeftIcon" plain @click="goBack"> Go back</el-button>
+                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack"> Go back</el-button>
             
                 <!-- Add the garage button -->
                 <el-button type="success" v-bind:disabled="!newGarageGarageNumber" @click="saveAddGarage(garageNumber)">Add Garage</el-button>
