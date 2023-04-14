@@ -1,5 +1,7 @@
 import { Delete, ArrowLeft } from '@element-plus/icons-vue'
 
+
+
 function GarageDto (garageNumber) {
     this.garageNumber = garageNumber;
 }
