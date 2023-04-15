@@ -15,10 +15,6 @@ export default {
 
   data() {
     return {
-
-      // Main page
-      owner: '',
-          
       // Offered services
       showOfferedServices: true,
       offeredServices: [],
@@ -28,6 +24,8 @@ export default {
 
       // Book
       showBookAppointment: false,
+      owner: '',
+      errorAccount:'',
       appointments: [],
       description: '',
       duration: '',
@@ -52,33 +50,37 @@ export default {
   },
 
   created() {
-      // Initializing offered services from backend
-      AXIOS.get('/offeredServices/get').then(response => {
-          this.offeredServices = response.data
-      })
-      .catch(e => {
-          this.errorOfferedService = e
-      })
+    // Getting the user's ID
+    AXIOS.get('/getAccount').then(response => {
+      this.owner = response.data
+    })
+    .catch(e => {
+      this.errorAccount = e
+    })
 
-      // Initializing garages from backend
-      AXIOS.get('/garages/get').then(response => {
-        this.garages = response.data
-      })
-      .catch(e => {
-          this.errorGarage = e
-      })
+    // Initializing offered services from backend
+    AXIOS.get('/offeredServices/get').then(response => {
+        this.offeredServices = response.data
+    })
+    .catch(e => {
+        this.errorOfferedService = e
+    })
 
-      // Initializing cars from backend
-      AXIOS.get('/cars/get/ByOwner/'.concat(this.owner)).then(response => {
-        this.appointments = response.data
-      })
-      .catch(e => {
-          this.errorAppointment = e
-      })
-  },
+    // Initializing garages from backend
+    AXIOS.get('/garages/get').then(response => {
+      this.garages = response.data
+    })
+    .catch(e => {
+        this.errorGarage = e
+    })
 
-  watch: {
-
+    // Initializing cars from backend
+    AXIOS.get('/cars/get/ByOwner/'.concat(this.owner.accountID)).then(response => {
+      this.appointments = response.data
+    })
+    .catch(e => {
+        this.errorAppointment = e
+    })
   },
 
   methods: {
@@ -190,6 +192,11 @@ export default {
         // If the garage is not selected
         else if (this.garage === '' || this.garage === 'undefined' || this.garage === null) {
           this.errorAppointment = "Please select a garage.";
+        }
+
+        // If the car is not selected
+        else if (this.car === '' || this.car === 'undefined' || this.car === null) {
+          this.errorAppointment = "Please select a car.";
         }
 
         // An error that is caught inside the controller 
