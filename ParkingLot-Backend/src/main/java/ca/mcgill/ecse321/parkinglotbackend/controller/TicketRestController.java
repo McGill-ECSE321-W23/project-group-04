@@ -62,8 +62,8 @@ public class TicketRestController {
                 case "Large" -> carType = CarType.Large;
                 case "Regular" -> carType = CarType.Regular;
             }
-            ticketService.createTicket(entryTime, carType, parkingLotSoftwareSystem);
-            return ResponseEntity.ok().build();
+            Ticket t = ticketService.createTicket(entryTime, carType, parkingLotSoftwareSystem);
+            return ResponseEntity.ok().body(convertToDto(t));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -79,6 +79,15 @@ public class TicketRestController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteTicket (HttpServletRequest request, @PathVariable(value = "id") long id) {
+
+        // Check authorization (staff)
+        try {
+            if (!AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.status(AuthenticationUtility.FORBIDDEN).build();
+            }
+        } catch (Exception e) {
+                    return ResponseEntity.status(AuthenticationUtility.UNAUTHORIZED).body(e.getMessage());
+        }
 
         try {
             Ticket t = ticketService.deleteTicket(id);

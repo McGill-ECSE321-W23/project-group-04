@@ -42,6 +42,9 @@
                                 <div class = "container" id = "regularButton">
                                     <el-button id = "regularTicketButton" type = "info" round @click= "createRegTicket()" > Reserve </el-button>
                                 </div>
+                                    <!-- Confirmation message -->
+                                    <el-alert style ="position: absolute" v-if="showConfirmation" title="Success!" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+                                    <br/>
                             </div>
                         </div>
                     </el-card>
@@ -66,6 +69,9 @@
                                 <div class = "container" id = "largeButton">
                                     <el-button id = "largeTicketButton" type = "info" round @click= "createLargeTicket()"> Reserve </el-button>
                                 </div>
+                                    <!-- Confirmation message -->
+                                    <el-alert style ="position: absolute" v-if="showConfirmation" title="Success!" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+                                    <br/>
                             </div>
                         </div>
                     </el-card>
@@ -80,7 +86,7 @@
             <span id style="margin: 0%; padding: 0px; align: left; font-size: 60%; margin-left:5%;"> Pay for an Existing Ticket </span>
             
             <div class="container" id="payments">
-                <div class = "container" style = " margin-left:5%;top:-200px;" id="ticketIDInputs">
+                <div class = "container" style = " margin-left:5%;top:-100px;" id="ticketIDInputs">
                     <label style="margin-right: 1%; font-size: 55%; color: #000000" for = "ticketID" >Ticket ID:</label>
                     <el-input v-model="ticketID" id = "ticketID" name = "ticketID" style="width: 100%;" placeholder="Input Ticket ID" clearable />
                     <el-button id = "payTicketButton" type="info" round style="width: 100%; margin-top: 10%"> Pay Now </el-button>
@@ -91,8 +97,8 @@
                     </div>
                     <div class = "container" id= "ticketParameters">
                       <p style = "font-size: 50%; margin-left:28px;"> From: {{entryTime}} <br>
-                         To: 15  <br>
-                         $/15 min: {{pls.feePer15m}} <br>
+                         To: {{endTime}}  <br>
+                         $/15 min: ${{pls.feePer15m}} <br>
                          <b>AMOUNT DUE: ${{totalCost}}</b></p>
                     </div>
                 </div>

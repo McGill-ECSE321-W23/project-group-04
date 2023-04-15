@@ -21,7 +21,7 @@ export default {
           cost15Min:'',
           totalCost: '',
           errorPLS: '',
-          ticketID: '',
+          currentTicketID: '',
           showConfirmation: false,
 
           AXIOS: axios.create({
@@ -100,7 +100,7 @@ export default {
 
         createRegTicket: function () {
 
-          if (this.regLeft == 0){
+          if (this.regLeft <= 0){
             this.errorTicket = 'The parking lot cannot accomodate more regular cars.'
             console.log(errorTicket)
           }else{
@@ -114,8 +114,8 @@ export default {
             })
             .then(response => {
               this.regLeft = this.regLeft -1
-              //this.ticketID = response.data.TicketID
-              //this.showConfirmation = true
+              this.currentTicketID = response.data.TicketID
+              this.showConfirmation = true
               this.errorTicket = ''
               this.newTicket = ''
             })
@@ -129,7 +129,7 @@ export default {
 
         createLargeTicket: function () {
 
-            if (this.largeLeft == 0){
+            if (this.largeLeft <= 0){
               this.errorMessage = 'The parking lot cannot accomodate more large cars'
             }
             
@@ -142,6 +142,7 @@ export default {
             })
             .then(response => {
             // JSON responses are automatically parsed.
+              this.currentTicketID = response.data.TicketID
               this.largeLeft = this.largeLeft -1
               this.errorTicket = ''
               this.newTicket = ''
