@@ -1,5 +1,6 @@
 import { ArrowLeft } from '@element-plus/icons-vue'
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
+import ServiceAppointmentService from "@/service/ServiceAppointmentService";
 
 function GarageDto (garageNumber) {
   this.garageNumber = garageNumber;
@@ -61,6 +62,24 @@ export default {
     const g2 = new GarageDto(2);
     this.garages = [g1, g2]
   },
+
+  // mounted() {
+  //   const axios = inject('axios')
+  //   const userService = new UserService(axios)
+
+  //   axios.get('api/account/get/' + userService.getCookie("accountId"))
+  //       .then((data) => {
+  //         data = data.data
+  //         this.form.name = data.person.name
+  //         this.form.email = data.email
+  //         this.form.password = data.password
+  //         this.form.phone = data.person.phoneNumber
+  //         console.log(this.form)
+  //       })
+  //       .catch(err => {
+  //         console.log(err)
+  //       })
+  // },
 
   methods: {
     handleOfferedServiceRowClick(row) {

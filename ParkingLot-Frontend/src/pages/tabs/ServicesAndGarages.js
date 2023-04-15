@@ -1,25 +1,16 @@
 import { Delete, ArrowLeft } from '@element-plus/icons-vue'
-
+// import { inject } from "vue";
 import axios from 'axios'
-// var config = require('../../config')
+// import ServicesAndGaragesService from "@/service/ServicesAndGaragesService";
 
-// var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-// var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var AXIOS = axios.create({
+    baseURL: 'http://localhost:8080/api',   // backend url
+    withCredentials: true,
+    headers: {
+        "Access-Control-Allow-Origin": 'localhost:5173' // frontend url
+    }
+})
 
-// var AXIOS = axios.create({
-//   baseURL: backendUrl,
-//   headers: { 'Access-Control-Allow-Origin': frontendUrl }
-// })
-
-// function GarageDto (garageNumber) {
-//     this.garageNumber = garageNumber;
-// }
-
-// function OfferedServiceDto (description, duration, cost) {
-//     this.description = description;
-//     this.duration = duration;
-//     this.cost = cost;
-// }
 
 export default {
     name: 'servicesAndGaragesManagement',
@@ -92,36 +83,26 @@ export default {
     },
 
     created() {
-        // // Test data
-    
-        // // Offered services
-        // const os1 = new OfferedServiceDto('Change Tires', 60, 99.99)
-        // const os2 = new OfferedServiceDto('Clean Car', 120, 50.00)
-        // const os3 = new OfferedServiceDto('Change Wipers', 15, 10.00)
-        // this.offeredServices = [os1, os2, os3]
-    
-        // // Garages
-        // const g1 = new GarageDto(1);
-        // const g2 = new GarageDto(2);
-        // this.garages = [g1, g2]
+        // const axios = inject('axios')
+        // const offeredServices = new ServicesAndGaragesService(axios)
 
         // Initializing offered services from backend
-        AXIOS.get('/api/offeredServices')
+        AXIOS.get('/offeredServices/get')
         .then(response => {
-            // JSON responses are automatically parsed.
             this.offeredServices = response.data
         })
         .catch(e => {
             this.errorOfferedService = e
+            // alert(e)
         })
 
         // Initializing garages from backend
-        AXIOS.get('/api/garages')
-            .then(response => {
+        AXIOS.get('/garages/get').then(response => {
             this.garages = response.data
         })
         .catch(e => {
             this.errorGarage = e
+            alert(e)
             // this.errors.push(e)
         })
     }, 
@@ -262,8 +243,9 @@ export default {
 
         saveAddOfferedService: function (description, duration, cost) {
             // Create a new offered service and add it to the list of offered services
-            AXIOS.post('/api/offeredServices/get'.concat(description), {}, {
+            AXIOS.post('/offeredServices/create', {}, {
                 params: {
+                    description: description,
                     duration: duration,
                     cost: cost,
                 }
@@ -282,7 +264,7 @@ export default {
             })
             .catch(e => {
               var errorMsg = e.response.data.message
-              console.log(errorMsg)
+            //   alert(errorMsg)
               this.errorOfferedService = errorMsg
             })
         },
@@ -299,20 +281,18 @@ export default {
             this.showErrorDeleteGarage = false;    
         },
 
-        saveAddGarage: function (garageNumber) {
-            // Create a new garage and add it to the list of garages
-            // var g = new GarageDto(garageNumber);
-            // this.garages.push(g);
-
-            // this.showGarageAdd = false;
-            // this.showOfferedServicesEdit = true;
-            // this.showGaragesEdit = true;
-
-            // this.newGarageGarageNumber = '';
+        saveAddGarage: function (garageNum) {
+            // alert("reached")
 
             // Create a new garage and add it to the list of garages
-            AXIOS.post('/api/garages'.concat(garageNumber), {}, {})
+            AXIOS.post('/garages/create', {}, {
+                params: {
+                    garageNumber: garageNum
+                }
+            })
             .then(response => {
+                // alert("reached")
+
             // JSON responses are automatically parsed.
               this.garages.push(response.data)
               this.errorGarage = ''
@@ -324,7 +304,7 @@ export default {
             })
             .catch(e => {
               var errorMsg = e.response.data.message
-              console.log(errorMsg)
+            //   alert(errorMsg)
               this.errorGarage = errorMsg
             })
         }, 
