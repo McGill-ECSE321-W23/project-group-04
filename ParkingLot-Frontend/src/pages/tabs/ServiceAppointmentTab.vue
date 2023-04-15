@@ -14,9 +14,9 @@
       
       <!-- Table for the offered services -->
       <el-table ref="table" :data="offeredServices" height="500" style="width: 100%" @row-click="handleOfferedServiceRowClick" :highlight-current-row="true">
-        <el-table-column prop="description" label="Description" style="width: 100%" />
-        <el-table-column prop="duration" label="Duration (minutes)" style="width: 100%" />
-        <el-table-column prop="cost" label="Cost ($)" style="width: 100%" />
+        <el-table-column prop="offeredServiceDescription" label="Description" style="width: 100%" />
+        <el-table-column prop="offeredServiceDuration" label="Duration (minutes)" style="width: 100%" />
+        <el-table-column prop="offeredServiceCost" label="Cost ($)" style="width: 100%" />
       </el-table>
       <br/>
 

@@ -11,9 +11,9 @@
             
             <!-- Table for the offered services -->
             <el-table :data="offeredServices" height="500" style="width: 100%" @row-click="handleOfferedServiceRowClick" :highlight-current-row="true">
-                <el-table-column prop="description" label="Description" style="width: 100%" />
-                <el-table-column prop="duration" label="Duration (minutes)" style="width: 100%" />
-                <el-table-column prop="cost" label="Cost ($)" style="width: 100%" />
+                <el-table-column prop="offeredServiceDescription" label="Description" style="width: 100%" />
+                <el-table-column prop="offeredServiceDuration" label="Duration (minutes)" style="width: 100%" />
+                <el-table-column prop="offeredServiceCost" label="Cost ($)" style="width: 100%" />
             </el-table>
             <br/>
 
@@ -26,7 +26,7 @@
                 <el-button type="primary" @click="editOfferedService">Edit Offered Service</el-button>
             
                 <!-- Delete the offered service button -->
-                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteOfferedServiceSelected"></el-button>
+                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteOfferedServiceSelected(deleteOfferedService)"></el-button>
             </div>
             <br />
 
@@ -44,7 +44,7 @@
             <br />
     
             <!-- Table for the garages -->
-            <el-table :data="garages" highlight-current-row height="250" style="width: 100%" id="garageTable" @row-click="handleGarageRowClick">
+            <el-table :data="garages" highlight-current-row height="250" style="width: 100%" @row-click="handleGarageRowClick">
                 <el-table-column prop="garageNumber" label="Garage number" style="width: 100%" />
             </el-table>
             <br/>
@@ -59,7 +59,7 @@
                 <el-button type="primary" @click="editGarage">Edit Garage</el-button>
     
                 <!-- Delete a garage button -->
-                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteGarageSelected"></el-button>
+                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteGarageSelected(deleteGarage)"></el-button>
             </div>
             <br />
     
@@ -97,7 +97,7 @@
             <br />
 
             <!-- Alert for the offered service edit -->
-            <el-alert v-if="showErrorSaveEditOfferedService" title="Error: {{errorOfferedService}}" type="error" :closable="false" show-icon />
+            <el-alert v-if="showErrorSaveEditOfferedService" :title="`Error: ${errorOfferedService}`" type="error" :closable="false" show-icon />
             <br/>
             
             <div>
@@ -105,7 +105,7 @@
                 <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
 
                 <!-- Save the edited offered service -->
-                <el-button type="success" @click="saveEditOfferedService">Save Offered Service</el-button>
+                <el-button type="success" @click="saveEditOfferedService(editOfferedServiceSelected, editOfferedServiceDescription, editOfferedServiceDuration, editOfferedServiceCost)">Save Offered Service</el-button>
             </div>
         </div>
         <br />
@@ -126,7 +126,7 @@
             <br />
 
             <!-- Alert for the offered service edit -->
-            <el-alert v-if="showErrorSaveEditGarage" title="Error: {{errorGarage}}" type="error" :closable="false" show-icon />
+            <el-alert v-if="showErrorSaveEditGarage" :title="`Error: ${errorGarage}`" type="error" :closable="false" show-icon />
             <br/>
             
             <div>
@@ -134,7 +134,7 @@
                 <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
 
                 <!-- Save the edited garage -->
-                <el-button type="success" @click="saveEditGarage">Save Garage</el-button>
+                <el-button type="success" @click="saveEditGarage(editGarageSelected, editGarageGarageNumber)">Save Garage</el-button>
             </div>
         </div>
         <br />    
@@ -169,7 +169,7 @@
             <br />
 
             <!-- Alert for the offered service edit -->
-            <el-alert v-if="showErrorSaveAddOfferedService" title="Error: {{errorOfferedService}}" type="error" :closable="false" show-icon />
+            <el-alert v-if="showErrorSaveAddOfferedService" :title="`Error: ${errorOfferedService}`" type="error" :closable="false" show-icon />
             <br/>
             
             <div>
@@ -177,7 +177,7 @@
                 <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
 
                 <!-- Add the offered service button -->
-                <el-button type="success" @click="saveAddOfferedService(description, duration, cost)">Add Offered Service</el-button>
+                <el-button type="success" @click="saveAddOfferedService(newOfferedServiceDescription, newOfferedServiceDuration, newOfferedServiceCost)">Add Offered Service</el-button>
             </div>
         </div>
         <br />
@@ -197,8 +197,8 @@
             </div>
             <br />
 
-            <!-- Alert for the offered service edit -->
-            <el-alert v-if="showErrorSaveAddGarage" title="Error: {{errorGarage}}" type="error" :closable="false" show-icon />
+            <!-- Alert for the garage edit -->
+            <el-alert v-if="showErrorSaveAddGarage" :title="`Error: ${errorGarage}`" type="error" :closable="false" show-icon />
             <br/>
             
             <div>
@@ -206,7 +206,7 @@
                 <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
             
                 <!-- Add the garage button -->
-                <el-button type="success" @click="saveAddGarage(garageNumber)">Add Garage</el-button>
+                <el-button type="success" @click="saveAddGarage(newGarageGarageNumber)">Add Garage</el-button>
             </div>
         </div>
     </div>

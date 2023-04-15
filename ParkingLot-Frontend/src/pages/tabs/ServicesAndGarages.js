@@ -1,7 +1,5 @@
 import { Delete, ArrowLeft } from '@element-plus/icons-vue'
-// import { inject } from "vue";
 import axios from 'axios'
-// import ServicesAndGaragesService from "@/service/ServicesAndGaragesService";
 
 var AXIOS = axios.create({
     baseURL: 'http://localhost:8080/api',   // backend url
@@ -10,7 +8,6 @@ var AXIOS = axios.create({
         "Access-Control-Allow-Origin": 'localhost:5173' // frontend url
     }
 })
-
 
 export default {
     name: 'servicesAndGaragesManagement',
@@ -38,6 +35,7 @@ export default {
 
             // Offered services
             showOfferedServiceEdit: false,
+            editOfferedServiceSelected: '',
             editOfferedServiceDescription: '',
             editOfferedServiceDuration: '',
             editOfferedServiceCost: '',
@@ -45,6 +43,7 @@ export default {
 
             // Garages
             showGarageEdit: false,
+            editGarageSelected: '',
             editGarageGarageNumber: '',
             showErrorSaveEditGarage: false,
 
@@ -83,17 +82,12 @@ export default {
     },
 
     created() {
-        // const axios = inject('axios')
-        // const offeredServices = new ServicesAndGaragesService(axios)
-
         // Initializing offered services from backend
-        AXIOS.get('/offeredServices/get')
-        .then(response => {
+        AXIOS.get('/offeredServices/get').then(response => {
             this.offeredServices = response.data
         })
         .catch(e => {
             this.errorOfferedService = e
-            // alert(e)
         })
 
         // Initializing garages from backend
@@ -102,31 +96,44 @@ export default {
         })
         .catch(e => {
             this.errorGarage = e
-            alert(e)
-            // this.errors.push(e)
         })
     }, 
 
     methods: {
         handleOfferedServiceRowClick(row) {
             this.selectedOfferedServiceRow = row;
-            this.editOfferedServiceDescription = row.description;
-            this.editOfferedServiceDuration = row.duration;
-            this.editOfferedServiceCost = row.cost;
 
+            // Edit
+            this.editOfferedServiceSelected = row.offeredServiceID;
+            this.editOfferedServiceDescription = row.offeredServiceDescription;
+            this.editOfferedServiceDuration = row.offeredServiceDuration;
+            this.editOfferedServiceCost = row.offeredServiceCost;
+
+            // Delete
+            this.deleteOfferedService = row.offeredServiceID;
+
+            // Errors
             this.showErrorEditOfferedService = false;
             this.showErrorDeleteOfferedService = false;
         },
     
         handleGarageRowClick(row) {
             this.selectedGarageRow = row;
+
+            // Edit
+            this.editGarageSelected = row.garageID;
             this.editGarageGarageNumber = row.garageNumber;
 
+            // Delete
+            this.deleteGarage = row.garageID;
+
+            // Errors
             this.showErrorEditGarage = false;
             this.showErrorDeleteGarage = false;
         },
 
         goBack() {
+            // Sections
             this.showOfferedServicesEdit = true;
             this.showGaragesEdit = true;
             this.showOfferedServiceEdit = false;
@@ -134,43 +141,61 @@ export default {
             this.showOfferedServiceAdd = false;
             this.showGarageAdd = false;
 
+            // Rows
             this.selectedOfferedServiceRow = null;
             this.selectedGarageRow = null;
 
+            // Edit offered service
+            this.editOfferedServiceSelected = '';
             this.editOfferedServiceDescription = '';
             this.editOfferedServiceDuration = '';
             this.editOfferedServiceCost = '';
 
+            // Edit garage
+            this.editGarageSelected = '';
             this.editGarageGarageNumber = '';
 
+            // Add offered service
             this.newOfferedServiceDescription = '';
             this.newOfferedServiceDuration = '';
             this.newOfferedServiceCost = '';
 
+            // Add garage
             this.newGarageGarageNumber = '';
+
+            // Delete offered service
+            this.deleteOfferedService = '';
+
+            // Delete garage
+            this.deleteGarage = '';
         },
 
-        deleteOfferedServiceSelected() {
-            if (this.selectedOfferedServiceRow) {
+        deleteOfferedServiceSelected: function (deleteos) {
+            AXIOS.post('/offeredServices/delete/'.concat(deleteos), {}, {}).then(response => {
+                this.offeredServices.pop(response.data);
+                this.deleteOfferedService = '';
+                this.editOfferedServiceSelected = '';
 
                 this.selectedOfferedServiceRow = null;
                 this.selectedGarageRow = null;
-            }
-
-            else {
+            })
+            .catch(e => {
                 this.showErrorDeleteOfferedService = true;
-            }
+            })
         },
 
-        deleteGarageSelected() {
-            if (this.selectedGarageRow) {
+        deleteGarageSelected: function (deleteg) {
+            AXIOS.post('/garages/delete/'.concat(deleteg), {}, {}).then(response => {
+                this.garages.pop(response.data);
+                this.deleteGarage = '';
+                this.editGarage = '';
+
                 this.selectedOfferedServiceRow = null;
                 this.selectedGarageRow = null;
-            }
-
-            else {
+            })
+            .catch(e => {
                 this.showErrorDeleteGarage = true;
-            }
+            })
         },
 
         // Edit an offered service
@@ -189,17 +214,34 @@ export default {
             }
         },
 
-        saveEditOfferedService() {
-            if (this.editOfferedServiceDescription !== '' && this.editOfferedServiceDuration !== '' && this.editOfferedServiceCost !== '') {
+        saveEditOfferedService: function (editos, desc, dur, co) {
+            AXIOS.post('/offeredServices/modify/'.concat(editos), {}, {
+                params: {
+                    description: desc,
+                    duration: dur,
+                    cost: co,
+                }
+            }).then(response => {
+                const newOfferedService = response.data;
+                const index = this.offeredServices.findIndex(os => os.id === editos);
+                this.offeredServices.splice(index, 1, newOfferedService);
+                this.editOfferedServiceSelected = '';
+                this.editOfferedServiceDescription = '';
+                this.editOfferedServiceDuration = '';
+                this.editOfferedServiceCost = '';
+                this.deleteOfferedService = '';
+
                 this.showOfferedServiceEdit = false;
                 this.showOfferedServicesEdit = true;
                 this.showGaragesEdit = true;
 
                 this.selectedOfferedServiceRow = null;
-                this.editOfferedServiceDescription = '';
-                this.editOfferedServiceDuration = '';
-                this.editOfferedServiceCost = '';
-            }
+            })
+            .catch(e => {
+                alert(e)
+                this.errorOfferedService = e.response.data.message;
+                this.showErrorSaveEditOfferedService = true;
+            })
         },
 
         // Edit a garage
@@ -218,15 +260,29 @@ export default {
             }
         },
 
-        saveEditGarage() {
-            if (this.editGarageGarageNumber !== '') {
+        saveEditGarage: function (editg, garageNum) {
+            AXIOS.post('/garages/modify/'.concat(editg), {}, {
+                params: {
+                    garageNumber: garageNum,
+                }
+            }).then(response => {
+                const newGarage = response.data;
+                const index = this.garages.findIndex(g => g.id === editg);
+                this.garages.splice(index, 1, newGarage);                
+                this.editGarage = '';
+                this.editGarageGarageNumber = '';
+                this.deleteGarage = '';
+
                 this.showGarageEdit = false;
                 this.showOfferedServicesEdit = true;
                 this.showGaragesEdit = true;
 
                 this.selectedGarageRow = null;
-                this.editGarageGarageNumber = '';
-            }
+            })
+            .catch(e => {
+                this.errorGarage = e.message;
+                this.showErrorSaveEditGarage = true;
+            })
         },
 
         // Add an offered service
@@ -241,17 +297,16 @@ export default {
             this.showErrorDeleteGarage = false;    
         },
 
-        saveAddOfferedService: function (description, duration, cost) {
+        saveAddOfferedService: function (desc, dur, co) {
             // Create a new offered service and add it to the list of offered services
             AXIOS.post('/offeredServices/create', {}, {
                 params: {
-                    description: description,
-                    duration: duration,
-                    cost: cost,
+                    description: desc,
+                    duration: dur,
+                    cost: co,
                 }
             })
             .then(response => {
-              // JSON responses are automatically parsed.
               this.offeredServices.push(response.data)
               this.errorOfferedService = ''
               this.newOfferedServiceDescription = '';
@@ -263,9 +318,8 @@ export default {
               this.showGaragesEdit = true;    
             })
             .catch(e => {
-              var errorMsg = e.response.data.message
-            //   alert(errorMsg)
-              this.errorOfferedService = errorMsg
+              this.errorOfferedService = e.response.data.message
+              this.showErrorSaveAddOfferedService = true;
             })
         },
 
@@ -282,8 +336,6 @@ export default {
         },
 
         saveAddGarage: function (garageNum) {
-            // alert("reached")
-
             // Create a new garage and add it to the list of garages
             AXIOS.post('/garages/create', {}, {
                 params: {
@@ -291,9 +343,6 @@ export default {
                 }
             })
             .then(response => {
-                // alert("reached")
-
-            // JSON responses are automatically parsed.
               this.garages.push(response.data)
               this.errorGarage = ''
               this.newGarageGarageNumber = ''
@@ -303,9 +352,8 @@ export default {
               this.showGaragesEdit = true;
             })
             .catch(e => {
-              var errorMsg = e.response.data.message
-            //   alert(errorMsg)
-              this.errorGarage = errorMsg
+              this.errorGarage = e.response.data.message
+              this.showErrorSaveAddGarage = true;
             })
         }, 
     }
