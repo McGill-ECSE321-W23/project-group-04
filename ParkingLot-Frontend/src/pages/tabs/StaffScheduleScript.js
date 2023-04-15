@@ -40,7 +40,7 @@ export default {
         };
     },
     created: function() {
-        axios.get('http://localhost:8080/api/staff/getAll') // need to add controller !!!
+        axios.get('http://localhost:8080/api/staff/all')
         .then(response => {
             this.staff_list = [];
             for (var i = 0; i < response.data.length; i++) {

@@ -3,6 +3,10 @@ package ca.mcgill.ecse321.parkinglotbackend.service;
 import ca.mcgill.ecse321.parkinglotbackend.dao.StaffAccountRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.model.StaffAccount;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +26,13 @@ public class StaffAccountService {
     public StaffAccount getStaffAccount(long id) {
         StaffAccount account = staffAccountRepository.getStaffAccountByAccountID(id);
         return account;
+    }
+
+    /*
+     * get all staff accounts
+     */
+    public List<StaffAccount> getAllStaffAccounts() {
+        return toList(staffAccountRepository.findAll());
     }
 
     /**
@@ -72,5 +83,19 @@ public class StaffAccountService {
             return staffAccountRepository.deleteStaffAccountByAccountID(accountId);
         }
         throw new IllegalArgumentException("id is null");
+    }
+
+    /**
+     * helper method to convert to list of objects
+     * @param iterable
+     * @param <T>
+     * @return list of objects
+     */
+    private <T> List<T> toList(Iterable<T> iterable) {
+        List<T> resultList = new ArrayList<T>();
+        for (T t : iterable) {
+            resultList.add(t);
+        }
+        return resultList;
     }
 }
