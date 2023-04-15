@@ -22,7 +22,6 @@ import ca.mcgill.ecse321.parkinglotbackend.service.AccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.PersonService;
 import jakarta.servlet.http.HttpServletRequest;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/account")
 public class AccountRestController {

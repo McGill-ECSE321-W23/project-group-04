@@ -38,9 +38,9 @@
                         <div style="text-align: center;padding: 14px">
                             <span style="font-weight:bold; font-size:55%"> REGULAR CAR</span>
                             <div class="bottom" id = "bottomReg">
-                                <el-text class="mx-1"> Tickets left: 18 </el-text>            
+                                <el-text class="mx-1"> Tickets left: {{regLeft}} </el-text>            
                                 <div class = "container" id = "regularButton">
-                                    <el-button id = "regularTicketButton" type = "info" round  > Reserve </el-button>
+                                    <el-button id = "regularTicketButton" type = "info" round @click= "createRegTicket()" > Reserve </el-button>
                                 </div>
                             </div>
                         </div>
@@ -62,9 +62,9 @@
                         <div style="text-align: center;padding: 14px">
                             <span style="font-weight:bold; font-size:55%"> LARGE CAR</span>
                             <div class="bottom" id = "bottomLarge">
-                                <el-text class="mx-1"> Tickets left: 18 </el-text>            
+                                <el-text class="mx-1"> Tickets left: {{largeLeft}} </el-text>            
                                 <div class = "container" id = "largeButton">
-                                    <el-button id = "largeTicketButton" type = "info" round> Reserve </el-button>
+                                    <el-button id = "largeTicketButton" type = "info" round @click= "createLargeTicket()"> Reserve </el-button>
                                 </div>
                             </div>
                         </div>
@@ -90,10 +90,10 @@
                         <img src="../../assets/Ticket.png" class="image" style="width: 50%; margin-left: 25%"/>
                     </div>
                     <div class = "container" id= "ticketParameters">
-                      <p style = "font-size: 50%; margin-left:28px;"> From: {{entry}} <br>
+                      <p style = "font-size: 50%; margin-left:28px;"> From: {{entryTime}} <br>
                          To: 15  <br>
-                         $/15 min: {{cost15Min}} <br>
-                         <b>AMOUNT DUE: $15</b></p>
+                         $/15 min: {{pls.feePer15m}} <br>
+                         <b>AMOUNT DUE: ${{totalCost}}</b></p>
                     </div>
                 </div>
             </div>
@@ -146,7 +146,7 @@
 }
 
 .demo-tabs > .el-tabs__content {
-  padding: 2%;
+  padding: 5%;
   color: #6b778c;
   font-size: 32px;
   font-weight: 600;

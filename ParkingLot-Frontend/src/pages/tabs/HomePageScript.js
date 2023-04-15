@@ -6,9 +6,6 @@ export default {
     data () {
         return {
           ticketInput: ref(''),
-          tickets: [],
-          regTickets: [],
-          largeTickets: [],
           newTicket: '',
           errorTicket: '',
           response: [],
@@ -21,9 +18,11 @@ export default {
           maxLarge: '',
           entryTime:'',
           endTime:'',
-          costPMin:'',
+          cost15Min:'',
           totalCost: '',
           errorPLS: '',
+          ticketID: '',
+          showConfirmation: false,
 
           AXIOS: axios.create({
             baseURL: 'http://localhost:8080',
@@ -62,64 +61,39 @@ export default {
           withCredentials: true, headers:{"Access-Control-Allow-Origin": 'localhost:8080'}})
         .then(response => {
           this.pls = response.data
-          console.log(response.data)
-          //this.maxReg = response.data.numberOfRegularParkingSpots
-          //this.regLeft = response.data.numberOfRegularParkingSpots
-          //this.maxLarge = response.data.numberOfLargeParkingSpots
-          //this.largeLeft = response.data.numberOfLargeParkingSpots
+          this.maxReg = response.data.numberOfRegularParkingSpots
+          this.maxLarge = response.data.numberOfLargeParkingSpots
           this.cost15Min = response.data.feePer15m
         })
         .catch(e => {
-          this.errorPLS = e
+          var errorMsg = e.response.data.message
+          console.log(errorMsg)
+          this.errorPLS = errorMsg
         })
-          //if (e.response) {
-            //console.log(e.response.data)
-            //console.log(e.response.status)
-          //}
-          //this.errorMessage = e.response.data
-        //})
+
         
-        // Initializing tickets from backend
-       // AXIOS.get('/api/ticket/getAll').then(response => {
-        // JSON responses are automatically parsed.
-       // this.tickets = response.data
+        this.AXIOS.get('http://localhost:8080/api/ticket/getCountRegular', {
+          withCredentials: true, headers:{"Access-Control-Allow-Origin": 'localhost:8080'}})
+          .then(response => {
+          //JSON responses are automatically parsed.
+          this.regLeft = this.maxReg - response.data
+          })
+          .catch(e => {
+            var errorMsg = e.response.data.message
+            console.log(errorMsg)
+            this.errorTicket = errorMsg
+        })
 
-        //})
-        //.catch(e => {
-         // if (e.response) {
-           // console.log(e.response.data)
-            //console.log(e.response.status)
-          //}
-          //this.errorMessage = e.response.data
-        //})
-
-       //AXIOS.get('/api/ticket/getAllRegular').then(response => {
-        // JSON responses are automatically parsed.
-
-       // this.regTickets = response.data
-        //this.regLeft = this.regLeft - this.regTickets.length
-        //})
-        //.catch(e => {
-         // if (e.response) {
-           // console.log(e.response.data)
-            //console.log(e.response.status)
-          //}
-          //this.errorMessage = e.response.data
-        //})
-
-      // AXIOS.get('/api/ticket/getAllLarge').then(response => {
-        // JSON responses are automatically parsed.
-        //this.tickets = response.data
-        //this.largeLeft = this.largeLeft = this.largeTickets.length
-        //})
-        //.catch(e => {
-         // if (e.response) {
-           // console.log(e.response.data)
-            //console.log(e.response.status)
-         // }
-          //this.errorMessage = e.response.data
-        //})
-
+        this.AXIOS.get('http://localhost:8080/api/ticket/getCountLarge', { 
+          withCredentials: true, headers:{"Access-Control-Allow-Origin": 'localhost:8080'}})
+          .then(response => {
+          this.largeLeft = this.maxLarge - response.data
+          })
+          .catch(e => {
+            var errorMsg = e.response.data.message
+            console.log(errorMsg)
+            this.errorTicket = errorMsg
+        })
     },
 
     methods: {
@@ -127,22 +101,28 @@ export default {
         createRegTicket: function () {
 
           if (this.regLeft == 0){
-            this.errorMessage = 'The parking lot cannot accomodate more regular cars'
+            this.errorTicket = 'The parking lot cannot accomodate more regular cars.'
+            console.log(errorTicket)
           }else{
             
-            AXIOS.post('/api/ticket/create' , {carTypeDto:'Regular', plsDto: this.pls}, {})
+            this.AXIOS.post('http://localhost:8080/api/ticket/create' , {}, {
+              withCredentials: true, 
+              headers:{"Access-Control-Allow-Origin": 'localhost:8080'},
+              params: {
+                type: "Regular"
+              }
+            })
             .then(response => {
-            // JSON responses are automatically parsed.
-              this.tickets.push(response.data)
-              this.regTickets.push(response.data)
-              //this.regLeft = this.regLeft -1
+              this.regLeft = this.regLeft -1
+              //this.ticketID = response.data.TicketID
+              //this.showConfirmation = true
               this.errorTicket = ''
               this.newTicket = ''
             })
             .catch(e => {
-              //var errorMsg = e.response.data.message
-              //console.log(errorMsg)
-              this.errorTicket = e
+              var errorMsg = e.response.data.message
+              console.log(errorMsg)
+              this.errorTicket = errorMsg
             })
           }
         },
@@ -153,29 +133,39 @@ export default {
               this.errorMessage = 'The parking lot cannot accomodate more large cars'
             }
             
-            AXIOS.post('/api/ticket/create', {carTypeDto:'Large', plsDto: this.pls}, {})
+            this.AXIOS.post('http://localhost:8080/api/ticket/create', {}, {
+              withCredentials: true, 
+              headers:{"Access-Control-Allow-Origin": 'localhost:8080'},
+              params: {
+                type: "Large"
+              }
+            })
             .then(response => {
             // JSON responses are automatically parsed.
-              this.tickets.push(response.data)
-              this.largeLeft.push(response.data)
               this.largeLeft = this.largeLeft -1
               this.errorTicket = ''
               this.newTicket = ''
             })
             .catch(e => {
-              //var errorMsg = e.response.data.message
-              //console.log(errorMsg)
-              this.errorTicket = e
+              var errorMsg = e.response.data.message
+              console.log(errorMsg)
+              this.errorTicket = errorMsg
             })
 
         },
         
-        /* payTicket: function (id) {
+        payTicket: function (id) {
             
             for (let i = 0; i < tickets.length; i++) {
                 if (this.tickets[i].ticketID == id) {
 
-            AXIOS.post('/api/ticket/delete/'+id, {}, {})
+            this.AXIOS.post('http://localhost:8080/api/ticket/delete', {}, {
+              withCredentials: true, 
+              headers:{"Access-Control-Allow-Origin": 'localhost:8080'},
+              params: {
+                id: $("#ticketID").val()
+              }
+            })
             .then(response => {
               var t = this.tickets[i];
               this.entryTime = t.startTime
@@ -198,8 +188,7 @@ export default {
                 }
               }
 
-        },*/
-          
+        },
       }
 }
 
