@@ -1,3 +1,6 @@
+import $ from 'jquery'
+import axios from 'axios';
+import router from '@/router'
 import Header from '../components/Header.vue';
 import AdminUsers from './tabs/AdminUsers.vue';
 import BookReservation from './tabs/BookReservation.vue';
@@ -45,6 +48,23 @@ export default {
             title: 'BOOK RESERVATION',
             index: 'bookReservation',
             bodyID: 'page_bookReservation'
+        });
+    },
+    mounted() {
+        axios.get('http://localhost:8080/api/auth/isStaff', {
+            withCredentials: true,
+            headers: {
+                "Access-Control-Allow-Origin": 'localhost:8080'
+            }
+        })
+        .then(response => { // logged in, need to check if is staff
+            if (response.data === false) {
+                router.push('/');
+            }
+        })
+        .catch(error => {   // not logged in
+            console.log(error);
+            router.push('/login');
         });
     }
 };
