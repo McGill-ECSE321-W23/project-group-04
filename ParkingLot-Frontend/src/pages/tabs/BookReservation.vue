@@ -15,11 +15,11 @@
           <label for="license_plate">License Plate:</label>
               <input type="text" name="license_plate" v-model="license_plate" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"  style="width: 60%;">
               <br>
-              <label for="car_make">Make: </label>
+              <!-- <label for="car_make">Make: </label>
               <input type="text" v-model="car_make" name="car_make" style="width: 60%;">       
               <br>
               <label for="car_model">Model: </label>
-              <input type="text" v-model="car_model" name="car_model" style="width: 60%;">  
+              <input type="text" v-model="car_model" name="car_model" style="width: 60%;">   -->
           </div>
       </div>
       <div class="container" id="tabs">
@@ -31,29 +31,17 @@
           
       <div id="reservation-info" style="font-size: 15px;margin-top: 20px;">
           <div id="parkingspot-info" style="margin-top:40px; ">
-              <div id="floor" >
-          <label for="floor" >Floor:</label>
-      <el-select v-model="selectedFloor" class="m-2" placeholder="Select"  id="floor"  >
-        <el-option
-           v-for="f in floors"
-           :key="f.value"
-            :label="f.label"
-            :value="f.value"
-            />
-    </el-select>
-  </div>
-  <br>
-  <div id="number" style="margin-top:30px; "  >
-    <label for="number" >Number:</label>
-    <el-select v-model="selectedSpot" class="m-2" placeholder="Select" id ="number" >
-      <el-option
-           v-for="p in spots"
-           :key="p.value"
-            :label="p.label"
-            :value="p.value"
-            />
-    </el-select>
-  </div>
+            <div id="res_floor" style="text-align: left; height: 30%; width:70%;">
+                            <label>Available Parking Spots </label>
+                            <el-select v-model="selectedSpot" class="m-1" placeholder="Select" size="large">
+              <el-option
+               v-for="p in parkingSpots"
+              :key="p.parkingSpotID"
+             :label="`ID: ${p.parkingSpotID}, Floor: ${p.floor}, Number: ${p.number},Monthly Reservation: ${p.monthlyReservationDto}`"
+              :value="{ parkingSpotID:p.parkingSpotID, floor: p.floor, number: p.number, monthlyReservationDto: p.monthlyReservationDto}"
+             />
+                            </el-select>
+                        </div>
       </div>
       <div id="reservation-dates" style ="margin-top: 40px; width:70%;">
           <label >Select Dates:</label>
@@ -91,10 +79,11 @@
           <el-select v-model="selectedService" class="m-2" placeholder="Select"  id="service"   >
            <el-option
            v-for="s in services"
-           :key="s.value"
-            :label="s.label"
-            :value="s.value"
-            />
+           :key="s.offeredServiceID"
+          :label="s.offeredServiceDescription"
+           :value="{ offeredServiceID: s.offeredServiceID, offeredServiceDescription: s.offeredServiceDescription,
+          offeredServiceCost: s.offeredServiceCost, offeredServiceDuration: s.offeredServiceDuration}"
+          />
           </el-select>
       </div>
       <div id="garage" style ="margin-top: 20px;"  >
@@ -102,16 +91,16 @@
           <el-select v-model="selectedGarage" class="m-2" placeholder="Select"  id="garage"   >
             <el-option
            v-for="g in garages"
-           :key="g.value"
-            :label="g.label"
-            :value="g.value"
+           :key="g.garageID"
+           :label="`ID: ${g.garageID}, Number: ${g.garageNumber}`"
+           :value="{ garageID: g.garageID, garageNumber: g.garageNumber}"
             />
           </el-select>
       </div>
       <div id="timeslot"  style ="margin-top: 20px;">
               <label for="timeslot" style="width:40%;">Select a Timeslot:</label>
               <el-time-select
-      v-model="value4"
+      v-model="aptTime"
       start="08:30"
       step="00:45"
       end="18:30"
@@ -120,63 +109,20 @@
     />
       </div>
       <div id="book-button" style ="width:100%;margin-top: 0px; margin-left: 10%;">
-      <el-button type="info" @click="createServiceAppointment(person_number, person_name, license_plate, car_make, car_model, 
-            selectedService, selectedGarage, value4, value3)" plain style=" width: 70%; display: block; margin-top: 100px;">Book</el-button>
+      <el-button type="info" @click="createServiceAppointment(license_plate, selectedGarage, selectedService,
+      aptTime, aptDate)" plain style=" width: 70%; display: block; margin-top: 100px;">Book</el-button>
       </div>
   
   
       </div>
       <div id="calendar"  style="width:50%;">
-          <el-calendar v-model="value3" />
+          <el-calendar v-model="aptDate" />
       </div>    
       </div>
       
       </el-tab-pane>
   
-      <el-tab-pane label="Update Services"  style="margin-left: 50px; ">
-        <h1 style="font-weight:bold; font-size: 25px;">Update an Existing Service</h1>
-          
-          <div id="service-info" style="font-size: 15px;margin-top: 20px;" >
-              <div id="make-selections" style="margin-top:20px;width:50%;">
-                  <div id="service-id"  style ="margin-top: 20px;" >
-              <label for="service-id" style="width:40%;" >Service ID:</label>
-          <el-input  type="text" v-model="service_id" name="service_id" style="width: 40%;" clearable />
-      </div>
-
-      <div id="book-button" style ="width:100%;margin-top: 0px; margin-left: 10%;">
-      <el-button type="info" @click="updateServiceAppointment(service-id, )" plain style=" width: 70%; display: block; margin-top: 100px;">Find</el-button>
-      </div>
-      
-        <el-card class="box-card" style="height:700px; margin-left:5%;">
-      <el-scrollbar height="70vh">
-         <div id="list-item" style="width:100%;text-align: center;font-size:15px; ">
-        <p v-for="apt in appointments" :key="apt.id" class="scrollbar-demo-item" style="height:50px; display:flex; flex-direction: row;"> 
-                   
-                   <div id="apt_id" style="height: 40%; width:40%; font-size: 20px;">
-                   <div id="apt_id" style="text-align: left;">{{ apt.id}}
-                   </div> </div>
-               
-               <div id="person_name" style="height: 40%; width:40%; font-size: 20px;">
-                   <div id="person_name" style="text-align: left;">{{ apt.personName }}
-                   </div> </div>
-
-                   <div id="car_licensePlate" style="height: 40%; width:40%; font-size: 20px;">
-                   <div id="car_licensePlate" style="text-align: left;">{{ apt.licensePlate }}
-                   </div> </div>
-
-                </p>
-                </div>
-     </el-scrollbar>
-        </el-card>
-  
-  
-      </div>
-      <div id="calendar"  style="width:50%;">
-          <el-calendar v-model="value3" />
-      </div>    
-      </div>
-      
-      </el-tab-pane>
+     
     </el-tabs>
   </el-card>
   </div>

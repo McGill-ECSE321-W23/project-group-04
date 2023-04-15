@@ -254,7 +254,7 @@ export default {
       number: selectedSpot.number,
       monthlyReservationDto: selectedSpot.monthlyReservationDto // or set this to a valid MonthlyReservationDto object if needed
     };
-        this.AXIOS.put('http://localhost:8080/api/monthlyReservation/updateLocation', {parkingSpotDto: selectedSpotDto}, {
+        this.AXIOS.put('http://localhost:8080/api/monthlyReservation/updateLocation', selectedSpotDto, {
           withCredentials: true,
           headers: {
               "Access-Control-Allow-Origin": 'localhost:8080',
@@ -270,7 +270,7 @@ export default {
          for (let i = 0; i < this.parkingSpots.length; i++) {
                    let temp = this.parkingSpots[i].monthlyReservationDto
                    if (temp.monthlyReservationID == resID) {
-                    this.parkingSpots[j].monthlyReservationDto = null
+                    this.parkingSpots[i].monthlyReservationDto = null
                     break
                  }
                 }

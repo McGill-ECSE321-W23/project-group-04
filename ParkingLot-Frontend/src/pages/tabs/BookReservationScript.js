@@ -12,9 +12,11 @@ export default {
           service_id: ref(''),
           reservations: [],
           selectedDateRange: [],
-          
+          parkingSpots: [],
           errorReservation: '',
-
+          errorCars: '',
+          errorAppointment: '',
+          errorGarage: '',
           appointments: [],
           newService: '',
           errorService: '',
@@ -31,92 +33,13 @@ export default {
 
           value4: ref(''),
           size: ref<'default' | 'large' | 'small'>('default'),
-          floors: [
-            {
-                value: '-1',
-                label: 'B1',
-              },
-            {
-              value: '1',
-              label: 'First',
-            },
-            {
-              value: '2',
-              label: 'Second',
-            },
-            {
-              value: '3',
-              label: 'Third',
-            },
-          ],
-          spots: [
-            {
-                value: '10',
-                label: '10',
-              },
-            {
-              value: '12',
-              label: '12',
-            },
-            {
-              value: '14',
-              label: '14',
-            },
-            {
-              value: '16',
-              label: '16',
-            },
-            {
-                value: '18',
-                label: '18',
-            },
-          ],
-          garages: [
-            {
-                value: '1',
-                label: 'Garage 1',
-              },
-            {
-              value: '2',
-              label: 'Garage 2',
-            },
-            {
-              value: '3',
-              label: 'Garage 3',
-            },
-            {
-              value: '4',
-              label: 'Garage 4',
-            },
-            
-          ],
           
-          services: [
-            {
-              value: '1',
-              label: 'Oil Change',
-            },
-            {
-              value: '2',
-              label: 'Tire Rotation and Balancing',
-            },
-            {
-              value: '3',
-              label: 'Brake Inspection and Service',
-            },
-            {
-              value: '4',
-              label: 'Battery Inspection and Replacement',
-            },
-            {
-              value: '5',
-              label: 'Wheel Alignment',
-            },
-            {
-              value: '6',
-              label: 'Air Conditioning Service',
-            },
-          ],
+          garages: [],
+          services: [],
+          aptTime: '',
+          aptDate: '',
+          cars: [],
+
           AXIOS: axios.create({
             baseURL: 'http://localhost:8080/',
             headers: {'Access-Control-Allow-Origin': 'http://localhost:5173'},
@@ -148,15 +71,7 @@ export default {
       created: function () {
         
         // // Test data
-        //  const s1 = new ServiceAppointmentDto('111','111-111-1111', 'Jane Doe', 'ABT-345', 'Toyota', 'Prius', 
-        //   'B1', '10', '08/10/2022', '09/10/2022', 'Ready')
-        //   const s2 = new ServiceAppointmentDto('112','111-111-1111', 'Jane Doe', 'ABT-345', 'Toyota', 'Prius', 
-        //   'B1', '10', '08/10/2022', '09/10/2022', 'Ready')
-        // // const r2 = new ReservationDto('1211','000-000-0000','Jane Doe','N/A', 'ABT-345', 'ABC-123', 'B1','10')
-        // // const r3 = new ReservationDto('1311','100-000-0000','Mary Doe','N/A', 'ASR-565','ABC-123', '2','14')
-        // // const r4 = new ReservationDto('1411','200-000-0000','Tom Doe','N/A', 'LSL-335','ABC-123', '3','16')
-        // // const r5 = new ReservationDto('1511','300-000-0000','Paul Doe','N/A', 'MOV-348','ABC-123', 'B1','10')
-        //  this.appointments = [s1, s2]
+        
         // Initializing persons from backend
       this.AXIOS.get('http://localhost:8080/api/monthlyReservation/allReservations', {}, {
         withCredentials: true,
@@ -177,7 +92,7 @@ export default {
     .catch(e => {
       this.errorReservation = e
     })
-    this.AXIOS.get('http://localhost:8080//api/appointments/get/all', {}, {
+    this.AXIOS.get('http://localhost:8080/api/appointments/get/all', {}, {
         withCredentials: true,
         headers: {
             "Access-Control-Allow-Origin": 'localhost:8080',
@@ -193,8 +108,81 @@ export default {
      
     })
     .catch(e => {
+      this.errorAppointments = e
+    })
+    // Initializing persons from backend
+    this.AXIOS.get('http://localhost:8080/api/parkingSpot/getAll', {}, {
+      withCredentials: true,
+      headers: {
+          "Access-Control-Allow-Origin": 'localhost:8080',
+      },
+      params: {
+      }
+  })
+  .then(response => {
+    console.log(response)
+    // JSON responses are automatically parsed.
+    //this.persons.push({id: 1, name: 'Jim', phoneNumber: '555-1234'});
+    this.parkingSpots = response.data
+   
+  })
+  .catch(e => {
+    this.errorParkingSpot = e
+  })
+  this.AXIOS.get('http://localhost:8080/api/garages/get', {}, {
+        withCredentials: true,
+        headers: {
+            "Access-Control-Allow-Origin": 'localhost:8080',
+        },
+        params: {
+        }
+    })
+    .then(response => {
+      console.log(response)
+      // JSON responses are automatically parsed.
+      //this.persons.push({id: 1, name: 'Jim', phoneNumber: '555-1234'});
+      this.garages = response.data
+     
+    })
+    .catch(e => {
+      this.errorGarage = e
+    }), 
+    this.AXIOS.get('http://localhost:8080/api/offeredServices/get', {}, {
+        withCredentials: true,
+        headers: {
+            "Access-Control-Allow-Origin": 'localhost:8080',
+        },
+        params: {
+        }
+    })
+    .then(response => {
+      console.log(response)
+      // JSON responses are automatically parsed.
+      //this.persons.push({id: 1, name: 'Jim', phoneNumber: '555-1234'});
+      this.services = response.data
+     
+    })
+    .catch(e => {
       this.errorService = e
     })
+    this.AXIOS.get('http://localhost:8080/api/cars/getAll', {}, {
+      withCredentials: true,
+      headers: {
+          "Access-Control-Allow-Origin": 'localhost:8080',
+      },
+      params: {
+      }
+  })
+  .then(response => {
+    console.log(response)
+    // JSON responses are automatically parsed.
+    //this.persons.push({id: 1, name: 'Jim', phoneNumber: '555-1234'});
+    this.cars = response.data
+   
+  })
+  .catch(e => {
+    this.errorCar = e
+  })
 
 
       },
@@ -203,11 +191,6 @@ export default {
         
         createReservation: function (selectedDateRange, person_id) {
           const [startDate, endDate] = selectedDateRange;
-        //   const monthlyReservationDto = {
-        //  startDate: startDate.toISOString().substr(0, 10), // convert to ISO format
-        //  endDate: endDate.toISOString().substr(0, 10), // convert to ISO format
-        // personId: person_id
-        //   };
         this.AXIOS.post('http://localhost:8080/api/monthlyReservation/create', {}, {
           withCredentials: true,
           headers: {
@@ -225,7 +208,6 @@ export default {
         //console.log(response)
         
         console.log(response)
-        //console.log(monthlyReservationDto)
         // JSON responses are automatically parsed.
         this.reservations.push(response.data)
         this.errorReservation = ''
@@ -237,23 +219,42 @@ export default {
             var errorMsg = e.response.data.message
             console.log(errorMsg)
             this.errorReservation = errorMsg
-      })
+      })},
 
-      }}}
+          createServiceAppointment: function (license_plate, selectedGarage, selectedService, aptTime, aptDate) {
+            
+            for (let i = 0; i < this.cars.length; i++) {
+                   if (this.cars[i].licensePlate == license_plate) {
+                    appointmentCar = cars[i]
+                    break}}
+             const carDTo = {
+              carID: appointmentCar.carID,
+              licensePlate: appointmentCar.licensePlate,
+              make: appointmentCar.make,
+              model:appointmentCar.model,
+              owner: appointmentCar.owner
+            }
+           
 
-          // createServiceAppointment: function (phoneNumber, personName, licensePlate, carMake, carModel, 
-          //   service, garage, timeSlot, startDate) {
-          //     var s = new ServiceAppointmentDto(phoneNumber, personName, licensePlate, carMake, carModel, 
-          //       floor, spotNumber, startDate, endDate, 'Ready')
-          //     this.offeredServices.push(s)
-          //     // Reset the name field for new people
-          //     this.newService = ''
-          // },
-          // updateAppointment: function(id, newAppointmentStatus) {
-          //   for (let i = 0; i < this.appointments.length; i++) {
-          //     if (this.appointments[i].id == id) {
-          //      this.appointments[i].appointmentStatus = newAppointmentStatus
-          //      break
-          //     }
-          //   }
-          // }
+              this.AXIOS.post('http://localhost:8080/api/appointments/create', selectedGarage, selectedService, carDto, {
+                withCredentials: true,
+                headers: {
+                    "Access-Control-Allow-Origin": 'localhost:8080',
+                },
+                params: {
+                }
+            })
+            .then(response => {
+              console.log('Hello world')
+              console.log(response)
+              // JSON responses are automatically parsed.
+               this.appointments.push(response)
+               this.errorAppointment = ''
+             
+            })
+            .catch(e => {
+                  var errorMsg = e.response.data.message
+                  console.log(errorMsg)
+                  this.errorAppointment = errorMsg
+            })
+            }}}
