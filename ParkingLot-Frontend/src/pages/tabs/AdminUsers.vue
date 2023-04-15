@@ -106,7 +106,7 @@
                     <p v-for="res in reservations" :key="res.id" class="scrollbar-demo-item" style="height:200px;"> 
                     <div id="res_id" style="font-size: large; text-align: left; height: 85%; margin-left: 1%; width:20%; ">
                         <div id="label_id" style="font-weight:bold; font-size: large; text-align: left; margin-left: 1%; width:20%; ">Reservation ID# </div>
-                        <div id=id_no style="font-size:30px; height: 100%" >{{res.id}}</div>
+                        <div id=id_no style="font-size:30px; height: 100%" >{{res.monthlyReservationID}}</div>
                     </div>
                     <div id="person_info" style="height: 30%; width:20%">
                         <div id="customer" style="text-align: left;font-weight:bold;">Customer: 
@@ -127,31 +127,21 @@
                         </div>
                         
                     </div>
-                        <div id="res_floor" style="text-align: left; height: 30%; width:15%;">
-                            <label>Floor </label>
-                            <el-select v-model="res.floor" class="m-1" placeholder="Select" size="large">
+                        <div id="res_floor" style="text-align: left; height: 30%; width:30%;">
+                            <label>Available Parking Spots </label>
+                            <el-select v-model="selectedSpot" class="m-1" placeholder="Select" size="large">
                                 <el-option
-                                v-for="f in floors"
-                                :key="f.value"
-                                :label="f.label"
-                                :value="f.value"
+                                v-for="p in parkingSpots"
+                                :key="p.parkingSpotID"
+                                :label="`ID: ${p.parkingSpotID}, Floor: ${p.floor}, Number: ${p.number},Monthly Reservation: ${p.monthlyReservationDto}`"
+                                :value="{ parkingSpotID:p.parkingSpotID, floor: p.floor, number: p.number, monthlyReservationDto: p.monthlyReservationDto}"
                                 />
                             </el-select>
-                        </div>
-                        <div id="res_spot_no" style="text-align: left; margin-left: 10px; height: 30%; width:15%;"><label>Number </label>
-                            <el-select v-model="res.spotNumber" class="m-2" placeholder="Select" size="large">
-                                <el-option
-                                v-for="p in spots"
-                                :key="p.value"
-                                :label="p.label"
-                                :value="p.value"
-                                />
-                            </el-select>
-                            
                         </div>
                         
+                        
                         <div id="update-button" style="margin-bottom:100px; margin-left: 10px; margin-right: 10px; ">
-                        <el-button type="info" @click="updateReservation(res.id, res.floor, res.spotNumber)">Update Info</el-button>
+                        <el-button type="info" @click="updateReservation(res.monthlyReservationID, selectedSpot)">Update Info</el-button>
                         </div>
                         
     

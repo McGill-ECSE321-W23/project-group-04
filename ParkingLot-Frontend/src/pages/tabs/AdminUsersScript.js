@@ -17,12 +17,15 @@ export default {
             persons: [
            
             ],
+            parkingSpots: [
+            ],
+            errorParkingSpot:'',
             tabPosition: ref('top'),
             reservations: [],
             newReservation: '',
             errorReservation: '',
             response: [],
-            selectedSpot: "",
+            selectedSpot: [],
             selectedFloor: "",
             floors: [
                 {
@@ -72,16 +75,10 @@ export default {
         }
     },
     setup () {
-        function ReservationDto (resID, phoneNumber, personName, personEmail, licensePlate1, licensePlate2,
-                                 floor, spotNumber) {
-            this.resID = resID
-            this.phoneNumber = phoneNumber
-            this.personName = personName
-            this.personEmail = personEmail
-            this.licensePlate1 = licensePlate1
-            this.licensePlate2 = licensePlate2
-            this.floor = floor
-            this.spotNumber = spotNumber
+        function MonthlyReservationDto (startDate, endDate, personID) {
+            this.startDate = startDate
+            this.endDate = endDate
+            this.personID = personID
         }
         function PersonDto (personID, phoneNumber, personName) {
             this.personID = personID
@@ -115,17 +112,8 @@ export default {
         .catch(e => {
           this.errorPerson = e
         })
-      // this.AXIOS.get('/api/person/get')
-      //     .then(response => {
-      //       // JSON responses are automatically parsed.
-      //       this.persons.push({id: 1, name: 'Jim', phoneNumber: '555-1234'});
-      //       this.persons = response.data
-           
-      //     })
-      //     .catch(e => {
-      //       this.errorPerson = e
-      //     })
-      // Initializing events
+      
+   
 
       this.AXIOS.get('http://localhost:8080/api/monthlyReservation/allReservations', {}, {
         withCredentials: true,
@@ -148,14 +136,25 @@ export default {
 
 
 
-      this.AXIOS.get('/api/parkingSpot/getAll')
-      .then(response => {
-        this.parkingSpots = response.data
-      })
-      .catch(e => {
-        this.errorSpot = e
-        // this.errors.push(e)
-      })
+      // Initializing persons from backend
+      this.AXIOS.get('http://localhost:8080/api/parkingSpot/getAll', {}, {
+            withCredentials: true,
+            headers: {
+                "Access-Control-Allow-Origin": 'localhost:8080',
+            },
+            params: {
+            }
+        })
+        .then(response => {
+          console.log(response)
+          // JSON responses are automatically parsed.
+          //this.persons.push({id: 1, name: 'Jim', phoneNumber: '555-1234'});
+          this.parkingSpots = response.data
+         
+        })
+        .catch(e => {
+          this.errorParkingSpot = e
+        })
     },
     methods: {
       createPerson: function (personName, personNumber) {
@@ -248,31 +247,44 @@ export default {
       })
       },
      
-    //   updateReservation: function (resID, parkingSpotDto) {
-    //     this.AXIOS.post('/api/person/get/'.concat(resID), {parkingSpotDto: {parkingSpotID: psID, floor: aFloor, number: aNumber, monthlyReservationDto: aMonthlyReservationDto}}, {})
-    //       .then(response => {
-    //       // JSON responses are automatically parsed.
-
-    //       for (let i = 0; i < this.parkingSpots.length; j++) {
-    //         let temp = this.parkingSpots[j].monthlyReservation
-    //         if (temp.id == resID) {
-    //           this.parkingSpots[j].monthlyReservation = null
-    //           break
-    //        }
-    //       }
-    //        for (let i = 0; i < this.parkingSpots.length; j++) {
-
-    //         if (this.parkingSpots[j].id == psID) {
-    //           this.parkingSpots[j].monthlyReservation = temp
-    //           break
-    //        }}
-
-    //       })
-    //       .catch(e => {
-    //         var errorMsg = e.response.data.message
-    //         console.log(errorMsg)
-    //         this.errorPerson = errorMsg
-    //       })
-    // }
-  //}
+  updateReservation: function (resID, selectedSpot) {
+      const selectedSpotDto ={
+      parkingSpotID : selectedSpot.parkingSpotID,
+      floor: selectedSpot.floor,
+      number: selectedSpot.number,
+      monthlyReservationDto: selectedSpot.monthlyReservationDto // or set this to a valid MonthlyReservationDto object if needed
+    };
+        this.AXIOS.put('http://localhost:8080/api/monthlyReservation/updateLocation', {parkingSpotDto: selectedSpotDto}, {
+          withCredentials: true,
+          headers: {
+              "Access-Control-Allow-Origin": 'localhost:8080',
+          },
+          params: {
+            reservationIdToUpdate: resID,
+          }
+      })
+      .then(response => {
+        console.log('Hello world')
+        console.log(response)
+        // JSON responses are automatically parsed.
+         for (let i = 0; i < this.parkingSpots.length; i++) {
+                   let temp = this.parkingSpots[i].monthlyReservationDto
+                   if (temp.monthlyReservationID == resID) {
+                    this.parkingSpots[j].monthlyReservationDto = null
+                    break
+                 }
+                }
+                 for (let j = 0; j < this.parkingSpots.length; j++) {
+                  if (this.parkingSpots[j].parkingSpotID == selectedSpot.parkingSpotID) {
+                    this.parkingSpots[j].monthlyReservationDto = selectedSpotDto
+                    break
+                 }}
+       
+      })
+      .catch(e => {
+            var errorMsg = e.response.data.message
+            console.log(errorMsg)
+            this.errorReservation = errorMsg
+      })
+      },
 }}

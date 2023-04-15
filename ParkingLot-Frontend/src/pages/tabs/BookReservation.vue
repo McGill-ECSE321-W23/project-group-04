@@ -3,13 +3,13 @@
   <div id="heading" style="width:100%; text-align: center; margin-top: 20px;"><h1 > Client Bookings </h1></div>
     <div id="input">
       <div class="container" id="person_info" style="width:40%; " >
-          <label for="person_name">Name: </label>
-              <input type="text" v-model="person_name" style="align-self: flex-end; width: 60%;">
+          <label for="person_name">ID: </label>
+              <input type="text" v-model="person_id" style="align-self: flex-end; width: 60%;">
               <br>
-              <label for="person_number">Phone: </label>
+              <!-- <label for="person_number">Phone: </label>
               
               <input type="tel" v-model="person_number" name="person_number " 
-              placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required style="width: 60%;">       
+              placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required style="width: 60%;">        -->
       </div>
       <div class="container" id="car_info" style="width:41%; ">
           <label for="license_plate">License Plate:</label>
@@ -62,7 +62,7 @@
       <div class="block">
         
         <el-date-picker
-          v-model="value1"
+          v-model="selectedDateRange"
           type="daterange"
           range-separator="To"
           start-placeholder="Start date"
@@ -77,8 +77,7 @@
       
   </div>
   <div id="book-button" style ="width:100%;margin-top: 100px;">
-  <el-button type="info" @click="createReservation(person_number, person_name, license_plate, car_make, car_model, 
-          selectedFloor, selectedSpot, value1, value1)" plain style="margin-top:20px; width: 50%; display: block;margin: 0 auto; margin-top: 20px;">Book</el-button>
+  <el-button type="info" @click="createReservation(selectedDateRange, person_id)" plain style="margin-top:20px; width: 50%; display: block;margin: 0 auto; margin-top: 20px;">Book</el-button>
   </div>
       </el-tab-pane>
      
