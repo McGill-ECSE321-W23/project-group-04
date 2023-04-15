@@ -18,19 +18,19 @@
             <br/>
 
             <!-- Alert to choose an offered service -->
-            <el-alert v-if="showErrorEditOfferedService || showErrorDeleteOfferedService" title="Please choose an offered service" type="error" :closable="false" show-icon />
+            <el-alert v-if="showErrorEditOfferedService || showErrorDeleteOfferedService" title="Please choose an offered service." type="error" :closable="false" show-icon />
             <br/>
 
             <!-- Confirmation message for add offered service -->
-            <el-alert v-if="showConfirmationAddOfferedService" title="Offered service added" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <el-alert v-if="showConfirmationAddOfferedService" title="Offered service added." type="success" :closable="true" @close="closeConfirmation" show-icon/>
             <br/>
 
             <!-- Confirmation message for edit offered service -->
-            <el-alert v-if="showConfirmationEditOfferedService" title="Offered service edited" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <el-alert v-if="showConfirmationEditOfferedService" title="Offered service edited." type="success" :closable="true" @close="closeConfirmation" show-icon/>
             <br/>
 
             <!-- Confirmation message for delete offered service-->
-            <el-alert v-if="showConfirmationDeleteOfferedService" title="Offered service deleted" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <el-alert v-if="showConfirmationDeleteOfferedService" title="Offered service deleted." type="success" :closable="true" @close="closeConfirmation" show-icon/>
             <br/>
 
             <div class="button-container">
@@ -62,20 +62,20 @@
             <br/>
 
             <!-- Alert to choose a garage -->
-            <el-alert v-if="showErrorEditGarage || showErrorDeleteGarage" title="Please choose a garage" type="error" :closable="false" show-icon />
+            <el-alert v-if="showErrorEditGarage || showErrorDeleteGarage" title="Please choose a garage." type="error" :closable="false" show-icon />
             
             <br/>
     
             <!-- Confirmation message for add offered service -->
-            <el-alert v-if="showConfirmationAddGarage" title="Garage added" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <el-alert v-if="showConfirmationAddGarage" title="Garage added." type="success" :closable="true" @close="closeConfirmation" show-icon/>
             <br/>
 
             <!-- Confirmation message for edit offered service -->
-            <el-alert v-if="showConfirmationEditGarage" title="Garage edited" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <el-alert v-if="showConfirmationEditGarage" title="Garage edited." type="success" :closable="true" @close="closeConfirmation" show-icon/>
             <br/>
 
             <!-- Confirmation message for delete offered service-->
-            <el-alert v-if="showConfirmationDeleteGarage" title="Garage deleted" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <el-alert v-if="showConfirmationDeleteGarage" title="Garage deleted." type="success" :closable="true" @close="closeConfirmation" show-icon/>
             <br/>
 
             <div class="button-container">

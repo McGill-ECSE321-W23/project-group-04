@@ -278,6 +278,14 @@ export default {
                 // Errors
                 this.showErrorEditGarage = false;
                 this.showErrorDeleteGarage = false;
+
+                // Confirmations
+                this.showConfirmationDeleteOfferedService = false;
+                this.showConfirmationDeleteGarage = false;
+                this.showConfirmationAddOfferedService = false;
+                this.showConfirmationAddGarage = false;
+                this.showConfirmationEditOfferedService = false;
+                this.showConfirmationEditGarage = false;
             }
 
             else {
@@ -325,8 +333,31 @@ export default {
                 this.showConfirmationEditGarage = false;
             })
             .catch(e => {
-                alert(toString(e.response.data))
-                this.errorOfferedService = e.response.data;
+                // If the duration is empty
+                if (this.editOfferedServiceDuration === '' || this.editOfferedServiceDuration === 'undefined' || this.editOfferedServiceDuration === null) {
+                    this.errorOfferedService = "Duration cannot be empty.";
+                }
+
+                // If the duration is not a number
+                else if (this.editOfferedServiceDuration % 1 !== 0) {
+                    this.errorOfferedService = "Duration must be an integer.";
+                }
+
+                // If the cost is empty
+                else if (this.editOfferedServiceCost === '' || this.editOfferedServiceCost === 'undefined' || this.editOfferedServiceCost === null) {
+                    this.errorOfferedService = "Cost cannot be empty.";
+                }
+
+                // If the cost is not a number
+                else if (Number.isNaN(parseInt(this.editOfferedServiceCost))) {
+                    this.errorOfferedService = "Cost must be a number.";
+                }
+
+                // An error that is caught inside the controller
+                else {
+                    this.errorOfferedService = e.response.data;
+                }
+
                 this.showErrorSaveEditOfferedService = true;
             })
         },
@@ -342,6 +373,14 @@ export default {
                 // Errors
                 this.showErrorEditOfferedService = false;
                 this.showErrorDeleteOfferedService = false;
+
+                // Confirmations
+                this.showConfirmationDeleteOfferedService = false;
+                this.showConfirmationDeleteGarage = false;
+                this.showConfirmationAddOfferedService = false;
+                this.showConfirmationAddGarage = false;
+                this.showConfirmationEditOfferedService = false;
+                this.showConfirmationEditGarage = false;
             }
 
             else {
@@ -385,7 +424,21 @@ export default {
                 this.showConfirmationEditGarage = true;
             })
             .catch(e => {
-                this.errorGarage = e.message;
+                // If the garage number is empty
+                if (this.editGarageGarageNumber === '' || this.editGarageGarageNumber === 'undefined' || this.editGarageGarageNumber === null) {
+                    this.errorGarage = "Garage number cannot be empty.";
+                }
+
+                // If the garage number is not an integer
+                else if (this.editGarageGarageNumber % 1 !== 0) {
+                    this.errorGarage = "Garage number must be an integer.";
+                }
+
+                // Error handled by the controller
+                else {
+                    this.errorGarage = e.response.data;
+                }
+
                 this.showErrorSaveEditGarage = true;
             })
         },
@@ -440,7 +493,31 @@ export default {
                 this.showConfirmationEditGarage = false;
             })
             .catch(e => {
-                this.errorOfferedService = e.response.data.message
+                // If the duration is empty
+                if (this.newOfferedServiceDuration === '' || this.newOfferedServiceDuration === 'undefined' || this.newOfferedServiceDuration === null) {
+                    this.errorOfferedService = "Duration cannot be empty.";
+                }
+
+                // If the duration is not an integer
+                else if (this.newOfferedServiceDuration % 1 !== 0) {
+                    this.errorOfferedService = "Duration must be an integer.";
+                }
+
+                // If the cost is empty
+                else if (this.newOfferedServiceCost === '' || this.newOfferedServiceCost === 'undefined' || this.newOfferedServiceCost === null) {
+                    this.errorOfferedService = "Cost cannot be empty.";
+                }
+
+                // If the cost is not a number
+                else if (Number.isNaN(parseInt(this.newOfferedServiceCost))) {
+                    this.errorOfferedService = "Cost must be a number.";
+                }
+
+                // An error that is caught inside the controller
+                else {
+                    this.errorOfferedService = e.response.data;
+                }
+
                 this.showErrorSaveAddOfferedService = true;
             })
         },
@@ -489,7 +566,21 @@ export default {
                 this.showConfirmationEditGarage = false;
             })
             .catch(e => {
-                this.errorGarage = e.response.data.message
+                // If the garage number is empty
+                if (this.newGarageGarageNumber === '' || this.newGarageGarageNumber === 'undefined' || this.newGarageGarageNumber === null) {
+                    this.errorGarage = "Garage number cannot be empty.";
+                }
+
+                // If the garage number is not an integer
+                else if (this.newGarageGarageNumber % 1 !== 0) {
+                    this.errorGarage = "Garage number must be an integer.";
+                }
+
+                // Error handled by the controller
+                else {
+                    this.errorGarage = e.response.data;
+                }
+                
                 this.showErrorSaveAddGarage = true;
             })
         }, 

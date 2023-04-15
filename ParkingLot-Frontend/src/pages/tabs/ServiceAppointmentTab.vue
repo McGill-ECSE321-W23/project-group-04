@@ -68,7 +68,7 @@
       <div>
         <span>Pick a garage: </span>
         <el-select v-model="garage" placeholder="Select a garage" style="width: 145px">
-          <el-option v-for="item in garages" :key="item.garageNumber" :label="item.id" :value="item.garageNumber"></el-option>
+          <el-option v-for="item in garages" :key="item.garageNumber" :label="item.garageID" :value="item.garageNumber"></el-option>
         </el-select>
       </div>
       <br />

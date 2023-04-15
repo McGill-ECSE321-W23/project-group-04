@@ -76,6 +76,10 @@ export default {
       })
   },
 
+  watch: {
+
+  },
+
   methods: {
     handleOfferedServiceRowClick(row) {
       this.selectedOfferedServiceRow = row;
@@ -112,6 +116,8 @@ export default {
       if (this.selectedOfferedServiceRow) {
         this.showOfferedServices = false;
         this.showBookAppointment = true;
+
+        this.showErrorOfferedService = false;
       }
 
       else {
@@ -119,10 +125,13 @@ export default {
       }
     },
 
-    saveAddAppointment: function () {
-      AXIOS.post('/garages/modify/'.concat(editg), {}, {
+    saveAddAppointment: function (gID, sID, cID, dateTime) {
+      AXIOS.post('/appointment/create/', {}, {
         params: {
-            garageNumber: garageNum,
+            garageID: gID,
+            serviceID: sID,
+            carID: cID, 
+            startTime: dateTime
         }
     }).then(response => {        
         this.showOfferedServices = true;
