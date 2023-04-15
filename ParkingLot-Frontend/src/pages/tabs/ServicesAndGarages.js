@@ -40,12 +40,14 @@ export default {
             editOfferedServiceDuration: '',
             editOfferedServiceCost: '',
             showErrorSaveEditOfferedService: false,
+            showConfirmationEditOfferedService: false,
 
             // Garages
             showGarageEdit: false,
             editGarageSelected: '',
             editGarageGarageNumber: '',
             showErrorSaveEditGarage: false,
+            showConfirmationEditGarage: false,
 
             // Add 
 
@@ -55,21 +57,25 @@ export default {
             newOfferedServiceDuration: '',
             newOfferedServiceCost: '',
             showErrorSaveAddOfferedService: false,
+            showConfirmationAddOfferedService: false,
 
             // Garages
             showGarageAdd: false,
             newGarageGarageNumber: '',
             showErrorSaveAddGarage: false,
+            showConfirmationAddGarage: false,
 
             // Delete
 
             // Offered services
             deleteOfferedService: '',
             showErrorDeleteOfferedService: false,
+            showConfirmationDeleteOfferedService: false,
 
             // Garages
             deleteGarage: '',
             showErrorDeleteGarage: false,
+            showConfirmationDeleteGarage: false,
 
             response: [],
 
@@ -115,6 +121,14 @@ export default {
             // Errors
             this.showErrorEditOfferedService = false;
             this.showErrorDeleteOfferedService = false;
+
+            // Confirmations
+            this.showConfirmationDeleteOfferedService = false;
+            this.showConfirmationDeleteGarage = false;
+            this.showConfirmationAddOfferedService = false;
+            this.showConfirmationAddGarage = false;
+            this.showConfirmationEditOfferedService = false;
+            this.showConfirmationEditGarage = false;
         },
     
         handleGarageRowClick(row) {
@@ -130,6 +144,14 @@ export default {
             // Errors
             this.showErrorEditGarage = false;
             this.showErrorDeleteGarage = false;
+
+            // Confirmations
+            this.showConfirmationDeleteOfferedService = false;
+            this.showConfirmationDeleteGarage = false;
+            this.showConfirmationAddOfferedService = false;
+            this.showConfirmationAddGarage = false;
+            this.showConfirmationEditOfferedService = false;
+            this.showConfirmationEditGarage = false;
         },
 
         goBack() {
@@ -178,16 +200,36 @@ export default {
             this.showErrorSaveAddGarage = false;
             this.showErrorDeleteOfferedService = false;
             this.showErrorDeleteGarage = false;
+
+            // Confirmations
+            this.showConfirmationDeleteOfferedService = false;
+            this.showConfirmationDeleteGarage = false;
+            this.showConfirmationAddOfferedService = false;
+            this.showConfirmationAddGarage = false;
+            this.showConfirmationEditOfferedService = false;
+            this.showConfirmationEditGarage = false;
         },
 
         deleteOfferedServiceSelected: function (deleteos) {
             AXIOS.post('/offeredServices/delete/'.concat(deleteos), {}, {}).then(response => {
+                // Save change
                 this.offeredServices.pop(response.data);
+
+                // Reset input boxes
                 this.deleteOfferedService = '';
                 this.editOfferedServiceSelected = '';
 
+                // Rows
                 this.selectedOfferedServiceRow = null;
                 this.selectedGarageRow = null;
+
+                // Confirmations
+                this.showConfirmationDeleteOfferedService = true;
+                this.showConfirmationDeleteGarage = false;
+                this.showConfirmationAddOfferedService = false;
+                this.showConfirmationAddGarage = false;
+                this.showConfirmationEditOfferedService = false;
+                this.showConfirmationEditGarage = false;
             })
             .catch(e => {
                 this.showErrorDeleteOfferedService = true;
@@ -196,12 +238,24 @@ export default {
 
         deleteGarageSelected: function (deleteg) {
             AXIOS.post('/garages/delete/'.concat(deleteg), {}, {}).then(response => {
+                // Save change
                 this.garages.pop(response.data);
+
+                // Reset input boxes
                 this.deleteGarage = '';
                 this.editGarage = '';
 
+                // Rows
                 this.selectedOfferedServiceRow = null;
                 this.selectedGarageRow = null;
+
+                // Confirmations
+                this.showConfirmationDeleteOfferedService = false;
+                this.showConfirmationDeleteGarage = true;
+                this.showConfirmationAddOfferedService = false;
+                this.showConfirmationAddGarage = false;
+                this.showConfirmationEditOfferedService = false;
+                this.showConfirmationEditGarage = false;
             })
             .catch(e => {
                 this.showErrorDeleteGarage = true;
@@ -211,10 +265,12 @@ export default {
         // Edit an offered service
         editOfferedService() {
             if (this.selectedOfferedServiceRow) {
+                // Show containers
                 this.showOfferedServiceEdit = true;
                 this.showOfferedServicesEdit = false;
                 this.showGaragesEdit = false;
 
+                // Errors
                 this.showErrorEditGarage = false;
                 this.showErrorDeleteGarage = false;
             }
@@ -232,22 +288,36 @@ export default {
                     cost: co,
                 }
             }).then(response => {
+                // Save changes
                 const newOfferedService = response.data;
                 const index = this.offeredServices.findIndex(os => os.id === editos);
                 this.offeredServices.splice(index, 1, newOfferedService);
+                
+                // Reset input boxes
                 this.editOfferedServiceSelected = '';
                 this.editOfferedServiceDescription = '';
                 this.editOfferedServiceDuration = '';
                 this.editOfferedServiceCost = '';
                 this.deleteOfferedService = '';
 
+                // Show containers
                 this.showOfferedServiceEdit = false;
                 this.showOfferedServicesEdit = true;
                 this.showGaragesEdit = true;
 
+                // Row
                 this.selectedOfferedServiceRow = null;
 
+                // Error
                 this.showErrorSaveEditOfferedService = false;
+
+                // Confirmations
+                this.showConfirmationDeleteOfferedService = false;
+                this.showConfirmationDeleteGarage = false;
+                this.showConfirmationAddOfferedService = false;
+                this.showConfirmationAddGarage = false;
+                this.showConfirmationEditOfferedService = true;
+                this.showConfirmationEditGarage = false;
             })
             .catch(e => {
                 alert(e)
@@ -259,10 +329,12 @@ export default {
         // Edit a garage
         editGarage() {
             if (this.selectedGarageRow) {
+                // Show containers
                 this.showGarageEdit = true;
                 this.showOfferedServicesEdit = false;
                 this.showGaragesEdit = false;
 
+                // Errors
                 this.showErrorEditOfferedService = false;
                 this.showErrorDeleteOfferedService = false;
             }
@@ -278,20 +350,34 @@ export default {
                     garageNumber: garageNum,
                 }
             }).then(response => {
+                // Save changes
                 const newGarage = response.data;
                 const index = this.garages.findIndex(g => g.id === editg);
                 this.garages.splice(index, 1, newGarage);                
+                
+                // Reset input boxes
                 this.editGarage = '';
                 this.editGarageGarageNumber = '';
                 this.deleteGarage = '';
 
+                // Show containers
                 this.showGarageEdit = false;
                 this.showOfferedServicesEdit = true;
                 this.showGaragesEdit = true;
 
+                // Row
                 this.selectedGarageRow = null;
 
+                // Error
                 this.showErrorSaveEditGarage = false;
+
+                // Confirmations
+                this.showConfirmationDeleteOfferedService = false;
+                this.showConfirmationDeleteGarage = false;
+                this.showConfirmationAddOfferedService = false;
+                this.showConfirmationAddGarage = false;
+                this.showConfirmationEditOfferedService = false;
+                this.showConfirmationEditGarage = true;
             })
             .catch(e => {
                 this.errorGarage = e.message;
@@ -301,10 +387,12 @@ export default {
 
         // Add an offered service
         addOfferedService() {
+            // Show containers
             this.showOfferedServiceAdd = true;
             this.showOfferedServicesEdit = false;
             this.showGaragesEdit = false;
 
+            // 
             this.showErrorEditOfferedService = false;
             this.showErrorEditGarage = false;
             this.showErrorDeleteOfferedService = false;
@@ -321,21 +409,34 @@ export default {
                 }
             })
             .then(response => {
-              this.offeredServices.push(response.data)
-              this.errorOfferedService = ''
-              this.newOfferedServiceDescription = '';
-              this.newOfferedServiceDuration = '';
-              this.newOfferedServiceCost = '';    
+                // Save changes
+                this.offeredServices.push(response.data)
 
-              this.showOfferedServiceAdd = false;
-              this.showOfferedServicesEdit = true;
-              this.showGaragesEdit = true;    
+                // Reset input boxes
+                this.errorOfferedService = ''
+                this.newOfferedServiceDescription = '';
+                this.newOfferedServiceDuration = '';
+                this.newOfferedServiceCost = '';    
 
-              this.showErrorSaveAddOfferedService = false;
+                // Show containers
+                this.showOfferedServiceAdd = false;
+                this.showOfferedServicesEdit = true;
+                this.showGaragesEdit = true;    
+
+                // Error
+                this.showErrorSaveAddOfferedService = false;
+
+                // Confirmations
+                this.showConfirmationDeleteOfferedService = false;
+                this.showConfirmationDeleteGarage = false;
+                this.showConfirmationAddOfferedService = true;
+                this.showConfirmationAddGarage = false;
+                this.showConfirmationEditOfferedService = false;
+                this.showConfirmationEditGarage = false;
             })
             .catch(e => {
-              this.errorOfferedService = e.response.data.message
-              this.showErrorSaveAddOfferedService = true;
+                this.errorOfferedService = e.response.data.message
+                this.showErrorSaveAddOfferedService = true;
             })
         },
 
@@ -359,19 +460,32 @@ export default {
                 }
             })
             .then(response => {
-              this.garages.push(response.data)
-              this.errorGarage = ''
-              this.newGarageGarageNumber = ''
+                // Save changes
+                this.garages.push(response.data)
 
-              this.showGarageAdd = false;
-              this.showOfferedServicesEdit = true;
-              this.showGaragesEdit = true;
+                // Reset input boxes
+                this.errorGarage = ''
+                this.newGarageGarageNumber = ''
 
-              this.showErrorSaveAddGarage = false;
+                // Show containers
+                this.showGarageAdd = false;
+                this.showOfferedServicesEdit = true;
+                this.showGaragesEdit = true;
+
+                // Error
+                this.showErrorSaveAddGarage = false;
+
+                // Confirmations
+                this.showConfirmationDeleteOfferedService = false;
+                this.showConfirmationDeleteGarage = false;
+                this.showConfirmationAddOfferedService = false;
+                this.showConfirmationAddGarage = true;
+                this.showConfirmationEditOfferedService = false;
+                this.showConfirmationEditGarage = false;
             })
             .catch(e => {
-              this.errorGarage = e.response.data.message
-              this.showErrorSaveAddGarage = true;
+                this.errorGarage = e.response.data.message
+                this.showErrorSaveAddGarage = true;
             })
         }, 
     }

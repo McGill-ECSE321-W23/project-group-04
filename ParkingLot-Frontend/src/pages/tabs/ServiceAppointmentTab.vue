@@ -73,6 +73,19 @@
       </div>
       <br />
 
+      <!-- Pick a car -->  
+      <div>
+        <span>Pick a car: </span>
+        <el-select v-model="car" placeholder="Select a car" style="width: 145px">
+          <el-option v-for="item in cars" :key="item.licensePlate" :label="item.id" :value="item.licensePlate"></el-option>
+        </el-select>
+      </div>
+      <br />
+
+      <!-- Alert for appointment -->
+      <el-alert v-if="showErrorBookAppointment" :title="`Error: ${errorAppointment}`" type="error" :closable="false" show-icon />
+      <br/>
+
       <!-- Choose the appointment -->
       <div>
         <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>

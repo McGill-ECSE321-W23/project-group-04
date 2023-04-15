@@ -21,6 +21,18 @@
             <el-alert v-if="showErrorEditOfferedService || showErrorDeleteOfferedService" title="Please choose an offered service" type="error" :closable="false" show-icon />
             <br/>
 
+            <!-- Confirmation message for add offered service -->
+            <el-alert v-if="showConfirmationAddOfferedService" title="Offered service added" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <br/>
+
+            <!-- Confirmation message for edit offered service -->
+            <el-alert v-if="showConfirmationEditOfferedService" title="Offered service edited" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <br/>
+
+            <!-- Confirmation message for delete offered service-->
+            <el-alert v-if="showConfirmationDeleteOfferedService" title="Offered service deleted" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <br/>
+
             <div class="button-container">
                 <!-- Edit the offered service button -->
                 <el-button type="primary" @click="editOfferedService">Edit Offered Service</el-button>
@@ -54,6 +66,18 @@
             
             <br/>
     
+            <!-- Confirmation message for add offered service -->
+            <el-alert v-if="showConfirmationAddGarage" title="Garage added" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <br/>
+
+            <!-- Confirmation message for edit offered service -->
+            <el-alert v-if="showConfirmationEditGarage" title="Garage edited" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <br/>
+
+            <!-- Confirmation message for delete offered service-->
+            <el-alert v-if="showConfirmationDeleteGarage" title="Garage deleted" type="success" :closable="true" @close="closeConfirmation" show-icon/>
+            <br/>
+
             <div class="button-container">
                 <!-- Edit a garage button -->
                 <el-button type="primary" @click="editGarage">Edit Garage</el-button>
@@ -84,14 +108,14 @@
             
             <!-- Edit the offered service's duration -->
             <div>
-                <span>Change Duration: </span>
+                <span>Change Duration (minutes): </span>
                 <el-input v-model="editOfferedServiceDuration" placeholder="Enter duration"></el-input>
             </div>
             <br />
 
             <!-- Edit the offered service's cost -->
             <div>
-                <span>Change Cost: </span>
+                <span>Change Cost ($): </span>
                 <el-input v-model="editOfferedServiceCost" placeholder="Enter cost"></el-input>
             </div>
             <br />
@@ -157,13 +181,13 @@
             
             <!-- Add the offered service's duration -->
             <div>
-                <span>Add Duration: </span>
+                <span>Add Duration (minutes): </span>
                 <el-input v-model="newOfferedServiceDuration" placeholder="Enter duration"></el-input>
             </div>
 
             <!-- Add the offered service's cost -->
             <div>
-                <span>Add Cost: </span>
+                <span>Add Cost ($): </span>
                 <el-input v-model="newOfferedServiceCost" placeholder="Enter cost"></el-input>
             </div>
             <br />

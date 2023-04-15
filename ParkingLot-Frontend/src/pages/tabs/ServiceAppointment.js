@@ -1,16 +1,14 @@
 import { ArrowLeft } from '@element-plus/icons-vue'
-import { ref, inject } from 'vue'
-import ServiceAppointmentService from "@/service/ServiceAppointmentService";
+import { ref } from 'vue'
+import axios from 'axios'
 
-function GarageDto (garageNumber) {
-  this.garageNumber = garageNumber;
-}
-
-function OfferedServiceDto (description, duration, cost) {
-  this.description = description;
-  this.duration = duration;
-  this.cost = cost;
-}
+var AXIOS = axios.create({
+  baseURL: 'http://localhost:8080/api',   // backend url
+  withCredentials: true,
+  headers: {
+      "Access-Control-Allow-Origin": 'localhost:5173' // frontend url
+  }
+})
 
 export default {
   name: 'serviceAppointmentManagement',
@@ -19,11 +17,13 @@ export default {
     return {
 
       // Main page
+      owner: '',
           
       // Offered services
       showOfferedServices: true,
       offeredServices: [],
       selectedOfferedServiceRow: '',
+      offeredServiceSelected: '',
       showErrorOfferedService: false,
 
       // Book
@@ -35,8 +35,10 @@ export default {
       time: ref(''),
       garage: ref(''),
       garages: [],
-      showErrorEditGarage: false,
-      errorGarage: '',
+      car: ref(''),
+      cars: [],
+      showErrorBookAppointment: false,
+      errorAppointment: '',
       showConfirmation: false,
 
       response: [],
@@ -49,44 +51,38 @@ export default {
   },
 
   created() {
-    // Test data
+      // Initializing offered services from backend
+      AXIOS.get('/offeredServices/get').then(response => {
+          this.offeredServices = response.data
+      })
+      .catch(e => {
+          this.errorOfferedService = e
+      })
 
-    // Offered services
-    const os1 = new OfferedServiceDto('Change Tires', 60, 99.99)
-    const os2 = new OfferedServiceDto('Clean Car', 120, 50.00)
-    const os3 = new OfferedServiceDto('Change Wipers', 15, 10.00)
-    this.offeredServices = [os1, os2, os3]
+      // Initializing garages from backend
+      AXIOS.get('/garages/get').then(response => {
+        this.garages = response.data
+      })
+      .catch(e => {
+          this.errorGarage = e
+      })
 
-    // Garages
-    const g1 = new GarageDto(1);
-    const g2 = new GarageDto(2);
-    this.garages = [g1, g2]
+      // Initializing cars from backend
+      AXIOS.get('/cars/get/ByOwner/'.concat(this.owner)).then(response => {
+        this.garages = response.data
+      })
+      .catch(e => {
+          this.errorGarage = e
+      })
   },
-
-  // mounted() {
-  //   const axios = inject('axios')
-  //   const userService = new UserService(axios)
-
-  //   axios.get('api/account/get/' + userService.getCookie("accountId"))
-  //       .then((data) => {
-  //         data = data.data
-  //         this.form.name = data.person.name
-  //         this.form.email = data.email
-  //         this.form.password = data.password
-  //         this.form.phone = data.person.phoneNumber
-  //         console.log(this.form)
-  //       })
-  //       .catch(err => {
-  //         console.log(err)
-  //       })
-  // },
 
   methods: {
     handleOfferedServiceRowClick(row) {
       this.selectedOfferedServiceRow = row;
-      this.description = row.description;
-      this.duration = row.duration;
-      this.cost = row.cost;
+      this.offeredServiceSelected = row.offeredServiceID;
+      this.description = row.offeredServiceDescription;
+      this.duration = row.offeredServiceDuration;
+      this.cost = row.offeredServiceCost;
 
       this.showErrorOfferedService = false;
     },
