@@ -168,6 +168,16 @@ export default {
 
             // Delete garage
             this.deleteGarage = '';
+
+            // Errors
+            this.showErrorEditOfferedService = false;
+            this.showErrorEditGarage = false;
+            this.showErrorSaveEditOfferedService = false;
+            this.showErrorSaveEditGarage = false;
+            this.showErrorSaveAddOfferedService = false;
+            this.showErrorSaveAddGarage = false;
+            this.showErrorDeleteOfferedService = false;
+            this.showErrorDeleteGarage = false;
         },
 
         deleteOfferedServiceSelected: function (deleteos) {
@@ -236,6 +246,8 @@ export default {
                 this.showGaragesEdit = true;
 
                 this.selectedOfferedServiceRow = null;
+
+                this.showErrorSaveEditOfferedService = false;
             })
             .catch(e => {
                 alert(e)
@@ -278,6 +290,8 @@ export default {
                 this.showGaragesEdit = true;
 
                 this.selectedGarageRow = null;
+
+                this.showErrorSaveEditGarage = false;
             })
             .catch(e => {
                 this.errorGarage = e.message;
@@ -316,6 +330,8 @@ export default {
               this.showOfferedServiceAdd = false;
               this.showOfferedServicesEdit = true;
               this.showGaragesEdit = true;    
+
+              this.showErrorSaveAddOfferedService = false;
             })
             .catch(e => {
               this.errorOfferedService = e.response.data.message
@@ -350,6 +366,8 @@ export default {
               this.showGarageAdd = false;
               this.showOfferedServicesEdit = true;
               this.showGaragesEdit = true;
+
+              this.showErrorSaveAddGarage = false;
             })
             .catch(e => {
               this.errorGarage = e.response.data.message
