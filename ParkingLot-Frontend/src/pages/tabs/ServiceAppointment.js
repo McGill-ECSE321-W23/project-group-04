@@ -119,9 +119,12 @@ export default {
       }
     },
 
-    saveAddAppointment() {
-      if (this.date !== '' && this.time !== '' && this.garage !== '') {
-        
+    saveAddAppointment: function () {
+      AXIOS.post('/garages/modify/'.concat(editg), {}, {
+        params: {
+            garageNumber: garageNum,
+        }
+    }).then(response => {        
         this.showOfferedServices = true;
         this.showBookAppointment = false;
 
@@ -133,7 +136,9 @@ export default {
         this.duration = '';
         this.cost = '';
         this.showConfirmation = true;
-      }
+      })
+      .catch(e => {
+      })
     },
   }
 }

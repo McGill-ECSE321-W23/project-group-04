@@ -210,6 +210,11 @@ export default {
             this.showConfirmationEditGarage = false;
         },
 
+        // Reset confirmation:
+        closeConfirmation() {
+            this.showConfirmation = false;
+        },
+
         deleteOfferedServiceSelected: function (deleteos) {
             AXIOS.post('/offeredServices/delete/'.concat(deleteos), {}, {}).then(response => {
                 // Save change
@@ -320,8 +325,8 @@ export default {
                 this.showConfirmationEditGarage = false;
             })
             .catch(e => {
-                alert(e)
-                this.errorOfferedService = e.response.data.message;
+                alert(toString(e.response.data))
+                this.errorOfferedService = e.response.data;
                 this.showErrorSaveEditOfferedService = true;
             })
         },
