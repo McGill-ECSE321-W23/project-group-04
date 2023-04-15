@@ -248,6 +248,9 @@ export default {
       },
      
   updateReservation: function (resID, selectedSpot) {
+      if (selectedSpot.monthlyReservationDto == null) {
+        selectedSpot.monthlyReservationDto = {startDate: 'N/A', endDate: 'N/A', personId: 'N/A'}
+      }
       const selectedSpotDto ={
       parkingSpotID : selectedSpot.parkingSpotID,
       floor: selectedSpot.floor,
