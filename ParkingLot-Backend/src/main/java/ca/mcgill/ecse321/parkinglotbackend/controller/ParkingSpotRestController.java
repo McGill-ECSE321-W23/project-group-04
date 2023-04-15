@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RequestMapping("/api/parkingSpot")
 @RestController
 public class ParkingSpotRestController {

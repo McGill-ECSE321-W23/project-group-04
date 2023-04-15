@@ -60,8 +60,8 @@ export default {
                     "Access-Control-Allow-Origin": 'localhost:8080',
                 },
                 params: {
-                    email: 'testemail',
-                    password: '123'
+                    email: $("#login_email").val(),
+                    password: $("#login_password").val()
                 }
             })
             .then((res) => {
