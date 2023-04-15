@@ -29,22 +29,11 @@ export default {
             index: 'home',
             bodyID: 'page_home'
         });
-        this.tabs.push({
-            title: 'SERVICES',
-            index: 'services',
-            bodyID: 'page_services'
-        });
-        this.tabs.push({
-            title: 'MY PROFILE',
-            index: 'profile',
-            bodyID: 'page_profile'
-        });
 
         // Check if the user is logged in
         api.get('api/auth/isLoggedIn')
             .then(res => {
-                console.log(res);
-                this.loggedIn = res.data === true;
+                this.loggedIn = res.data;
                 if (this.loggedIn) {
                     api.get('api/auth/isStaff')
                         .then(resp => {
@@ -53,7 +42,19 @@ export default {
                         })
                         .catch(err => {
                             console.log(err);
-                        });
+                        })
+                        .finally(() => {
+                            this.tabs.push({
+                                title: 'SERVICES',
+                                index: 'services',
+                                bodyID: 'page_services'
+                            });
+                            this.tabs.push({
+                                title: 'MY PROFILE',
+                                index: 'profile',
+                                bodyID: 'page_profile'
+                            });
+                        })
                 }
                 console.log("isLoggedIn: " + this.loggedIn);
             })

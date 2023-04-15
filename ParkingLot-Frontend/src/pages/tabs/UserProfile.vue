@@ -23,7 +23,7 @@
   </el-form>
 
   <el-divider />
-  <h2>Tickets & Monthly Reservations</h2>
+  <h2>Monthly Reservations</h2>
   <br>
   <el-container>
     <template v-for="(ticket, i) in tickets">
@@ -31,19 +31,22 @@
         <template #header>
           <span >Ticket {{i+1}}</span>
         </template>
-        <div>Start Time: {{ticket.start}}</div>
-        <span>Time Remaining: {{ticket.remainingTime}} min</span>
+        <div>Start Time: {{ticket.startDate}}</div>
+        <span>End Time: {{ticket.endDate}}</span>
         <br>
         <br>
-          <el-time-select
-              v-model="times[i]"
-              start="00:00"
-              step="00:15"
-              end="12:00"
-              placeholder="Select time"
-          />
-        <el-button type="success">
-          Add Time
+<!--          <el-time-select-->
+<!--              v-model="times[i]"-->
+<!--              start="00:00"-->
+<!--              step="00:15"-->
+<!--              end="12:00"-->
+<!--              placeholder="Select time"-->
+<!--          />-->
+<!--        <el-button type="success">-->
+<!--          Add Time-->
+<!--        </el-button>-->
+        <el-button type="success" @click="renewMonthly(i)">
+          Renew
         </el-button>
       </el-card>
       &nbsp;
@@ -73,7 +76,7 @@
       <el-container>
         <el-card>
           <template #header>
-            License Number: {{cars[currentIndex].license}}
+            License Number: {{cars[currentIndex]? cars[currentIndex].licensePlate : 0}}
           </template>
           <el-table :data="tableData"
                     @selection-change="handleSelectionChange"
@@ -100,59 +103,28 @@
 import {inject} from "vue";
 import UserService from "@/services/UserService";
 import {ElNotification} from "element-plus";
+import {Check, Edit} from "@element-plus/icons-vue";
 
 export default {
     name: "UserProfile",
+  computed: {
+    Check() {
+      return Check
+    },
+    Edit() {
+      return Edit
+    }
+  },
     props: {
     },
     data() {
       return {
-        form: {
-          name: 'jon',
-          email: 'jon@mcgill',
-          password: '123',
-          phone: '514'
-        },
+        form: {},
         currentIndex: 0,
         times: [],
-        cars: [
-          {
-            license: "dasd",
-            make: "honda",
-            model: "civic"
-          },
-          {
-            license: "yayayaya",
-            make: "toyota",
-            model: "rav4"
-          }
-        ],
-        tickets: [
-          {
-            carLicense: "141",
-            start: "15h45",
-            remainingTime: 54
-          },
-          {
-            carLicense: "141",
-            start: "5h45",
-            remainingTime: 42
-          }
-        ],
-        tableData: [
-          {
-            name: 'Tire Change',
-            location: "5",
-            date: '2016-05-03',
-            status: 'Check',
-          },
-          {
-            name: 'Wash',
-            location: "3",
-            date: '2016-05-02',
-            status: 'Star',
-          }
-        ],
+        tickets: [],
+        cars: [],
+        tableData: [],
         axios: inject('axios')
       }
     },
@@ -169,12 +141,33 @@ export default {
             this.form.password = data.password
             this.form.phone = data.person.phoneNumber
             console.log(this.form)
+
+            let date = new Date();
+            date.setTime(date.getTime() + (3 * 60 * 60 * 1000)); // 1 hour in milliseconds
+            document.cookie = "personId="+data.person.personID
+
+            // get account reservations
+            this.axios.get('api/monthlyReservation/' + userService.getCookie("personId"))
+                .then(data => {
+                  console.log(data.data)
+                  this.tickets = data.data
+                })
+                .catch(err => {
+                  console.log(err)
+                })
+
+            // get cars
+            this.axios.get('api/cars/get/ByOwner/' + userService.getCookie("personId"))
+                .then(data => {
+                  this.cars = data.data
+                })
+                .catch(err => {
+                  console.log(err)
+                })
           })
           .catch(err => {
             console.log(err)
           })
-
-      // get account tickets
     },
     methods: {
       updateProfile() {
@@ -200,8 +193,26 @@ export default {
               console.log(err)
             })
       },
+      renewMonthly(i) {
+        this.axios.put('/api/monthlyReservation/pay', {}, {
+          params: {
+            reservationId: this.tickets[i].monthlyReservationID,
+            amount: 999999
+          }
+        })
+            .then(data => {
+              console.log(data.data)
+            })
+            .catch(err => {
+              console.log(err)
+            })
+      },
       handleSelect(key, keyPath) {
         this.currentIndex = key
+      },
+      handleSelectionChange(k) {
+        console.log("ay")
+        console.log(k)
       },
       handleOpen(key, keyPath) {
         console.log(key, keyPath)
@@ -209,7 +220,6 @@ export default {
       handleClose (key, keyPath) {
         console.log(key, keyPath)
       },
-      handleSelectionChange() {},
       handleClick() {
 
       }
