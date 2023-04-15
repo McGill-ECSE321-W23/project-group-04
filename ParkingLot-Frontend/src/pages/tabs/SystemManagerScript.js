@@ -80,8 +80,7 @@ export default {
                 })
             }
         })
-        .catch(error => {
-            var e = error.response.data.message
+        .catch(e => {
             console.log(e)
             alert(e)
         })
@@ -99,8 +98,7 @@ export default {
                 })
             }
         })
-        .catch(error => {
-            var e = error.response.data.message
+        .catch(e => {
             console.log(e)
             alert(e)
         })
@@ -134,8 +132,7 @@ export default {
                 })
                 this.clearCreateSystem();
             })
-            .catch(error => {
-                var e = error.response.data.message
+            .catch(e => {
                 console.log(e)
                 alert(e)
             })
@@ -176,8 +173,7 @@ export default {
                         .then(response => {
                             this.system_list[i].system.monthlyFee = value;
                         })
-                        .catch(error => {
-                            var e = error.response.data.message
+                        .catch(e => {
                             console.log(e)
                             alert(e)
                         })
@@ -192,8 +188,7 @@ export default {
                         .then(response => {
                             this.system_list[i].system.feePer15m = value;
                         })
-                        .catch(error => {
-                            var e = error.response.data.message
+                        .catch(e => {
                             console.log(e)
                             alert(e)
                         })
@@ -208,8 +203,7 @@ export default {
                         .then(response => {
                             this.system_list[i].system.maxStay = value;
                         })
-                        .catch(error => {
-                            var e = error.response.data.message
+                        .catch(e => {
                             console.log(e)
                             alert(e)
                         })
@@ -224,8 +218,7 @@ export default {
                         .then(response => {
                             this.system_list[i].system.numRegular = value;
                         })
-                        .catch(error => {
-                            var e = error.response.data.message
+                        .catch(e => {
                             console.log(e)
                             alert(e)
                         })
@@ -240,8 +233,7 @@ export default {
                         .then(response => {
                             this.system_list[i].system.numLarge = value;
                         })
-                        .catch(error => {
-                            var e = error.response.data.message
+                        .catch(e => {
                             console.log(e)
                             alert(e)
                         })
@@ -256,8 +248,7 @@ export default {
                         .then(response => {
                             this.system_list[i].system.numMonthlyFloors = value;
                         })
-                        .catch(error => {
-                            var e = error.response.data.message
+                        .catch(e => {
                             console.log(e)
                             alert(e)
                         })
@@ -272,8 +263,7 @@ export default {
                         .then(response => {
                             this.system_list[i].system.numMonthlySpots = value;
                         })
-                        .catch(error => {
-                            var e = error.response.data.message
+                        .catch(e => {
                             console.log(e)
                             alert(e)
                         })
@@ -288,8 +278,7 @@ export default {
                         .then(response => {
                             this.system_list[i].system.numGarages = value;
                         })
-                        .catch(error => {
-                            var e = error.response.data.message
+                        .catch(e => {
                             console.log(e)
                             alert(e)
                         })
@@ -352,8 +341,7 @@ export default {
                         label: "Time Slot " + timeSlotDto.timeSlotID,
                     })
                 })
-                .catch(error => {
-                    var e = error.response.data.message
+                .catch(e => {
                     console.log(e)
                     alert(e)
                 })
@@ -373,8 +361,7 @@ export default {
                     this.all_openhours[index].timeSlotID = timeSlotDto.timeSlotID;
                     this.all_openhours[index].label = "Time Slot " + timeSlotDto.timeSlotID;
                 })
-                .catch(error => {
-                    var e = error.response.data.message
+                .catch(e => {
                     console.log(e)
                     alert(e)
                 })
@@ -399,8 +386,7 @@ export default {
                     .then(response => {
                         this.all_openhours.splice(i, 1);
                     })
-                    .catch(error => {
-                        var e = error.response.data.message
+                    .catch(e => {
                         console.log(e)
                         alert(e)
                     })

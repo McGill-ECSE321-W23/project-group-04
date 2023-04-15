@@ -53,8 +53,7 @@ export default {
                 });
             }
         })
-        .catch(error => {
-            var e = error.response.data.message
+        .catch(e => {
             console.log(e)
             alert(e)
         })
@@ -74,8 +73,7 @@ export default {
                 }
             }
         })
-        .catch(error => {
-            var e = error.response.data.message
+        .catch(e => {
             console.log(e)
             alert(e)
         })
@@ -120,8 +118,7 @@ export default {
                         label: slotDto.day + " " + slotDto.startTime + " - " + slotDto.endTime,
                     })
                 })
-                .catch(error => {
-                    var e = error.response.data.message
+                .catch(e => {
                     console.log(e)
                     alert(e)
                 })
@@ -141,8 +138,7 @@ export default {
                     this.all_timeslots[index].timeslotID = slotDto.timeSlotID;
                     this.all_timeslots[index].label = slotDto.day + " " + slotDto.startTime + " - " + slotDto.endTime;
                 })
-                .catch(error => {
-                    var e = error.response.data.message
+                .catch(e => {
                     console.log(e)
                     alert(e)
                 })
@@ -167,8 +163,7 @@ export default {
                     .then(response => {
                         this.all_timeslots.splice(i, 1);
                     })
-                    .catch(error => {
-                        var e = error.response.data.message
+                    .catch(e => {
                         console.log(e)
                         alert(e)
                     })
