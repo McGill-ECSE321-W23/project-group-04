@@ -28,6 +28,7 @@ export default {
 
       // Book
       showBookAppointment: false,
+      appointments: [],
       description: '',
       duration: '',
       cost: '',
@@ -69,10 +70,10 @@ export default {
 
       // Initializing cars from backend
       AXIOS.get('/cars/get/ByOwner/'.concat(this.owner)).then(response => {
-        this.garages = response.data
+        this.appointments = response.data
       })
       .catch(e => {
-          this.errorGarage = e
+          this.errorAppointment = e
       })
   },
 
@@ -83,27 +84,39 @@ export default {
   methods: {
     handleOfferedServiceRowClick(row) {
       this.selectedOfferedServiceRow = row;
+
+      // Fill offered service info
       this.offeredServiceSelected = row.offeredServiceID;
       this.description = row.offeredServiceDescription;
       this.duration = row.offeredServiceDuration;
       this.cost = row.offeredServiceCost;
 
+      // Show container
       this.showErrorOfferedService = false;
+
+      // Confirmation
+      this.showConfirmation = false;
     },
 
     // Go back to the selection of offered service section when clicking the back button
     goBack() {
+      // Show containers
       this.showOfferedServices = true;
       this.showBookAppointment = false;
 
+      // Reset row
       this.selectedOfferedServiceRow = null;
+
+      // Reset info
       this.description = '';
       this.duration = '';
       this.cost = '';
-
       this.date = ref('');
       this.time = ref('');
       this.garage = ref('');
+
+      // Error
+      this.showErrorBookAppointment = false;
     },
   
     // Reset confirmation:
@@ -114,10 +127,15 @@ export default {
     // Start booking an appointment
     selectOfferedService() {
       if (this.selectedOfferedServiceRow) {
+        // Show containers
         this.showOfferedServices = false;
         this.showBookAppointment = true;
 
+        // Errors
         this.showErrorOfferedService = false;
+
+        // Confirmation
+        this.showConfirmation = false;
       }
 
       else {
@@ -133,20 +151,53 @@ export default {
             carID: cID, 
             startTime: dateTime
         }
-    }).then(response => {        
+      }).then(response => {      
+        // Save changes
+        this.appointments.push(response.data);
+        
+        // Show containers
         this.showOfferedServices = true;
         this.showBookAppointment = false;
 
-        this.date = '';
-        this.time = '';
-        this.garage = '';
+        // Reset offered service
         this.selectedRow = null;
         this.description = '';
         this.duration = '';
         this.cost = '';
+        
+        // Reset selection boxes
+        this.date = '';
+        this.time = '';
+        this.garage = '';
+
+        // Confirmation
         this.showConfirmation = true;
+
+        // Error
+        this.showErrorBookAppointment = false;
       })
       .catch(e => {
+        // If the date is not selected
+        if (this.date === '' || this.date === 'undefined' || this.date === null) {
+          this.errorAppointment = "Please select a date.";
+        }
+
+        // If the time is not selected
+        else if (this.time === '' || this.time === 'undefined' || this.time === null) {
+          this.errorAppointment = "Please select a time.";
+        }
+
+        // If the garage is not selected
+        else if (this.garage === '' || this.garage === 'undefined' || this.garage === null) {
+          this.errorAppointment = "Please select a garage.";
+        }
+
+        // An error that is caught inside the controller 
+        else {
+          this.errorAppointment = e.response.data;
+        }
+
+        this.showErrorBookAppointment = true;
       })
     },
   }

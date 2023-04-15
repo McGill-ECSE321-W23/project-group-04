@@ -450,7 +450,7 @@ export default {
             this.showOfferedServicesEdit = false;
             this.showGaragesEdit = false;
 
-            // 
+            // Errors
             this.showErrorEditOfferedService = false;
             this.showErrorEditGarage = false;
             this.showErrorDeleteOfferedService = false;
@@ -468,10 +468,10 @@ export default {
             })
             .then(response => {
                 // Save changes
-                this.offeredServices.push(response.data)
+                this.offeredServices.push(response.data);
 
                 // Reset input boxes
-                this.errorOfferedService = ''
+                this.errorOfferedService = '';
                 this.newOfferedServiceDescription = '';
                 this.newOfferedServiceDuration = '';
                 this.newOfferedServiceCost = '';    
@@ -543,11 +543,11 @@ export default {
             })
             .then(response => {
                 // Save changes
-                this.garages.push(response.data)
+                this.garages.push(response.data);
 
                 // Reset input boxes
-                this.errorGarage = ''
-                this.newGarageGarageNumber = ''
+                this.errorGarage = '';
+                this.newGarageGarageNumber = '';
 
                 // Show containers
                 this.showGarageAdd = false;

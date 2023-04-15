@@ -305,7 +305,7 @@ public class ServiceAppointmentRestController {
     }
 
     /**
-     * Helper method that converts Car to fomain object
+     * Helper method that converts Car to domain object
      * @param cDto Car DTO to bo converted
      * @return Car domain object
      * @author anniegouchee
