@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
  * This class followed the template from the tutorials provided:
  * https://mcgill-ecse321-w23.github.io/#_exposing_service_functionality_via_a_restful_api
  */
-//@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/offeredServices")
 public class OfferedServiceRestController {

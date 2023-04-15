@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
  * @author Qin Xuan Xu
  * using template from tutorials
  */
-//@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/timeslot")
 public class TimeSlotRestController {

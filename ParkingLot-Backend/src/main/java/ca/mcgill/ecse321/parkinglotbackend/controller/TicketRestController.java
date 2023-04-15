@@ -23,8 +23,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/ticket")
 public class TicketRestController {
