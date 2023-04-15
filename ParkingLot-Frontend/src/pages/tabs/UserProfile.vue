@@ -19,7 +19,7 @@
       <el-input v-model="form.phone" />
     </el-form-item>
     <br>
-    <el-button type="primary" round>Update</el-button>
+    <el-button type="primary" round @click="updateProfile()">Update</el-button>
   </el-form>
 
   <el-divider />
@@ -96,106 +96,14 @@
 
 </template>
 
-<script setup>
-import {inject, ref} from "vue";
-import {Check, Edit,} from '@element-plus/icons-vue'
-// import UserService from "@/services/UserService";
-//
-// const axios = inject('axios')
-// const userService = new UserService(axios)
+<script lang="js">
+import {inject} from "vue";
+import UserService from "@/services/UserService";
+import {ElNotification} from "element-plus";
 
-// const form = ref({
-//   name: 'jon',
-//   email: 'jon@mcgill',
-//   password: '123',
-//   phone: '514'
-// })
-
-// axios.get('api/account/get/' + userService.getCookie("accountId"))
-//     .then((data) => {
-//       data = data.data
-//       console.log(data.person.name)
-//       const form = ref({
-//         name: data.person.name,
-//         email: data.email,
-//         password: data.password,
-//         phone: data.person.phoneNumber
-//       })
-//     })
-//     .catch(err => {
-//       console.log(err)
-//     })
-
-const times = ref([])
-
-const cars = ref([
-  {
-    license: "dasd",
-    make: "honda",
-    model: "civic"
-  },
-  {
-    license: "yayayaya",
-    make: "toyota",
-    model: "rav4"
-  }
-])
-
-const tickets = ref([
-  {
-    carLicense: "141",
-    start: "15h45",
-    remainingTime: 54
-  },
-  {
-    carLicense: "141",
-    start: "5h45",
-    remainingTime: 42
-  }
-])
-
-const tableData = [
-  {
-    name: 'Tire Change',
-    location: "5",
-    date: '2016-05-03',
-    status: 'Check',
-  },
-  {
-    name: 'Wash',
-    location: "3",
-    date: '2016-05-02',
-    status: 'Star',
-  }
-]
-
-const currentIndex = ref(0)
-
-const handleSelect = (key, keyPath) => {
-  currentIndex.value = key
-}
-
-const handleOpen = (key, keyPath) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key, keyPath) => {
-  console.log(key, keyPath)
-}
-
-const handleSelectionChange = () => {}
-</script>
-
-<script>
-  import {inject, onMounted} from "vue";
-  import UserService from "@/services/UserService";
-
-  export default {
+export default {
     name: "UserProfile",
     props: {
-      // isLoggedIn: {
-      //   type: Boolean,
-      //   default: false
-      // }
     },
     data() {
       return {
@@ -204,14 +112,56 @@ const handleSelectionChange = () => {}
           email: 'jon@mcgill',
           password: '123',
           phone: '514'
-        }
+        },
+        currentIndex: 0,
+        times: [],
+        cars: [
+          {
+            license: "dasd",
+            make: "honda",
+            model: "civic"
+          },
+          {
+            license: "yayayaya",
+            make: "toyota",
+            model: "rav4"
+          }
+        ],
+        tickets: [
+          {
+            carLicense: "141",
+            start: "15h45",
+            remainingTime: 54
+          },
+          {
+            carLicense: "141",
+            start: "5h45",
+            remainingTime: 42
+          }
+        ],
+        tableData: [
+          {
+            name: 'Tire Change',
+            location: "5",
+            date: '2016-05-03',
+            status: 'Check',
+          },
+          {
+            name: 'Wash',
+            location: "3",
+            date: '2016-05-02',
+            status: 'Star',
+          }
+        ],
+        axios: inject('axios')
       }
     },
+    setup() { },
     mounted() {
-      const axios = inject('axios')
-      const userService = new UserService(axios)
+      const userService = new UserService(this.axios)
 
-      axios.get('api/account/get/' + userService.getCookie("accountId"))
+      // get account data
+      this.axios.get('api/account/get/' + userService.getCookie("accountId"))
           .then((data) => {
             data = data.data
             this.form.name = data.person.name
@@ -223,9 +173,48 @@ const handleSelectionChange = () => {}
           .catch(err => {
             console.log(err)
           })
+
+      // get account tickets
+    },
+    methods: {
+      updateProfile() {
+        console.log("pressed")
+        const userService = new UserService(this.axios)
+        this.axios.put("/api/account/update/" + userService.getCookie("accountId"), {}, {
+          params: {
+            email: this.form.email,
+            password: this.form.password
+          }
+        })
+            .then(res => {
+              console.log(res)
+              ElNotification({
+                title: 'Success',
+                message: 'Account Updated',
+                type: 'success',
+                showClose: false,
+                duration: 3000
+              })
+            })
+            .catch(err => {
+              console.log(err)
+            })
+      },
+      handleSelect(key, keyPath) {
+        this.currentIndex = key
+      },
+      handleOpen(key, keyPath) {
+        console.log(key, keyPath)
+      },
+      handleClose (key, keyPath) {
+        console.log(key, keyPath)
+      },
+      handleSelectionChange() {},
+      handleClick() {
+
+      }
     }
   }
-
 </script>
 
 <style scoped>
