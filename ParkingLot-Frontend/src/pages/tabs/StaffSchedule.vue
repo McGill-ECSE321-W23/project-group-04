@@ -114,7 +114,7 @@
     font-size: 16px;
     text-align: center;
     width: 14.28%;
-    min-width: 90px;
+    min-width: 110px;
     padding: 10px 0px 10px 0px;
 }
 
