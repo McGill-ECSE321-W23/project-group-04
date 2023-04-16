@@ -114,31 +114,59 @@ public class TimeSlotRestController {
     }
 
     /**
-     * Create a timeslot
+     * Create a timeslot for staff account
      * @param request - only manager can access this method
      * @param dayOfTheWeek - the day of the week of the timeslot
      * @param startTime - start of timeslot
      * @param endTime - end of timeslot
-     * @param parkingLotSoftwareSystemID - system ID
      * @param accountID - account ID
      * @return error message if encountered
      * @author Qin Xuan Xu
      */
     @PostMapping("/create")
-    public ResponseEntity<?> createTimeSlot(HttpServletRequest request, @RequestParam DayOfWeek dayOfTheWeek, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime, @RequestParam long parkingLotSoftwareSystemID, @RequestParam long accountID) {
+    public ResponseEntity<?> createTimeSlot(HttpServletRequest request, @RequestParam String dayOfTheWeek, @RequestParam String startTime, @RequestParam String endTime, @RequestParam long accountID) {
         try {
-            ParkingLotSoftwareSystem system = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID);
             StaffAccount staffAccount = staffAccountService.getStaffAccount(accountID);
-            if ((staffAccount == null && system == null) || (staffAccount != null && system != null)) {
-                return ResponseEntity.badRequest().body("Cannot create timeslot");
+            if (staffAccount == null) {
+                return ResponseEntity.badRequest().body("Staff account does not exist");
             }
             // Check authorization
             if (AuthenticationUtility.isManager(request)) {
-                if (system == null) {
-                    return ResponseEntity.ok(convertToDto(timeSlotService.createTimeSlot(dayOfTheWeek, startTime, endTime, null, staffAccount)));
-                } else {
-                    return ResponseEntity.ok(convertToDto(timeSlotService.createTimeSlot(dayOfTheWeek, startTime, endTime, system, null)));
-                }
+                DayOfWeek day = DayOfWeek.valueOf(dayOfTheWeek.toUpperCase());
+                LocalTime start = convertStringToLocalTime(startTime);
+                LocalTime end = convertStringToLocalTime(endTime);
+                return ResponseEntity.ok(convertToDto(timeSlotService.createTimeSlot(day, start, end, null, staffAccount)));
+            } else {
+                return ResponseEntity.badRequest().body("Only manager can create TimeSlot");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /**
+     * Create a timeslot as open hour
+     * @param request - only manager can access this method
+     * @param dayOfTheWeek - the day of the week of the timeslot
+     * @param startTime - start of timeslot
+     * @param endTime - end of timeslot
+     * @param parkingLotSoftwareSystemID - system ID
+     * @return error message if encountered
+     * @author Qin Xuan Xu
+     */
+    @PostMapping("/createOpen")
+    public ResponseEntity<?> createOpenHour(HttpServletRequest request, @RequestParam String dayOfTheWeek, @RequestParam String startTime, @RequestParam String endTime, @RequestParam long parkingLotSoftwareSystemID) {
+        try {
+            ParkingLotSoftwareSystem system = parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID);
+            if (system == null) {
+                return ResponseEntity.badRequest().body("System does not exist");
+            }
+            // Check authorization
+            if (AuthenticationUtility.isManager(request)) {
+                DayOfWeek day = DayOfWeek.valueOf(dayOfTheWeek.toUpperCase());
+                LocalTime start = convertStringToLocalTime(startTime);
+                LocalTime end = convertStringToLocalTime(endTime);
+                return ResponseEntity.ok(convertToDto(timeSlotService.createTimeSlot(day, start, end, system, null)));
             } else {
                 return ResponseEntity.badRequest().body("Only manager can create TimeSlot");
             }
@@ -158,11 +186,14 @@ public class TimeSlotRestController {
      * @author Qin Xuan Xu
      */
     @PutMapping("/update/{timeSlotID}")
-    public ResponseEntity<?> updateTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID, @RequestParam DayOfWeek dayOfTheWeek, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime) {
+    public ResponseEntity<?> updateTimeSlot(HttpServletRequest request, @PathVariable(value = "timeSlotID") long timeSlotID, @RequestParam String dayOfTheWeek, @RequestParam String startTime, @RequestParam String endTime) {
         // Check authorization
         try {
             if (AuthenticationUtility.isManager(request)) {
-                return ResponseEntity.ok(convertToDto(timeSlotService.updateTimeSlot(timeSlotID, dayOfTheWeek, startTime, endTime)));
+                DayOfWeek day = DayOfWeek.valueOf(dayOfTheWeek.toUpperCase());
+                LocalTime start = convertStringToLocalTime(startTime);
+                LocalTime end = convertStringToLocalTime(endTime);
+                return ResponseEntity.ok(convertToDto(timeSlotService.updateTimeSlot(timeSlotID, day, start, end)));
             } else {
                 return ResponseEntity.badRequest().body("Only manager can update TimeSlot");
             }
@@ -202,14 +233,44 @@ public class TimeSlotRestController {
         if (t == null) {
             throw new IllegalArgumentException("TimeSlot does not exist");
         }
-        TimeSlotDto timeSlotDto = new TimeSlotDto(
-                t.getTimeSlotID(),
-                t.getDayOfTheWeek(),
-                t.getStartTime(),
-                t.getEndTime(),
-                t.getSystem().getParkingLotSoftwareSystemID(),
-                t.getStaffAccount().getAccountID());
-        return timeSlotDto;
+        if (t.getSystem() == null && t.getStaffAccount() != null) {
+            TimeSlotDto timeSlotDto = new TimeSlotDto();
+            timeSlotDto.setTimeSlotID(t.getTimeSlotID());
+            timeSlotDto.setDayOfTheWeek(t.getDayOfTheWeek());
+            timeSlotDto.setStartTime(t.getStartTime());
+            timeSlotDto.setEndTime(t.getEndTime());
+            timeSlotDto.setStaffAccount(t.getStaffAccount().getAccountID());
+            return timeSlotDto;
+        } else if (t.getStaffAccount() == null && t.getSystem() != null) {
+            TimeSlotDto timeSlotDto = new TimeSlotDto();
+            timeSlotDto.setTimeSlotID(t.getTimeSlotID());
+            timeSlotDto.setDayOfTheWeek(t.getDayOfTheWeek());
+            timeSlotDto.setStartTime(t.getStartTime());
+            timeSlotDto.setEndTime(t.getEndTime());
+            timeSlotDto.setSystemId(t.getSystem().getParkingLotSoftwareSystemID());
+            return timeSlotDto;
+        } else {
+            throw new IllegalArgumentException("Cannot convert to DTO");
+        }
+    }
+
+    /**
+     * convert string to LocalTime
+     * @param time - string of time (HH:mm AM/PM)
+     * @return LocalTime
+     * @author Qin Xuan Xu
+     */
+    private LocalTime convertStringToLocalTime(String time) {
+        String[] parts = time.split(" ");
+        String[] timeParts = parts[0].split(":");
+        int hour = Integer.parseInt(timeParts[0]);
+        int minute = Integer.parseInt(timeParts[1]);
+        if (parts[1].equalsIgnoreCase("PM") && hour != 12) {
+            hour += 12;
+        } else if (parts[1].equalsIgnoreCase("AM") && hour == 12) {
+            hour = 0;
+        }
+        return LocalTime.of(hour, minute);
     }
 
 }

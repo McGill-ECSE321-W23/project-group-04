@@ -129,22 +129,15 @@ public class GarageRestController {
     /**
      * RESTful API get all garages.
      *
-     * @param request - Who is trying to access this method. Only staff are allowed to get them.
-     * @return - Either a message specifying the user is not authorized to perform this, or all the garages if the user is authorized to perform this
+     * @param request - Who is trying to access this method.
+     * @return - All the garages or an error message
      * @author Estefania Vazquez
      */
     @GetMapping("/get")
     ResponseEntity<?> getAllGarages(HttpServletRequest request) {
         try {
-            // If the user trying to get all the garages is staff
-            if (AuthenticationUtility.isStaff(request)) { // Check which user is trying to call this method
-                return ResponseEntity.ok(garageService.getAllGarageService().stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
-            }
-
-            // If the user trying to get a garage is not the Manager
-            else {
-                return ResponseEntity.badRequest().body("Only the manager can get all the garages.");
-            }
+            // Anyone can get the garages
+            return ResponseEntity.ok(garageService.getAllGarageService().stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
         } catch (Exception e) {
             // Return the error
             return ResponseEntity.badRequest().body(e.getMessage());

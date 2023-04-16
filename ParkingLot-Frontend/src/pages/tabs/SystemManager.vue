@@ -4,10 +4,10 @@
     </div>
     <br />
     <div class="container">
-        <label for="staffSelect" style="padding-right: 10px">Select a system:</label>
-        <el-select v-model="system_value" placeholder="Select" style="width: 300px">
-            <el-option v-for="item in system_options" :key="item.system_value" :label="item.label"
-                :value="item.system_value">
+        <label style="padding-right: 10px">Select a system:</label>
+        <el-select v-model="system_selected" placeholder="Select" style="width: 300px" @change="refreshTable()">
+            <el-option v-for="item in system_list" :key="item.systemID" :label="item.label"
+                :value="item.systemID">
             </el-option>
         </el-select>
     </div>
@@ -21,84 +21,84 @@
                         <table style="padding-top: 5px;">
                             <tr>
                                 <td>Monthly fee</td>
-                                <td>21</td>
+                                <td id="monthlyFeeCell">-</td>
                             </tr>
                             <tr>
                                 <td>Fee per 15 mins</td>
-                                <td>21</td>
+                                <td id="feePer15MinsCell">-</td>
                             </tr>
                             <tr>
                                 <td>Maximum stay duration</td>
-                                <td>21</td>
+                                <td id="maxStayCell">-</td>
                             </tr>
                             <tr>
                                 <td>Number of regular parking spots</td>
-                                <td>21</td>
+                                <td id="numRegularCell">-</td>
                             </tr>
                             <tr>
                                 <td>Number of large parking spots</td>
-                                <td>21</td>
+                                <td id="numLargeCell">-</td>
                             </tr>
                             <tr>
                                 <td>Number of floors for monthly users</td>
-                                <td>21</td>
+                                <td id="numMonthlyFloorsCell">-</td>
                             </tr>
                             <tr>
                                 <td style="padding-right: 10px">
                                     Number of parking spots for monthly users per floor
                                 </td>
-                                <td>21</td>
+                                <td id="numMonthlySpotsCell">-</td>
                             </tr>
                             <tr>
                                 <td>Number of garages</td>
-                                <td>21</td>
+                                <td id="numGaragesCell">-</td>
                             </tr>
                         </table>
                     </el-card>
                 </td>
                 <td>
-                    <el-card style="min-width: 300px;" shadow="hover">
+                    <el-card shadow="hover">
                         <label>Current open hours</label>
                         <table style="padding-top: 5px;">
                             <tr>
                                 <td>Sunday</td>
-                                <td style="text-align: center">
-                                    12:00 AM - 12:00 PM
+                                <td style="text-align: center" id="sunOpen">
+                                    -
                                 </td>
                             </tr>
                             <tr>
                                 <td>Monday</td>
-                                <td style="text-align: center">
+                                <td style="text-align: center" id="monOpen">
                                     -
                                 </td>
                             </tr>
                             <tr>
                                 <td>Tuesday</td>
-                                <td style="text-align: center">
+                                <td style="text-align: center" id="tueOpen">
                                     -
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding-right: 30px">Wednesday</td>
-                                <td style="text-align: center">
+                                <td style="text-align: center" id="wedOpen">
                                     -
                                 </td>
                             </tr>
                             <tr>
                                 <td>Thursday</td>
-                                <td style="text-align: center">
+                                <td style="text-align: center" id="thuOpen">
                                     -
                                 </td>
                             </tr>
                             <tr>
                                 <td>Friday</td>
-                                <td style="text-align: center">
+                                <td style="text-align: center" id="friOpen">
                                     -
                                 </td>
                             </tr>
                             <tr>
                                 <td>Saturday</td>
-                                <td style="text-align: center">
+                                <td style="text-align: center" id="satOpen">
                                     -
                                 </td>
                             </tr>
@@ -117,7 +117,7 @@
                         <label style="padding-right: 15px;">Parking lot specifications:</label>
                     </td>
                     <td>
-                        <el-select v-model="parkingspecs_value" placeholder="Select" style="width: 280px">
+                        <el-select v-model="parkingspecs_selected" placeholder="Select an option" style="width: 280px">
                             <el-option v-for="item in parkingspecs_options" :key="item.spec_value" :label="item.label"
                                 :value="item.spec_value">
                             </el-option>
@@ -131,8 +131,8 @@
                     <td></td>
                     <td></td>
                     <td style="padding-bottom: 10px;">
-                        <el-button>Update</el-button>
-                        <el-button>Cancel</el-button>
+                        <el-button @click="updateSystem(parkingspecs_selected,spec_input,system_selected)">Update</el-button>
+                        <el-button @click="clearEditSpecs()">Cancel</el-button>
                     </td>
                 </tr>
                 <tr>
@@ -140,7 +140,7 @@
                         <label>Open hours:</label>
                     </td>
                     <td>
-                        <el-select v-model="day_value" placeholder="Select" style="width: 280px">
+                        <el-select v-model="day_selected" placeholder="Select a day" style="width: 280px">
                             <el-option v-for="item in day_options" :key="item.day_value" :label="item.label"
                                 :value="item.day_value">
                             </el-option>
@@ -161,9 +161,9 @@
                     <td></td>
                     <td></td>
                     <td>
-                        <el-button>Update</el-button>
-                        <el-button>Delete</el-button>
-                        <el-button>Cancel</el-button>
+                        <el-button @click="updateOpenHour(day_selected,start_time,end_time,system_selected)">Update</el-button>
+                        <el-button @click="deleteOpenHour(day_selected,system_selected)">Delete</el-button>
+                        <el-button @click="clearEditOpenHours()">Cancel</el-button>
                     </td>
                 </tr>
             </table>
@@ -240,8 +240,8 @@
                 <tr>
                     <td></td>
                     <td style="padding-top: 10px;">
-                        <el-button>Create</el-button>
-                        <el-button>Cancel</el-button>
+                        <el-button @click="createSystem(create_monthlyfee,create_feeper15mins,create_maxstay,create_numregular,create_numlarge,create_nummonthlyfloors,create_nummonthlyspots,create_numgarages)">Create</el-button>
+                        <el-button @click="clearCreateSystem()">Cancel</el-button>
                     </td>
                 </tr>
             </table>

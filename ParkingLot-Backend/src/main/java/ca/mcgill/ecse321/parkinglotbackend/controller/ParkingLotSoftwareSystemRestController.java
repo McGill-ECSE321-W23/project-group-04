@@ -36,6 +36,21 @@ public class ParkingLotSoftwareSystemRestController {
     }
 
     /**
+     * Get all systems
+     * @param request - Who is trying to access this method. There is no limitation on who is able to get the system
+     * @return Error message or the parking lot system
+     */
+    @GetMapping("/getall")
+    public ResponseEntity<?> getAllParkingLotSoftwareSystems(HttpServletRequest request) {
+        // Everyone can get system
+        try {
+            return ResponseEntity.ok(parkingLotSoftwareSystemService.getAllParkingLotSoftwareSystem().stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /**
      * Create a new system
      * @param request - Who is trying to access this method. Only the manager is allowed to do so.
      * @param monthlyFee Monthly fee of a reservation
