@@ -159,12 +159,9 @@ export default {
             for (let i = 0; i < tickets.length; i++) {
                 if (this.tickets[i].ticketID == id) {
 
-            this.AXIOS.delete('http://localhost:8080/api/ticket/delete', {}, {
+            this.AXIOS.delete('http://localhost:8080/api/ticket/delete/'+id, {}, {
               withCredentials: true, 
               headers:{"Access-Control-Allow-Origin": 'localhost:8080'},
-              params: {
-                id: $("#ticketID").val()
-              }
             })
             .then(response => {
 
