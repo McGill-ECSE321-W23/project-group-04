@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/staff")
@@ -52,6 +53,27 @@ public class StaffAccountRestController {
             return ResponseEntity.internalServerError().build();
         }
         
+    }
+
+    /**
+     * RESTful API for getting all the employee accounts
+     *
+     * @param request - Who is trying to access this method. Only the manager is allowed to get one.
+     * @return - Either a message specifying the user is not authorized to perform this, or the employee accounts if the user is authorized to perform this
+     * @author Edwin
+     */
+    @GetMapping("/all")
+    ResponseEntity<?> getAllEmployees(HttpServletRequest request) {
+        try {
+            if (AuthenticationUtility.isManager(request) || AuthenticationUtility.isStaff(request)) {
+                return ResponseEntity.ok().body(staffAccountService.getAllStaffAccounts().stream().map(DtoUtility::convertToDto).collect(Collectors.toList()));
+            } else {
+                return ResponseEntity.badRequest().body("Unauthorized");
+            }
+        } catch (Exception ex) {
+            // return ResponseEntity.internalServerError().build();
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
     }
 
     /**

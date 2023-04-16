@@ -60,8 +60,8 @@ export default {
                     "Access-Control-Allow-Origin": 'localhost:8080',
                 },
                 params: {
-                    email: 'testemail',
-                    password: '123'
+                    email: $("#login_email").val(),
+                    password: $("#login_password").val()
                 }
             })
             .then((res) => {
@@ -70,7 +70,8 @@ export default {
 
             })
             .catch(err => {
-                console.log(err)
+                // console.log(err)
+                alert(err.response.data)
             })
             // $.ajax({
             //     url: "http://127.0.0.1:8080/api/auth/login",
@@ -122,6 +123,7 @@ export default {
                 },
                 error: function(data) {
                     console.log(data);
+                    alert(data.responseText);
                 }
             });
         });
@@ -140,6 +142,7 @@ export default {
             })
             .catch(err => {
                 console.log(err)
+                alert(err.response.data)
             })
             // $.ajax({
             //     url: "http://localhost:8080/api/auth/smokeTest",
