@@ -49,7 +49,7 @@ The application will improve the overall experience for customers, employees and
 3. Start the Vite server with `npm run dev`*
 4. The frontend server should be started on `localhost:5173`
 
-* Note that this runs a development server, a production version should be built using `npm run build` and then ran using a webserver module such as `serve`
+\* Note that this runs a development server, a production version should be built using `npm run build` and then ran using a webserver module such as `serve`
 
 ## Sprint Summary
 
