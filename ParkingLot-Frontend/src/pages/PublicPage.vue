@@ -5,7 +5,7 @@
       <div id="page_home" class="tabBody" active="true">
       <HomePage />
       </div>
-      <div id="page_services" style= "padding: 60px 80px" class="tabBody" v-if="loggedIn">
+      <div id="page_services" style= "padding: 60px 80px" class="tabBody">
         <ServiceAppointmentTab />
       </div>
       <div id="page_profile" style= "padding: 60px 80px" class="tabBody" v-if="loggedIn">
