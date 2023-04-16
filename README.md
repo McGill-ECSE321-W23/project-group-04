@@ -57,7 +57,7 @@ The application will improve the overall experience for customers, employees and
 | Team Member       | Sprint 1  | Sprint 2  | Sprint 3 |
 | ----------------- | ----------- | ------ | -- |
 | Faiza Chowdhury   |   26     | 27 | 44 |
-| Annie Gouchee     |   26   | 28 | 47 |
+| Annie Gouchee     |   26   | 28 | 49 |
 | Lin Wei Li        |    32   | 32 | 55 |
 | Estefania Vazquez | 28     | 29 | 45 |
 | Qin Xuan Xu       |  27   | 22 | 43 |
