@@ -20,13 +20,13 @@ export default {
             staff_selected: "",
 
             day_options: [
-                {day_value: "Sunday", label: "Sunday",},
-                {day_value: "Monday", label: "Monday",},
-                {day_value: "Tuesday", label: "Tuesday",},
-                {day_value: "Wednesday", label: "Wednesday",},
-                {day_value: "Thursday", label: "Thursday",},
-                {day_value: "Friday", label: "Friday",},
-                {day_value: "Saturday", label: "Saturday",}
+                {day_value: "SUNDAY", label: "Sunday",},
+                {day_value: "MONDAY", label: "Monday",},
+                {day_value: "TUESDAY", label: "Tuesday",},
+                {day_value: "WEDNESDAY", label: "Wednesday",},
+                {day_value: "THURSDAY", label: "Thursday",},
+                {day_value: "FRIDAY", label: "Friday",},
+                {day_value: "SATURDAY", label: "Saturday",}
             ],
 
             day_value2: "", // update
@@ -99,11 +99,16 @@ export default {
             const starttime = date1.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             const date2 = new Date(endTime);
             const endtime = date2.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            console.log(starttime);
+            console.log(endtime);
             
             var timeSlotObj = null;
             var index = -1;
+
+            console.log(this.all_timeslots);
             for (var i = 0; i < this.all_timeslots.length; i++) {
-                if (this.all_timeslots[i].timeslot.staffID == staffId && this.all_timeslots[i].timeslot.day == day) {
+                if (this.all_timeslots[i].timeslot.staffID == staffId && this.all_timeslots[i].timeslot.day == day.toUpperCase()) {
                     timeSlotObj = this.all_timeslots[i].timeslot;
                     index = i;
                     break;
@@ -131,6 +136,8 @@ export default {
                         timeslotID: slotDto.timeSlotID,
                         label: slotDto.day + " " + slotDto.startTime + " - " + slotDto.endTime,
                     })
+                    this.cancelUpdateTimeSlot();
+                    this.refreshTable();
                 })
                 .catch(e => {
                     console.log(e)
@@ -155,6 +162,8 @@ export default {
                     this.all_timeslots[index].timeslot = slotDto;
                     this.all_timeslots[index].timeslotID = slotDto.timeSlotID;
                     this.all_timeslots[index].label = slotDto.day + " " + slotDto.startTime + " - " + slotDto.endTime;
+                    this.cancelUpdateTimeSlot();
+                    this.refreshTable();
                 })
                 .catch(e => {
                     console.log(e)
@@ -162,8 +171,7 @@ export default {
                 })
             }
 
-            this.cancelUpdateTimeSlot();
-            this.refreshTable();
+            
         },
 
         deleteTimeslot: function (day, staffId) {
@@ -174,7 +182,7 @@ export default {
 
             var timeSlotObj = null;
             for (var i = 0; i < this.all_timeslots.length; i++) {
-                if (this.all_timeslots[i].timeslot.staffID == staffId && this.all_timeslots[i].timeslot.day == day) {
+                if (this.all_timeslots[i].timeslot.staffID == staffId && this.all_timeslots[i].timeslot.day == day.toUpperCase()) {
                     timeSlotObj = this.all_timeslots[i].timeslot;
 
                     axios.delete('http://localhost:8080/api/timeslot/delete/'.concat(timeSlotObj.timeSlotID), {
@@ -185,6 +193,8 @@ export default {
                     })
                     .then(response => {
                         this.all_timeslots.splice(i, 1);
+                        this.refreshTable();
+                        this.cancelUpdateTimeSlot();
                     })
                     .catch(e => {
                         console.log(e)
@@ -200,9 +210,9 @@ export default {
                 console.log("Time slot not found");
                 return;
             }
-
-            this.cancelUpdateTimeSlot();
             this.refreshTable();
+            this.cancelUpdateTimeSlot();
+            
         },
 
         cancelUpdateTimeSlot: function () {
@@ -219,6 +229,9 @@ export default {
                         staffschedule.push(this.all_timeslots[i].timeslot);
                     }
                 }
+
+                // print staffschedule
+                console.log(staffschedule);
                 
                 const sun = document.getElementById("sun_schedule");
                 const mon = document.getElementById("mon_schedule");
@@ -237,17 +250,17 @@ export default {
 
                 for (var i = 0; i < staffschedule.length; i++) {
                     var slot = staffschedule[i];
-                    if (slot.day == "Sunday") {
+                    if (slot.day == "SUNDAY") {
                         sun.textContent = slot.startTime + " - " + slot.endTime;
-                    } else if (slot.day == "Monday") {
+                    } else if (slot.day == "MONDAY") {
                         mon.textContent = slot.startTime + " - " + slot.endTime;
-                    } else if (slot.day == "Tuesday") {
+                    } else if (slot.day == "TUESDAY") {
                         tue.textContent = slot.startTime + " - " + slot.endTime;
-                    } else if (slot.day == "Wednesday") {
+                    } else if (slot.day == "WEBNESDAY") {
                         wed.textContent = slot.startTime + " - " + slot.endTime;
-                    } else if (slot.day == "Thursday") {
+                    } else if (slot.day == "THURSDAY") {
                         thu.textContent = slot.startTime + " - " + slot.endTime;
-                    } else if (slot.day == "Friday") {
+                    } else if (slot.day == "FRIDAY") {
                         fri.textContent = slot.startTime + " - " + slot.endTime;
                     } else {
                         sat.textContent = slot.startTime + " - " + slot.endTime;

@@ -190,6 +190,8 @@ export default {
                         })
                         .then(response => {
                             this.system_list[i].system.monthlyFee = value;
+                            this.refreshTable();
+                            this.clearEditSpecs();
                         })
                         .catch(e => {
                             console.log(e)
@@ -209,6 +211,8 @@ export default {
                         })
                         .then(response => {
                             this.system_list[i].system.feePer15m = value;
+                            this.refreshTable();
+                            this.clearEditSpecs();
                         })
                         .catch(e => {
                             console.log(e)
@@ -228,6 +232,8 @@ export default {
                         })
                         .then(response => {
                             this.system_list[i].system.maxStay = value;
+                            this.refreshTable();
+                            this.clearEditSpecs();
                         })
                         .catch(e => {
                             console.log(e)
@@ -247,6 +253,8 @@ export default {
                         })
                         .then(response => {
                             this.system_list[i].system.numRegular = value;
+                            this.refreshTable();
+                            this.clearEditSpecs();
                         })
                         .catch(e => {
                             console.log(e)
@@ -266,6 +274,8 @@ export default {
                         })
                         .then(response => {
                             this.system_list[i].system.numLarge = value;
+                            this.refreshTable();
+                            this.clearEditSpecs();
                         })
                         .catch(e => {
                             console.log(e)
@@ -285,6 +295,8 @@ export default {
                         })
                         .then(response => {
                             this.system_list[i].system.numMonthlyFloors = value;
+                            this.refreshTable();
+                            this.clearEditSpecs();
                         })
                         .catch(e => {
                             console.log(e)
@@ -304,6 +316,8 @@ export default {
                         })
                         .then(response => {
                             this.system_list[i].system.numMonthlySpots = value;
+                            this.refreshTable();
+                            this.clearEditSpecs();
                         })
                         .catch(e => {
                             console.log(e)
@@ -323,6 +337,8 @@ export default {
                         })
                         .then(response => {
                             this.system_list[i].system.numGarages = value;
+                            this.refreshTable();
+                            this.clearEditSpecs();
                         })
                         .catch(e => {
                             console.log(e)
@@ -343,9 +359,8 @@ export default {
                 console.log("System not found");
                 return;
             }
-
-            this.clearEditSpecs();
-            this.refreshTable();
+            
+            
         },
 
         updateOpenHour: function (day, startTime, endTime, system) {
@@ -362,7 +377,7 @@ export default {
             var timeSlotObj = null;
             var index = -1;
             for (var i = 0; i < this.all_openhours.length; i++) {
-                if (this.all_openhours[i].timeSlot.day == day && this.all_openhours[i].timeSlot.systemID == system) {
+                if (this.all_openhours[i].timeSlot.day == day.toUpperCase() && this.all_openhours[i].timeSlot.systemID == system) {
                     timeSlotObj = this.all_openhours[i].timeSlot;
                     index = i;
                     break;
@@ -390,6 +405,8 @@ export default {
                         timeSlotID: timeSlotDto.timeSlotID,
                         label: "Time Slot " + timeSlotDto.timeSlotID,
                     })
+                    this.refreshTable();
+                    this.clearEditOpenHours();
                 })
                 .catch(e => {
                     console.log(e)
@@ -414,15 +431,16 @@ export default {
                     this.all_openhours[index].timeSlot = timeSlotDto;
                     this.all_openhours[index].timeSlotID = timeSlotDto.timeSlotID;
                     this.all_openhours[index].label = "Time Slot " + timeSlotDto.timeSlotID;
+                    this.refreshTable();
+                    this.clearEditOpenHours();
                 })
                 .catch(e => {
                     console.log(e)
                     alert(e.response.data)
                 })
             }
-
-            this.clearEditOpenHours();
-            this.refreshTable();
+            
+            
         },
 
         deleteOpenHour: function (day, system) {
@@ -433,7 +451,7 @@ export default {
 
             var timeSlotObj = null;
             for (var i = 0; i < this.all_openhours.length; i++) {
-                if (this.all_openhours[i].timeSlot.day == day && this.all_openhours[i].timeSlot.systemID == system) {
+                if (this.all_openhours[i].timeSlot.day == day.toUpperCase() && this.all_openhours[i].timeSlot.systemID == system) {
                     timeSlotObj = this.all_openhours[i].timeSlot;
                     
                     axios.delete("http://localhost:8080/api/timeslot/delete/".concat(timeSlotObj.timeSlotID), {
@@ -444,6 +462,8 @@ export default {
                     })
                     .then(response => {
                         this.all_openhours.splice(i, 1);
+                        this.refreshTable();
+                        this.clearEditOpenHours();
                     })
                     .catch(e => {
                         console.log(e)
@@ -460,8 +480,9 @@ export default {
                 return;
             }
 
-            this.clearEditOpenHours();
+            
             this.refreshTable();
+            this.clearEditOpenHours();
         },
 
         clearEditOpenHours: function () {
@@ -499,20 +520,23 @@ export default {
                         for (var j = 0; j < this.all_openhours.length; j++) {
                             if (this.all_openhours[j].timeSlot.systemID == this.system_selected) {
                                 const oh = this.all_openhours[j].timeSlot;
-                                if (oh.day == "Sunday") {
+                                console.log(oh);
+                                if (oh.day == "SUNDAY") {
                                     document.getElementById("sunOpen").textContent = oh.startTime + " - " + oh.endTime;
-                                } else if (oh.day == "Monday") {
+                                } else if (oh.day == "MONDAY") {
                                     document.getElementById("monOpen").textContent = oh.startTime + " - " + oh.endTime;
-                                } else if (oh.day == "Tuesday") {
+                                } else if (oh.day == "TUESDAY") {
                                     document.getElementById("tueOpen").textContent = oh.startTime + " - " + oh.endTime;
-                                } else if (oh.day == "Wednesday") {
+                                } else if (oh.day == "WEDNESDAY") {
                                     document.getElementById("wedOpen").textContent = oh.startTime + " - " + oh.endTime;
-                                } else if (oh.day == "Thursday") {
+                                } else if (oh.day == "THURSDAY") {
                                     document.getElementById("thuOpen").textContent = oh.startTime + " - " + oh.endTime;
-                                } else if (oh.day == "Friday") {
+                                } else if (oh.day == "FRIDAY") {
                                     document.getElementById("friOpen").textContent = oh.startTime + " - " + oh.endTime;
-                                } else {
+                                } else if (oh.day == "SATURDAY") {
                                     document.getElementById("satOpen").textContent = oh.startTime + " - " + oh.endTime;
+                                } else {
+                                    console.log("Error: invalid day occured");
                                 }
                             }
                         }
