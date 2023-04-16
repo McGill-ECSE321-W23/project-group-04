@@ -22,6 +22,7 @@ export default {
           totalCost: '',
           errorPLS: '',
           currentTicketID:'',
+          ticketID: '',
 
           AXIOS: axios.create({
             baseURL: 'http://localhost:8080',
