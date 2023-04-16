@@ -81,7 +81,7 @@ export default {
     })
 
     // Initializing cars from backend
-    AXIOS.get('/cars/get/ByOwner/'.concat(this.owner)).then(response => {
+    AXIOS.get('/cars/getByPersonID/'.concat(this.owner)).then(response => {
       this.cars = response.data
     })
     .catch(e => {
