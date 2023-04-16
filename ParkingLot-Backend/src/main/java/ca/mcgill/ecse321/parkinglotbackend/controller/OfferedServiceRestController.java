@@ -4,7 +4,6 @@ import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUt
 import ca.mcgill.ecse321.parkinglotbackend.dto.OfferedServiceDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.OfferedService;
 import ca.mcgill.ecse321.parkinglotbackend.service.OfferedServiceService;
-
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -135,22 +134,15 @@ public class OfferedServiceRestController {
     /**
      * RESTful API get all offered services.
      *
-     * @param request - Who is trying to access this method. Only staff are allowed to get them.
-     * @return - Either a message specifying the user is not authorized to perform this, or all the offered services if the user is authorized to perform this
+     * @param request - Who is trying to access this method.
+     * @return - All the offered services or an error message
      * @author Estefania Vazquez
      */
     @GetMapping("/get")
     ResponseEntity<?> getAllOfferedServices(HttpServletRequest request) {
         try {
-            // If the user trying to get all services is not staff
-            if (AuthenticationUtility.isStaff(request)) { // Check which user is trying to call this method
-                return ResponseEntity.ok(offeredServiceService.getAllOfferedServiceService().stream().map(os -> convertToDto(os)).collect(Collectors.toList()));
-            }
-
-            // If the user trying to get all services is not staff
-            else {
-                return ResponseEntity.badRequest().body("Only staff can get all services offered.");
-            }
+            // Everyone can request to get all offered services
+            return ResponseEntity.ok(offeredServiceService.getAllOfferedServiceService().stream().map(os -> convertToDto(os)).collect(Collectors.toList()));
         } catch (Exception e) {
             // Return the error
             return ResponseEntity.badRequest().body(e.getMessage());

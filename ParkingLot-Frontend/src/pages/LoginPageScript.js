@@ -1,7 +1,6 @@
-import {reactive} from 'vue'
+import {inject, reactive} from 'vue'
 import $ from 'jquery'
 import router from '@/router'
-import axios from 'axios';
 
 export default {
     name: "LoginPage",
@@ -17,6 +16,8 @@ export default {
         }
     },
     mounted() {
+        const axios = inject('axios')
+
         // Logo
         $("#img_logo").click(function () {
             router.push("/");
@@ -54,11 +55,7 @@ export default {
 
         // Login
         $("#login_button").click(function() {
-            axios.post('http://localhost:8080/api/auth/login', {}, {
-                withCredentials: true,
-                headers: {
-                    "Access-Control-Allow-Origin": 'localhost:8080',
-                },
+            axios.post('api/auth/login', {}, {
                 params: {
                     email: $("#login_email").val(),
                     password: $("#login_password").val()
@@ -66,11 +63,18 @@ export default {
             })
             .then((res) => {
                 console.log(res)
-                router.push("/")
-
+                axios.get('api/account/get')
+                    .then(response => {
+                    })
+                    .catch(error => {
+                    })
+                    .finally(() => {
+                        router.push("/")
+                    })
             })
             .catch(err => {
-                console.log(err)
+                // console.log(err)
+                alert(err.response.data)
             })
             // $.ajax({
             //     url: "http://127.0.0.1:8080/api/auth/login",
@@ -122,24 +126,21 @@ export default {
                 },
                 error: function(data) {
                     console.log(data);
+                    alert(data.responseText);
                 }
             });
         });
 
         // Recover (smoke test)
         $("#recovery_button").click(function() {
-            axios.get('http://localhost:8080/api/auth/smokeTest', {
-                withCredentials: true,
-                headers: {
-                    "Access-Control-Allow-Origin": 'localhost:8080',
-                },
-            })
+            this.axios.get('api/auth/smokeTest')
             .then((res) => {
                 console.log(res)
                 router.push("/")
             })
             .catch(err => {
                 console.log(err)
+                alert(err.response.data)
             })
             // $.ajax({
             //     url: "http://localhost:8080/api/auth/smokeTest",

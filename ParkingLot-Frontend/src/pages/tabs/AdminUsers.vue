@@ -7,43 +7,32 @@
                     <div id="user-input" style="width:100%;text-align: center; padding:0%;font-size:18px; margin-top: 5%;">
                         <div id="name">
                         <label for="person_name" >Name:  </label>
-              <el-input  type="text" v-model="person_name" style="font-size:15px;margin-left:50px; align-self: flex-end; width: 40%;" clearable />
+              <el-input type="text" v-model="person_name" style="font-size:15px;margin-left:50px; align-self: flex-end; width: 40%;" clearable />
             </div>
               <br>
               <div id="phone" style="margin-top:30px;">
               <label for="person_number">Phone:  </label>
               
-              <el-input clearable type="tel" v-model="person_number" name="person_number " 
-              placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required style="font-size:15px;width: 40%; margin-left: 50px;"/>
+              <el-input clearable type="tel" v-model="person_number" name="person_number" 
+              placeholder="123-456-7890" style="font-size:15px;width: 40%; margin-left: 50px;"/>
               </div>
-              <div id="email" style="margin-top:50px;">
-              <label for="person_email">Email:  </label>
-              
-              <el-input type="text" v-model="person_email" name="person_email " 
-             style="font-size:15px;width: 40%; margin-left: 50px; margin-top:5px;" clearable />
-              </div>
+             
               <div id="create-button" style="margin-top:100px; margin-left: 10px; margin-right: 10px; ">
-                        <el-button type="info" style="width:100px;" @click="createPerson(106,  person_number, person_name, person_email)">Create</el-button>
+                        <el-button type="info" style="width:100px;" @click="createPerson(person_name, person_number)">Create</el-button>
                         </div>
+                        
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="Update User Info"  style="width: auto;">
                         <div id="user-input" style="width:100%;text-align: center; padding:0%;font-size:18px; margin-top: 5%;">
-                        <div id="phone" style="margin-top:30px;">
-              <label for="person_number">Phone:  </label>
-              <el-input type="tel" v-model="person_number" name="person_number " 
-              placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required style="font-size:18px;width: 40%; margin-left: 50px;" clearable />
-              </div>
-              <div id="find-button" style="margin-top:40px; margin-left: 10px; margin-right: 10px; ">
-                        <el-button type="info" style="width:100px;" @click="findPersonByPhone(person_number)">Find By Phone</el-button>
-                        </div>
+                        
               <div id="id" style="margin-top:30px;">
               <label for="person_id">ID:  </label>
-              <el-input clearable type="text" v-model="person_id" name="person_id " 
+              <el-input clearable type="text" v-model="person_id" name="person_id" 
                 style="font-size:18px;width: 40%; margin-left: 50px;"/>
               </div>
                         <div id="find-button" style="margin-top:40px; margin-left: 10px; margin-right: 10px; ">
-                        <el-button type="info" @click="findPersonByID(person_id)" style="width:100px;">Find By ID</el-button>
+                        <el-button type="info" @click="findPerson(person_id)" style="width:100px;">Find By ID</el-button>
                         </div>
                         <el-card v-show="found" class="box-card" style="height:250px; margin-top:20px; width:100%; 
                         justify-content: center;">
@@ -52,12 +41,11 @@
                         <div id="person_info" style="height: 30%; width:100%">
                         <div id="customer" style="text-align: left;font-weight:bold;">Found User: 
                         </div>
-                        <div id="name" style="text-align: left;">{{ found_user.personName }}
+                        <div id="name" style="text-align: left;">{{ found_user.name }}
                         </div>
                         <div id="number" style="text-align: left;"> {{ found_user.phoneNumber }}
                         </div>
-                        <div id="email" style="text-align: left;">Email: {{ found_user.personEmail }}
-                        </div>
+                        
                         </div>
                         </p>   
                         <p  style="text-align: center; width:50%; ">
@@ -69,11 +57,10 @@
                         <el-input clearable type="tel" v-model="new_phone" name="new_phone " 
                          placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required style="width: 60%;"/>   
                          <br><br>
-                         <label for="new_email">Update Email: </label>
-                        <el-input clearable type="text" v-model="new_email" style="align-self: flex-end; width: 60%;"/>
+                         
                          </div>
                          <div id="update-button" style=" margin-top:10px; margin-left: 10px; margin-right: 10px; ">
-                        <el-button type="info" style="width:100px;" @click="updatePerson(found_user.id, new_name, new_phone, new_email)">
+                        <el-button type="info" style="width:100px;" @click="updatePerson(found_user.personID, new_name, new_phone)">
                             Update </el-button>
                         </div>
                         </p>  
@@ -86,26 +73,26 @@
             </div>
                     </el-tab-pane>
                     <el-tab-pane label="View All Users "  style="width: auto;">
-                       <div id="header" style="display:flex; flex-direction: row; font-size: 20px;"> <p style="margin-left:1%;"> ID#</p> <p style="margin-left:21%;">Name</p> <p style="margin-left:19%;">Email</p>
-                         <p style="margin-left:20%;">Phone</p></div>
+                       <div id="header" style="display:flex; flex-direction: row; font-size: 20px;"> <p style="margin-left:1%;"> ID#</p> <p style="margin-left:27%;">Name</p> 
+                         <p style="margin-left:23%;">Phone</p></div>
                         <el-scrollbar height="70vh">
                     <div id="list-item" style="width:100%;text-align: center;font-size:15px;">
                     <p v-for="user in persons" :key="user.id" class="scrollbar-demo-item" style="height:50px;"> 
                    
                         <div id="person_info" style="height: 40%; width:40%; font-size: 20px;">
-                        <div id="name" style="text-align: left;">{{ user.id }}
+                        <div id="person_id" style="text-align: left;">{{ user.personID }}
                         </div> </div>
                     
                     <div id="person_info" style="height: 40%; width:40%; font-size: 20px;">
-                        <div id="name" style="text-align: left;">{{ user.personName }}
+                        <div id="person_name" style="text-align: left;">{{ user.name }}
                         </div> </div>
 
-                        <div id="person_info" style="height: 40%; width:40%; font-size: 20px;">
+                        <!-- <div id="person_info" style="height: 40%; width:40%; font-size: 20px;">
                         <div id="name" style="text-align: left;">{{ user.personEmail }}
-                        </div> </div>
+                        </div> </div> -->
 
                         <div id="person_info" style="height: 40%; width:40%; font-size: 20px;">
-                        <div id="name" style="text-align: left;">{{ user.phoneNumber }}
+                        <div id="person_phone" style="text-align: left;">{{ user.phoneNumber }}
                         </div> </div>
                     
                      </p>
@@ -119,7 +106,7 @@
                     <p v-for="res in reservations" :key="res.id" class="scrollbar-demo-item" style="height:200px;"> 
                     <div id="res_id" style="font-size: large; text-align: left; height: 85%; margin-left: 1%; width:20%; ">
                         <div id="label_id" style="font-weight:bold; font-size: large; text-align: left; margin-left: 1%; width:20%; ">Reservation ID# </div>
-                        <div id=id_no style="font-size:30px; height: 100%" >{{res.id}}</div>
+                        <div id=id_no style="font-size:30px; height: 100%" >{{res.monthlyReservationID}}</div>
                     </div>
                     <div id="person_info" style="height: 30%; width:20%">
                         <div id="customer" style="text-align: left;font-weight:bold;">Customer: 
@@ -140,31 +127,21 @@
                         </div>
                         
                     </div>
-                        <div id="res_floor" style="text-align: left; height: 30%; width:15%;">
-                            <label>Floor </label>
-                            <el-select v-model="res.floor" class="m-1" placeholder="Select" size="large">
+                        <div id="res_floor" style="text-align: left; height: 30%; width:30%;">
+                            <label>Available Parking Spots </label>
+                            <el-select v-model="selectedSpot" class="m-1" placeholder="Select" size="large">
                                 <el-option
-                                v-for="f in floors"
-                                :key="f.value"
-                                :label="f.label"
-                                :value="f.value"
+                                v-for="p in parkingSpots"
+                                :key="p.parkingSpotID"
+                                :label="`ID: ${p.parkingSpotID}, Floor: ${p.floor}, Number: ${p.number},Monthly Reservation: ${p.monthlyReservationDto}`"
+                                :value="{ parkingSpotID:p.parkingSpotID, floor: p.floor, number: p.number, monthlyReservationDto: p.monthlyReservationDto}"
                                 />
                             </el-select>
-                        </div>
-                        <div id="res_spot_no" style="text-align: left; margin-left: 10px; height: 30%; width:15%;"><label>Number </label>
-                            <el-select v-model="res.spotNumber" class="m-2" placeholder="Select" size="large">
-                                <el-option
-                                v-for="p in spots"
-                                :key="p.value"
-                                :label="p.label"
-                                :value="p.value"
-                                />
-                            </el-select>
-                            
                         </div>
                         
+                        
                         <div id="update-button" style="margin-bottom:100px; margin-left: 10px; margin-right: 10px; ">
-                        <el-button type="info" @click="updateReservation(res.id, res.floor, res.spotNumber)">Update Info</el-button>
+                        <el-button type="info" @click="updateReservation(res.monthlyReservationID, selectedSpot)">Update Info</el-button>
                         </div>
                         
     

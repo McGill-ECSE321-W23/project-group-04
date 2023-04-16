@@ -1,44 +1,24 @@
-import $ from 'jquery'
-import { ref } from 'vue'
+import {ref} from 'vue'
+import axios from 'axios'
 
-function ReservationDto (phoneNumber, personName, licensePlate, carMake, carModel, 
-  floor, spotNumber, startDate, endDate) {
- this.phoneNumber = phoneNumber
- this.personName = personName
- this.licensePlate = licensePlate
- this.carMake = carMake
- this.carModel = carModel
- this.floor = floor
- this.spotNumber = spotNumber
- this.startDate = startDate
- this.endDate = endDate
-}
-function OfferedServiceDto (phoneNumber, personName, licensePlate, carMake, carModel, 
-  service, garage, timeSlot, startDate) {
- this.phoneNumber = phoneNumber
- this.personName = personName
- this.licensePlate = licensePlate
- this.carMake = carMake
- this.carModel = carModel
- this.service = service
- this.garage = garage
- this.timeSlot = timeSlot
- this.startDate = startDate
-}
   
 export default {
     name: "BookReservation",
-    components: {
-    },
+   
     data () {
         return {
+          oldSpot:[],
+          newRes:[],
           tabPosition: ref('top'),
-
+          service_id: ref(''),
           reservations: [],
-          newReservation: '',
+          selectedDateRange: [],
+          parkingSpots: [],
           errorReservation: '',
-
-          offeredServices: [],
+          errorCars: '',
+          errorAppointment: '',
+          errorGarage: '',
+          appointments: [],
           newService: '',
           errorService: '',
 
@@ -51,127 +31,250 @@ export default {
           value1: ref(''),
           value2: ref(''),
           value3: ref(new Date()),
+
           value4: ref(''),
           size: ref<'default' | 'large' | 'small'>('default'),
-          floors: [
-            {
-                value: '-1',
-                label: 'B1',
-              },
-            {
-              value: '1',
-              label: 'First',
-            },
-            {
-              value: '2',
-              label: 'Second',
-            },
-            {
-              value: '3',
-              label: 'Third',
-            },
-          ],
-          spots: [
-            {
-                value: '10',
-                label: '10',
-              },
-            {
-              value: '12',
-              label: '12',
-            },
-            {
-              value: '14',
-              label: '14',
-            },
-            {
-              value: '16',
-              label: '16',
-            },
-            {
-                value: '18',
-                label: '18',
-            },
-          ],
-          garages: [
-            {
-                value: '1',
-                label: 'Garage 1',
-              },
-            {
-              value: '2',
-              label: 'Garage 2',
-            },
-            {
-              value: '3',
-              label: 'Garage 3',
-            },
-            {
-              value: '4',
-              label: 'Garage 4',
-            },
-            
-          ],
           
-          services: [
-            {
-              value: '1',
-              label: 'Oil Change',
-            },
-            {
-              value: '2',
-              label: 'Tire Rotation and Balancing',
-            },
-            {
-              value: '3',
-              label: 'Brake Inspection and Service',
-            },
-            {
-              value: '4',
-              label: 'Battery Inspection and Replacement',
-            },
-            {
-              value: '5',
-              label: 'Wheel Slignment',
-            },
-            {
-              value: '6',
-              label: 'Air Conditioning Service',
-            },
-          ]
+          garages: [],
+          services: [],
+          aptTime: '',
+          aptDate: '',
+          cars: [],
+
+          AXIOS: axios.create({
+            baseURL: 'http://localhost:8080/',
+            headers: {'Access-Control-Allow-Origin': 'http://localhost:5173'},
+            withCredentials: true
+        })
+    }
+},
+      setup() {
+        function MonthlyReservationDto (startDate, endDate, personId) {
+         this.startDate = startDate
+         this.endDate = endDate
+         this.personId = personId
+        }
+        function ServiceAppointmentDto (id, phoneNumber, personName, licensePlate, carMake, carModel, 
+          service, garage, timeSlot, startDate, appointmentStatus) {
+            this.id = id;
+         this.phoneNumber = phoneNumber
+         this.personName = personName
+         this.licensePlate = licensePlate
+         this.carMake = carMake
+         this.carModel = carModel
+         this.service = service
+         this.garage = garage
+         this.timeSlot = timeSlot
+         this.startDate = startDate
+         this.appointmentStatus = appointmentStatus
         }
       },
       created: function () {
-        // Test data
-        // const r1 = new ReservationDto('1111','123-456-7890','John Doe', 'abc@gmail.com','CRA-123','ABC-123', '1', '12')
-        // const r2 = new ReservationDto('1211','000-000-0000','Jane Doe','N/A', 'ABT-345', 'ABC-123', 'B1','10')
-        // const r3 = new ReservationDto('1311','100-000-0000','Mary Doe','N/A', 'ASR-565','ABC-123', '2','14')
-        // const r4 = new ReservationDto('1411','200-000-0000','Tom Doe','N/A', 'LSL-335','ABC-123', '3','16')
-        // const r5 = new ReservationDto('1511','300-000-0000','Paul Doe','N/A', 'MOV-348','ABC-123', 'B1','10')
-        // this.reservations = [r1, r2, r3, r4, r5]
+        
+        // // Test data
+        
+        // Initializing persons from backend
+      this.AXIOS.get('http://localhost:8080/api/monthlyReservation/allReservations', {}, {
+        withCredentials: true,
+        headers: {
+            "Access-Control-Allow-Origin": 'localhost:8080',
+        },
+        params: {
+        }
+    })
+    .then(response => {
+      console.log(response)
+      console.log(personID)
+      console.log(selectedDateRange)
+      // JSON responses are automatically parsed.
+      this.reservations = response.data
+     
+    })
+    .catch(e => {
+      this.errorReservation = e
+    })
+    this.AXIOS.get('http://localhost:8080/api/appointments/get/all', {}, {
+        withCredentials: true,
+        headers: {
+            "Access-Control-Allow-Origin": 'localhost:8080',
+        },
+        params: {
+        }
+    })
+    .then(response => {
+      console.log(response)
+      // JSON responses are automatically parsed.
+      //this.persons.push({id: 1, name: 'Jim', phoneNumber: '555-1234'});
+      this.appointments = response.data
+     
+    })
+    .catch(e => {
+      this.errorAppointments = e
+    })
+    // Initializing persons from backend
+    this.AXIOS.get('http://localhost:8080/api/parkingSpot/getAll', {}, {
+      withCredentials: true,
+      headers: {
+          "Access-Control-Allow-Origin": 'localhost:8080',
+      },
+      params: {
+      }
+  })
+  .then(response => {
+    console.log(response)
+    // JSON responses are automatically parsed.
+    //this.persons.push({id: 1, name: 'Jim', phoneNumber: '555-1234'});
+    this.parkingSpots = response.data
+   
+  })
+  .catch(e => {
+    this.errorParkingSpot = e
+  })
+  this.AXIOS.get('http://localhost:8080/api/garages/get', {}, {
+        withCredentials: true,
+        headers: {
+            "Access-Control-Allow-Origin": 'localhost:8080',
+        },
+        params: {
+        }
+    })
+    .then(response => {
+      console.log(response)
+      // JSON responses are automatically parsed.
+      //this.persons.push({id: 1, name: 'Jim', phoneNumber: '555-1234'});
+      this.garages = response.data
+     
+    })
+    .catch(e => {
+      this.errorGarage = e
+    }), 
+    this.AXIOS.get('http://localhost:8080/api/offeredServices/get', {}, {
+        withCredentials: true,
+        headers: {
+            "Access-Control-Allow-Origin": 'localhost:8080',
+        },
+        params: {
+        }
+    })
+    .then(response => {
+      console.log(response)
+      // JSON responses are automatically parsed.
+      //this.persons.push({id: 1, name: 'Jim', phoneNumber: '555-1234'});
+      this.services = response.data
+     
+    })
+    .catch(e => {
+      this.errorService = e
+    })
+    this.AXIOS.get('http://localhost:8080/api/cars/getAll', {}, {
+      withCredentials: true,
+      headers: {
+          "Access-Control-Allow-Origin": 'localhost:8080',
+      },
+      params: {
+      }
+  })
+  .then(response => {
+    console.log(response)
+    // JSON responses are automatically parsed.
+    //this.persons.push({id: 1, name: 'Jim', phoneNumber: '555-1234'});
+    this.cars = response.data
+   
+  })
+  .catch(e => {
+    this.errorCar = e
+  })
+
 
       },
    
     methods: {
-        createReservation: function (phoneNumber, personName, licensePlate, carMake, carModel, 
-          floor, spotNumber, startDate, endDate) {
-            // Create a new person and add it to the list of people
-            var r = new ReservationDto(phoneNumber, personName, licensePlate, carMake, carModel, 
-              floor, spotNumber, startDate, endDate)
-            this.reservations.push(r)
-            // Reset the name field for new people
-            this.newReservation = ''
+        createReservation: function (selectedDateRange, person_id, selectedSpot) {
+        const [startDate, endDate] = selectedDateRange;
+        this.AXIOS.post('http://localhost:8080/api/monthlyReservation/create', {}, {
+          withCredentials: true,
+          headers: {
+              "Access-Control-Allow-Origin": 'localhost:8080',
           },
-        
-          createOfferedService: function (phoneNumber, personName, licensePlate, carMake, carModel, 
-            service, garage, timeSlot, startDate) {
+          params: {
+          startDate: startDate.toISOString().substr(0, 10), // convert to ISO format
+          endDate: endDate.toISOString().substr(0, 10), // convert to ISO format
+          personId: person_id
+          }
+      })
+      .then(response => {
+        console.log(response)
+        // JSON responses are automatically parsed.
+        this.reservations.push(response.data)
+        newRes = response.data
+        this.errorReservation = ''
+        //this.newPerson = ''
+        this.AXIOS.put('http://localhost:8080/api/parkingSpot/attachReservation', {}, {
+          withCredentials: true,
+          headers: {
+              "Access-Control-Allow-Origin": 'localhost:8080',
+          },
+          params: {
+          parkingSpotID: selectedSpot.parkingSpotID,
+          reservationId: newRes.reservationId
+          }
+      })
+      .catch(e => {
+        console.log("Hello world")
+            var errorMsg = e.response.data.message
+            console.log(errorMsg)
+            this.errorReservation = errorMsg
+      })
+      
+      .then(response => {
+        //console.log(response)
+        console.log(response)
+      })
+       
+      })
+     
+      .catch(e => {
+        console.log("Hello world")
+            var errorMsg = e.response.data.message
+            console.log(errorMsg)
+            this.errorReservation = errorMsg
+      })
+    },
+
+          createServiceAppointment: function (license_plate, selectedGarage, selectedService, aptTime, aptDate) {
             
-              var s = new OfferedServiceDto(phoneNumber, personName, licensePlate, carMake, carModel, 
-                floor, spotNumber, startDate, endDate)
-              this.offeredServices.push(s)
-              // Reset the name field for new people
-              this.newService = ''
-          },
-      }
-    
-}
+            for (let i = 0; i < this.cars.length; i++) {
+                   if (this.cars[i].licensePlate == license_plate) {
+                    appointmentCar = cars[i]
+                    break}}
+             const carDTo = {
+              carID: appointmentCar.carID,
+              licensePlate: appointmentCar.licensePlate,
+              make: appointmentCar.make,
+              model:appointmentCar.model,
+              owner: appointmentCar.owner
+            }
+           
+
+              this.AXIOS.post('http://localhost:8080/api/appointments/create', selectedGarage, selectedService, carDto, {
+                withCredentials: true,
+                headers: {
+                    "Access-Control-Allow-Origin": 'localhost:8080',
+                },
+                params: {
+                }
+            })
+            .then(response => {
+              console.log('Hello world')
+              console.log(response)
+              // JSON responses are automatically parsed.
+               this.appointments.push(response)
+               this.errorAppointment = ''
+             
+            })
+            .catch(e => {
+                  var errorMsg = e.response.data.message
+                  console.log(errorMsg)
+                  this.errorAppointment = errorMsg
+            })
+            }}}

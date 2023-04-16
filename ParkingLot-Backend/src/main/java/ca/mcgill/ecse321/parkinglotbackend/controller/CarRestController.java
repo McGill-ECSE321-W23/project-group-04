@@ -1,23 +1,17 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import ca.mcgill.ecse321.parkinglotbackend.dto.CarDto;
 import ca.mcgill.ecse321.parkinglotbackend.dto.PersonDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.service.CarService;
 import ca.mcgill.ecse321.parkinglotbackend.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -35,8 +29,8 @@ public class CarRestController {
      * @author anniegouchee
      */
     @GetMapping(value = { "/getAll", "/getAll/" })
-    public List<CarDto> getAllCars() {
-        return service.getAllCars().stream().map(c -> convertToDto(c)).collect(Collectors.toList());
+    public ResponseEntity<?> getAllCars() {
+        return ResponseEntity.ok().body(service.getAllCars().stream().map(c -> convertToDto(c)).collect(Collectors.toList()));
     }
 
     /**
@@ -45,13 +39,17 @@ public class CarRestController {
      * 
      * @param licensePlate License plate of the car
      * @return Car that has the given license plate
-     * @throws Exception No car for the given license plate exists
      * @author anniegouchee
      */
-    @GetMapping(value = { "/get/{licensePlate}", "/get/{licensePlate}/" })
-    public CarDto getCarByLicensePlate(@PathVariable("licensePlate") String licensePlate) throws Exception{
-        Car c = service.getCarByLicensePlate(licensePlate);
-        return convertToDto(c);
+    @GetMapping(value = { "/getByLicensePlate/{licensePlate}", "/getByLicensePlate/{licensePlate}/" })
+    public ResponseEntity<?> getCarByLicensePlate(@PathVariable("licensePlate") String licensePlate) {
+
+        try {
+            return ResponseEntity.ok().body(convertToDto(service.getCarByLicensePlate(licensePlate)));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
 
@@ -60,13 +58,17 @@ public class CarRestController {
      * 
      * @param id ID of a car
      * @return Car with the given ID
-     * @throws Exception No car found under a given ID
      * @author anniegouchee
      */
     @GetMapping(value = { "/get/{id}", "/get/{id}/" })
-    public CarDto getCarByID(@PathVariable("id") Long id) throws Exception{
-        Car c = service.getCarByID(id);
-        return convertToDto(c);
+    public ResponseEntity<?> getCarByID(@PathVariable("id") Long id) {
+        Car c;
+        try {
+            c = service.getCarByID(id);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().body(convertToDto(c));
     }
 
     /**
@@ -74,12 +76,17 @@ public class CarRestController {
      * 
      * @param id ID of the owner of the car
      * @return List of cars assciated to a person with the given person ID
-     * @throws Exception No person exists with given person ID
      * @author anniegouchee
      */
-    @GetMapping(value = { "/get/ByOwner/{id}", "/get/ByOwner/{id}/" })
-    public List<CarDto> getCarsByOwner(@PathVariable("id")Long id) throws Exception{
-        return service.findCarByOwnerID(id).stream().map(c -> convertToDto(c)).collect(Collectors.toList());
+    @GetMapping(value = { "/getByPersonID/{id}", "/getByPersonID/{id}/" })
+    public ResponseEntity<?> getCarsByOwner(@PathVariable("id")Long id) {
+
+        try {
+            return ResponseEntity.ok().body(service.findCarByOwnerID(id).stream().map(c -> convertToDto(c)).collect(Collectors.toList()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     /**
@@ -90,18 +97,34 @@ public class CarRestController {
      * @param model Model of the car to be registered
      * @param person Owner of the car to be registered
      * @return Car that was registered successfully
-     * @throws Exception Invalis inputs resulting in the car not being able to be registered successfully
      * @author anniegouchee
      */
-    @PostMapping(value = {"/register", "/register/"})
-    public CarDto registerCar(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person) throws Exception{
+    @PostMapping(value = {"/register/{licensePlate}", "/register/{licensePlate}/"})
+    public ResponseEntity<?> registerCar(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person) {
 
         //Gets the owener of the car
-       Person p = personService.getPersonByID(person.getPersonID());
+        Person p;
+        try {
+            p = personService.getPersonByID(person.getPersonID());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
-       //Registers car with given information
-       Car c = service.registerCar(p, licensePlate, make, model);
-       return convertToDto(c);
+        //Registers car with given information
+        Car c = service.registerCar(p, licensePlate, make, model);
+        return ResponseEntity.ok().body(convertToDto(c));
+
+    }
+
+    @PostMapping(value = {"/reg", "/reg/"})
+    public CarDto registerCarWithBody(@RequestParam String licensePlate, @RequestParam String make, @RequestParam String model, @RequestBody PersonDto person) throws Exception{
+
+        //Gets the owener of the car
+        Person p = personService.getPersonByID(person.getPersonID());
+
+        //Registers car with given information
+        Car c = service.registerCar(p, licensePlate, make, model);
+        return convertToDto(c);
 
     }
 
@@ -114,13 +137,18 @@ public class CarRestController {
      * @param model Model of the updated car
      * @param person Owner of the updated car
      * @return Car with updated information
-     * @throws Exception Invalid inputs resulting in the car not being able to be updates successfully
      * @author anniegouchee
      */
     @PutMapping(value = {"/update/{id}", "/update/{id}/"})
-    public CarDto updateCar(@PathVariable("id") Long id, String licensePlate, String make, String model, PersonDto person) throws Exception{
-        Car car = service.updateCar(id, licensePlate, make, model, convertToDomainObject(person));
-        return convertToDto(car);
+    public ResponseEntity<?> updateCar(@PathVariable("id") Long id, String licensePlate, String make, String model, PersonDto person) {
+        Car car;
+        try {
+            car = service.updateCar(id, licensePlate, make, model, convertToDomainObject(person));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return ResponseEntity.ok().body(convertToDto(car));
     }
 
     /**
@@ -132,9 +160,9 @@ public class CarRestController {
      * @author anniegouchee
      */
     @DeleteMapping(value = {"/delete/{id}", "/delete/{id}/"})
-    public CarDto deleteCar(@PathVariable("id") Long id) throws Exception{
+    public ResponseEntity<?> deleteCar(@PathVariable("id") Long id) throws Exception{
         Car car = service.deleteCar(id);
-        return convertToDto(car);
+        return ResponseEntity.ok().body(convertToDto(car));
     }
 
     /**

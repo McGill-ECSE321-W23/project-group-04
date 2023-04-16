@@ -1,21 +1,16 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.dto.ParkingLotSoftwareSystemDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import ca.mcgill.ecse321.parkinglotbackend.service.ParkingLotSoftwareSystemService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +36,21 @@ public class ParkingLotSoftwareSystemRestController {
         // Everyone can get system
         try {
             return ResponseEntity.ok(convertToDto(parkingLotSoftwareSystemService.getParkingLotSoftwareSystem(parkingLotSoftwareSystemID)));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /**
+     * Get all systems
+     * @param request - Who is trying to access this method. There is no limitation on who is able to get the system
+     * @return Error message or the parking lot system
+     */
+    @GetMapping("/getall")
+    public ResponseEntity<?> getAllParkingLotSoftwareSystems(HttpServletRequest request) {
+        // Everyone can get system
+        try {
+            return ResponseEntity.ok(parkingLotSoftwareSystemService.getAllParkingLotSoftwareSystem().stream().map(g -> convertToDto(g)).collect(Collectors.toList()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

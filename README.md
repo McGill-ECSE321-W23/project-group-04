@@ -26,6 +26,8 @@ The application will improve the overall experience for customers, employees and
   - username: postgres
   - password: 123
 * Java 17
+* Node.js v10.21.0 (or higher)
+* Npm 6.14.4 (or higher)
 
 ### Setup Database
 1. Open command line
@@ -33,24 +35,33 @@ The application will improve the overall experience for customers, employees and
 3. Create database: `create database parkinglotdb;`
 4. Quit: `\q`
 
-### Build and Start Application on Local Machine
+### Build and Start Application Bakcend on Local Machine
 1. Build grade: `./gradlew build`
 2. Run application:
   - via Gradle: `./gradlew bootRun`
   - via an IDE: run the application from `/ParkingLot-Backend/src/main/java/ca/mcgill/ecse321/parkinglotbackend/ParkingLotBackendApplication.java`
  3. Application should be started on `localhost:8080`
 
+### Build and Start Application Frontend on Local Machine
+0. Backend should be started first
+1. Open a command prompt in the root folder and run `cd ParkingLot-Frontend`
+2. Install node modules with `npm install`
+3. Start the Vite server with `npm run dev`*
+4. The frontend server should be started on `localhost:5173`
+
+\* Note that this runs a development server, a production version should be built using `npm run build` and then ran using a webserver module such as `serve`
+
 ## Sprint Summary
 
 ### Contributions
 | Team Member       | Sprint 1  | Sprint 2  | Sprint 3 |
 | ----------------- | ----------- | ------ | -- |
-| Faiza Chowdhury   |   26     | 27 | |
-| Annie Gouchee     |   26   | 28 | |
-| Lin Wei Li        |    32   | 32 | |
-| Estefania Vazquez | 28     | 29 | |
-| Qin Xuan Xu       |  27   | 22 | |
-| Edwin You Zhou    | 30   | 24 | |
+| Faiza Chowdhury   |   26     | 27 | 44 |
+| Annie Gouchee     |   26   | 28 | 49 |
+| Lin Wei Li        |    32   | 32 | 55 |
+| Estefania Vazquez | 28     | 29 | 45 |
+| Qin Xuan Xu       |  27   | 22 | 43 |
+| Edwin You Zhou    | 30   | 24 | 44 |
 
 ### Sprint 1
 [Sprint 1: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Overview)
