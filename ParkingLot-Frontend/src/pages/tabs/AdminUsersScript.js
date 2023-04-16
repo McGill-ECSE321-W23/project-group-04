@@ -248,40 +248,47 @@ export default {
       },
      
   updateReservation: function (resID, selectedSpot) {
-      if (selectedSpot.monthlyReservationDto == null) {
-        selectedSpot.monthlyReservationDto = {startDate: 'N/A', endDate: 'N/A', personId: 'N/A'}
-      }
-      const selectedSpotDto ={
-      parkingSpotID : selectedSpot.parkingSpotID,
-      floor: selectedSpot.floor,
-      number: selectedSpot.number,
-      monthlyReservationDto: selectedSpot.monthlyReservationDto // or set this to a valid MonthlyReservationDto object if needed
-    };
-        this.AXIOS.put('http://localhost:8080/api/monthlyReservation/updateLocation', selectedSpotDto, {
+    //   if (selectedSpot.monthlyReservationDto == null) {
+    //     selectedSpot.monthlyReservationDto = {startDate: 'N/A', endDate: 'N/A', personId: 'N/A'}
+    //   }
+    //   const selectedSpotDto ={
+    //   parkingSpotID : selectedSpot.parkingSpotID,
+    //   floor: selectedSpot.floor,
+    //   number: selectedSpot.number,
+    //   monthlyReservationDto: selectedSpot.monthlyReservationDto // or set this to a valid MonthlyReservationDto object if needed
+    // };
+    this.AXIOS.get('http://localhost:8080/api/parkingSpot/getByResId', {}, {
           withCredentials: true,
           headers: {
               "Access-Control-Allow-Origin": 'localhost:8080',
           },
           params: {
-            reservationIdToUpdate: resID,
+            reservationId: resID,
           }
       })
       .then(response => {
-        console.log('Hello world')
+        oldSpot = response.data
         console.log(response)
-        // JSON responses are automatically parsed.
-         for (let i = 0; i < this.parkingSpots.length; i++) {
-                   let temp = this.parkingSpots[i].monthlyReservationDto
-                   if (temp.monthlyReservationID == resID) {
-                    this.parkingSpots[i].monthlyReservationDto = null
-                    break
-                 }
-                }
-                 for (let j = 0; j < this.parkingSpots.length; j++) {
-                  if (this.parkingSpots[j].parkingSpotID == selectedSpot.parkingSpotID) {
-                    this.parkingSpots[j].monthlyReservationDto = selectedSpotDto
-                    break
-                 }}
+      })
+      .catch(e => {
+            var errorMsg = e.response.data.message
+            console.log(errorMsg)
+            this.errorReservation = errorMsg
+      })
+      this.AXIOS.put('http://localhost:8080/api/parkingSpot/attachReservation', {}, {
+          withCredentials: true,
+          headers: {
+              "Access-Control-Allow-Origin": 'localhost:8080',
+          },
+          params: {
+            reservationId: resID,
+            parkingSpotID: selectedSpot.parkingSpotID,
+          }
+      })
+      .then(response => {
+        // oldSpot = response.data
+        console.log(response)
+       
        
       })
       .catch(e => {
@@ -289,5 +296,43 @@ export default {
             console.log(errorMsg)
             this.errorReservation = errorMsg
       })
-      },
+      
+      this.AXIOS.put('http://localhost:8080/api/parkingSpot/unbind', {}, {
+          withCredentials: true,
+          headers: {
+              "Access-Control-Allow-Origin": 'localhost:8080',
+          },
+          params: {
+            
+            parkingSpotID: oldSpot.parkingSpotID,
+          }
+      })
+      .then(response => {
+        console.log(response)
+        for (let i=0; i<this.reservations.length; i++) {
+          if (reservations[i].reservationId == resID) {
+            found_res = reservations[i]
+          }
+        }
+
+        for (let i=0; i<this.parkingSpots.length; i++) {
+          if (parkingSpots[i].parkingSpotID == oldSpot.parkingSpotID) {
+            parkingSpots[i].monthlyReservationDto = null
+          }
+          if (parkingSpots[i].parkingSpotID == selectedSpot.parkingSpotID) {
+            parkingSpots[i].monthlyReservationDto = found_res
+          }
+          
+        }
+       
+      })
+      .catch(e => {
+            var errorMsg = e.response.data.message
+            console.log(errorMsg)
+            this.errorReservation = errorMsg
+      })
+      }
+ 
+    
+      
 }}

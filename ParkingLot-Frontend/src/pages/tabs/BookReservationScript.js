@@ -7,7 +7,8 @@ export default {
    
     data () {
         return {
-          
+          oldSpot:[],
+          newRes:[],
           tabPosition: ref('top'),
           service_id: ref(''),
           reservations: [],
@@ -188,9 +189,8 @@ export default {
       },
    
     methods: {
-        
-        createReservation: function (selectedDateRange, person_id) {
-          const [startDate, endDate] = selectedDateRange;
+        createReservation: function (selectedDateRange, person_id, selectedSpot) {
+        const [startDate, endDate] = selectedDateRange;
         this.AXIOS.post('http://localhost:8080/api/monthlyReservation/create', {}, {
           withCredentials: true,
           headers: {
@@ -201,25 +201,45 @@ export default {
           endDate: endDate.toISOString().substr(0, 10), // convert to ISO format
           personId: person_id
           }
-
-
       })
       .then(response => {
-        //console.log(response)
-        
         console.log(response)
         // JSON responses are automatically parsed.
         this.reservations.push(response.data)
+        newRes = response.data
         this.errorReservation = ''
         //this.newPerson = ''
-       
+        this.AXIOS.put('http://localhost:8080/api/parkingSpot/attachReservation', {}, {
+          withCredentials: true,
+          headers: {
+              "Access-Control-Allow-Origin": 'localhost:8080',
+          },
+          params: {
+          parkingSpotID: selectedSpot.parkingSpotID,
+          reservationId: newRes.reservationId
+          }
       })
       .catch(e => {
         console.log("Hello world")
             var errorMsg = e.response.data.message
             console.log(errorMsg)
             this.errorReservation = errorMsg
-      })},
+      })
+      
+      .then(response => {
+        //console.log(response)
+        console.log(response)
+      })
+       
+      })
+     
+      .catch(e => {
+        console.log("Hello world")
+            var errorMsg = e.response.data.message
+            console.log(errorMsg)
+            this.errorReservation = errorMsg
+      })
+    },
 
           createServiceAppointment: function (license_plate, selectedGarage, selectedService, aptTime, aptDate) {
             

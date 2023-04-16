@@ -3,8 +3,10 @@ package ca.mcgill.ecse321.parkinglotbackend.controller;
 
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.dto.ParkingSpotDto;
+import ca.mcgill.ecse321.parkinglotbackend.model.MonthlyReservation;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingSpot;
 import ca.mcgill.ecse321.parkinglotbackend.service.ParkingSpotService;
+import ca.mcgill.ecse321.parkinglotbackend.service.MonthlyReservationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ public class ParkingSpotRestController {
 
      @Autowired
      private ParkingSpotService parkingSpotService;
+    private MonthlyReservationService monthlyReservationService;
 
     /**
      * Create a parking spot
@@ -180,6 +183,78 @@ public class ParkingSpotRestController {
              return ResponseEntity.badRequest().body(e.getMessage());
          }
      }
+     /**
+     * Return the PS linked to a reservation
+     * @param request - anyone can call this method
+     * @param reservationId - monthly res ID 
+     * @return found spot
+     * @author faizachowdhury
+     */
+    @GetMapping("/getByResId")
+    public ResponseEntity<?> getParkingSpotByReservationId(HttpServletRequest request, @RequestParam long reservationId) {
+        ParkingSpotDto parkingSpotDto = null;
+        try {
+            ParkingSpot parkingSpot = parkingSpotService.getParkingSpotByReservationId(reservationId);
+            List <ParkingSpot> parkingSpots = parkingSpotService.findAllParkingSpots();
+            for (ParkingSpot p: parkingSpots){
+                if (p.getParkingSpotID() == parkingSpot.getParkingSpotID()) {
+                long id = p.getParkingSpotID();
+                int floor = p.getFloor();
+                int number = p.getNumber();
+                parkingSpotDto = new ParkingSpotDto(id, floor, number);
+                break;
+            }
+                if (parkingSpotDto == null) {
+                    return ResponseEntity.notFound().build();
+                }
+            
+        }
+        return ResponseEntity.ok().body(parkingSpotDto);
+     } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    /**
+     * Return the PS linked to a reservation
+     * @param request - anyone can call this method
+     * @param reservationId - monthly res ID 
+     * @return found spot
+     * @author faizachowdhury
+     */
+    @PutMapping("/attachReservation")
+    public ResponseEntity<?> attachReservation(HttpServletRequest request, @RequestParam long reservationId, @RequestParam long parkingSpotId) {
+        
+        try {
+            MonthlyReservation monthlyReservation = monthlyReservationService.getReservationById(reservationId).get();
+            parkingSpotService.attachReservation(parkingSpotId, monthlyReservation);
+            
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+
+    }
+    /**
+     * Return the PS linked to a reservation
+     * @param request - anyone can call this method
+     * @param reservationId - monthly res ID 
+     * @return found spot
+     * @author faizachowdhury
+     */
+    @PutMapping("/unbind")
+    public ResponseEntity<?> unbind(HttpServletRequest request, @RequestParam long parkingSpotId) {
+        
+        try {
+            parkingSpotService.unbind(parkingSpotId);
+
+            
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+
+    }
+
 
 
 }

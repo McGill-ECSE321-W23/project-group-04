@@ -65,7 +65,7 @@
       
   </div>
   <div id="book-button" style ="width:100%;margin-top: 100px;">
-  <el-button type="info" @click="createReservation(selectedDateRange, person_id)" plain style="margin-top:20px; width: 50%; display: block;margin: 0 auto; margin-top: 20px;">Book</el-button>
+  <el-button type="info" @click="createReservation(selectedDateRange, person_id, selectedSpot)" plain style="margin-top:20px; width: 50%; display: block;margin: 0 auto; margin-top: 20px;">Book</el-button>
   </div>
       </el-tab-pane>
      
