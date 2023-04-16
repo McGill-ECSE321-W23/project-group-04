@@ -99,7 +99,7 @@ public class CarRestController {
      * @return Car that was registered successfully
      * @author anniegouchee
      */
-    @PostMapping(value = {"/register", "/register/"})
+    @PostMapping(value = {"/register/{licensePlate}", "/register/{licensePlate}/"})
     public ResponseEntity<?> registerCar(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person) {
 
         //Gets the owener of the car
