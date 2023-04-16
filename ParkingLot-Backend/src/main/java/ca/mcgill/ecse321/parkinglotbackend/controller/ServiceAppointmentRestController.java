@@ -45,7 +45,7 @@ public class ServiceAppointmentRestController {
     /**
      * RESTful API that gets the appointment of a given ID
      * 
-     * @return Appointment witht he given ID
+     * @return Appointment with the given ID
      * @throws Exception No appointment exists with given ID
      * @author anniegouchee
      */
@@ -107,7 +107,7 @@ public class ServiceAppointmentRestController {
     }
 
     /**
-     * RESTful API that create a servuce appointment
+     * RESTful API that create a service appointment
      * @param garageID Garage associated with service appointment
      * @param serviceID Service of the service appoointment
      * @param carID Car of the service appointment
@@ -305,7 +305,7 @@ public class ServiceAppointmentRestController {
     }
 
     /**
-     * Helper method that converts Car to fomain object
+     * Helper method that converts Car to domain object
      * @param cDto Car DTO to bo converted
      * @return Car domain object
      * @author anniegouchee
