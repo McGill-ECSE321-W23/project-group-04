@@ -29,6 +29,11 @@ export default {
             index: 'home',
             bodyID: 'page_home'
         });
+        this.tabs.push({
+            title: 'SERVICES',
+            index: 'services',
+            bodyID: 'page_services'
+        });
 
         // Check if the user is logged in
         api.get('api/auth/isLoggedIn')
@@ -44,11 +49,7 @@ export default {
                             console.log(err);
                         })
                         .finally(() => {
-                            this.tabs.push({
-                                title: 'SERVICES',
-                                index: 'services',
-                                bodyID: 'page_services'
-                            });
+
                             this.tabs.push({
                                 title: 'MY PROFILE',
                                 index: 'profile',
