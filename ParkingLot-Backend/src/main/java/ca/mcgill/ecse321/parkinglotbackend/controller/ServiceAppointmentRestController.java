@@ -8,7 +8,10 @@ import ca.mcgill.ecse321.parkinglotbackend.service.CarService;
 import ca.mcgill.ecse321.parkinglotbackend.service.GarageService;
 import ca.mcgill.ecse321.parkinglotbackend.service.OfferedServiceService;
 import ca.mcgill.ecse321.parkinglotbackend.service.ServiceAppointmentService;
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -16,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/appointments")
+@RequestMapping("/api/appointment")
 public class ServiceAppointmentRestController {
 
     @Autowired
@@ -34,9 +37,9 @@ public class ServiceAppointmentRestController {
      * @return List of all service appointments
      * @author anniegouchee
      */
-    @GetMapping(value = { "/get/all", "/get/all/" })
-    public List<ServiceAppointmentDto> getAllAppointments() {
-        return service.getAllAppointments().stream().map(a -> convertToDto(a)).collect(Collectors.toList());
+    @GetMapping(value = { "/get", "/get/" })
+    public ResponseEntity<?> getAllAppointments(HttpServletRequest request) {
+        return ResponseEntity.ok().body(service.getAllAppointments().stream().map(a -> convertToDto(a)).collect(Collectors.toList()));
     }
 
     /**
@@ -47,8 +50,17 @@ public class ServiceAppointmentRestController {
      * @author anniegouchee
      */
     @GetMapping(value = {"/get/{id}", "/get/{id}/"})
-    public ServiceAppointmentDto getAppointmentById(@PathVariable("id") Long id) throws Exception{
-        return convertToDto(service.findAppointmentByID(id));
+    public ResponseEntity<?> getAppointmentById(HttpServletRequest request, @PathVariable("id") Long id) {
+
+        ServiceAppointment appointment;
+
+        try {
+            appointment = service.findAppointmentByID(id);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return ResponseEntity.ok().body(convertToDto(appointment));
     }
 
     /**
@@ -58,9 +70,18 @@ public class ServiceAppointmentRestController {
      * @throws Exception No car associated with the license plate
      * @author anniegouchee
      */
-    @GetMapping(value = {"/get/{id}", "/appointment/{id}/"})
-    public List<ServiceAppointmentDto> getAppointmentByCarID(@PathVariable("id") Long id) throws Exception{
-        return service.getAppointmentsByCarID(id).stream().map(c -> convertToDto(c)).collect(Collectors.toList());
+    @GetMapping(value = {"/getByCar/{id}", "/getByCar/{id}/"})
+    public ResponseEntity<?> getAppointmentByCarID(HttpServletRequest request, @PathVariable("id") Long id) {
+
+        List<ServiceAppointment> appointments;
+
+        try {
+            appointments = service.getAppointmentsByCarID(id);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return ResponseEntity.ok().body(appointments.stream().map(c -> convertToDto(c)).collect(Collectors.toList()));
     }
 
     /**
@@ -70,23 +91,47 @@ public class ServiceAppointmentRestController {
      * @throws Exception No service associated with the given servic ID
      * @author anniegouchee
      */
-    @GetMapping(value = {"/get/byServiceID/{serviceID}", "/get/byServiceID/{serviceID}/"})
-    public List<ServiceAppointmentDto> getAppointmentByServiceID(@PathVariable("serviceID") Long serviceID) throws Exception{
-        return service.getAppointmentsByServiceID(serviceID).stream().map(c -> convertToDto(c)).collect(Collectors.toList());
+    @GetMapping(value = {"/getByService/{serviceID}", "/getByService/{serviceID}/"})
+    public ResponseEntity<?> getAppointmentByServiceID(HttpServletRequest request, @PathVariable("serviceID") Long serviceID) throws Exception{
+        
+        List<ServiceAppointment> appointments;
+
+        try {
+            appointments = service.getAppointmentsByServiceID(serviceID);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return ResponseEntity.ok().body(appointments.stream().map(c -> convertToDto(c)).collect(Collectors.toList()));
+
     }
 
     /**
      * RESTful API that create a servuce appointment
-     * @param garage Garage associated with service appointment
-     * @param offeredService Service of the service appoointment
-     * @param car Car of the service appointment
+     * @param garageID Garage associated with service appointment
+     * @param serviceID Service of the service appoointment
+     * @param carID Car of the service appointment
      * @return Service appointment with the given parameters
      * @author anniegouchee
      */
     @PostMapping(value = {"/create", "/create/"})
-    public ServiceAppointmentDto createAppointment(GarageDto garage, OfferedServiceDto offeredService, CarDto car) {
-        ServiceAppointment appointment = service.createAppointment(convertToDomainObject(garage), convertToDomainObject(offeredService),convertToDomainObject(car));
-        return convertToDto(appointment);
+    public ResponseEntity<?> createAppointment(HttpServletRequest request, @RequestParam long garageID,
+    @RequestParam long serviceID, @RequestParam long carID, @RequestParam LocalDateTime startTime) {
+
+        Garage garage;
+        OfferedService offeredService;
+        Car car;
+
+        try {
+            garage = garageService.getGarageService(garageID);
+            offeredService = offeredServiceService.getOfferedServiceService(serviceID);
+            car = carService.getCarByID(carID);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        ServiceAppointment appointment = service.createAppointment(garage, offeredService, car);
+        return ResponseEntity.ok(convertToDto(appointment));
     }
     
     /**
@@ -94,19 +139,33 @@ public class ServiceAppointmentRestController {
      * @param id ID of the service appointment to be updated
      * @param startTime Start time of the updated service appointment
      * @param status Status of the updated service appointment
-     * @param garage Garage of the updated appointment
-     * @param offeredService Service of the updates appointment
-     * @param car Car of the updated appointment
+     * @param garageID Garage of the updated appointment
+     * @param serviceID Service of the updates appointment
+     * @param carID Car of the updated appointment
      * @return Updated Service Appointment
      * @throws Exception No appointment associated with the ID
      * @author anniegouchee
      */
     @PutMapping(value = {"/update/{id}", "/update/{id}/"})
-    public ServiceAppointmentDto updateAppointment(@PathVariable("id") Long id, LocalDateTime startTime, AppointmentStatus status, GarageDto garage, OfferedServiceDto offeredService, CarDto car) throws Exception{
-        ServiceAppointment appointment = service.updateAppointment(id, startTime, status, convertToDomainObject(garage), convertToDomainObject(offeredService),convertToDomainObject(car));
-        
-        updateAppointment(id, startTime, status, garage, offeredService, car);
-        return convertToDto(appointment);
+    public ResponseEntity<?> updateAppointment(HttpServletRequest request, @PathVariable("id") Long id,
+    LocalDateTime apptTime, AppointmentStatus status, long garageID, long serviceID, long carID) {
+            
+        Garage garage;
+        OfferedService offeredService;
+        Car car;
+        ServiceAppointment appointment;
+
+        try {
+            garage = garageService.getGarageService(garageID);
+            offeredService = offeredServiceService.getOfferedServiceService(serviceID);
+            car = carService.getCarByID(carID);
+            appointment = service.updateAppointment(id, apptTime, status, garage, offeredService, car);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        return ResponseEntity.ok(convertToDto(appointment));
+
     }
 
     /**
@@ -117,7 +176,7 @@ public class ServiceAppointmentRestController {
      * @author anniegouchee
      */
     @DeleteMapping(value = {"/delete/{id}", "/delete/{id}/"})
-    public ServiceAppointmentDto deleteServiceAppointment(@PathVariable("id") Long id) throws Exception{
+    public ServiceAppointmentDto deleteServiceAppointment(HttpServletRequest request, @PathVariable("id") Long id) throws Exception{
         ServiceAppointment appointment = service.deleteAppointment(id);
         return convertToDto(appointment);
     }
