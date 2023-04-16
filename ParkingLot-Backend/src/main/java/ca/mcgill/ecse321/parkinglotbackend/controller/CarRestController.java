@@ -116,6 +116,18 @@ public class CarRestController {
 
     }
 
+    @PostMapping(value = {"/register", "/register/"})
+    public CarDto registerCarWithBody(@RequestParam String licensePlate, @RequestParam String make, @RequestParam String model, @RequestBody PersonDto person) throws Exception{
+
+        //Gets the owener of the car
+        Person p = personService.getPersonByID(person.getPersonID());
+
+        //Registers car with given information
+        Car c = service.registerCar(p, licensePlate, make, model);
+        return convertToDto(c);
+
+    }
+
     /**
      * RESTful API for updating the information fo a car
      * 
@@ -135,7 +147,7 @@ public class CarRestController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        
+
         return ResponseEntity.ok().body(convertToDto(car));
     }
 
