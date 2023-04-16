@@ -3,6 +3,10 @@ package ca.mcgill.ecse321.parkinglotbackend.service;
 import ca.mcgill.ecse321.parkinglotbackend.dao.ParkingLotSoftwareSystemRepository;
 import ca.mcgill.ecse321.parkinglotbackend.model.ParkingLotSoftwareSystem;
 import jakarta.transaction.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,6 +86,17 @@ public class ParkingLotSoftwareSystemService {
     }
 
     /**
+     * Get all parking lot software system in database
+     *
+     * @return all parking lot software system in database
+     * @author Qin Xuan Xu
+     */
+    @Transactional
+    public List<ParkingLotSoftwareSystem> getAllParkingLotSoftwareSystem() throws Exception {
+        return toList(parkingLotSoftwareSystemRepository.findAll());
+    }
+
+    /**
      * Update a parking lot software system
      * 
      * @param parkingLotSoftwareSystemID - id of the system
@@ -134,5 +149,19 @@ public class ParkingLotSoftwareSystemService {
         }
         parkingLotSoftwareSystemRepository.delete(system);
         return system;
+    }
+
+    /**
+     * helper method to convert to list of objects
+     * @param iterable
+     * @param <T>
+     * @return list of objects
+     */
+    private <T> List<T> toList(Iterable<T> iterable) {
+        List<T> resultList = new ArrayList<T>();
+        for (T t : iterable) {
+            resultList.add(t);
+        }
+        return resultList;
     }
 }

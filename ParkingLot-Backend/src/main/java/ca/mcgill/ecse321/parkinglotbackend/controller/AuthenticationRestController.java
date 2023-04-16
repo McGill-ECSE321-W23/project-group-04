@@ -37,7 +37,6 @@ public class AuthenticationRestController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(HttpServletRequest request, @RequestParam String email, @RequestParam String password) {
-        HttpSession session = request.getSession(true);
 
         // Check if already logged in
         if (AuthenticationUtility.isLoggedIn(request)) {
@@ -49,7 +48,8 @@ public class AuthenticationRestController {
             Account account = authenticationService.authenticate(email, password);
 
             // Respond with success
-
+            HttpSession session = request.getSession(true);
+            
             if (account.getClass().equals(ManagerAccount.class)) {
                 session.setAttribute("accountID", account.getAccountID());
                 session.setAttribute("role", AuthenticationUtility.Role.MANAGER);

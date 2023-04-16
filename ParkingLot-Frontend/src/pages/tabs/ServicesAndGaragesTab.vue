@@ -1,336 +1,317 @@
 <template>
 
     <!-- Edit Offered services -->
-    <el-card class="container" style="display:block;" id="OfferedServicesEdit">
-        <!-- Header -->
-        <div class="card-header">
-            <h2>Offered Services:</h2> 
+    <div class="page">
+        <div class="container" v-if="showOfferedServicesEdit" id="OfferedServicesEdit">
+            <!-- Header -->
+            <div class="card-header">
+                <h2>Offered Services:</h2> 
+            </div>
+            <br />
+            
+            <!-- Table for the offered services -->
+            <el-table :data="offeredServices" height="500" style="width: 100%" @row-click="handleOfferedServiceRowClick" :highlight-current-row="true">
+                <el-table-column prop="description" label="Description" style="width: 100%" />
+                <el-table-column prop="duration" label="Duration (minutes)" style="width: 100%" />
+                <el-table-column prop="cost" label="Cost ($)" style="width: 100%" />
+            </el-table>
+            <br/>
+
+            <!-- Alert to choose an offered service -->
+            <el-alert v-if="showErrorEditOfferedService || showErrorDeleteOfferedService" title="Please choose an offered service" type="error" show-icon />
+            <br/>
+
+            <div class="button-container">
+                <!-- Edit the offered service button -->
+                <el-button type="primary" @click="editOfferedService">Edit Offered Service</el-button>
+            
+                <!-- Delete the offered service button -->
+                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteOfferedServiceSelected"></el-button>
+            </div>
+            <br />
+
+            <!-- Add an offered service -->
+            <el-button type="success" @click="addOfferedService">Add Offered Service</el-button>
         </div>
         <br />
-        
-        <!-- Table for the offered services -->
-        <el-table :data="offeredServicesAvailable" height="500" style="width: 100%" @row-click="handleOfferedServiceRowClick" :highlight-current-row="true">
-            <el-table-column prop="description" label="Description" style="width: 100%" />
-            <el-table-column prop="duration" label="Duration (minutes)" style="width: 100%" />
-            <el-table-column prop="cost" label="Cost ($)" style="width: 100%" />
-        </el-table>
-        <br/>
 
-        <div class="button-container">
-            <!-- Edit the offered service button -->
-            <el-button type="primary" id="edit_offered_service_button" >Edit Offered Service</el-button>
-                    
-            <!-- Delete the offered service button -->
-            <el-button type="danger" :icon="Delete" circle id="delete_offered_service_button" />
-        </div>
-        <br />
+        <!-- Edit Garages -->
+        <div class="container" v-if="showGaragesEdit" id="GaragesEdit">
+            <!-- Header -->
+            <div class="card-header">
+                <h2>Garages:</h2> 
+            </div> 
+            <br />
+    
+            <!-- Table for the garages -->
+            <el-table :data="garages" highlight-current-row height="250" style="width: 100%" id="garageTable" @row-click="handleGarageRowClick">
+                <el-table-column prop="garageNumber" label="Garage number" style="width: 100%" />
+            </el-table>
+            <br/>
 
-        <!-- Add an offered service -->
-        <el-button type="success" @click="addAnOfferedService" id="add_offered_service_button">Add Offered Service</el-button>
-    </el-card>
-    <br />
-
-    <!-- Edit Garages -->
-    <el-card class="container" style="display:block;" id="GaragesEdit">
-        <!-- Header -->
-        <div class="card-header">
-            <h2>Garages:</h2> 
+            <!-- Alert to choose a garage -->
+            <el-alert v-if="showErrorEditGarage || showErrorDeleteGarage" title="Please choose a garage" type="error" show-icon />
+            
+            <br/>
+    
+            <div class="button-container">
+                <!-- Edit a garage button -->
+                <el-button type="primary" @click="editGarage">Edit Garage</el-button>
+    
+                <!-- Delete a garage button -->
+                <el-button type="danger" :icon="icons.deleteIcon" circle @click="deleteGarageSelected"></el-button>
+            </div>
+            <br />
+    
+            <!-- Add a garage -->
+            <el-button type="success" @click="addGarage">Add Garage</el-button>
         </div> 
-        <br />
 
-        <!-- Table for the garages -->
-        <el-table :data="garages" highlight-current-row height="250" style="width: 100%" id="garageTable" @row-click="handleGarageRowClick">
-            <el-table-column prop="garageNumber" label="Garage number" style="width: 100%" />
-        </el-table>
-        <br/>
+        <!-- Edit Offered services -->
+        <div class="container" v-if="showOfferedServiceEdit" id="OfferedServiceEdit">
+            <!-- Header -->
+            <div class="card-header">
+                <h2>Edit an Offered Service:</h2> <br />
+            </div>
+            <br />
+            
+            <!-- Edit the offered service's description -->
+            <div>
+                <span>Change Description: </span>
+                <el-input v-model="editOfferedServiceDescription" placeholder="Enter description"></el-input>
+            </div>
+            <br />
+            
+            <!-- Edit the offered service's duration -->
+            <div>
+                <span>Change Duration: </span>
+                <el-input v-model="editOfferedServiceDuration" placeholder="Enter duration"></el-input>
+            </div>
+            <br />
 
-        <div class="button-container">
-            <!-- Edit a garage button -->
-            <el-button type="primary" id="edit_garage_button">Edit Garage</el-button>
+            <!-- Edit the offered service's cost -->
+            <div>
+                <span>Change Cost: </span>
+                <el-input v-model="editOfferedServiceCost" placeholder="Enter cost"></el-input>
+            </div>
+            <br />
 
-            <!-- Delete a garage button -->
-            <el-button type="danger" :icon="Delete" circle @click="deleteGarage" id="delete_garage_button" />
+            <!-- Alert to for the offered service edit -->
+            <el-alert v-if="showErrorSaveEditOfferedService" title="Error: {{errorOfferedService}}" type="error" show-icon />
+            <br/>
+            
+            <div>
+                <!-- Go back button -->
+                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
+
+                <!-- Save the edited offered service -->
+                <el-button type="success" @click="saveEditOfferedService">Save Offered Service</el-button>
+            </div>
         </div>
         <br />
 
-        <!-- Add a garage -->
-        <el-button type="success" id="add_garage_button">Add Garage</el-button>
-    </el-card>
+        <!-- Edit garages -->
+        <div class="container" v-if="showGarageEdit" id="GarageEdit">
+            <!-- Header -->
+            <div class="card-header">
+                <h2>Edit a Garage:</h2> <br />
+            </div>
+            <br />
+            
+            <!-- Edit the garage's number-->
+            <div>
+                <span>Change Garage Number: </span>
+                <el-input v-model="editGarageGarageNumber" placeholder="Enter garage number"></el-input> 
+            </div>
+            <br />
 
-    <!-- Create Offered services -->
-    <el-card class="container" style="display:none;" id="OfferedServiceAdd">
-        <!-- Header -->
-        <div class="card-header">
-            <h2>Create an Offered Service:</h2> <br />
-        </div>
-        <br />
+            <!-- Alert to for the offered service edit -->
+            <el-alert v-if="showErrorSaveEditGarage" title="Error: {{errorGarage}}" type="error" show-icon />
+            <br/>
+            
+            <div>
+                <!-- Go back button -->
+                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack"> Go back</el-button>
 
-        <!-- Add the offered service's description -->
-        <div>
-            <span>Add Description: </span>
-            <el-input v-model="descriptionInput" placeholder="Enter description"></el-input>
+                <!-- Save the edited garage -->
+                <el-button type="success" @click="saveEditGarage">Save Garage</el-button>
+            </div>
         </div>
-        <br />
-        
-        <!-- Add the offered service's duration -->
-        <div>
-            <span>Add Duration: </span>
-            <el-input v-model="durationInput" placeholder="Enter duration"></el-input>
-        </div>
-        <br />
+        <br />    
 
-        <!-- Add the offered service's cost -->
-        <div>
-            <span>Add Cost: </span>
-            <el-input v-model="costInput" placeholder="Enter cost"></el-input>
-        </div>
-        <br />
-        
-        <!-- Go back button -->
-        <el-button type="warning" :icon="ArrowLeft" plain id="go_back_button_1"> Go back</el-button>
+        <!-- Add Offered services -->
+        <div class="container" v-if="showOfferedServiceAdd" id="OfferedServiceAdd">
+            <!-- Header -->
+            <div class="card-header">
+                <h2>Add an Offered Service:</h2> <br />
+            </div>
+            <br />
 
-        <!-- Add the offered service button -->
-        <el-button type="success" id="save_add_offered_service_button">Add Offered Service</el-button>
-    </el-card>
-    <br />
+            <!-- Add the offered service's description -->
+            <div>
+                <el-row :gutter="20">
+                    <span>Add Description: </span>
+                    <el-input v-model="newOfferedServiceDescription" placeholder="Enter description"></el-input>
+                </el-row>
+            </div>
+            
+            <!-- Add the offered service's duration -->
+            <div>
+                <span>Add Duration: </span>
+                <el-input v-model="newOfferedServiceDuration" placeholder="Enter duration"></el-input>
+            </div>
 
-    <!-- Create garages -->
-    <el-card class="container" style="display:none;" id="GarageAdd">
-        <!-- Header -->
-        <div class="card-header">
-            <h2>Create a Garage:</h2> <br />
-        </div>
-        <br />
+            <!-- Add the offered service's cost -->
+            <div>
+                <span>Add Cost: </span>
+                <el-input v-model="newOfferedServiceCost" placeholder="Enter cost"></el-input>
+            </div>
+            <br />
 
-        <!-- Add the garage's number-->
-        <div>
-            <span>Add Garage Number: </span>
-            <el-input v-model="garageNumberInput" placeholder="Enter garage number"></el-input> 
-        </div>
-        <br />
-        
-        <!-- Go back button -->
-        <el-button type="warning" :icon="ArrowLeft" plain id="go_back_button_2"> Go back</el-button>
-        
-        <!-- Add the garage button -->
-        <el-button type="success" id="save_add_garage_button">Add Garage</el-button>
-    </el-card>
-    <br />
+            <!-- Alert to for the offered service edit -->
+            <el-alert v-if="showErrorSaveAddOfferedService" title="Error: {{errorOfferedService}}" type="error" show-icon />
+            <br/>
+            
+            <div>
+                <!-- Go back button -->
+                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
 
-    <!-- Edit Offered services -->
-    <el-card class="container" style="display:none;" id="OfferedServiceEdit">
-        <!-- Header -->
-        <div class="card-header">
-            <h2>Edit an Offered Service:</h2> <br />
-        </div>
-        <br />
-        
-        <!-- Edit the offered service's description -->
-        <div>
-            <span>Change Description: </span>
-            <el-input v-model="descriptionEdit" placeholder="Enter description"></el-input>
-        </div>
-        <br />
-        
-        <!-- Edit the offered service's duration -->
-        <div>
-            <span>Change Duration: </span>
-            <el-input v-model="durationEdit" placeholder="Enter duration"></el-input>
+                <!-- Add the offered service button -->
+                <el-button type="success" v-bind:disabled="(!newOfferedServiceDescription && !newOfferedServiceDuration && !newOfferedServiceCost)" @click="saveAddOfferedService(description, duration, cost)">Add Offered Service</el-button>
+            </div>
         </div>
         <br />
 
-        <!-- Edit the offered service's cost -->
-        <div>
-            <span>Change Cost: </span>
-            <el-input v-model="costEdit" placeholder="Enter cost"></el-input>
-        </div>
-        <br />
-        
-        <!-- Go back button -->
-        <el-button type="warning" :icon="ArrowLeft" plain id="go_back_button_3"> Go back</el-button>
+        <!-- Add garages -->
+        <div class="container" v-if="showGarageAdd" id="GarageAdd">
+            <!-- Header -->
+            <div class="card-header">
+                <h2>Add a Garage:</h2> <br />
+            </div>
+            <br />
 
-        <!-- Save the edited offered service -->
-        <el-button type="success" id="save_edit_offered_service_button">Save Offered Service</el-button>
-    </el-card>
-    <br />
+            <!-- Add the garage's number-->
+            <div>
+                <span>Add Garage Number: </span>
+                <el-input v-model="newGarageGarageNumber" placeholder="Enter garage number"></el-input> 
+            </div>
+            <br />
 
-    <!-- Edit garages -->
-    <el-card class="container" style="display:none;" id="GarageEdit">
-        <!-- Header -->
-        <div class="card-header">
-            <h2>Edit a Garage:</h2> <br />
+            <!-- Alert to for the offered service edit -->
+            <el-alert v-if="showErrorSaveAddGarage" title="Error: {{errorGarage}}" type="error" show-icon />
+            <br/>
+            
+            <div>
+                <!-- Go back button -->
+                <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack"> Go back</el-button>
+            
+                <!-- Add the garage button -->
+                <el-button type="success" v-bind:disabled="!newGarageGarageNumber" @click="saveAddGarage(garageNumber)">Add Garage</el-button>
+            </div>
         </div>
-        <br />
-        
-        <!-- Edit the garage's number-->
-        <div>
-            <span>Change Garage Number: </span>
-            <el-input v-model="garageNumberEdit" placeholder="Enter garage number"></el-input> 
-        </div>
-        <br />
-                
-        <!-- Go back button -->
-        <el-button type="warning" :icon="ArrowLeft" plain id="go_back_button_4"> Go back</el-button>
-
-        <!-- Save the edited garage -->
-        <el-button type="success" id="save_edit_garage_button">Save Garage</el-button>
-    </el-card>
-    <br />
+    </div>
 
 </template>
 
-<!-- <script lang="ts" setup> -->
-<script setup>
-
-import { offeredServicesAvailable, garages } from './ServicesAndGarages.js'
-import { reactive, ref } from 'vue'
-import { Delete, ArrowLeft } from '@element-plus/icons-vue'
-import $ from 'jquery'
-
-// Input boxes
-const descriptionInput = ref('')
-const durationInput = ref('')
-const costInput = ref('')
-const garageNumberInput = ref('')
-const descriptionEdit = ref('')
-const durationEdit = ref('')
-const costEdit = ref('')
-const garageNumberEdit = ref('')
-
-let selectedOfferedServiceRow = null;
-let selectedGarageRow = null;
-
-function handleOfferedServiceRowClick(row) {
-    selectedOfferedServiceRow = row;
-};
-
-function handleGarageRowClick(row) {
-    selectedGarageRow = row;
-};
-
-// Only show the offered services and garages to edit when opening the tab
-$(document).ready(function() {
-    $('#OfferedServicesEdit').show();
-    $('#GaragesEdit').show();
-    $('#OfferedServiceAdd').hide();
-    $('#GarageAdd').hide();
-    $('#OfferedServiceEdit').hide();
-    $('#GarageEdit').hide();
-
-    // Only show the add offered service section
-    $('#add_offered_service_button').click(function() {
-        $('#OfferedServicesEdit').hide();
-        $('#GaragesEdit').hide();
-        $('#OfferedServiceAdd').show();
-        $('#GarageAdd').hide();
-        $('#OfferedServiceEdit').hide();
-        $('#GarageEdit').hide();
-    });
-
-    // Only show the add garage section
-    $('#add_garage_button').click(function() {
-        $('#OfferedServicesEdit').hide();
-        $('#GaragesEdit').hide();
-        $('#OfferedServiceAdd').hide();
-        $('#GarageAdd').show();
-        $('#OfferedServiceEdit').hide();
-        $('#GarageEdit').hide();
-    });
-
-    // Only show the edit offered service section
-    $('#edit_offered_service_button').click(function() {
-        if (selectedOfferedServiceRow) {
-            $('#OfferedServicesEdit').hide();
-            $('#GaragesEdit').hide();
-            $('#OfferedServiceAdd').hide();
-            $('#GarageAdd').hide();
-            $('#OfferedServiceEdit').show();
-            $('#GarageEdit').hide();
-        }
-    });
-
-    // Only show the edit offered service section
-    $('#edit_garage_button').click(function() {
-        if (selectedGarageRow) {
-            $('#OfferedServicesEdit').hide();
-            $('#GaragesEdit').hide();
-            $('#OfferedServiceAdd').hide();
-            $('#GarageAdd').hide();
-            $('#OfferedServiceEdit').hide();
-            $('#GarageEdit').show();
-        }
-    });
-
-    // Bo back to the edit section
-    $('#go_back_button_1').click(function() {
-        $('#OfferedServicesEdit').show();
-        $('#GaragesEdit').show();
-        $('#OfferedServiceAdd').hide();
-        $('#GarageAdd').hide();
-        $('#OfferedServiceEdit').hide();
-        $('#GarageEdit').hide();
-    });
-
-    // Bo back to the edit section
-    $('#go_back_button_2').click(function() {
-        $('#OfferedServicesEdit').show();
-        $('#GaragesEdit').show();
-        $('#OfferedServiceAdd').hide();
-        $('#GarageAdd').hide();
-        $('#OfferedServiceEdit').hide();
-        $('#GarageEdit').hide();
-    });
-
-    // Bo back to the edit section
-    $('#go_back_button_3').click(function() {
-        $('#OfferedServicesEdit').show();
-        $('#GaragesEdit').show();
-        $('#OfferedServiceAdd').hide();
-        $('#GarageAdd').hide();
-        $('#OfferedServiceEdit').hide();
-        $('#GarageEdit').hide();
-    });
-
-    // Bo back to the edit section
-    $('#go_back_button_4').click(function() {
-        $('#OfferedServicesEdit').show();
-        $('#GaragesEdit').show();
-        $('#OfferedServiceAdd').hide();
-        $('#GarageAdd').hide();
-        $('#OfferedServiceEdit').hide();
-        $('#GarageEdit').hide();
-    });
-});
-
-</script>
+<script src="./ServicesAndGarages.js"></script>
 
 <style scoped>
+    #OfferedServicesEdit {
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    }
 
-.card-header {
-    text-align: center;
-}
+    #GaragesEdit {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+      }
 
-.button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    #OfferedServiceAdd {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    #GarageAdd {
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    }
 
-.table {
-    display: flex;
-    justify-content: center;
-}
+    #OfferedServiceEdit {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    }
 
-#GaragesEdit {
-    max-width: 350px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+    #GarageEdit {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .message-container {
+        display: flex;
+        position: absolute;
+        top: 50px;
+        width: 300px;
+        text-align: right;
+      }
+    
+      .example-basic .el-date-editor {
+        margin: 8px;
+      }
+    
+      .button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    
+      .table {
+        display: flex;
+        justify-content: center;
+      }
+    
+      .el-alert {
+        margin: 20px 0 0;
+      }
 
 </style>
