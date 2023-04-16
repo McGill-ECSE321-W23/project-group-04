@@ -58,7 +58,14 @@ export default {
   created() {
     // Getting the user's ID
     AXIOS.get('/auth/getAccount').then(response => {
-      this.owner = response.data.getAccountID()
+      this.owner = response.data["accountID"]
+      // Initializing cars from backend
+      AXIOS.get('/cars/getByPersonID/'.concat(this.owner)).then(response => {
+        this.cars = response.data
+      })
+      .catch(e => {
+        this.errorCar = e
+      })
     })
     .catch(e => {
       this.errorAccount = e
@@ -80,13 +87,6 @@ export default {
         this.errorGarage = e
     })
 
-    // Initializing cars from backend
-    AXIOS.get('/cars/getByPersonID/'.concat(this.owner)).then(response => {
-      this.cars = response.data
-    })
-    .catch(e => {
-        this.errorCar = e
-    })
   },
 
   methods: {
