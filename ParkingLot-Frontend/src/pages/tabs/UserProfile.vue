@@ -184,7 +184,7 @@ export default {
                 })
 
             // get cars
-            this.axios.get('api/cars/get/ByOwner/' + userService.getCookie("personId"))
+            this.axios.get('api/cars/getByPersonID/' + userService.getCookie("personId"))
                 .then(data => {
                   this.cars = data.data
 
