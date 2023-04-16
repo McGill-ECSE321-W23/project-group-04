@@ -46,8 +46,10 @@ The application will improve the overall experience for customers, employees and
 0. Backend should be started first
 1. Open a command prompt in the root folder and run `cd ParkingLot-Frontend`
 2. Install node modules with `npm install`
-3. Start the Vite server with `npm run dev`
+3. Start the Vite server with `npm run dev`*
 4. The frontend server should be started on `localhost:5173`
+
+* Note that this runs a development server, a production version should be built using `npm run build` and then ran using a webserver module such as `serve`
 
 ## Sprint Summary
 
