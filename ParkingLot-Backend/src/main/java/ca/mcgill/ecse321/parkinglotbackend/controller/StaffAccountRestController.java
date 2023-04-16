@@ -71,7 +71,8 @@ public class StaffAccountRestController {
                 return ResponseEntity.badRequest().body("Unauthorized");
             }
         } catch (Exception ex) {
-            return ResponseEntity.internalServerError().build();
+            // return ResponseEntity.internalServerError().build();
+            return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
 

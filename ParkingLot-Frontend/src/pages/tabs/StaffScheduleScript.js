@@ -40,7 +40,12 @@ export default {
         };
     },
     created: function() {
-        axios.get('http://localhost:8080/api/staff/all')
+        axios.get('http://localhost:8080/api/staff/all', {
+            withCredentials: true,
+            headers: {
+                "Access-Control-Allow-Origin": 'localhost:8080',
+            }
+        })
         .then(response => {
             this.staff_list = [];
             for (var i = 0; i < response.data.length; i++) {
@@ -55,10 +60,15 @@ export default {
         })
         .catch(e => {
             console.log(e)
-            alert(e)
+            // alert(e.response.data)
         })
 
-        axios.get('http://localhost:8080/api/timeslot/getAll')
+        axios.get('http://localhost:8080/api/timeslot/getAll', {
+            withCredentials: true,
+            headers: {
+                "Access-Control-Allow-Origin": 'localhost:8080',
+            }
+        })
         .then(response => {
             this.all_timeslots = [];
             for (var i = 0; i < response.data.length; i++) {
@@ -75,7 +85,7 @@ export default {
         })
         .catch(e => {
             console.log(e)
-            alert(e)
+            // alert(e.response.data)
         })
     },
     methods: {
@@ -102,6 +112,10 @@ export default {
 
             if (timeSlotObj == null) { // create new timeslot
                 axios.post('http://localhost:8080/api/timeslot/create', {}, {
+                    withCredentials: true,
+                    headers: {
+                        "Access-Control-Allow-Origin": 'localhost:8080',
+                    },
                     params: {
                         dayOfTheWeek: day,
                         startTime: starttime,
@@ -120,10 +134,14 @@ export default {
                 })
                 .catch(e => {
                     console.log(e)
-                    alert(e)
+                    alert(e.response.data)
                 })
             } else { // update existing timeslot
                 axios.put('http://localhost:8080/api/timeslot/update/'.concat(timeSlotObj.timeSlotID), {}, {
+                    withCredentials: true,
+                    headers: {
+                        "Access-Control-Allow-Origin": 'localhost:8080',
+                    },
                     params: {
                         timeSlotID: timeSlotObj.timeSlotID,
                         dayOfTheWeek: day,
@@ -140,7 +158,7 @@ export default {
                 })
                 .catch(e => {
                     console.log(e)
-                    alert(e)
+                    alert(e.response.data)
                 })
             }
 
@@ -159,13 +177,18 @@ export default {
                 if (this.all_timeslots[i].timeslot.staffID == staffId && this.all_timeslots[i].timeslot.day == day) {
                     timeSlotObj = this.all_timeslots[i].timeslot;
 
-                    axios.delete('http://localhost:8080/api/timeslot/delete/'.concat(timeSlotObj.timeSlotID))
+                    axios.delete('http://localhost:8080/api/timeslot/delete/'.concat(timeSlotObj.timeSlotID), {
+                        withCredentials: true,
+                        headers: {
+                            "Access-Control-Allow-Origin": 'localhost:8080',
+                        }
+                    })
                     .then(response => {
                         this.all_timeslots.splice(i, 1);
                     })
                     .catch(e => {
                         console.log(e)
-                        alert(e)
+                        alert(e.response.data)
                     })
 
                     break;

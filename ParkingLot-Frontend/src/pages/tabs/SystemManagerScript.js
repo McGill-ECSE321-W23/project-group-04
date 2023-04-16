@@ -67,7 +67,12 @@ export default {
         };
     },
     created() {
-        axios.get("http://localhost:8080/api/parkinglotsoftwaresystem/getall")
+        axios.get("http://localhost:8080/api/parkinglotsoftwaresystem/getall", {
+            withCredentials: true,
+            headers: {
+                'Access-Control-Allow-Origin': 'localhost:8080'
+            }
+        })
         .then(response => {
             this.system_list = [];
             for (var i = 0; i < response.data.length; i++) {
@@ -82,10 +87,15 @@ export default {
         })
         .catch(e => {
             console.log(e)
-            alert(e)
+            // alert(e.response.data)
         })
 
-        axios.get("http://localhost:8080/api/timeslot/getOpen")
+        axios.get("http://localhost:8080/api/timeslot/getOpen", {
+            withCredentials: true,
+            headers: {
+                'Access-Control-Allow-Origin': 'localhost:8080'
+            }
+        })
         .then(response => {
             this.all_openhours = [];
             for (var i = 0; i < response.data.length; i++) {
@@ -100,7 +110,7 @@ export default {
         })
         .catch(e => {
             console.log(e)
-            alert(e)
+            // alert(e.response.data)
         })
     },
     methods: {
@@ -111,6 +121,10 @@ export default {
             }
 
             axios.post("http://localhost:8080/api/parkinglotsoftwaresystem/create", {}, {
+                withCredentials: true,
+                headers: {
+                    'Access-Control-Allow-Origin': 'localhost:8080'
+                },
                 params: {
                     monthlyFee: monthlyFee,
                     feePer15m: feePer15m,
@@ -134,7 +148,7 @@ export default {
             })
             .catch(e => {
                 console.log(e)
-                alert(e)
+                alert(e.response.data)
             })
         },
         
@@ -164,6 +178,10 @@ export default {
 
                     if (specs == "Monthly fee") {
                         axios.put("http://localhost:8080/api/parkinglotsoftwaresystem/update/".concat(systemID), {}, {
+                            withCredentials: true,
+                            headers: {
+                                'Access-Control-Allow-Origin': 'localhost:8080'
+                            },
                             params: {
                                 parkingLotSoftwareSystemID: systemID, monthlyFee: value, feePer15m: systemObj.feePer15m, maxStay: systemObj.maxStay,
                                 numberOfRegularParkingSpots: systemObj.numRegular, numberOfLargeParkingSpots: systemObj.numLarge, numberOfMonthlyFloors: systemObj.numMonthlyFloors,
@@ -175,10 +193,14 @@ export default {
                         })
                         .catch(e => {
                             console.log(e)
-                            alert(e)
+                            alert(e.response.data)
                         })
                     } else if (specs == "Fee per 15 mins") {
                         axios.put("http://localhost:8080/api/parkinglotsoftwaresystem/update/".concat(systemID), {}, {
+                            withCredentials: true,
+                            headers: {
+                                'Access-Control-Allow-Origin': 'localhost:8080'
+                            },
                             params: {
                                 parkingLotSoftwareSystemID: systemID, monthlyFee: systemObj.monthlyFee, feePer15m: value, maxStay: systemObj.maxStay,
                                 numberOfRegularParkingSpots: systemObj.numRegular, numberOfLargeParkingSpots: systemObj.numLarge, numberOfMonthlyFloors: systemObj.numMonthlyFloors,
@@ -190,10 +212,14 @@ export default {
                         })
                         .catch(e => {
                             console.log(e)
-                            alert(e)
+                            alert(e.response.data)
                         })
                     } else if (specs == "Maximum stay duration") {
                         axios.put("http://localhost:8080/api/parkinglotsoftwaresystem/update/".concat(systemID), {}, {
+                            withCredentials: true,
+                            headers: {
+                                'Access-Control-Allow-Origin': 'localhost:8080'
+                            },
                             params: {
                                 parkingLotSoftwareSystemID: systemID, monthlyFee: systemObj.monthlyFee, feePer15m: systemObj.feePer15m, maxStay: value,
                                 numberOfRegularParkingSpots: systemObj.numRegular, numberOfLargeParkingSpots: systemObj.numLarge, numberOfMonthlyFloors: systemObj.numMonthlyFloors,
@@ -205,10 +231,14 @@ export default {
                         })
                         .catch(e => {
                             console.log(e)
-                            alert(e)
+                            alert(e.response.data)
                         })
                     } else if (specs == "Number of regular parking spots") {
                         axios.put("http://localhost:8080/api/parkinglotsoftwaresystem/update/".concat(systemID), {}, {
+                            withCredentials: true,
+                            headers: {
+                                'Access-Control-Allow-Origin': 'localhost:8080'
+                            },
                             params: {
                                 parkingLotSoftwareSystemID: systemID, monthlyFee: systemObj.monthlyFee, feePer15m: systemObj.feePer15m, maxStay: systemObj.maxStay,
                                 numberOfRegularParkingSpots: value, numberOfLargeParkingSpots: systemObj.numLarge, numberOfMonthlyFloors: systemObj.numMonthlyFloors,
@@ -220,10 +250,14 @@ export default {
                         })
                         .catch(e => {
                             console.log(e)
-                            alert(e)
+                            alert(e.response.data)
                         })
                     } else if (specs == "Number of large parking spots") {
                         axios.put("http://localhost:8080/api/parkinglotsoftwaresystem/update/".concat(systemID), {}, {
+                            withCredentials: true,
+                            headers: {
+                                'Access-Control-Allow-Origin': 'localhost:8080'
+                            },
                             params: {
                                 parkingLotSoftwareSystemID: systemID, monthlyFee: systemObj.monthlyFee, feePer15m: systemObj.feePer15m, maxStay: systemObj.maxStay,
                                 numberOfRegularParkingSpots: systemObj.numRegular, numberOfLargeParkingSpots: value, numberOfMonthlyFloors: systemObj.numMonthlyFloors,
@@ -235,10 +269,14 @@ export default {
                         })
                         .catch(e => {
                             console.log(e)
-                            alert(e)
+                            alert(e.response.data)
                         })
                     } else if (specs == "Number of floors for monthly users") {
                         axios.put("http://localhost:8080/api/parkinglotsoftwaresystem/update/".concat(systemID), {}, {
+                            withCredentials: true,
+                            headers: {
+                                'Access-Control-Allow-Origin': 'localhost:8080'
+                            },
                             params: {
                                 parkingLotSoftwareSystemID: systemID, monthlyFee: systemObj.monthlyFee, feePer15m: systemObj.feePer15m, maxStay: systemObj.maxStay,
                                 numberOfRegularParkingSpots: systemObj.numRegular, numberOfLargeParkingSpots: systemObj.numLarge, numberOfMonthlyFloors: value,
@@ -250,10 +288,14 @@ export default {
                         })
                         .catch(e => {
                             console.log(e)
-                            alert(e)
+                            alert(e.response.data)
                         })
                     } else if (specs == "Number of parking spots for monthly users per floor") {
                         axios.put("http://localhost:8080/api/parkinglotsoftwaresystem/update/".concat(systemID), {}, {
+                            withCredentials: true,
+                            headers: {
+                                'Access-Control-Allow-Origin': 'localhost:8080'
+                            },
                             params: {
                                 parkingLotSoftwareSystemID: systemID, monthlyFee: systemObj.monthlyFee, feePer15m: systemObj.feePer15m, maxStay: systemObj.maxStay,
                                 numberOfRegularParkingSpots: systemObj.numRegular, numberOfLargeParkingSpots: systemObj.numLarge, numberOfMonthlyFloors: systemObj.numMonthlyFloors,
@@ -265,10 +307,14 @@ export default {
                         })
                         .catch(e => {
                             console.log(e)
-                            alert(e)
+                            alert(e.response.data)
                         })
                     } else if (specs == "Number of garages") {
                         axios.put("http://localhost:8080/api/parkinglotsoftwaresystem/update/".concat(systemID), {}, {
+                            withCredentials: true,
+                            headers: {
+                                'Access-Control-Allow-Origin': 'localhost:8080'
+                            },
                             params: {
                                 parkingLotSoftwareSystemID: systemID, monthlyFee: systemObj.monthlyFee, feePer15m: systemObj.feePer15m, maxStay: systemObj.maxStay,
                                 numberOfRegularParkingSpots: systemObj.numRegular, numberOfLargeParkingSpots: systemObj.numLarge, numberOfMonthlyFloors: systemObj.numMonthlyFloors,
@@ -280,7 +326,7 @@ export default {
                         })
                         .catch(e => {
                             console.log(e)
-                            alert(e)
+                            alert(e.response.data)
                         })
                     } else {
                         alert("Invalid system specification");
@@ -325,6 +371,10 @@ export default {
 
             if (timeSlotObj == null) { // no existing timeslot for this day
                 axios.post("http://localhost:8080/api/timeslot/createOpen", {}, {
+                    withCredentials: true,
+                    headers: {
+                        'Access-Control-Allow-Origin': 'localhost:8080'
+                    },
                     params: {
                         dayOfTheWeek: day,
                         startTime: starttime,
@@ -343,10 +393,14 @@ export default {
                 })
                 .catch(e => {
                     console.log(e)
-                    alert(e)
+                    alert(e.response.data)
                 })
             } else { // existing timeslot for this day
                 axios.put("http://localhost:8080/api/timeslot/update/".concat(timeSlotObj.timeSlotID), {}, {
+                    withCredentials: true,
+                    headers: {
+                        'Access-Control-Allow-Origin': 'localhost:8080'
+                    },
                     params: {
                         timeSlotID: timeSlotObj.timeSlotID,
                         dayOfTheWeek: day,
@@ -363,7 +417,7 @@ export default {
                 })
                 .catch(e => {
                     console.log(e)
-                    alert(e)
+                    alert(e.response.data)
                 })
             }
 
@@ -382,13 +436,18 @@ export default {
                 if (this.all_openhours[i].timeSlot.day == day && this.all_openhours[i].timeSlot.systemID == system) {
                     timeSlotObj = this.all_openhours[i].timeSlot;
                     
-                    axios.delete("http://localhost:8080/api/timeslot/delete/".concat(timeSlotObj.timeSlotID))
+                    axios.delete("http://localhost:8080/api/timeslot/delete/".concat(timeSlotObj.timeSlotID), {
+                        withCredentials: true,
+                        headers: {
+                            'Access-Control-Allow-Origin': 'localhost:8080'
+                        },
+                    })
                     .then(response => {
                         this.all_openhours.splice(i, 1);
                     })
                     .catch(e => {
                         console.log(e)
-                        alert(e)
+                        alert(e.response.data)
                     })
 
                     break;
