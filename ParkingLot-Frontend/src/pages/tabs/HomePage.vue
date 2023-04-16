@@ -83,7 +83,7 @@
                 <div class = "container" style = " margin-left:5%;top:-100px;" id="ticketIDInputs">
                     <label style="margin-right: 1%; font-size: 55%; color: #000000" for = "ticketID" >Ticket ID:</label>
                     <el-input v-model="ticketID" id = "ticketID" name = "ticketID" style="width: 100%;" placeholder="Input Ticket ID" clearable />
-                    <el-button id = "payTicketButton" type="info" round style="width: 100%; margin-top: 10%"> Pay Now </el-button>
+                    <el-button id = "payTicketButton" type="info" round style="width: 100%; margin-top: 10%" @click= "payTicket(ticketID)"> Pay Now </el-button>
 
                 </div>
                 <div class = "container" style=" margin-top: 1%;" id="fakeTicketDisplay">
