@@ -44,7 +44,7 @@ The application will improve the overall experience for customers, employees and
 
 ### Build and Start Application Frontend on Local Machine
 0. Backend should be started first
-1. Open a command prompt and run `cd ParkingLot-Frontend`
+1. Open a command prompt in the root folder and run `cd ParkingLot-Frontend`
 2. Start the node.js server with `npm SOMETHING`
 3. The frontend server should be started on `localhost:5173`
 
