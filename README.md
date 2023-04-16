@@ -56,12 +56,12 @@ The application will improve the overall experience for customers, employees and
 ### Contributions
 | Team Member       | Sprint 1  | Sprint 2  | Sprint 3 |
 | ----------------- | ----------- | ------ | -- |
-| Faiza Chowdhury   |   26     | 27 | |
-| Annie Gouchee     |   26   | 28 | |
-| Lin Wei Li        |    32   | 32 | |
-| Estefania Vazquez | 28     | 29 | |
-| Qin Xuan Xu       |  27   | 22 | |
-| Edwin You Zhou    | 30   | 24 | |
+| Faiza Chowdhury   |   26     | 27 | 44 |
+| Annie Gouchee     |   26   | 28 | 49 |
+| Lin Wei Li        |    32   | 32 | 55 |
+| Estefania Vazquez | 28     | 29 | 45 |
+| Qin Xuan Xu       |  27   | 22 | 43 |
+| Edwin You Zhou    | 30   | 24 | 44 |
 
 ### Sprint 1
 [Sprint 1: Overview](https://github.com/McGill-ECSE321-W23/project-group-04/wiki/Overview)
