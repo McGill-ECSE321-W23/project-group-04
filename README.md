@@ -26,6 +26,8 @@ The application will improve the overall experience for customers, employees and
   - username: postgres
   - password: 123
 * Java 17
+* Node.js v10.21.0 (or higher)
+* Npm 6.14.4 (or higher)
 
 ### Setup Database
 1. Open command line
@@ -33,12 +35,18 @@ The application will improve the overall experience for customers, employees and
 3. Create database: `create database parkinglotdb;`
 4. Quit: `\q`
 
-### Build and Start Application on Local Machine
+### Build and Start Application Bakcend on Local Machine
 1. Build grade: `./gradlew build`
 2. Run application:
   - via Gradle: `./gradlew bootRun`
   - via an IDE: run the application from `/ParkingLot-Backend/src/main/java/ca/mcgill/ecse321/parkinglotbackend/ParkingLotBackendApplication.java`
  3. Application should be started on `localhost:8080`
+
+### Build and Start Application Frontend on Local Machine
+0. Backend should be started first
+1. Open a command prompt and run `cd ParkingLot-Frontend`
+2. Start the node.js server with `npm SOMETHING`
+3. The frontend server should be started on `localhost:5173`
 
 ## Sprint Summary
 
