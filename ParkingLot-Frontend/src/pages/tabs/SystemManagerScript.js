@@ -521,20 +521,37 @@ export default {
                             if (this.all_openhours[j].timeSlot.systemID == this.system_selected) {
                                 const oh = this.all_openhours[j].timeSlot;
                                 console.log(oh);
+
+                                var hour = oh.startTime[0];
+                                var minute = oh.startTime[1];
+                                var ampm = hour >= 12 ? 'PM' : 'AM';
+                                hour = hour % 12;
+                                hour = hour ? hour : 12; // 12 AM instead of 0 AM
+                                minute = minute < 10 ? '0' + minute : minute;
+                                const start = hour + ':' + minute + ' ' + ampm;
+
+                                var hour2 = oh.endTime[0];
+                                var minute2 = oh.endTime[1];
+                                var ampm2 = hour2 >= 12 ? 'PM' : 'AM';
+                                hour2 = hour2 % 12;
+                                hour2 = hour2 ? hour2 : 12; // 12 AM instead of 0 AM
+                                minute2 = minute2 < 10 ? '0' + minute2 : minute2;
+                                const end = hour2 + ':' + minute2 + ' ' + ampm2;
+
                                 if (oh.day == "SUNDAY") {
-                                    document.getElementById("sunOpen").textContent = oh.startTime + " - " + oh.endTime;
+                                    document.getElementById("sunOpen").textContent = start + " - " + end;
                                 } else if (oh.day == "MONDAY") {
-                                    document.getElementById("monOpen").textContent = oh.startTime + " - " + oh.endTime;
+                                    document.getElementById("monOpen").textContent = start + " - " + end;
                                 } else if (oh.day == "TUESDAY") {
-                                    document.getElementById("tueOpen").textContent = oh.startTime + " - " + oh.endTime;
+                                    document.getElementById("tueOpen").textContent = start + " - " + end;
                                 } else if (oh.day == "WEDNESDAY") {
-                                    document.getElementById("wedOpen").textContent = oh.startTime + " - " + oh.endTime;
+                                    document.getElementById("wedOpen").textContent = start + " - " + end;
                                 } else if (oh.day == "THURSDAY") {
-                                    document.getElementById("thuOpen").textContent = oh.startTime + " - " + oh.endTime;
+                                    document.getElementById("thuOpen").textContent = start + " - " + end;
                                 } else if (oh.day == "FRIDAY") {
-                                    document.getElementById("friOpen").textContent = oh.startTime + " - " + oh.endTime;
+                                    document.getElementById("friOpen").textContent = start + " - " + end;
                                 } else if (oh.day == "SATURDAY") {
-                                    document.getElementById("satOpen").textContent = oh.startTime + " - " + oh.endTime;
+                                    document.getElementById("satOpen").textContent = start + " - " + end;
                                 } else {
                                     console.log("Error: invalid day occured");
                                 }

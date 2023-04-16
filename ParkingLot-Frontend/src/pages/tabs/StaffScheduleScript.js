@@ -264,20 +264,37 @@ export default {
 
                     for (var i = 0; i < this.all_timeslots.length; i++) {
                         var slot = this.all_timeslots[i].timeslot;
+
+                        var hour = slot.startTime[0];
+                        var minute = slot.startTime[1];
+                        var ampm = hour >= 12 ? 'PM' : 'AM';
+                        hour = hour % 12;
+                        hour = hour ? hour : 12; // 12 AM instead of 0 AM
+                        minute = minute < 10 ? '0' + minute : minute;
+                        const start = hour + ':' + minute + ' ' + ampm;
+
+                        var hour2 = slot.endTime[0];
+                        var minute2 = slot.endTime[1];
+                        var ampm2 = hour2 >= 12 ? 'PM' : 'AM';
+                        hour2 = hour2 % 12;
+                        hour2 = hour2 ? hour2 : 12; // 12 AM instead of 0 AM
+                        minute2 = minute2 < 10 ? '0' + minute2 : minute2;
+                        const end = hour2 + ':' + minute2 + ' ' + ampm2;
+
                         if (slot.day == "SUNDAY") {
-                            sun.textContent = slot.startTime + " - " + slot.endTime;
+                            sun.textContent = start + " - " + end;
                         } else if (slot.day == "MONDAY") {
-                            mon.textContent = slot.startTime + " - " + slot.endTime;
+                            mon.textContent = start + " - " + end;
                         } else if (slot.day == "TUESDAY") {
-                            tue.textContent = slot.startTime + " - " + slot.endTime;
+                            tue.textContent = start + " - " + end;
                         } else if (slot.day == "WEDNESDAY") {
-                            wed.textContent = slot.startTime + " - " + slot.endTime;
+                            wed.textContent = start + " - " + end;
                         } else if (slot.day == "THURSDAY") {
-                            thu.textContent = slot.startTime + " - " + slot.endTime;
+                            thu.textContent = start + " - " + end;
                         } else if (slot.day == "FRIDAY") {
-                            fri.textContent = slot.startTime + " - " + slot.endTime;
+                            fri.textContent = start + " - " + end;
                         } else {
-                            sat.textContent = slot.startTime + " - " + slot.endTime;
+                            sat.textContent = start + " - " + end;
                         }
                     }
 
