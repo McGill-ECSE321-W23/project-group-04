@@ -116,7 +116,7 @@ public class CarRestController {
 
     }
 
-    @PostMapping(value = {"/register", "/register/"})
+    @PostMapping(value = {"/reg", "/reg/"})
     public CarDto registerCarWithBody(@RequestParam String licensePlate, @RequestParam String make, @RequestParam String model, @RequestBody PersonDto person) throws Exception{
 
         //Gets the owener of the car

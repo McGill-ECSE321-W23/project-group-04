@@ -279,7 +279,7 @@ export default {
       registerCar() {
         const userService = new UserService(this.axios)
 
-        this.axios.post('/api/cars/register', {
+        this.axios.post('/api/cars/reg', {
           personID: userService.getCookie("personId"),
           phoneNumber: this.form.phone,
           name: this.form.name
