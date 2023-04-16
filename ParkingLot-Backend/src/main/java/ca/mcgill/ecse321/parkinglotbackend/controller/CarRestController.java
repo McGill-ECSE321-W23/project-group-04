@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,12 +75,17 @@ public class CarRestController {
      * 
      * @param id ID of the owner of the car
      * @return List of cars assciated to a person with the given person ID
-     * @throws Exception No person exists with given person ID
      * @author anniegouchee
      */
-    @GetMapping(value = { "/get/ByOwner/{id}", "/get/ByOwner/{id}/" })
-    public List<CarDto> getCarsByOwner(@PathVariable("id")Long id) throws Exception{
-        return service.findCarByOwnerID(id).stream().map(c -> convertToDto(c)).collect(Collectors.toList());
+    @GetMapping(value = { "/getByPersonID/{id}", "/getByPersonID/{id}/" })
+    public ResponseEntity<?> getCarsByOwner(@PathVariable("id")Long id) {
+
+        try {
+            return ResponseEntity.ok().body(service.findCarByOwnerID(id).stream().map(c -> convertToDto(c)).collect(Collectors.toList()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     /**
