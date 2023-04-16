@@ -1,23 +1,16 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import ca.mcgill.ecse321.parkinglotbackend.dto.CarDto;
 import ca.mcgill.ecse321.parkinglotbackend.dto.PersonDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.Car;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
 import ca.mcgill.ecse321.parkinglotbackend.service.CarService;
 import ca.mcgill.ecse321.parkinglotbackend.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -94,7 +87,7 @@ public class CarRestController {
      * @author anniegouchee
      */
     @PostMapping(value = {"/register", "/register/"})
-    public CarDto registerCar(@PathVariable("licensePlate") String licensePlate, String make, String model, PersonDto person) throws Exception{
+    public CarDto registerCar(@RequestParam String licensePlate, @RequestParam String make, @RequestParam String model, @RequestBody PersonDto person) throws Exception{
 
         //Gets the owener of the car
        Person p = personService.getPersonByID(person.getPersonID());

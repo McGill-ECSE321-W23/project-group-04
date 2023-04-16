@@ -64,32 +64,53 @@
             class="el-menu-vertical-demo"
             @select="handleSelect"
         >
-          <el-menu-item v-for="(car, i) in cars" :index="i.toString()">
+          <el-menu-item v-for="(car, i) in cars" :index="i.toString()" @click="handleCarSelectionChange(i)">
             <span>{{car.make}} {{car.model}}</span>
           </el-menu-item>
-          <el-menu-item>
-            <el-button :icon="Edit"></el-button>
-          </el-menu-item>
         </el-menu>
+        <br>
+        <el-button :icon="Plus" @click="this.dialogVisible = true">Add Car</el-button>
+        <el-dialog v-model="this.dialogVisible" title="Car Information">
+          <el-form :model="carForm">
+            <el-form-item label="Make" :label-width="formLabelWidth">
+              <el-input v-model="carForm.make" autocomplete="off" />
+            </el-form-item>
+            <el-form-item label="Model" :label-width="formLabelWidth">
+              <el-input v-model="carForm.model" autocomplete="off" />
+            </el-form-item>
+            <el-form-item label="License Plate Number" :label-width="formLabelWidth">
+              <el-input v-model="carForm.plate" autocomplete="off" />
+            </el-form-item>
+          </el-form>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="dialogVisible = false">Cancel</el-button>
+              <el-button type="success" @click="registerCar">
+                Register
+              </el-button>
+            </span>
+          </template>
+        </el-dialog>
       </el-aside>
 
       <el-container>
-        <el-card>
+        <el-card style="width: 100%">
           <template #header>
             License Number: {{cars[currentIndex]? cars[currentIndex].licensePlate : 0}}
           </template>
           <el-table :data="tableData"
                     @selection-change="handleSelectionChange"
                     ref="multipleTableRef"
-          >
-            <el-table-column type="selection" width="55" />
-            <el-table-column prop="name" label="Service Name" width="150" />
-            <el-table-column prop="location" label="Garage" width="100" />
-            <el-table-column prop="date" label="Date" width="180" />
-            <el-table-column prop="status" label="Status">
-              <template #default>
-                <el-button type="primary" :icon="Check" circle @click="handleClick"/>
-              </template>
+                    style="width: 100%"          >
+<!--            <el-table-column type="selection" width="55" />-->
+            <el-table-column prop="service.offeredServiceDescription" label="Service Name" width="150" />
+            <el-table-column prop="garage.garageNumber" label="Garage" width="100" />
+            <el-table-column prop="startTime" label="Date" width="180" :formatter="dateTimeArrToString"/>
+
+            <el-table-column prop="appointmentStatus" label="Status">
+<!--              <template #default>-->
+<!--                <el-button type="primary" :icon="Check" circle @click="handleClick"/>-->
+<!--              </template>-->
             </el-table-column>
 
           </el-table>
@@ -103,11 +124,14 @@
 import {inject} from "vue";
 import UserService from "@/services/UserService";
 import {ElNotification} from "element-plus";
-import {Check, Edit} from "@element-plus/icons-vue";
+import {Check, Edit, Plus} from "@element-plus/icons-vue";
 
 export default {
     name: "UserProfile",
   computed: {
+    Plus() {
+      return Plus
+    },
     Check() {
       return Check
     },
@@ -120,10 +144,13 @@ export default {
     data() {
       return {
         form: {},
+        carForm: {},
         currentIndex: 0,
+        dialogVisible: false,
         times: [],
         tickets: [],
         cars: [],
+        serviceData: [],
         tableData: [],
         axios: inject('axios')
       }
@@ -160,6 +187,18 @@ export default {
             this.axios.get('api/cars/get/ByOwner/' + userService.getCookie("personId"))
                 .then(data => {
                   this.cars = data.data
+
+                  this.cars.forEach((car, i) => {
+                    this.axios.get('/api/appointment/getByCar/' + car.carID)
+                        .then(res => {
+                          console.log(res.data)
+                          this.serviceData.push(res.data)
+                          if (i === 0) {
+                            this.tableData = res.data
+                          }
+                        })
+                        .catch(err => console.log(err))
+                  })
                 })
                 .catch(err => {
                   console.log(err)
@@ -168,6 +207,9 @@ export default {
           .catch(err => {
             console.log(err)
           })
+    },
+    onBeforeUpdate() {
+      this.tableData = this.serviceData[i]
     },
     methods: {
       updateProfile() {
@@ -202,9 +244,13 @@ export default {
         })
             .then(data => {
               console.log(data.data)
+              alert("renew successful")
             })
             .catch(err => {
               console.log(err)
+            })
+            .finally(() => {
+              window.location.reload()
             })
       },
       handleSelect(key, keyPath) {
@@ -213,6 +259,47 @@ export default {
       handleSelectionChange(k) {
         console.log("ay")
         console.log(k)
+      },
+      handleCarSelectionChange(i) {
+        this.tableData = this.serviceData[i]
+      },
+      dateTimeArrToString(row, col) {
+        console.log(row,  col)
+        let d = new Date(...row.startTime)
+        const options = {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour12: false,
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+        };        return d.toLocaleString('en-US', options)
+      },
+      registerCar() {
+        const userService = new UserService(this.axios)
+
+        this.axios.post('/api/cars/register', {
+          personID: userService.getCookie("personId"),
+          phoneNumber: this.form.phone,
+          name: this.form.name
+        }, {
+          params: {
+            licensePlate: this.carForm.plate,
+            make: this.carForm.make,
+            model: this.carForm.model,
+
+          }
+        })
+            .then(res => {
+              console.log(res)
+              alert("car added")
+            })
+            .catch()
+            .finally(() => {
+              this.dialogVisible = false
+              window.location.reload();
+            })
       },
       handleOpen(key, keyPath) {
         console.log(key, keyPath)
