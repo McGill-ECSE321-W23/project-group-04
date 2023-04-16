@@ -45,7 +45,7 @@ public class ServiceAppointmentRestController {
     /**
      * RESTful API that gets the appointment of a given ID
      * 
-     * @return Appointment witht he given ID
+     * @return Appointment with the given ID
      * @throws Exception No appointment exists with given ID
      * @author anniegouchee
      */

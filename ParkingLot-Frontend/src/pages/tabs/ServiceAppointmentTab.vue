@@ -67,8 +67,8 @@
       <!-- Pick a garage -->  
       <div>
         <span>Pick a garage: </span>
-        <el-select v-model="garage" placeholder="Select a garage" style="width: 145px">
-          <el-option v-for="item in garages" :key="item.garageNumber" :label="item.garageID" :value="item.garageNumber"></el-option>
+        <el-select v-model="garage" placeholder="Select a garage" style="width: 145px" ref="garageSelected">
+          <el-option v-for="item in garages" :key="item.id" :label="item.garageNumber" :value="item.garageNumber"></el-option>
         </el-select>
       </div>
       <br />
@@ -76,7 +76,7 @@
       <!-- Pick a car -->  
       <div>
         <span>Pick a car: </span>
-        <el-select v-model="car" placeholder="Select a car" style="width: 145px">
+        <el-select v-model="car" placeholder="Select a car" style="width: 145px" ref="carSelected">
           <el-option v-for="item in cars" :key="item.licensePlate" :label="item.id" :value="item.licensePlate"></el-option>
         </el-select>
       </div>
@@ -86,10 +86,10 @@
       <el-alert v-if="showErrorBookAppointment" :title="`Error: ${errorAppointment}`" type="error" :closable="false" show-icon />
       <br/>
 
-      <!-- Choose the appointment -->
+      <!-- Book the appointment -->
       <div>
         <el-button type="warning" :icon="icons.arrowLeftIcon" @click="goBack">Go back</el-button>
-        <el-button type="primary" @click="saveAddAppointment">Book appointment</el-button>
+        <el-button type="primary" @click="saveAddAppointment(garage, offeredService, car, date, time)">Book appointment</el-button>
       </div>
     </div>
   </div>

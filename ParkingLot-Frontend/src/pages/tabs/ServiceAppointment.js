@@ -1,6 +1,7 @@
 import { ArrowLeft } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import axios from 'axios'
+import dayjs from 'dayjs';
 
 var AXIOS = axios.create({
   baseURL: 'http://localhost:8080/api',   // backend url
@@ -26,16 +27,21 @@ export default {
       showBookAppointment: false,
       owner: '',
       errorAccount:'',
-      appointments: [],
+      
+      // Fill in
       description: '',
       duration: '',
       cost: '',
       date: ref(''),
       time: ref(''),
+      dateTime: '',
       garage: ref(''),
       garages: [],
+      errorGarage: '',
       car: ref(''),
       cars: [],
+      errorCar: '',
+
       showErrorBookAppointment: false,
       errorAppointment: '',
       showConfirmation: false,
@@ -51,8 +57,8 @@ export default {
 
   created() {
     // Getting the user's ID
-    AXIOS.get('/getAccount').then(response => {
-      this.owner = response.data
+    AXIOS.get('/auth/getAccount').then(response => {
+      this.owner = response.data.getAccountID()
     })
     .catch(e => {
       this.errorAccount = e
@@ -75,11 +81,11 @@ export default {
     })
 
     // Initializing cars from backend
-    AXIOS.get('/cars/get/ByOwner/'.concat(this.owner.accountID)).then(response => {
-      this.appointments = response.data
+    AXIOS.get('/cars/get/ByOwner/'.concat(this.owner)).then(response => {
+      this.cars = response.data
     })
     .catch(e => {
-        this.errorAppointment = e
+        this.errorCar = e
     })
   },
 
@@ -88,7 +94,7 @@ export default {
       this.selectedOfferedServiceRow = row;
 
       // Fill offered service info
-      this.offeredServiceSelected = row.offeredServiceID;
+      this.offeredService = row.offeredServiceID;
       this.description = row.offeredServiceDescription;
       this.duration = row.offeredServiceDuration;
       this.cost = row.offeredServiceCost;
@@ -110,6 +116,7 @@ export default {
       this.selectedOfferedServiceRow = null;
 
       // Reset info
+      this.offeredService = '';
       this.description = '';
       this.duration = '';
       this.cost = '';
@@ -145,24 +152,28 @@ export default {
       }
     },
 
-    saveAddAppointment: function (gID, sID, cID, dateTime) {
+    saveAddAppointment: function (g, s, c, d, t) {
+      const formattedDate = dayjs(d).format('YYYY-MM-DD');
+      const formattedTime = dayjs(t).format('HH:mm:ss');
+      this.dateTime = dayjs(formattedDate + ' ' + formattedTime).format('YYYY-MM-DDTHH:mm:ss');
+
       AXIOS.post('/appointment/create/', {}, {
         params: {
-            garageID: gID,
-            serviceID: sID,
-            carID: cID, 
-            startTime: dateTime
+            garageID: g.garageID,
+            serviceID: s,
+            carID: c.carID, 
+            startTime: this.dateTime
         }
       }).then(response => {      
-        // Save changes
-        this.appointments.push(response.data);
+        // No display of the booked appointments so no need to save the response
         
         // Show containers
         this.showOfferedServices = true;
         this.showBookAppointment = false;
 
         // Reset offered service
-        this.selectedRow = null;
+        this.selectedOfferedServiceRow = null;
+        this.offeredService = '';
         this.description = '';
         this.duration = '';
         this.cost = '';
@@ -171,6 +182,7 @@ export default {
         this.date = '';
         this.time = '';
         this.garage = '';
+        this.car = '';
 
         // Confirmation
         this.showConfirmation = true;
