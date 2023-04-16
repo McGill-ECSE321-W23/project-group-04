@@ -133,7 +133,7 @@ export default {
 
         // Recover (smoke test)
         $("#recovery_button").click(function() {
-            this.axios.get('api/auth/smokeTest')
+            axios.get('api/auth/smokeTest')
             .then((res) => {
                 console.log(res)
                 router.push("/")
