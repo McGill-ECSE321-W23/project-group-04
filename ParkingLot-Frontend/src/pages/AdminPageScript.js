@@ -65,6 +65,7 @@ export default {
         .catch(error => {   // not logged in
             console.log(error);
             router.push('/login');
+            alert('You are not logged in. Redirecting to login page...');
         });
     }
 };
