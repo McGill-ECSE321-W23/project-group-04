@@ -46,7 +46,7 @@ The application will improve the overall experience for customers, employees and
 0. Backend should be started first
 1. Open a command prompt in the root folder and run `cd ParkingLot-Frontend`
 2. Install node modules with `npm install`
-3. Start the node.js server with `npm run build`
+3. Start the node.js server with `npm run dev`
 4. The frontend server should be started on `localhost:5173`
 
 ## Sprint Summary
