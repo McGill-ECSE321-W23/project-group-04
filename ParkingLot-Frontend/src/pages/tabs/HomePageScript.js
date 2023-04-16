@@ -21,8 +21,7 @@ export default {
           cost15Min:'',
           totalCost: '',
           errorPLS: '',
-          currentTicketID: '',
-          showConfirmation: false,
+          currentTicketID:'',
 
           AXIOS: axios.create({
             baseURL: 'http://localhost:8080',
@@ -115,7 +114,6 @@ export default {
             .then(response => {
               this.regLeft = this.regLeft -1
               this.currentTicketID = response.data.TicketID
-              this.showConfirmation = true
               this.errorTicket = ''
               this.newTicket = ''
             })
@@ -160,7 +158,7 @@ export default {
             for (let i = 0; i < tickets.length; i++) {
                 if (this.tickets[i].ticketID == id) {
 
-            this.AXIOS.post('http://localhost:8080/api/ticket/delete', {}, {
+            this.AXIOS.delete('http://localhost:8080/api/ticket/delete', {}, {
               withCredentials: true, 
               headers:{"Access-Control-Allow-Origin": 'localhost:8080'},
               params: {
@@ -168,8 +166,8 @@ export default {
               }
             })
             .then(response => {
-              var t = this.tickets[i];
-              this.entryTime = t.startTime
+
+              this.entryTime = response.data.startTime
               var today = new Date();
               this.endTime =  today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
               
@@ -177,7 +175,6 @@ export default {
               var elapsedMin = entryTime.getMinute() - this.endTime.getMinutes()
               var elapsedTime = elapsedHr*60 + elapsedMin
               this.totalCost =  (elapsedTime/15)*this.costPMin
-              this.tickets.pop(t)
 
             })
             .catch(e => {

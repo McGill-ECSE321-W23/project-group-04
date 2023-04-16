@@ -42,9 +42,6 @@
                                 <div class = "container" id = "regularButton">
                                     <el-button id = "regularTicketButton" type = "info" round @click= "createRegTicket()" > Reserve </el-button>
                                 </div>
-                                    <!-- Confirmation message -->
-                                    <el-alert style ="position: absolute" v-if="showConfirmation" title="Success!" type="success" :closable="true" @close="closeConfirmation" show-icon/>
-                                    <br/>
                             </div>
                         </div>
                     </el-card>
@@ -69,9 +66,6 @@
                                 <div class = "container" id = "largeButton">
                                     <el-button id = "largeTicketButton" type = "info" round @click= "createLargeTicket()"> Reserve </el-button>
                                 </div>
-                                    <!-- Confirmation message -->
-                                    <el-alert style ="position: absolute" v-if="showConfirmation" title="Success!" type="success" :closable="true" @close="closeConfirmation" show-icon/>
-                                    <br/>
                             </div>
                         </div>
                     </el-card>
@@ -90,6 +84,7 @@
                     <label style="margin-right: 1%; font-size: 55%; color: #000000" for = "ticketID" >Ticket ID:</label>
                     <el-input v-model="ticketID" id = "ticketID" name = "ticketID" style="width: 100%;" placeholder="Input Ticket ID" clearable />
                     <el-button id = "payTicketButton" type="info" round style="width: 100%; margin-top: 10%"> Pay Now </el-button>
+
                 </div>
                 <div class = "container" style=" margin-top: 1%;" id="fakeTicketDisplay">
                     <div class = "container" id = "ticketOutline">
