@@ -107,11 +107,7 @@ public class ServiceAppointmentRestController {
     }
 
     /**
-<<<<<<< HEAD
      * RESTful API that create a service appointment
-=======
-     * RESTful API that create a servuce appointment
->>>>>>> master
      * @param garageID Garage associated with service appointment
      * @param serviceID Service of the service appoointment
      * @param carID Car of the service appointment
