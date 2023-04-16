@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 @RestController
 @RequestMapping("/api/monthlyReservation")
 public class MonthlyReservationRestController {
@@ -37,9 +38,11 @@ public class MonthlyReservationRestController {
      * @author Edwin
      */
     @PostMapping("/create")
-    ResponseEntity<?> createReservation(HttpServletRequest request, @RequestBody MonthlyReservationDto monthlyReservationDto) {
+    ResponseEntity<?> createReservation(HttpServletRequest request, @RequestParam LocalDate startDate, @RequestParam 
+    LocalDate endDate, @RequestParam long personId) {
         try {
             if (AuthenticationUtility.isLoggedIn(request)) {
+                MonthlyReservationDto monthlyReservationDto = new MonthlyReservationDto(startDate, endDate, personId);
                 Person person = personService.getPersonByID(monthlyReservationDto.getPersonId());
 
                 MonthlyReservationDto res = DtoUtility.convertToDto(monthlyReservationService.addReservation(monthlyReservationDto.getStartDate(), monthlyReservationDto.getEndDate(), person));
@@ -141,11 +144,15 @@ public class MonthlyReservationRestController {
      * @return An error messahe or the monthly reservation DTO
      */
     @PutMapping("/updateLocation")
-    ResponseEntity<?> updateParkingLocation(HttpServletRequest request, @RequestParam Long reservationIdToUpdate , @RequestBody ParkingSpotDto parkingSpotDto) {
+    ResponseEntity<?> updateParkingLocation(HttpServletRequest request, @RequestParam Long reservationIdToUpdate,
+     @RequestBody ParkingSpotDto parkingSpotDto) {
+       
         try {
-            if (AuthenticationUtility.isStaff(request) && reservationIdToUpdate != null && ParkingSpotDto.isValid(parkingSpotDto)) {
+            if (AuthenticationUtility.isStaff(request) && reservationIdToUpdate != null 
+             && ParkingSpotDto.isValid(parkingSpotDto)
+            ) {
+               
                 MonthlyReservation monthlyReservation = monthlyReservationService.getReservationById(reservationIdToUpdate).get();
-
                 ParkingSpot parkingSpot = parkingSpotService.findParkingSpotByID(parkingSpotDto.getParkingSpotID());
 
                 if (parkingSpot.getMonthlyReservation() != null) {
