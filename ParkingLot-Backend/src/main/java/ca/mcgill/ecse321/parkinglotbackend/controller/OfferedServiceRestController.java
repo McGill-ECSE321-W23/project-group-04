@@ -4,7 +4,6 @@ import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUt
 import ca.mcgill.ecse321.parkinglotbackend.dto.OfferedServiceDto;
 import ca.mcgill.ecse321.parkinglotbackend.model.OfferedService;
 import ca.mcgill.ecse321.parkinglotbackend.service.OfferedServiceService;
-
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
