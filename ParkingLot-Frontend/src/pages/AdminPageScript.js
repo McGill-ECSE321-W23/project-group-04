@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import axios from 'axios';
 import router from '@/router'
 import Header from '../components/Header.vue';
@@ -20,7 +19,9 @@ export default {
     },
     data() {
         return {
-            tabs: []
+            tabs: [],
+            loggedIn: true,
+            isStaff: false
         }
     },
     created() {
@@ -60,6 +61,8 @@ export default {
         .then(response => { // logged in, need to check if is staff
             if (response.data === false) {
                 router.push('/');
+            } else {
+                this.isStaff = true
             }
         })
         .catch(error => {   // not logged in
