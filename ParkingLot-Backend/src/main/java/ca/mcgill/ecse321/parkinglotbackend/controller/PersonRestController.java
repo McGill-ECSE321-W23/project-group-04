@@ -1,18 +1,5 @@
 package ca.mcgill.ecse321.parkinglotbackend.controller;
 
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.AuthenticationUtility;
 import ca.mcgill.ecse321.parkinglotbackend.controller.utilities.DtoUtility;
 import ca.mcgill.ecse321.parkinglotbackend.model.Person;
@@ -20,6 +7,11 @@ import ca.mcgill.ecse321.parkinglotbackend.service.AccountService;
 import ca.mcgill.ecse321.parkinglotbackend.service.PersonService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/person")
